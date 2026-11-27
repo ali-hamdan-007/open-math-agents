@@ -645,6 +645,141 @@ theorem cubic_root_recovers_unrepeated_prime (p q x : ℤ) (hp : 3≤p)
   refine ⟨pos_of_mul_pos_right hprod (by positivity),?_⟩
   linear_combination -hx
 
+/-- At least one of the roots lies strictly between q and p. Its quadratic
+value is a positive divisor of a polynomial in p and determines q exactly. -/
+theorem cubic_root_reconstruction_candidate (p q a b c : ℤ)
+    (hq : 11≤q) (hp : 2*q<p) (ha : 0≤a) (hb : 0≤b) (hc : 0≤c)
+    (hL : 2*(a+b+c)=(p^2+p+1)*(q+1)+2*p^3)
+    (hM : a*b+a*c+b*c+1=p^3*(p+q-1)+(a+b+c))
+    (hZ : a*b*c=p^4*q+12) :
+    let T (x : ℤ) := (p^2+p+1)*x^2-(2*p^3+p^2+p+1)*x+2*p^4
+    ∃ x : ℤ, q<x ∧ x<p ∧ (x=a ∨ x=b ∨ x=c) ∧ 0<T x ∧
+      q*T x=2*x^3-(p^2+p+1+2*p^3)*x^2+(2*p^4+p^2+p-1)*x-24 ∧
+      T x∣2*(p^16+2*p^15-p^14-2*p^13+p^12-13*p^11-32*p^10-
+        29*p^9+2*p^8+29*p^7+72*p^6+234*p^5+438*p^4+492*p^3+432*p^2+216*p+72) := by
+  have hp3 : 3≤p := by omega
+  have hq0 : 0≤q := by omega
+  have hp0 : 0≤p := by omega
+  have hL' : 2*(a+b+c)=twiceSum p q := hL
+  have hM' : 2*(a*b+a*c+b*c)=twicePairSum p q := by
+    dsimp [twicePairSum]
+    nlinarith only [hL',hM]
+  have hpos : 0<2*p*twiceSum p q-twicePairSum p q-6*p^2 := by
+    have he : 2*p*twiceSum p q-twicePairSum p q-6*p^2 =
+        (p^2+p-1)*q+p^2*(2*p^2-5)+2*p^3+p+1 := by
+      dsimp [twiceSum,twicePairSum]
+      ring
+    rw [he]
+    have h₁ := mul_nonneg (show 0≤p^2+p-1 by nlinarith [sq_nonneg p]) hq0
+    have h₂ := mul_nonneg (sq_nonneg p) (show 0≤2*p^2-5 by
+      nlinarith [mul_nonneg (show 0≤p-3 by omega) (show 0≤p+3 by omega)])
+    have h₃ : 0≤p^3 := by positivity
+    nlinarith only [h₁,h₂,h₃,hp3]
+  have hsmall : a<p ∨ b<p ∨ c<p := by
+    by_contra! h
+    obtain ⟨hpa,hpb,hpc⟩ := h
+    have h₁ := mul_nonneg (show 0≤a-p by omega) (show 0≤b-p by omega)
+    have h₂ := mul_nonneg (show 0≤a-p by omega) (show 0≤c-p by omega)
+    have h₃ := mul_nonneg (show 0≤b-p by omega) (show 0≤c-p by omega)
+    have hsum := congrArg (fun y : ℤ => 2*p*y) hL'
+    nlinarith only [hpos,h₁,h₂,h₃,hsum,hM']
+  let T (x : ℤ) := (p^2+p+1)*x^2-(2*p^3+p^2+p+1)*x+2*p^4
+  let P := 2*(p^16+2*p^15-p^14-2*p^13+p^12-13*p^11-32*p^10-
+    29*p^9+2*p^8+29*p^7+72*p^6+234*p^5+438*p^4+492*p^3+432*p^2+216*p+72)
+  have hprod : T a*T b*T c=P := cubic_root_quadratic_product p q a b c hL hM hZ
+  have root (x : ℤ) (hx : x=a ∨ x=b ∨ x=c) :
+      2*x^3-twiceSum p q*x^2+twicePairSum p q*x-2*(p^4*q+12)=0 := by
+    rw [←hL',←hM',←hZ]
+    rcases hx with rfl|rfl|rfl <;> ring
+  have exhibit (x : ℤ) (hx : 0≤x) (hxp : x<p) (hr : x=a ∨ x=b ∨ x=c)
+      (hd : T x∣P) :
+      ∃ y : ℤ, q<y ∧ y<p ∧ (y=a ∨ y=b ∨ y=c) ∧ 0<T y ∧
+        q*T y=2*y^3-(p^2+p+1+2*p^3)*y^2+(2*p^4+p^2+p-1)*y-24 ∧ T y∣P := by
+    obtain ⟨ht,hqT⟩ := cubic_root_recovers_unrepeated_prime p q x hp3 (root x hr)
+    exact ⟨x,cubic_root_gt_q p q x hp hq hx (root x hr),hxp,hr,ht,hqT,hd⟩
+  change ∃ x : ℤ, q<x ∧ x<p ∧ (x=a ∨ x=b ∨ x=c) ∧ 0<T x ∧
+    q*T x=2*x^3-(p^2+p+1+2*p^3)*x^2+(2*p^4+p^2+p-1)*x-24 ∧ T x∣P
+  rcases hsmall with h|h|h
+  · exact exhibit a ha h (Or.inl rfl) ⟨T b*T c,by rw [←hprod]; ring⟩
+  · exact exhibit b hb h (Or.inr (Or.inl rfl)) ⟨T a*T c,by rw [←hprod]; ring⟩
+  · exact exhibit c hc h (Or.inr (Or.inr rfl)) ⟨T a*T b,by rw [←hprod]; ring⟩
+
+/-- For sufficiently large q, the consecutive-odd-root interval improves
+the cubic bound to 3p² < q³. -/
+theorem cubic_gap_bound_three (p q a b c : ℤ) (hp : 2*q<p) (hq : 107≤q)
+    (ha : 0≤a) (hb : 0≤b) (hc : 0≤c)
+    (hqa : q+1≠a) (hqb : q+1≠b) (hqc : q+1≠c)
+    (hL : 2*(a+b+c)=(p^2+p+1)*(q+1)+2*p^3)
+    (hM : a*b+a*c+b*c+1=p^3*(p+q-1)+(a+b+c))
+    (hZ : a*b*c=p^4*q+12) :
+    3*p^2<q^3 := by
+  by_contra! hpow
+  have hq0 : 0≤q := by omega
+  have hp0 : 0<p := by omega
+  have h5 : 5*q≤p := by
+    by_contra! he
+    have H := mul_pos (show 0<5*q-p by omega) (show 0<5*q+p by omega)
+    have J := mul_nonneg (sq_nonneg q) (show 0≤q-75 by omega)
+    have K : 3*p^2<q^3 := by nlinarith only [H,J]
+    linarith only [hpow,K]
+  have hp100 : 100≤p := by omega
+  have hL' : 2*(a+b+c)=twiceSum p q := hL
+  have hM' : 2*(a*b+a*c+b*c)=twicePairSum p q := by
+    dsimp [twicePairSum]
+    nlinarith only [hL',hM]
+  let f (x : ℤ) := 2*x^3-twiceSum p q*x^2+twicePairSum p q*x-2*(p^4*q+12)
+  have hfactor (x : ℤ) : f x=2*(x-a)*(x-b)*(x-c) := by
+    dsimp [f]
+    rw [←hL',←hM',←hZ]
+    ring
+  have hpos : 0<f (q+2) := by
+    have he : f (q+2)=4*p^3*(p-q-2)-(p^2+p)*(q^3+4*q^2+5*q+2)+
+        (q^3+8*q^2+17*q-14) := by dsimp [f,twiceSum,twicePairSum]; ring
+    rw [he]
+    have h₁ := mul_le_mul_of_nonneg_left (show 19*p≤24*(p-q-2) by omega)
+      (show 0≤p^3 by positivity)
+    have h₂ : 24*(q^3+4*q^2+5*q+2)≤25*q^3 := by
+      let v := q-107
+      have hv : 0≤v := by dsimp [v]; omega
+      have E : 25*q^3-24*(q^3+4*q^2+5*q+2)=v^3+225*v^2+13683*v+113051 := by
+        dsimp [v]
+        ring
+      have H : 0≤v^3+225*v^2+13683*v+113051 := by positivity
+      omega
+    have h₃ := mul_le_mul_of_nonneg_left (h₂.trans (mul_le_mul_of_nonneg_left hpow (by decide)))
+      (show 0≤p^2+p by positivity)
+    have h₄ := mul_le_mul_of_nonneg_right (show 100*(p^2+p)≤101*p^2 by
+      nlinarith [mul_nonneg hp0.le (show 0≤p-100 by omega)])
+      (show 0≤75*p^2 by positivity)
+    have h₅ : 0<p^4 := by positivity
+    have h₆ : 0≤q^3+8*q^2+17*q-14 := by
+      have : 0≤q^3 := by positivity
+      nlinarith
+    nlinarith only [h₁,h₃,h₄,h₅,h₆]
+  have hA : f a=0 := by rw [hfactor]; ring
+  have hB : f b=0 := by rw [hfactor]; ring
+  have hC : f c=0 := by rw [hfactor]; ring
+  have h₁ := cubic_root_gt_q p q a hp (by omega) ha hA
+  have h₂ := cubic_root_gt_q p q b hp (by omega) hb hB
+  have h₃ := cubic_root_gt_q p q c hp (by omega) hc hC
+  have hA' : q+2≠a := by
+    intro h
+    rw [h,hA] at hpos
+    exact (lt_irrefl _ hpos)
+  have hB' : q+2≠b := by
+    intro h
+    rw [h,hB] at hpos
+    exact (lt_irrefl _ hpos)
+  have hC' : q+2≠c := by
+    intro h
+    rw [h,hC] at hpos
+    exact (lt_irrefl _ hpos)
+  rw [hfactor] at hpos
+  have hprod := mul_neg_of_pos_of_neg
+    (mul_pos_of_neg_of_neg (show q+2-a<0 by omega) (show q+2-b<0 by omega))
+    (show q+2-c<0 by omega)
+  nlinarith only [hpos,hprod]
+
 end A056777OddSquarefreeThreeFive
 
 #print axioms A056777OddSquarefreeThreeFive.narrowed_odd_squarefree_three_five
@@ -658,3 +793,7 @@ end A056777OddSquarefreeThreeFive
 #print axioms A056777OddSquarefreeThreeFive.cubic_root_quadratic_product
 
 #print axioms A056777OddSquarefreeThreeFive.cubic_root_recovers_unrepeated_prime
+
+#print axioms A056777OddSquarefreeThreeFive.cubic_root_reconstruction_candidate
+
+#print axioms A056777OddSquarefreeThreeFive.cubic_gap_bound_three

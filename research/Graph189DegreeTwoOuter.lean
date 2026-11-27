@@ -1,4 +1,4 @@
-import Graph189LowDegreeTwo
+import Graph189DistanceLayers
 import Graph189BipartiteStructure
 
 namespace Graph189DegreeTwoOuter
@@ -7,7 +7,7 @@ variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V]
   {G : SimpleGraph V} [DecidableRel G.Adj]
 
 omit [Nontrivial V] [DecidableRel G.Adj] in
-private theorem distance_two_cap (s : ℕ) (hσ : ∀ x, G.distEven x ≤ 1 + s) (x : V) :
+theorem distance_two_cap (s : ℕ) (hσ : ∀ x, G.distEven x ≤ 1 + s) (x : V) :
     (Finset.univ.filter (fun v => G.dist x v = 2)).card ≤ s := by
   let D := Finset.univ.filter (fun v => G.dist x v = 2)
   have hsub : insert x D ⊆ Finset.univ.filter (fun v => Even (G.dist x v)) := by
