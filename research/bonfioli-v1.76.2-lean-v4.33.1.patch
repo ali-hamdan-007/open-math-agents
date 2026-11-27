@@ -1,0 +1,117 @@
+--- a/lean/Erdos307/Barrier.lean
++++ b/lean/Erdos307/Barrier.lean
+@@ -1,4 +1,4 @@
+-import Mathlib
++import Erdos307.FocusedImports
+ import Erdos307.Rigidity
+ 
+ /-!
+--- a/lean/Erdos307/Closed.lean
++++ b/lean/Erdos307/Closed.lean
+@@ -44,7 +44,7 @@
+       have hp_ge : (281 : ℚ) ≤ p := by
+         rw [hpdef]
+         have hm : Nat.nth Nat.Prime 59 ≤ Nat.nth Nat.Prime n :=
+-          Nat.nth_monotone Nat.infinite_setOf_prime hn
++          Nat.nth_monotone Nat.infinite_setOfPred_prime hn
+         rw [np59] at hm
+         exact_mod_cast hm
+       have hpos : (0 : ℚ) < p := by linarith
+@@ -56,7 +56,7 @@
+         have hnat : ∏ i ∈ Finset.range 59, Nat.nth Nat.Prime i
+                   ≤ ∏ i ∈ Finset.range n, Nat.nth Nat.Prime i := by
+           apply Finset.prod_le_prod_of_subset_of_one_le' hsub59
+-          intro i _ _; exact (Nat.prime_nth_prime i).one_lt.le
++          intro i _ _; exact (Nat.nth_mem_of_infinite Nat.infinite_setOfPred_prime i).one_lt.le
+         calc (P59 : ℚ) = ((∏ i ∈ Finset.range 59, Nat.nth Nat.Prime i : ℕ) : ℚ) := by
+               rw [prod_first59_nat]
+           _ ≤ ((∏ i ∈ Finset.range n, Nat.nth Nat.Prime i : ℕ) : ℚ) := by exact_mod_cast hnat
+--- a/lean/Erdos307/Extremal.lean
++++ b/lean/Erdos307/Extremal.lean
+@@ -1,4 +1,4 @@
+-import Mathlib
++import Erdos307.FocusedImports
+ 
+ /-!
+ # Erdős #307 — T4′ groundwork: the smallest primes are extremal (crux lemma)
+@@ -26,7 +26,7 @@
+ is at least the `i`-th prime. -/
+ lemma nth_prime_le_orderEmb {U : Finset ℕ} (hU : ∀ p ∈ U, p.Prime) (i : Fin U.card) :
+     Nat.nth Nat.Prime (i : ℕ) ≤ U.orderEmbOfFin rfl i := by
+-  have hinf : (setOf Nat.Prime).Infinite := Nat.infinite_setOf_prime
++  have hinf : (Set.ofPred Nat.Prime).Infinite := Nat.infinite_setOfPred_prime
+   set e := U.orderEmbOfFin rfl with he
+   have hprime : Nat.Prime (e i) := hU _ (Finset.orderEmbOfFin_mem U rfl i)
+   -- the `i` earlier elements are distinct primes `< e i`
+@@ -97,7 +97,7 @@
+   have hle : (Nat.nth Nat.Prime (i : ℕ) : ℚ) ≤ (U.orderEmbOfFin rfl i : ℚ) := by
+     exact_mod_cast nth_prime_le_orderEmb hU i
+   have hpos : (0 : ℚ) < (Nat.nth Nat.Prime (i : ℕ) : ℚ) := by
+-    exact_mod_cast (Nat.prime_nth_prime (i : ℕ)).pos
++    exact_mod_cast (Nat.nth_mem_of_infinite Nat.infinite_setOfPred_prime (i : ℕ)).pos
+   gcongr
+ 
+ /-- **Reduction.**  Given the (proven) extremality, the barrier hypothesis `hRatio` for a prime
+--- /dev/null
++++ b/lean/Erdos307/FocusedImports.lean
+@@ -0,0 +1,26 @@
++import Mathlib.Algebra.BigOperators.Group.Finset.Lemmas
++import Mathlib.Algebra.Order.BigOperators.Group.Finset
++import Mathlib.Data.Finset.Sort
++import Mathlib.Data.Nat.Nth
++import Mathlib.Data.Nat.Prime.Infinite
++import Mathlib.Data.Nat.Sqrt
++import Mathlib.Data.Rat.Cast.Order
++import Mathlib.Data.Rat.Lemmas
++import Mathlib.Tactic.FieldSimp
++import Mathlib.Tactic.GCongr
++import Mathlib.Tactic.Linarith
++import Mathlib.Tactic.NormNum
++import Mathlib.Tactic.Positivity
++import Mathlib.Tactic.Ring
++import Mathlib.Algebra.BigOperators.Ring.Finset
++import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
++import Mathlib.Data.Nat.GCD.BigOperators
++import Mathlib.Data.Rat.Cast.CharZero
++import Mathlib.Tactic.LinearCombination
++import Mathlib.Data.Nat.Prime.Basic
++import Mathlib.Algebra.BigOperators.Field
++import Mathlib.Data.Nat.Cast.Field
++import Mathlib.Algebra.BigOperators.Fin
++import Mathlib.Order.Interval.Finset.Fin
++import Mathlib.Data.Nat.PrimeFin
++import Mathlib.Tactic.NormNum.Prime
+--- a/lean/Erdos307/NonSquare.lean
++++ b/lean/Erdos307/NonSquare.lean
+@@ -1,5 +1,4 @@
+-import Mathlib.Data.Nat.Bitwise
+-import Mathlib.Tactic
++import Erdos307.FocusedImports
+ 
+ /-!
+ # A modular non-square certificate
+--- a/lean/Erdos307/Rigidity.lean
++++ b/lean/Erdos307/Rigidity.lean
+@@ -1,4 +1,4 @@
+-import Mathlib
++import Erdos307.FocusedImports
+ 
+ /-!
+ # Erdős #307 — Rigidity (Lean targets T1, T2)
+--- a/lean/Erdos307/Sixty.lean
++++ b/lean/Erdos307/Sixty.lean
+@@ -1,4 +1,4 @@
+-import Mathlib
++import Erdos307.FocusedImports
+ import Erdos307.Rigidity
+ import Erdos307.Barrier
+ import Erdos307.Capstone
+@@ -424,7 +424,7 @@
+ 
+ set_option maxHeartbeats 0 in
+ /-- The whole search, checked by the kernel. Roughly a minute. -/
+-theorem dfsA_run : dfsA pool99 20 0 P0 D0 = true := by decide
++theorem dfsA_run : dfsA pool99 20 0 P0 D0 = true := by decide +kernel
+ 
+ 
+ /-! ### The bridge: the scaled search implies the rational one -/
