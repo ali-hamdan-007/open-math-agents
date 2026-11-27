@@ -1,0 +1,19 @@
+# Nonadjacent covering anchors
+
+Use the hypotheses and notation of adjacent-cover.md, now with k≥9 and ab a nonedge. Assume that a,b cover B and n>3k. Then G is traceable. The high-degree condition is imposed on every vertex other than z. Global diameter three is unnecessary.
+
+Keep d,L,M,E_a,E_b,T,t as in that note. Let h be the total number of incidences from a,b to another anchor at distance two. Thus h≥2, since each sees the other across z. Let g be the number of members of M at distance two from the unique covering anchor that misses them. Then
+
+|C|+t+g+h≤2k,    |C|≥2k−3+d.
+
+Thus d+t+g≤1. Each covering anchor has at most one neighbor among the other two anchors, since ab is a nonedge, so each misses at most 2−d of B. If either misses none then n≤2k+4≤3k. Hence 2≤m=|M|≤4 and L is nonempty. Each common vertex w in L has at most |L|−1 further neighbors in L, three anchor neighbors, t remote neighbors and g neighbors in M (each such neighbor is distance two from the anchor missing it, via w). Thus k≤b₀−m−1+3+t+g, giving
+
+m≤2−d+t+g≤3,    |C|+m≤2k
+
+by the first displayed bound and h≥2. Moreover each E side has size at least k−2 because it is exactly the set of C vertices not visible to the other anchor, and the latter sees at most k−1 vertices of C. There are now either two singleton sides in M, or one singleton p and one doubleton q,r. Every E vertex is adjacent to some M vertex on its own side, and has no other B neighbor.
+
+Start the core with z,a,b,c,L, the remote side with E∪M∪T. If t=1 and its vertex has no E neighbor, transfer it to the core. In the doubleton case transfer any vertex among q,r with at most one E neighbor. At most one qualifies, since their combined E-neighborhood has size ≥k−2. Let l∈{0,1,2} be the number of transfers. At most one vertex of E has lost a single neighbor. All others retain full degree ≥k in the remote side. Use the endpoint leaf and path closure exactly as in adjacent-cover.md. The remote order is |C|+m−l≤2k−l. The unchanged E vertices have size ≥|C|−t−1≥2k−5≥k+1, and so fill the whole E to a clique.
+
+It remains to realize a spanning path of that closure with a specified starting M vertex. For two singleton M sides, use the construction in adjacent-cover.md. For (1,2), if T remains remote reserve an E port for it first, to make it the final special on the path. If one of q,r transferred, start at the remaining vertex (it has ≥k−3 E neighbors) and visit p internally on two ports. If both q,r remain, their E-neighborhoods after reserving the possible T port both have size ≥1, their union has size ≥k−3≥6 and thus the larger one has at least three vertices. Start at the vertex with smaller available neighborhood, and take one port there and two at the larger. Use p internally with two ports in its disjoint class. All ports are distinct, and the clique allows all remaining E vertices to be inserted. Include the leaf at the selected start, reverse closure and delete it.
+
+In the core, X consists of L and the transferred vertices. Let s=m+t≤4. Every member of X retains degree ≥k−s+l except possibly the transferred q or r, which may lose one extra E neighbor. Hence, if l≥1 every pair has total degree at least 2k−2s+2l−1. If l=0 the corresponding bound is 2k−2s. The core order is 4+b₀−m+l≤4+k−m+l. For m≤3, t≤1, k≥9 we have 2k−2(m+t)≥4+k−m (equivalently k≥4+m+2t). For l≥1 the lower bound on the degree sum increases by 2l−1≥l, as needed. Add an endpoint leaf at the anchor that sees the chosen remote start. Path closure fills X to a clique. The other anchor among the original three can start a core path, followed by z, the other covering anchor, the X clique starting and ending with distinct members of L, then the designated anchor and the leaf. Reverse closure, remove leaf, and join to the remote path across the designated edge.
