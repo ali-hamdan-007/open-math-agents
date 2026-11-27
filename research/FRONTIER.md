@@ -2,6 +2,10 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Irregular graphs and cut vertices of balls
+
+Under the full even-distance hypothesis, if the two smallest degrees both equal k ≥ 2 and a minimum-degree vertex disconnects a radius-two ball on removal, the graph has a Hamiltonian cycle. Degrees above k and diameter are unrestricted. The [paper proof](graph189/full/minimum-cut-ball.md) uses cycle closure, and an [independent audit](graph189/full/minimum-cut-ball-audit.md) checks the mixed and unmixed cases. When the minimum degree is unique, the low vertex cannot disconnect any radius-two ball. The [local degree-sum transfer lemma](Graph189LocalOre.lean) is Lean-checked. The full irregular conjecture remains open.
+
 ## Regular graphs in Conjecture 189
 
 The [regular-case proof](graph189/full/regular-case.md) establishes a Hamiltonian cycle for **every finite connected k-regular graph, k ≥ 2**, satisfying the full even-distance cap. It allows arbitrary order, degree and diameter. The connected degree-one case is a single edge and has a spanning path. The proof combines Asratian–Granholm's Theorem 1.6 and ball decomposition (Lemma 2.2) with the full parity condition and an explicit application of Bondy–Chvátal closure. An [independent verifier](graph189/full/regular-audit.md) checked both branches. The problem desk accepted the regular-case research note under Ali's full-parent lease. This is a mathematical proof on the fork. No end-to-end Lean proof or official verdict exists for this result. Irregular graphs remain the target. The [boundary argument](graph189/full/degree-boundary.md) and its conditional [Lean component](Graph189BoundaryHigh.lean) study orders immediately beyond the published range.

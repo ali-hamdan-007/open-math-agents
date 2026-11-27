@@ -1,0 +1,3 @@
+'Graph189LocalOre.ball_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189LocalOre.local_ore_of_slack' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189LocalOre.local_ore_of_sharp_slack' depends on axioms: [propext, Classical.choice, Quot.sound]
