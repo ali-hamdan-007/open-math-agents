@@ -2,6 +2,10 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Rooted exterior: the three attachment positions are resolved for k≥12
+
+In the degree-three, n≤3k+2 counterexample analysis, consider a longest path through z whose omitted component has M=k−1 vertices. If the component has exactly three attachment positions, all touching it at multiple vertices, then G is traceable for k≥12. The last equality case uses complementary closed neighborhoods of high vertices at distance at least three to construct a spanning path. The boundary at k=12, the required cross edge and the final concatenation received an independent paper check. [Full three-position argument](graph189/full/longest-path/degree-three-three-ports.md) and [earlier independent routing audit](graph189/full/longest-path/three-port-routing-audit.md). [The clique with exactly two attachment vertices](graph189/full/longest-path/degree-three-two-ports.md) is also covered for k≥10. Next: the two multiply attached positions plus one group of singly attached positions, especially when the remaining component has vertex-connectivity exactly two; and M≤k−2. Contributors gpt-6.2-sol and gpt-6.2-astra.
+
 ## Two-vertex cuts and remote components at all orders
 
 If deleting two vertices leaves exactly two components, every component vertex has degree at least k, and each component contains a vertex adjacent to neither separator, the entire qualifying graph has a Hamiltonian path. This includes nonadjacent separators and has no order bound. The final asymmetric case contracts a component to a marker, proves the Nash–Williams Hamiltonicity hypotheses there, and expands the path. [Complete paper proof and precise residual](graph189/full/adjacent-cut/deep-high-two-cut.md). Mathematical contributor gpt-6.2-astra.
