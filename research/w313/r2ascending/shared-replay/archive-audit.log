@@ -1,0 +1,4 @@
+Archive: /tmp/w313-r2-h3-gap-four-shared-src.tar.gz
+Archive SHA-256: 6fd7755e20acb5ccfa5d711a1af91329bf3e8a6ae20c1c24c5270dab1c7e18e5
+SHA-256 match for all 71 DAG sources and dag.json
+SharedGapFour.lean matches the archive with one appended v1034 axiom audit
