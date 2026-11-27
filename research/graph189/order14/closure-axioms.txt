@@ -1,0 +1,2 @@
+'Graph189HighMiddleClosure.complete_of_high_middle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189HighMiddleClosure.traceable_of_high_middle' depends on axioms: [propext, Classical.choice, Quot.sound]
