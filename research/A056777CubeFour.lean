@@ -79,7 +79,7 @@ private theorem excess_four_primes {r s t u : ℕ} (hr : r.Prime) (hs : s.Prime)
   zify [hr₁, hs₁, ht₁, hu₁]
   ring
 
-private theorem four_factor_shape {n : ℕ} (h : n.primeFactorsList.length = 4) :
+theorem four_factor_shape {n : ℕ} (h : n.primeFactorsList.length = 4) :
     (∃ k, n = k^2) ∨
     (∃ r s, r.Prime ∧ s.Prime ∧ r ≠ s ∧ n = r^3*s) ∨
     (∃ r s t, r.Prime ∧ s.Prime ∧ t.Prime ∧ r ≠ s ∧ r ≠ t ∧ s ≠ t ∧ n = r^2*s*t) ∨
