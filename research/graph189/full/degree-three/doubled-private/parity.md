@@ -1,0 +1,15 @@
+# An odd shortcut forced between the two doubled-private classes
+
+In the doubled-private triangle let t be the unique triple-visible remote, P,Q the two privates of the same anchor A, and B,C the two remaining privates. Let E_P,E_Q be the remotes supported by P alone and Q alone respectively. Both have at least three members by doubled-solo.md. Suppose there is a common middle with private neighbors P,B and another with private neighbors P,C. Write n_R for remote order, r for the number of nontriple remotes adjacent to P, a_P for P's number of common middle neighbors, and delta for the indicator of adjacency between P and t.
+
+At the first common middle, all nontriple neighbors of P or B are at distance two beside z and the two missed privates. Hence the union of nontriple port sets of P and B has size at most k-3. The analogous bound holds for P and C. These two unions together cover all nontriples except precisely E_Q; their intersection contains all r nontriple P ports (and can contain others). Adding the two bounds yields
+  |E_Q| >= r + n_R - 1 - 2(k-3).
+The closed remote neighborhood of any P-solo has at least k members, and is contained in H_P, of size at most r+delta+a_P+1. Thus k-a_P-1 <= r+delta.
+
+For any x in E_P the a_P common middle neighbors of P and anchor A already consume a_P+1 positive even-distance slots. Every y in E_Q lies at distance at most four from x, by the walk x,P,A,Q,y. Consequently the number of y in E_Q at distance one or three from x is at least
+  |E_Q| - (k-a_P-1) >= n_R-2k+5-delta >= 2-delta.
+This is a full-even consequence, genuinely stronger than the distance-two hypotheses. In the 185-vertex witness, every x in E_P is at distance four from every member of E_Q.
+
+If the edge P,Q is absent and x has no remote neighbor in R_Q, every one of these odd shortcuts either ends at a member of the external remote boundary of R_P or has length one or three within G[remotes]. Indeed, for solo endpoints a three-edge path through the middle layer can only take the form x,P,Q,y or x,P,u,y or x,u,Q,y with u remote. In the last remaining middle-layer form y is in the external remote boundary of R_P. This characterizes exactly which routes can avoid the distance-four obstruction.
+
+Two further fixed slots strengthen the guaranteed count. Write h=1 when P,Q are adjacent, else 0. At P, the other twin Q occupies a distance-two slot if h=0, via their common anchor A. Thus |H_P|<=r+delta+a_P+h. At x, one of the singleton privates b,c occupies another distance-two slot since the closed remote neighborhood of x has size >=k>|V_A|, giving a remote neighbor outside V_A. If h=1, Q is also at distance two via P. The even-distance space remaining at x for E_Q is therefore at most k-a_P-2-h <= r+delta-2. It follows that at least n_R-2k+7-delta >=4-delta members of E_Q must be at odd distance from each x in E_P. In the explicit example a_P=50 and |E_Q|=24, and even the unstrengthened exact count demands at least 24-(60-50-1)=15 odd shortcuts per P-only solo, while all 24 are actually at distance four.

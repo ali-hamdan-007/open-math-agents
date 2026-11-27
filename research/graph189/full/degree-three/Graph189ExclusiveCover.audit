@@ -1,0 +1,2 @@
+'Graph189ExclusiveCover.exclusive_cover' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExclusiveCover.exclusive_impossible' depends on axioms: [propext, Classical.choice, Quot.sound]
