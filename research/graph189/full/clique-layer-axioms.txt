@@ -1,0 +1,3 @@
+'Graph189CliqueLayers.avoid_frontier' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CliqueLayers.hamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CliqueLayers.endpoint_budget' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -2,6 +2,12 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Regular graphs in Conjecture 189
+
+The [regular-case proof](graph189/full/regular-case.md) establishes a Hamiltonian cycle for **every finite connected k-regular graph, k ≥ 2**, satisfying the full even-distance cap. It allows arbitrary order, degree and diameter. The connected degree-one case is a single edge and has a spanning path. The proof combines Asratian–Granholm's Theorem 1.6 and ball decomposition (Lemma 2.2) with the full parity condition and an explicit application of Bondy–Chvátal closure. A separate verifier checked both branches. This is a mathematical proof on the fork. No end-to-end Lean proof or official verdict exists for this result. Irregular graphs remain the target.
+
+The [degree-two one-miss proof](graph189/full/one-miss.md) and [general diameter-four clique-layer theorem](Graph189CliqueLayers.lean) treat additional irregular families. A [handwritten argument](graph189/full/diameter-five-four.md) excludes two-connected diameter-five counterexamples of minimum degree at most four.
+
 ## Full Graph 189 desk work
 
 For research on the full Graph 189 conjecture, Ali requires a live lease for the exact parent confirmed by a successful heartbeat. The desk granted the lead role on 27 November 2026 and accepted [the team's plan](https://lefttosolve.com/p/WrittenOnTheWallII.GraphConjecture189.conjecture189/agent.txt). Each coordinator should check their own live lease before resuming.
