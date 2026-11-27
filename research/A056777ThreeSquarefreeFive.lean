@@ -297,6 +297,7 @@ private theorem distinct_odd_pair_ge_fifteen {a b : ℕ}
   · exact Nat.mul_le_mul (by omega : 3≤a) (by omega : 5≤b)
   · exact Nat.mul_le_mul (by omega : 5≤a) (by omega : 3≤b)
 
+set_option maxHeartbeats 1200000 in
 private theorem quintic_moment_bounds (a b c d e : ℤ)
     (ha : 3≤a) (hb : 3≤b) (hc : 3≤c) (hd : 3≤d) (he : 3≤e)
     (hab : 15≤a*b) (hac : 15≤a*c) (had : 15≤a*d) (hae : 15≤a*e) (hbc : 15≤b*c) (hbd : 15≤b*d) (hbe : 15≤b*e) (hcd : 15≤c*d) (hce : 15≤c*e) (hde : 15≤d*e) :
@@ -341,23 +342,110 @@ private theorem quintic_moment_bounds (a b c d e : ℤ)
     have htcde : c*d*e≤X := by dsimp [X]; linarith only [habc,habd,habe,hacd,hace,hade,hbcd,hbce,hbde,hcde]
     have htade : a*d*e≤X := by dsimp [X]; linarith only [habc,habd,habe,hacd,hace,hade,hbcd,hbce,hbde,hcde]
     have htabe : a*b*e≤X := by dsimp [X]; linarith only [habc,habd,habe,hacd,hace,hade,hbcd,hbce,hbde,hcde]
-    have h₁ := mul_le_mul htabc htbcd habc hX0
+    have h₁ := mul_le_mul htabc htbcd hbcd hX0
     have h₂ := mul_le_mul h₁ htcde hcde (mul_nonneg hX0 hX0)
     have h₃ := mul_le_mul h₂ htade hade (by positivity : 0≤X*X*X)
     have h₄ := mul_le_mul h₃ htabe habe (by positivity : 0≤X*X*X*X)
-    dsimp [Z]
-    nlinarith only [h₄]
-  · dsimp [X,Y,Z]
-    nlinarith only [sq_nonneg (a*b*c*d-a*b*c*e),
-      sq_nonneg (a*b*c*d-a*b*d*e),
-      sq_nonneg (a*b*c*d-a*c*d*e),
-      sq_nonneg (a*b*c*d-b*c*d*e),
-      sq_nonneg (a*b*c*e-a*b*d*e),
-      sq_nonneg (a*b*c*e-a*c*d*e),
-      sq_nonneg (a*b*c*e-b*c*d*e),
-      sq_nonneg (a*b*d*e-a*c*d*e),
-      sq_nonneg (a*b*d*e-b*c*d*e),
-      sq_nonneg (a*c*d*e-b*c*d*e)]
+    calc
+      Z^3 = (a*b*c)*(b*c*d)*(c*d*e)*(a*d*e)*(a*b*e) := by dsimp [Z]; ring
+      _ ≤ X*X*X*X*X := h₄
+      _ = X^5 := by ring
+  · let L₁ := a*b*c*d
+    let L₂ := a*b*c*e
+    let L₃ := a*b*d*e
+    let L₄ := a*c*d*e
+    let L₅ := b*c*d*e
+    have hN : 5*(L₁*L₂+L₁*L₃+L₁*L₄+L₁*L₅+L₂*L₃+L₂*L₄+L₂*L₅+L₃*L₄+L₃*L₅+L₄*L₅)≤2*(L₁+L₂+L₃+L₄+L₅)^2 := by
+      nlinarith only [sq_nonneg (L₁-L₂),
+        sq_nonneg (L₁-L₃),
+        sq_nonneg (L₁-L₄),
+        sq_nonneg (L₁-L₅),
+        sq_nonneg (L₂-L₃),
+        sq_nonneg (L₂-L₄),
+        sq_nonneg (L₂-L₅),
+        sq_nonneg (L₃-L₄),
+        sq_nonneg (L₃-L₅),
+        sq_nonneg (L₄-L₅)]
+    calc
+      5*X*Z = 5*(L₁*L₂+L₁*L₃+L₁*L₄+L₁*L₅+L₂*L₃+L₂*L₄+L₂*L₅+L₃*L₄+L₃*L₅+L₄*L₅) := by dsimp [X,Z,L₁,L₂,L₃,L₄,L₅]; ring
+      _ ≤ 2*(L₁+L₂+L₃+L₄+L₅)^2 := hN
+      _ = 2*Y^2 := by dsimp [Y,L₁,L₂,L₃,L₄,L₅]
+
+set_option maxHeartbeats 1200000 in
+/-- No three-factor endpoint has a squarefree five-factor partner in A056777.
+The orientation of the twelve-step is arbitrary. -/
+theorem no_three_squarefree_five_pair {n m : ℕ}
+    (hn : n.primeFactorsList.length=3) (hm : m.primeFactorsList.length=5) (hs : Squarefree m)
+    (hgap : n+12=m ∨ m+12=n)
+    (hφ : n.totient+m=m.totient+n) (hσ : σ 1 n+m=σ 1 m+n) : False := by
+  obtain ⟨p,q,hp,hq,hpq,hop,hoq,hom,hform⟩ := remaining_three_squarefree_five hn hm hs hgap hφ hσ
+  rw [hform] at hgap hφ hσ
+  have hp7 := (three_squarefree_five_residues hp hq hpq hop hoq hom hm hs hgap hφ hσ).1
+  obtain ⟨a,b,c,d,e,ha,hb,hc,hd,he,hab,hac,had,hae,hbc,hbd,hbe,hcd,hce,hde,hM⟩ :=
+    squarefree_five_shape hm hs
+  rw [hM] at hgap hφ hσ hom
+  simp only [Nat.odd_mul] at hom
+  have hoa := hom.1.1.1.1
+  have hob := hom.1.1.1.2
+  have hoc := hom.1.1.2
+  have hod := hom.1.2
+  have hoe := hom.2
+  have odd_three {x : ℕ} (hx : x.Prime) (ho : Odd x) : 3≤x := by
+    have := hx.two_le
+    have := Nat.odd_iff.mp ho
+    omega
+  have hq3 := odd_three hq hoq
+  have ha3 := odd_three ha hoa
+  have hb3 := odd_three hb hob
+  have hc3 := odd_three hc hoc
+  have hd3 := odd_three hd hod
+  have he3 := odd_three he hoe
+  have hab15 := distinct_odd_pair_ge_fifteen ha hb hoa hob hab
+  have hac15 := distinct_odd_pair_ge_fifteen ha hc hoa hoc hac
+  have had15 := distinct_odd_pair_ge_fifteen ha hd hoa hod had
+  have hae15 := distinct_odd_pair_ge_fifteen ha he hoa hoe hae
+  have hbc15 := distinct_odd_pair_ge_fifteen hb hc hob hoc hbc
+  have hbd15 := distinct_odd_pair_ge_fifteen hb hd hob hod hbd
+  have hbe15 := distinct_odd_pair_ge_fifteen hb he hob hoe hbe
+  have hcd15 := distinct_odd_pair_ge_fifteen hc hd hoc hod hcd
+  have hce15 := distinct_odd_pair_ge_fifteen hc he hoc hoe hce
+  have hde15 := distinct_odd_pair_ge_fifteen hd he hod hoe hde
+  have ⟨hFn,hKn⟩ := A056777EvenFourFour.square_prime_formulas hp hq hpq
+  have ⟨hKm,hFm⟩ := quintic_formulas ha hb hc hd he hab hac had hae hbc hbd hbe hcd hce hde
+  have hpq1 : 1≤p+q := by omega
+  have hg : p^2*q≤a*b*c*d*e+12 := by
+    rcases hgap with h|h
+    · rw [← h]
+      exact (Nat.le_add_right (p^2*q) 12).trans (Nat.le_add_right (p^2*q+12) 12)
+    · rw [h]
+  zify [hpq1] at hφ hσ hFn hKn hKm hFm hg hp7 hq3 ha3 hb3 hc3 hd3 he3
+  zify at hab15 hac15 had15 hae15 hbc15 hbd15 hbe15 hcd15 hce15 hde15
+  have ha0 : (0:ℤ)≤a := by positivity
+  have hb0 : (0:ℤ)≤b := by positivity
+  have hc0 : (0:ℤ)≤c := by positivity
+  have hd0 : (0:ℤ)≤d := by positivity
+  have he0 : (0:ℤ)≤e := by positivity
+  let A : ℤ := a+b+c+d+e
+  let E : ℤ := a*b+a*c+a*d+a*e+b*c+b*d+b*e+c*d+c*e+d*e
+  let X : ℤ := a*b*c+a*b*d+a*b*e+a*c*d+a*c*e+a*d*e+b*c*d+b*c*e+b*d*e+c*d*e
+  let Y : ℤ := a*b*c*d+a*b*c*e+a*b*d*e+a*c*d*e+b*c*d*e
+  let Z : ℤ := a*b*c*d*e
+  obtain ⟨hXA,hAE,hcyc,hNew⟩ :=
+    quintic_moment_bounds a b c d e ha3 hb3 hc3 hd3 he3
+      hab15 hac15 had15 hae15 hbc15 hbd15 hbe15 hcd15 hce15 hde15
+  have hK : 2*(X+A)=(q:ℤ)+2*p+1 := by
+    dsimp [X,A]
+    nlinarith only [hφ,hσ,hKn,hKm]
+  have hF : Y+E+1=X+A+(p:ℤ)*((p:ℤ)+q-1) := by
+    dsimp [Y,E,X,A]
+    nlinarith only [hφ,hFn,hFm]
+  have hYup : 2*Y≤2*(p:ℤ)^2+(2*(p:ℤ)+1)*q+1 := by
+    have hAE' : A≤E := hAE
+    have hA0 : 0≤A := by dsimp [A]; positivity
+    nlinarith only [hF,hAE',hK,hA0]
+  exact A056777SquarefreeFiveMoments.moments_impossible p q X A Y Z hp7 hq3
+    (by dsimp [A]; positivity) (by dsimp [Y]; positivity) (by dsimp [X]; positivity)
+    hK hYup (by dsimp [Z]; linarith only [hg]) hcyc hXA hNew
 
 end A056777ThreeSquarefreeFive
 
@@ -365,3 +453,5 @@ end A056777ThreeSquarefreeFive
 #print axioms A056777ThreeSquarefreeFive.remaining_three_squarefree_five
 
 #print axioms A056777ThreeSquarefreeFive.three_squarefree_five_residues
+
+#print axioms A056777ThreeSquarefreeFive.no_three_squarefree_five_pair
