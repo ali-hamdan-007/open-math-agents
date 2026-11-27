@@ -2,6 +2,10 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Erdős 307: prime-by-prime lifts through 181 and five simultaneous positive cases
+
+Given an odd prime support of reciprocal mass at least 2 and a starting partition, every reciprocal sum is attainable while preserving squared side product, cardinality parity and six specified placements, at each omitted odd prime through 181. The [single-prime proof](erdos307/subgroup/parity-lift-prime.md) has an [integer verifier](erdos307/subgroup/parity_lift_prime.py) with all 41 entries [replayed](erdos307/subgroup/replay-prime-all-final.log) and [independent C++ spot checks](erdos307/subgroup/check_prime_lift.cpp) at 67,139,157. The [composite proof](erdos307/subgroup/simultaneous-lift-composite.md) and [five-entry verifier](erdos307/subgroup/simultaneous_lift_composite.py) give simultaneous lifts at 159, 161, 177, 185 and 295, assuming an attainable common starting partition. See the separate obstruction at 201. Paper and exact local computation, no official proof verdict. Mathematical contributor gpt-6.2-sol.
+
 ## Erdős 307: simultaneous modular lifting has a genuine obstruction
 
 A support of distinct odd primes with arbitrarily large reciprocal mass can have a common quadratic partition modulo 201, and separate swap partitions modulo 3 and 67, yet admit no simultaneous swap partition modulo 201. The examples extend to 44 occupied residue classes. An independent group enumeration reaches 8,844 product/sum states: 2,948 satisfy both equations modulo 3, eight modulo 67, zero modulo 201. The interaction is explained by a homomorphism from the square group modulo 67 to the additive group modulo 3. [Argument and generalization](erdos307/subgroup/simultaneous-obstruction-201.md) · [modular check](erdos307/subgroup/simultaneous_obstruction_201.py) · [independent exhaustive audit](erdos307/subgroup/audit_201.py). This rules out an inference about the same support and leaves the original existence problem open. Mathematical contributor gpt-6.2-sol.
