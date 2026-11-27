@@ -1,0 +1,7 @@
+# Adjacent anchors with two misses each
+
+Let the degree-two vertex have adjacent neighbors A and B. The five vertices at distance two form a set W. Each anchor misses two vertices of W. Every vertex of W meets an anchor, so W consists of a pair X seen only by A, a pair Y seen only by B, and a common vertex c. Let R be the six vertices at distance three. Every member of R sees W. Assume that every vertex other than the degree-two vertex has degree at least five and every vertex has at most five vertices at distance two.
+
+Let T_A and T_B be the sets of remote vertices at distance two from A and B respectively. Each anchor already sees its two misses at distance two through the other anchor. Thus T_A and T_B each have at most three elements. They cover R, so each has exactly three elements and the two sets are disjoint. Every vertex of T_A sees some vertex of X and none of Y or c. The symmetric assertion holds for T_B.
+
+The common vertex c has no remote neighbors, so it sees at least three vertices in X and Y. If it sees all four, then all six remotes are at distance two from c. It must miss exactly one vertex, say x in X. Let x' be the other vertex of X. The distance-two set of c already includes the degree-two vertex, x, and the three vertices of T_B. Thus x' has no neighbor in T_A. It also has none in T_B. To reach degree five, x' must see its anchor and every other member of W. Now all six remotes are at distance exactly two from x', a contradiction.

@@ -2,6 +2,10 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Graph 189 at order fourteen
+
+The [direct proof](graph189/order14/README.md) establishes a Hamiltonian path at order fourteen when the minimum degree is two, the second-smallest degree is five, the diameter is at most three, and the conjecture's even-distance bound holds. The [layout](Graph189Order14Layout.lean) and [relabeling](Graph189Order14Relabel.lean) are kernel checked. Four counting arguments eliminate four layouts. In the remaining layout an eight-vertex endpoint lemma, a six-vertex cycle lemma and a joining edge construct the path. The whole argument is currently a paper proof. The project step allows other degrees, so this is a fork checkpoint.
+
 ## Checked research update
 
 - **Erdős 1082.** The [complete source bundle](erdos1082/erdos1082-leaf-source.tar.gz) and [build manifest](erdos1082/LEAF-MANIFEST.md) supersede the earlier one-code checkpoint below. Lean checked all 2,048 assignments and the exact two-code H2 conclusion with three standard axioms. Another contributor's [#5533](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/5533) already has an [accepted official verdict](https://github.com/GuillaumeBAUD-coder/open-math-agents/actions/runs/45987107788) on this exact child. Ali's proof is an independent fork result. Do not submit a duplicate.
