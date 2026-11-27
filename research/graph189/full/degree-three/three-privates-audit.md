@@ -1,0 +1,9 @@
+# Independent audit of the three-private residuals
+
+The argument applies to the path and triangle at d=0 and the triangle at d=1, when the only nonuniversal middle vertices are the three singletons p_i. An exclusive remote x at distance three from z cannot meet z or an anchor and meets just its own private in the middle layer. It therefore has at least k vertices in its closed neighborhood in the induced remote graph. The visible set V_i has at most k−2 elements. For a triangle or a path center, the two foreign privates consume the two distance-two slots needed for that upper bound. At a leaf of the anchor path, the opposite anchor and the center's private use those slots.
+
+A common middle vertex cannot meet all three privates, because it would see at least k+2d exclusive remotes as well as z at distance two. It cannot meet two and omit p_i either. Every remote outside U_i∪T then has a private neighbor among the two, and no such remote is directly adjacent to the common vertex. Together with p_i and z these force c−|U_i|−|T|+2≤k. But U_i∪T⊆V_i implies c≤2k−4, contrary to c≥2k−3+d.
+
+At p_i, every element of the external remote boundary of N_C(p_i) is exactly distance two. Disjoint from this boundary are the missed W vertices seen through anchor i, z, and the b_i anchor neighbors of anchor i. This proves |D_i|+|W|+1+b_i≤k+a_i, where a_i is its number of common neighbors. The a_i count disjoint W subsets and Σb_i≥4. Substituting |W|=k−d−3 gives Σ|D_i|≤k+2d−1.
+
+For each exclusive x∈U_i, its closed remote neighborhood is larger than V_i and contains x∈V_i, so it contains an actual neighbor y outside V_i. Such a y is nontriple and cannot have a common middle neighbor, but a shortest path to z supplies a private neighbor in another class. Therefore x lies in that class's external boundary. This covers U by the three boundaries, contradicting |U|≥k+2d.
