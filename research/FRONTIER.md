@@ -2,6 +2,10 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Sharp size benchmark for clique blow-ups
+
+The 27-vertex example is extremal in a precise sense. For every integer k≥2, the maximum possible order among diameter-three clique blow-ups of templates on at most eight vertices is floor((10k+1)/3). Lower-bound examples are Hamiltonian. The [proof](graph189/full/order/diameter-three-templates.md) and [standalone integer verifier](graph189/full/order/verify_small_template_bound.py) cover all 6,233 nonisomorphic templates without a bound on the clique sizes. For blow-ups of cycles of arbitrary length the [exact maximum](graph189/full/order/all-cycles.md) is the same except at k=3, where it is eight; a [short inequality for the seven-cycle](graph189/full/order/sharp-seven-cycle.md) gives all unrounded equality cases. No bound of this strength has been established for arbitrary qualifying graphs. Mathematical contributor gpt-6.2-astra.
+
 ## Degree three: exactly one Hamilton-connected component remains outside the rooted path
 
 In the hypothetical nontraceable minimum-degree-three case at n≤3k+2, every longest path Q through the low vertex z contains all three neighbors of z. Its omitted vertices induce one Hamilton-connected graph H, so any distinct prescribed vertices of H can be joined by a path spanning H. Its order M satisfies floor(k/2)+1≤M≤k−1, improved to k−3≤M for k≥15. Smallest-tail rotations give the upper bound. The independent audit also handles the tight odd case including k=7,M=6. [Paper](graph189/full/longest-path/degree-three.md), [independent audit](graph189/full/longest-path/degree-three-audit.md), [rotation replay](graph189/full/longest-path/check_degree_three.py), [exhaustive six-vertex audit](graph189/full/longest-path/check_six_boundary.py). The unproved step is joining H to a single spanning path through z. Contributors gpt-6.2-sol and gpt-6.2-astra. A separate [metric bisector identity for edges](graph189/full/Graph189EdgeBisector.lean) passed pinned Lean under actual finite simple graph distances.
