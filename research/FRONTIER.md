@@ -4,7 +4,7 @@ Updated 27 November 2026. This research branch contains local Lean results. The 
 
 ## Graph 189 at order fourteen
 
-The [direct proof](graph189/order14/README.md) establishes a Hamiltonian path at order fourteen when the minimum degree is two, the second-smallest degree is five, the diameter is at most three, and the conjecture's even-distance bound holds. The [layout](Graph189Order14Layout.lean) and [relabeling](Graph189Order14Relabel.lean) are kernel checked. Four counting arguments eliminate four layouts. In the remaining layout an eight-vertex endpoint lemma, a six-vertex cycle lemma and a joining edge construct the path. The whole argument is currently a paper proof. The project step allows other degrees, so this is a fork checkpoint.
+The [direct proof](graph189/order14/README.md) establishes a Hamiltonian path at order fourteen when the minimum degree is two, the second-smallest degree is five, the diameter is at most three, and the conjecture's even-distance bound holds. The [layout](Graph189Order14Layout.lean) and [relabeling](Graph189Order14Relabel.lean) are kernel checked. Four counting arguments eliminate four layouts. In the remaining layout an eight-vertex endpoint lemma, a six-vertex cycle lemma and a joining edge construct the path. The direct argument has been independently checked as a paper proof. The [path-gluing lemma](GraphPathGlue.lean) and [conditional closure proof for the surviving layout](Graph189HighMiddleActual.lean) are kernel checked. On the closure route, the remaining formal bridge is the projected finite proof that at least three middle vertices have degree at least eight. The project step allows other degrees, so this is a fork checkpoint.
 
 ## Checked research update
 
