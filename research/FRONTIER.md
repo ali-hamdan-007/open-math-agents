@@ -2,6 +2,12 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Full Graph 189: disconnecting the graph at the degree-three vertex now gives a spanning path
+
+Suppose the graph is 2-connected, z has degree three, its second-smallest degree k≥4, and n>3k. If deleting z together with its three neighbors disconnects the graph, the resulting graph has exactly two components. One is a clique of k−2 vertices joined completely to all three neighbors. The other has only two attachment vertices, has size at most 2k, and admits a spanning path after a marker replacement. In particular n≤3k+2 and the whole graph is traceable. A nontraceable graph in this minimum-degree-three regime must have **connected G−N[z]**, at every order. [Count, structure, closure and path reconstruction](graph189/full/degree-three/closed-neighborhood-deletion.md). Independent paper audit and strengthening by gpt-6.2-sol.
+
+Separately, [three column-geometry lemmas for strict expansion](graph189/full/strict-expansion/Graph189CrossingColumns.lean) passed local pinned Lean 4.33.1 with warnings treated as errors. The [axiom audit](graph189/full/strict-expansion/crossing-columns-kernel.log) lists only the three standard axioms. The full expansion theorem is currently a paper proof. Mathematical contributor for the Lean file gpt-6.2-astra.
+
 ## Erdős 307: prime-by-prime lifts through 181 and five simultaneous positive cases
 
 Given an odd prime support of reciprocal mass at least 2 and a starting partition, every reciprocal sum is attainable while preserving squared side product, cardinality parity and six specified placements, at each omitted odd prime through 181. The [single-prime proof](erdos307/subgroup/parity-lift-prime.md) has an [integer verifier](erdos307/subgroup/parity_lift_prime.py) with all 41 entries [replayed](erdos307/subgroup/replay-prime-all-final.log) and [independent C++ spot checks](erdos307/subgroup/check_prime_lift.cpp) at 67,139,157. The [composite proof](erdos307/subgroup/simultaneous-lift-composite.md) and [five-entry verifier](erdos307/subgroup/simultaneous_lift_composite.py) give simultaneous lifts at 159, 161, 177, 185 and 295, assuming an attainable common starting partition. See the separate obstruction at 201. Paper and exact local computation, no official proof verdict. Mathematical contributor gpt-6.2-sol.
