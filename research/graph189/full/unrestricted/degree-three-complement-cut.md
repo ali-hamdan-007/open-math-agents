@@ -1,0 +1,19 @@
+# Cut vertices of the connected complement of a degree-three closed neighborhood
+
+Let G be a finite simple 2-connected graph, z a vertex of degree three, and k≥4 a lower bound on the degrees of all vertices other than z. Suppose every vertex has at most k other vertices at positive even distance and any two vertices different from z have distance at most four in G. These are the Graph 189 metric hypotheses together with its established high-pair distance bound. Put A=N(z), T={v:d_G(z,v)=2}, C=G−({z}∪A), and R=V(C)∖T. Suppose C is connected. Vertices in R have no neighbors in A. All distances below are in G unless explicitly marked with a subscript C.
+
+Every x in C has at least one positive even-distance witness in {z}∪A. If x∈T, take z. If x∈R, each of the three anchor distances d(x,a) lies in {2,3,4}. Either one is even, or all three equal three and d(x,z)=4. In particular each x∈C has at most k−1 even-distance witnesses in C.
+
+**Theorem.** For k≥10 and every w∈C, deleting w from C leaves at most two components, at all orders.
+
+Suppose to the contrary that C−w has at least three components. First, no anchor a∈A touches three components. Otherwise choose in each of three distinct components Dᵢ a neighbor uᵢ of a. Any neighbor of uᵢ outside Dᵢ lies in A∪{w} since uᵢ misses z and C−w has no edges between components. Thus the closed neighborhood of uᵢ within Dᵢ has at least k−3 vertices. Each of its vertices is either adjacent to a, in which case it belongs to T, or at distance two from a via uᵢ. The three closed neighborhoods are disjoint. As |T|≤k and |D₂(a)|≤k, this yields 3(k−3)≤2k, impossible at k≥10. Hence at most six distinct anchor-component incidences occur.
+
+Fix any three components D₁,D₂,D₃ and choose xᵢ∈Dᵢ adjacent to w, possible by connectivity of C. Define sᵢ=|N(xᵢ)∩A|, aᵢ=|N(w)∩Dᵢ| and b=a₁+a₂+a₃. Every counted incidence in Σsᵢ is an anchor-component incidence, so Σsᵢ≤6. For each i, the b−aᵢ neighbors of w in the other two chosen components all have distance two from xᵢ. They are within C and distinct from its witness in {z}∪A. Summing b−aᵢ≤k−1 gives 2b≤3(k−1).
+
+The closed neighborhood of xᵢ in Dᵢ has at least k−sᵢ vertices, because only w and its sᵢ anchor neighbors lie outside Dᵢ. At most aᵢ of these are adjacent to w. The others have distance two from w via xᵢ. These sets are disjoint across the three components and contained in C. Hence 3k−Σsᵢ−b≤k−1. Together the bounds give k+5≤2Σsᵢ≤12, contradicting k≥10. This proves the theorem.
+
+**Remote distances across a cut.** For a cut w of C and two remotes x,y in different components of C−w, put i=d_C(x,w) and j=d_C(y,w). Any x–y path using an anchor has length at least four, as each remote has distance at least two to every anchor. Any x–y path staying within C goes through w, with shortest length i+j. Since high distances are at most four, d_G(x,y)=min(4,i+j). In particular its only odd possibility is distance three, exactly when {i,j}={1,2}.
+
+If some component D of C−w contains a remote x with i≥3, every remote outside D∪{w} is at distance four from x. There is also a distance-two witness within D: D contains a neighbor of w, which x cannot itself see when i≥3, and the first two steps of a shortest path inside D from x to this missed vertex yield the witness. The internal distance-two vertex cannot be adjacent to x in G since D is induced. Counting also the witness in {z}∪A proves that at most k−2 remotes lie outside D∪{w}. If n>3k+2, at least n−4−|T|−1≥2k−2 remotes remain after excluding w. Two distinct components with deep remotes would each have at most k−2 remotes outside, bounding the total by 2k−4. Thus at most one component contains a remote at C-distance at least three from w, and any such component contains at least k remotes.
+
+These restrictions apply independently of the internal graph on the three anchors. They do not yet construct a spanning path when a cut leaves two components.
