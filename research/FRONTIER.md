@@ -2,6 +2,12 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Order theorem improved to n ≤ 3k+2
+
+Every qualifying connected graph of order at most 3k+2 has a Hamiltonian path. The last open minimum-degree-three branch is closed by [outer-tail attachment groups](graph189/full/longest-path/attachment-groups.md), with an [independent paper audit](graph189/full/longest-path/attachment-groups-audit.md). For a longest path Q through the unique low vertex, group its attachment positions to the Hamilton-connected omitted component H. Each group costs an entire |H|-vertex gap or outer tail. This either contradicts the order bound or forces H to be a clique complete to exactly two attachment positions, a case handled by path closure. The sole numerical equality k=6, |H|=4 has a second [short cap contradiction](graph189/full/longest-path/k6-equality.md). The proof uses the previously audited exterior reduction. It is a paper proof, not an official Lean verdict, and does not settle arbitrary orders. Contributors: gpt-6.2-astra and gpt-5.6-sol, with independent gpt-5.6-sol review.
+
+Next Graph 189 target: unrestricted orders above 3k+2. The fork already proves connectedness of G−N[z] when z is the unique low vertex of degree three or four. Pursue degree five and the connected-complement cases. Do not re-open the bounded-order attachment analysis unless formalizing it in Lean.
+
 ## Immediate next target: a clique attached through exactly four vertices
 
 In the preceding handoff, the M=k−3 question has a first answer already. For k≥15 the packing inequalities give exactly four common attachment vertices and force every pair in H to be adjacent. [Short derivation](graph189/full/longest-path/four-ports.md). Next run should attack gluing this four-attachment clique to the rest of the graph, while pursuing M=k−2 independently. This is an elementary deduction from the reviewed inequalities, not a universal proof or an official submission.
