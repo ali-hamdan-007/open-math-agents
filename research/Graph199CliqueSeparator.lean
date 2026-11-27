@@ -251,26 +251,27 @@ private theorem touching_representatives {I : Type*} (C : I → Set V) (J : Fins
     obtain ⟨i,_,rfl⟩ := mem_image.mp hx
     exact hAdj i
 
-/-- Separator incidence obeys the clique-style difference bound whenever every
-pair of distinct separator vertices is adjacent or meets a common component. -/
-theorem separator_incidence_of_common_component {I : Type*} [Fintype I] [DecidableEq I] [Nontrivial I]
+/-- Separator incidence obeys a pairwise difference bound for each pair of distinct
+centers that is adjacent or meets a common component. -/
+theorem separator_incidence_partial {I : Type*} [Fintype I] [DecidableEq I] [Nontrivial I]
     (U : Finset V) (C : I → Set V)
     (hn : ∀ i, (C i).Nonempty)
     (hout : ∀ i x, x ∈ C i → x ∉ U)
     (hcover : ∀ x ∉ U, ∃ i, x ∈ C i)
     (hsep : ∀ {i j : I} {x y : V}, i ≠ j → x ∈ C i → y ∈ C j → x ≠ y ∧ ¬ G.Adj x y)
-    (hcompat : ∀ u v : U, u ≠ v →
-      G.Adj u.val v.val ∨ ∃ i, (G.induce (C i)).Connected ∧
-        (∃ x ∈ C i, G.Adj u.val x) ∧ (∃ x ∈ C i, G.Adj v.val x))
     (ht : largestInducedTreeSize G - 2 ≤ vertexConnectivity G) :
     ∃ R : U → Finset I,
+      (∀ u i, i ∈ R u ↔ ∃ x ∈ C i, G.Adj u.val x) ∧
       (∀ i, vertexConnectivity G ≤ (univ.filter fun u : U => i ∈ R u).card) ∧
       (∀ u, (R u).card ≤ vertexConnectivity G + 1) ∧
-      (∀ u v, u ≠ v → (((R u \ R v) ∪ (R v \ R u))).card ≤ vertexConnectivity G) := by
+      (∀ u v, u ≠ v →
+        (G.Adj u.val v.val ∨ ∃ i, (G.induce (C i)).Connected ∧
+          (∃ x ∈ C i, G.Adj u.val x) ∧ (∃ x ∈ C i, G.Adj v.val x)) →
+        (((R u \ R v) ∪ (R v \ R u))).card ≤ vertexConnectivity G) := by
   classical
   let R (u : U) := univ.filter fun i => ∃ x ∈ C i, G.Adj u.val x
   have hR (u : U) (i : I) : i ∈ R u ↔ ∃ x ∈ C i, G.Adj u.val x := by simp [R]
-  refine ⟨R,?_,?_,?_⟩
+  refine ⟨R,hR,?_,?_,?_⟩
   · intro i
     have h := component_neighbour_count U C hn hout hcover (fun he hx hy => hsep he hx hy) i
     let emb : U ↪ V := ⟨Subtype.val,Subtype.val_injective⟩
@@ -291,7 +292,7 @@ theorem separator_incidence_of_common_component {I : Type*} [Fintype I] [Decidab
       (fun he hx hy => hsep he hx hy) (fun i hi => (hR u i).mp hi)
     have hstar := star_bound u.val B hBin hBAdj
     omega
-  · intro u v huv
+  · intro u v huv hcompat
     let Iu := R u \ R v
     let Iv := R v \ R u
     have hdis : Disjoint Iu Iv := by
@@ -326,7 +327,7 @@ theorem separator_incidence_of_common_component {I : Type*} [Fintype I] [Decidab
     have htree : S.card + T.card + 2 ≤ largestInducedTreeSize G := by
       by_cases hAdj : G.Adj u.val v.val
       · exact double_star_bound u.val v.val hAdj S T hSi hTi hST hS hT hSv hTu
-      obtain ⟨i,hCi,huI,hvI⟩ := (hcompat u v huv).resolve_left hAdj
+      obtain ⟨i,hCi,huI,hvI⟩ := hcompat.resolve_left hAdj
       have hune : u.val ≠ v.val := fun he => huv (Subtype.ext he)
       obtain ⟨B,hBc,hBu,hBv,hBC,hBtree⟩ :=
         connector_tree_of_common_component u.val v.val (C i) hune hAdj hCi huI hvI
@@ -373,6 +374,25 @@ theorem separator_incidence_of_common_component {I : Type*} [Fintype I] [Decidab
     rw [card_union_of_disjoint hdis,← hSc,← hTc]
     omega
 
+/-- Separator incidence obeys the clique-style difference bound whenever every
+pair of distinct separator vertices is adjacent or meets a common component. -/
+theorem separator_incidence_of_common_component {I : Type*} [Fintype I] [DecidableEq I]
+    [Nontrivial I] (U : Finset V) (C : I → Set V) (hn : ∀ i, (C i).Nonempty)
+    (hout : ∀ i x, x ∈ C i → x ∉ U)
+    (hcover : ∀ x ∉ U, ∃ i, x ∈ C i)
+    (hsep : ∀ {i j : I} {x y : V}, i ≠ j → x ∈ C i → y ∈ C j → x ≠ y ∧ ¬ G.Adj x y)
+    (hcompat : ∀ u v : U, u ≠ v →
+      G.Adj u.val v.val ∨ ∃ i, (G.induce (C i)).Connected ∧
+        (∃ x ∈ C i, G.Adj u.val x) ∧ (∃ x ∈ C i, G.Adj v.val x))
+    (ht : largestInducedTreeSize G - 2 ≤ vertexConnectivity G) :
+    ∃ R : U → Finset I,
+      (∀ i, vertexConnectivity G ≤ (univ.filter fun u : U => i ∈ R u).card) ∧
+      (∀ u, (R u).card ≤ vertexConnectivity G + 1) ∧
+      (∀ u v, u ≠ v → (((R u \ R v) ∪ (R v \ R u))).card ≤ vertexConnectivity G) := by
+  obtain ⟨R,_,hc,hr,hd⟩ := separator_incidence_partial U C hn hout hcover
+    (fun h hx hy => hsep h hx hy) ht
+  exact ⟨R,hc,hr,fun u v h => hd u v h (hcompat u v h)⟩
+
 /-- Every clique separator satisfies the pairwise compatibility hypothesis. -/
 theorem clique_separator_incidence {I : Type*} [Fintype I] [DecidableEq I] [Nontrivial I]
     (U : Finset V) (hU : G.IsClique (U : Set V)) (C : I → Set V)
@@ -388,6 +408,7 @@ theorem clique_separator_incidence {I : Type*} [Fintype I] [DecidableEq I] [Nont
   separator_incidence_of_common_component U C hn hout hcover (fun he hx hy => hsep he hx hy)
     (fun u v h => Or.inl (hU u.property v.property (fun he => h (Subtype.ext he)))) ht
 
+#print axioms separator_incidence_partial
 #print axioms separator_incidence_of_common_component
 #print axioms component_neighbour_count
 #print axioms clique_separator_incidence
