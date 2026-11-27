@@ -1,0 +1,2 @@
+OMA.solution : OMA.R_WrittenOnTheWallII_GraphConjecture199_conjecture199_R1.H1
+'OMA.solution' depends on axioms: [propext, Classical.choice, Quot.sound]
