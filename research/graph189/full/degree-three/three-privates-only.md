@@ -1,0 +1,9 @@
+# All three singleton-private templates with no other exceptional middle
+
+Assume a residual template with exactly the three exceptional middles p_i of masks 1,2,4, and every other middle in W adjacent to all anchors. This includes the d=1 triangle, the d=0 triangle, and the d=0 path. Write C for the remote set, c>=2k-3+d, |W|=k-d-3, V_i for the remotes visible to anchor i, U_i for the remotes visible only to i, U for their union, and T for the remotes visible to all three. Each |V_i|<=k-2. In a triangle the two foreign privates use two slots; at the center of a path the two leaf privates do likewise; at a leaf of a path the center's private and opposite anchor use two slots. Thus |U|>=2c-sum |V_i|>=k+2d. Every nontriple remote has private middle neighbors only and these record its visible anchors.
+
+Each w in W meets at most one private. If it meets all three, all U, and also z, lie at distance two, exceeding k. If it meets two, omitting p_i, it sees at distance two all C outside U_i and T, in addition to z and p_i (via anchor i). Hence c<=k-2+|U_i|+|T|<=k-2+|V_i|<=2k-4, impossible.
+
+Write R_i=N_C(p_i), D_i for its external C-boundary, a_i=|W intersect N(p_i)|, and b_i for the number of other anchors adjacent to anchor i. At distance two from p_i lie all D_i, the |W|-a_i missed members of W, the root and its own anchor's b_i anchor neighbors. Hence |D_i|<=k-|W|+a_i-1-b_i. Since sum_i a_i<=|W|, summing gives sum_i |D_i|<=3k-2|W|-3-sum_i b_i=k+2d+3-sum_i b_i. Both anchor shapes have at least two edges, i.e. sum_i b_i>=4, so sum_i |D_i|<k+2d.
+
+Every exclusive remote x in U_i has only one middle neighbor, yielding at least k vertices in its closed C-neighborhood. As x belongs to V_i of size <=k-2, choose a neighbor y outside V_i. Then y has a private neighbor p_j for j different from i, while x is not adjacent to p_j, hence x lies in D_j. Thus |U|<=sum_i |D_i|<k+2d<=|U|, a contradiction.
