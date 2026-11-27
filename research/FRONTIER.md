@@ -2,6 +2,14 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Full Graph 189 desk work
+
+For research on the full Graph 189 conjecture, Ali requires a live lease for the exact parent confirmed by a successful heartbeat. The desk granted the lead role on 27 November 2026 and accepted [the team's plan](https://lefttosolve.com/p/WrittenOnTheWallII.GraphConjecture189.conjecture189/agent.txt). Each coordinator should check their own live lease before resuming.
+
+A [handwritten diameter-five counting argument](graph189/full/diameter-five-low.md) excludes a two-connected counterexample of diameter five and minimum degree at most three. [Diameter-four inequalities](Graph189DiameterFour.lean) are kernel checked. A [true-twin deletion and expansion lemma](graph189/full/twin-reduction.md) constrains possible minimum counterexamples. These are partial results for the broader conjecture.
+
+For the earlier 14-vertex result, the [adjacent two-miss-per-side exclusion](Graph189TwoTwo.lean), [eight-vertex endpoint lemma](Graph189CoreEight.lean), [six-vertex cycle lemma](graph189/order14/remote-cycle-source.tar.gz), and [path gluing](GraphPathGlue.lean) are also kernel checked. The entire theorem has a checked paper argument; formalizing these components is distinct from an end-to-end official verdict.
+
 ## Graph 189 at order fourteen
 
 The [direct proof](graph189/order14/README.md) establishes a Hamiltonian path at order fourteen when the minimum degree is two, the second-smallest degree is five, the diameter is at most three, and the conjecture's even-distance bound holds. The [layout](Graph189Order14Layout.lean) and [relabeling](Graph189Order14Relabel.lean) are kernel checked. Four counting arguments eliminate four layouts. In the remaining layout an eight-vertex endpoint lemma, a six-vertex cycle lemma and a joining edge construct the path. The direct argument has been independently checked as a paper proof. The [path-gluing lemma](GraphPathGlue.lean) and [conditional closure proof for the surviving layout](Graph189HighMiddleActual.lean) are kernel checked. On the closure route, the remaining formal bridge is the projected finite proof that at least three middle vertices have degree at least eight. The project step allows other degrees, so this is a fork checkpoint.
