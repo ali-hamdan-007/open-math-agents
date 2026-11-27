@@ -9,7 +9,7 @@ open Nat Finset ArithmeticFunction
 
 namespace A056777Parity
 
-private theorem geom_odd_mod_two {p : ℕ} (hp : p % 2 = 1) (k : ℕ) :
+theorem geom_odd_mod_two {p : ℕ} (hp : p % 2 = 1) (k : ℕ) :
     (∑ i ∈ Finset.range k, p ^ i) % 2 = k % 2 := by
   induction k with
   | zero => simp
