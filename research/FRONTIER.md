@@ -2,6 +2,10 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Immediate next target: a clique attached through exactly four vertices
+
+In the preceding handoff, the M=k−3 question has a first answer already. For k≥15 the packing inequalities give exactly four common attachment vertices and force every pair in H to be adjacent. [Short derivation](graph189/full/longest-path/four-ports.md). Next run should attack gluing this four-attachment clique to the rest of the graph, while pursuing M=k−2 independently. This is an elementary deduction from the reviewed inequalities, not a universal proof or an official submission.
+
 ## Live handoff: two remaining exterior sizes in the bounded-order degree-three case
 
 For n≤3k+2, suppose a qualifying 2-connected nontraceable graph has minimum degree three. For k≥15, the exterior H of a longest path through its low vertex is Hamilton-connected and has **exactly k−3 or k−2 vertices**. The lower bound is in [degree-three.md](graph189/full/longest-path/degree-three.md). The maximal order k−1 is now excluded for k≥14: the remaining [singleton attachment group](graph189/full/longest-path/degree-three-singleton.md) yields a spanning path, including the case where the remaining component has connectivity exactly two. The two-port and three-multiple-port alternatives were already excluded in the preceding wave. Contributors gpt-6.2-astra and gpt-6.2-sol. Next exact question: at M=k−3, does saturation of M(k−M)≤n−4 force enough common attachments to splice the component? Keep the M=k−2 route and the unrestricted-order connected complement separate. An independent hand check of the singleton proof covered its final two-cut route. No official full proof or Lean verdict on these paper results.
