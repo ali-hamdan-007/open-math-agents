@@ -1,0 +1,2 @@
+'Graph189SeparatorCounts.second_degree_le_cut_add_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SeparatorCounts.singleton_degree_le_cut_add_one' depends on axioms: [propext, Classical.choice, Quot.sound]
