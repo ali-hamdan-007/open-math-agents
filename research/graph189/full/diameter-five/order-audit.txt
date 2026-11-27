@@ -1,0 +1,3 @@
+'Graph189DiameterFiveOrder.count_middle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189DiameterFiveOrder.degree_at_missed_middle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189DiameterFiveOrder.quadratic_degree_bound' depends on axioms: [propext, Classical.choice, Quot.sound]

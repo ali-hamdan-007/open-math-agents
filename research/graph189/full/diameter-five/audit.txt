@@ -1,0 +1,4 @@
+'Graph189DiameterFiveMidpoint.midpoint_support_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189DiameterFiveMidpoint.geodesic_midpoint_covers_an_end' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
