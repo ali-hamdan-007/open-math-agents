@@ -1,0 +1,2 @@
+'OMA.GreenR2GapTwo.gap_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.GreenR2GapTwo.h3_of_wider_and_nonalternating' depends on axioms: [propext, Classical.choice, Quot.sound]
