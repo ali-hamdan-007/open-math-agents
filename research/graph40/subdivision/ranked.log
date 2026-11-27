@@ -1,0 +1,2 @@
+'Graph40.isAcyclic_of_left_two_hop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph40.isAcyclic_of_ranked_left_two_hop' depends on axioms: [propext, Classical.choice, Quot.sound]
