@@ -62,7 +62,7 @@ private theorem card_ge_four_of_indepNum (hc : G.Connected) (hi : 3 ≤ G.indepN
   | @cons _ c _ h _ =>
     exact (hs.isIndepSet (by simp [hsu]) (by simp [hsu]) h.ne) h
 
-private theorem connectivity_two_reduction (step : TwoComponentStep.{u})
+theorem connectivity_two_reduction (step : TwoComponentStep.{u})
     (hg : G.Connected) (hk : vertexConnectivity G = 2)
     (hi : 3 ≤ G.indepNum) (ht : largestInducedTreeSize G - 2 ≤ vertexConnectivity G) :
     ∃ a b : V, ∃ p : G.Walk a b, p.IsHamiltonian := by

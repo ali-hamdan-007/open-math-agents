@@ -1,0 +1,1 @@
+'OMA.GreenR2Premises.impossible_of_mono' depends on axioms: [propext, Quot.sound]

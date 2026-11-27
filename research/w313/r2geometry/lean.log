@@ -1,0 +1,4 @@
+'OMA.GreenR2SeedGeometry.forces_of_covered' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.GreenR2SeedGeometry.covered_ray_shape_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.GreenR2SeedGeometry.reflected_ray_mem' depends on axioms: [propext, Quot.sound]
+'OMA.GreenR2SeedGeometry.r2_of_covered_shape' depends on axioms: [propext, Classical.choice, Quot.sound]

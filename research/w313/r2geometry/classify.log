@@ -1,0 +1,11 @@
+154 (1, 3, 13, 15) patterns 14 ray fits 2
+150 (14, 16, 26, 28) patterns 22 ray fits 2
+137 (27, 29, 39, 41) patterns 48 ray fits 4
+130 (64, 66, 76, 78) patterns 44 ray fits 4
+141 (43, 47, 48, 75) patterns 40 ray fits 0
+141 (73, 77, 78, 105) patterns 40 ray fits 0
+160 (66, 70, 71, 98) patterns 2 ray fits 0
+Distinct forbidden patterns: 210
+Distinct symmetric starts: 128
+Ray fibers: [(1, 0, 1, 0), (2, 1, 2, 1), (3, 2, 3, 2), (4, 3, 4, 3), (5, 4, 5, 4), (6, 5, 6, 5), (7, 6, 7, 6), (8, 7, 8, 7), (9, 8, 9, 8), (10, 9, 10, 9), (11, 10, 11, 10), (12, 11, 12, 11)]
+Counts: {'H2': 6, 'unnormalized': 6}

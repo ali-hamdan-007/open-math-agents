@@ -1,21 +1,19 @@
 # The adjacent alternating-height family in W(3,13) R2-H2
 
-The normalized heights ((h+1,h,h+1,h)) belong to R2-H2 exactly for integers (0le hle5). The two second differences are (2) and (-2), and both sums used for normalization are (2h+1). The corresponding red points, in increasing order, are
-[
-13h+1,quad 13h+3,quad 13h+13,quad 13h+15.
-]
+The normalized heights $(h+1,h,h+1,h)$ belong to R2-H2 exactly for integers $0 ≤ h ≤ 5$. The two second differences are $2$ and $−2$, and both sums used for normalization are $2h+1$. The corresponding red points, in increasing order, are
+$13h+1$, $13h+3$, $13h+13$, and $13h+15$.
 
-The first set of kernel proofs covers the subfamily (1le hle5) under the ray, no-red-triple and shorter-step hitting assumptions of R2-H2.
+The first set of kernel proofs covers the subfamily $1 ≤ h ≤ 5$ under the ray, no-red-triple and shorter-step hitting assumptions of R2-H2.
 
 | Heights | First red point | Certificate | Search nodes | Tape fragments |
 | --- | ---: | --- | ---: | ---: |
-| (h=1) | 14 | Width 150, local start 14 | 27,178 | 187 |
-| (h=2,3) | 27, 40 | Width 137, local start 27, shifted by 0 or 13 | 6,616 | 52 |
-| (h=4,5) | 53, 66 | Earlier width-130 certificate in `../window141` | 2,603 | 19 |
+| $h=1$ | 14 | Width 150, local start 14 | 27,178 | 187 |
+| $h=2,3$ | 27, 40 | Width 137, local start 27, shifted by 0 or 13 | 6,616 | 52 |
+| $h=4,5$ | 53, 66 | Earlier width-130 certificate in `../window141` | 2,603 | 19 |
 
-The two new tapes use 193,678 bytes of Lean source, excluding their small checker copies and parameterized bridge. Upstream R2-H2 has 4,924 normalized tuples. The five certified tuples here include the two previously certified, so the incremental progress is three more tuples. The edge tuple isolated by this first set has (h=0) and red positions (1,3,13,15). The exploratory solver closes it on a width-154 window after 127,771 nodes and on 160 after 129,119 nodes. The separately packaged edge completion uses the width-154 run.
+The two new tapes use 193,678 bytes of Lean source, excluding their small checker copies and parameterized bridge. Upstream R2-H2 has 4,924 normalized tuples. The five certified tuples here include the two previously certified, so the incremental progress is three more tuples. The edge tuple isolated by this first set has $h=0$ and red positions $(1,3,13,15)$. The exploratory solver closes it on a width-154 window after 127,771 nodes and on 160 after 129,119 nodes. The separately packaged edge completion uses the width-154 run.
 
-The wider normalized alternating family ((i,j,i,j)), with (j<i) and (i+jle12), has 42 tuples. The pilot search closed 15 within 100,000 calls and reached its cap on 27. The adjacent cases in the table and the separately packaged edge case have checked certificates. The two recorded search logs use the existing 100,000-node solver cap.
+The wider normalized alternating family $(i,j,i,j)$, with $j<i$ and $i+j ≤ 12$, has 42 tuples. The pilot search closed 15 within 100,000 calls and reached its cap on 27. The adjacent cases in the table and the separately packaged edge case have checked certificates. The two recorded search logs use the existing 100,000-node solver cap.
 
 ## Reproduce
 
