@@ -1,5 +1,6 @@
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.Data.Nat.Totient
+import Mathlib.Data.Nat.Squarefree
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Ring
@@ -304,7 +305,7 @@ theorem prime_quadruple_of_one_semiprime {n : ℕ}
     · exact prime_quadruple_of_one_excess_two ht hs
         (Or.inr ((excess_two_iff (n + 12)).mpr ⟨p, q, hp, hq, h, hn⟩))
 
-private theorem factor_count_of_nonsemiprime {n : ℕ} (hn : 1 < n) (hp : ¬n.Prime)
+theorem factor_count_of_nonsemiprime {n : ℕ} (hn : 1 < n) (hp : ¬n.Prime)
     (hs : ¬∃ p q : ℕ, p.Prime ∧ q.Prime ∧ n = p * q) :
     3 ≤ n.primeFactorsList.length := by
   have hprod := Nat.prod_primeFactorsList (n := n) (by omega)
@@ -342,9 +343,70 @@ theorem factor_count_of_counterexample {n : ℕ} (hn : 1 < n) (hp : ¬n.Prime)
     factor_count_of_nonsemiprime (by omega) hm
       (fun h => hc (prime_quadruple_of_one_semiprime ht hs (Or.inr h)))⟩
 
+/-- The low values of the excess for an odd squarefree number are zero and two. -/
+theorem low_excess_of_odd_squarefree (n : ℕ) (ho : Odd n) (hs : Squarefree n) :
+    σ 1 n + n.totient = 2 * n ∨ σ 1 n + n.totient = 2 * n + 2 ∨
+      2 * n + 10 ≤ σ 1 n + n.totient := by
+  suffices h : n = 1 ∨ n.Prime ∨ σ 1 n + n.totient = 2 * n + 2 ∨
+      2 * n + 10 ≤ σ 1 n + n.totient by
+    rcases h with rfl | hp | h | h
+    · left; simp
+    · left
+      rw [sigma_prime hp, Nat.totient_prime hp]
+      have := hp.one_lt
+      omega
+    · exact Or.inr (Or.inl h)
+    · exact Or.inr (Or.inr h)
+  induction n using Nat.recOnPosPrimePosCoprime with
+  | zero => simp at ho
+  | one => exact Or.inl rfl
+  | prime_pow p k hp hk =>
+    have h := hs.natFactorization_le_one p
+    rw [hp.factorization_pow, Finsupp.single_eq_same] at h
+    have h1 : k = 1 := by omega
+    subst k
+    exact Or.inr (Or.inl (by simpa using hp))
+  | coprime a b ha hb hc iha ihb =>
+    obtain ⟨hoa, hob⟩ := Nat.odd_mul.mp ho
+    have hsa := hs.squarefree_of_dvd (dvd_mul_right a b)
+    have hsb := hs.squarefree_of_dvd (dvd_mul_left b a)
+    by_cases hab : a.Prime ∧ b.Prime
+    · exact Or.inr (Or.inr (Or.inl ((excess_two_iff _).mpr
+        ⟨a, b, hab.1, hab.2, (Nat.coprime_primes hab.1 hab.2).mp hc, rfl⟩)))
+    · have hhelper (x y : ℕ) (hx : 1 < x) (hy : 1 < y) (hyod : Odd y)
+          (hcop : x.Coprime y) (hnp : ¬x.Prime)
+          (hi : x = 1 ∨ x.Prime ∨ σ 1 x + x.totient = 2 * x + 2 ∨
+            2 * x + 10 ≤ σ 1 x + x.totient) :
+          2 * (x * y) + 10 ≤ σ 1 (x * y) + (x * y).totient := by
+        have hDx : 2 * x + 2 ≤ σ 1 x + x.totient := by
+          rcases hi with h | h | h | h
+          · omega
+          · exact (hnp h).elim
+          · omega
+          · omega
+        have hDy := le_sigma_add_totient y
+        have hy3 : 3 ≤ y := by have := Nat.odd_iff.mp hyod; omega
+        have hprod := Nat.mul_le_mul hDx hDy
+        have hσx := lt_sigma_of_not_prime x hx hnp
+        have hσy := le_sigma y hy
+        have htx := Nat.totient_lt x hx
+        have hty := Nat.totient_lt y hy
+        have hdiff : 8 ≤ ((σ 1 x : ℤ) - x.totient) * ((σ 1 y : ℤ) - y.totient) :=
+          mul_le_mul (show (4 : ℤ) ≤ σ 1 x - (x.totient : ℤ) by omega)
+            (show (2 : ℤ) ≤ σ 1 y - (y.totient : ℤ) by omega) (by decide) (by omega)
+        rw [isMultiplicative_sigma.map_mul_of_coprime hcop, Nat.totient_mul hcop]
+        zify at hprod hy3 ⊢
+        linarith only [hprod, hy3, hdiff]
+      refine Or.inr (Or.inr (Or.inr ?_))
+      by_cases hap : a.Prime
+      · have hbp : ¬b.Prime := fun hp => hab ⟨hap, hp⟩
+        simpa [mul_comm] using hhelper b a hb ha hoa hc.symm hbp (ihb hob hsb)
+      · exact hhelper a b ha hb hob hc hap (iha hoa hsa)
+
 end A056777Closure
 
 #print axioms A056777Closure.excess_two_iff
 #print axioms A056777Closure.prime_quadruple_of_one_excess_two
 #print axioms A056777Closure.prime_quadruple_of_one_semiprime
 #print axioms A056777Closure.factor_count_of_counterexample
+#print axioms A056777Closure.low_excess_of_odd_squarefree
