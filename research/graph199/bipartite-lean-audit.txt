@@ -1,0 +1,5 @@
+'Graph199BipartiteOrder.private_neighbors_le_of_common' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph199BipartiteOrder.common_neighbors_trans' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph199BipartiteOrder.bipartition_size_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph199BipartiteOrder.same_color_common_neighbors' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph199BipartiteOrder.bipartition_balance_of_separator' depends on axioms: [propext, Classical.choice, Quot.sound]

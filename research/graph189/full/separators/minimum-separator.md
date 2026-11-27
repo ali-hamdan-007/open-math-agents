@@ -27,3 +27,24 @@ Otherwise k=s or s+1 by the previous bound and s≤δ≤k. Use the high-valid an
 If k=s+1, t=s+1: for t≥s+2 the earlier lower bound gives A≥2t−k≥s+3, whereas A≤tk/(t−1)≤s+2. Thus A≤s+2 and the displayed defect sum is at most one. In particular there is a contact adjacent to all S. Every component has at least k−s+1=2 vertices and at least two distinct attachment vertices. The all-S contact in one component has all the attachment vertices of every other component at distance two, at least 2s>k, a contradiction.
 
 If k=s, t=s+1 since t−1≤k, and A=t by the upper bound. The displayed defect sum is at most s. At least one of the s+1 chosen contacts therefore sees every vertex of S. Its allowance k=s leaves room for just one attachment in each other component. These other components are singletons since G is 2-connected. Each such singleton sees all S by the minimum-cut property, so its distance-two bound also forces the original component to have only one attachment and to be a singleton. This proves the classification.
+
+## Local form for larger failing cuts
+
+Let S now be any failing toughness cut, of size s with t≥s+1 components. Put I(x)={i : x has a neighbor in component C_i}. If S is inclusion-minimal among failing cuts, then for every x∈S its restoration merges exactly |I(x)| components (or forms a new singleton when I(x) is empty). Therefore c(G−(S minus x))=t−|I(x)|+1≤s−1; the same inequality is automatic when this graph is connected and s≥2. Hence |I(x)|≥t−s+2≥3.
+
+One may apply the counting argument to any selection of r≥3 incident components in which x has a high neighbor, ignoring all other components. With a_i=|N(x)∩C_i|, A=Σa_i over this selection, and b_i the number of distinct S vertices with a neighbor in C_i, it gives
+
+    (r−1)A ≤ rk,
+    Σ_i(k+1−b_i) ≤ A+k.
+
+Indeed choose a high x-neighbor inside each selected C_i. It has at most b_i neighbors in S. Its closed neighborhood within C_i contains at least k+1−b_i vertices. At most a_i were already adjacent to x. Since b_i≤s, one obtains
+
+    (r²−3r+1)k ≤ r(r−1)(s−1).
+
+Consequently any inclusion-minimal bad cut of size s≥3 satisfies k≤6(s−1): choose x with all its incident components high-contact-valid as above if the exceptional vertex is not an entire component. If z is the exceptional singleton and does not see all S, take a nonneighbor x in S; its incident components are all high. It remains that z sees all S. The union of all high contact vertices then has size at most k. If some anchor touches r≥3 high components, the high-contact lower counts together with A≤k give r(k−s+1)≤2k, hence k≤3(s−1). Otherwise every anchor touches exactly two high components and the singleton z, by cut-minimality. Then t=s+1, and every high component touches exactly two members of S (2-connectivity gives the lower bound two, and total incidences are 2s). For each x the two high contacts yield at least 2(k−1)−A_x witnesses, so A_x≥k−2. Summing gives s(k−2)≤Σ_x A_x≤2k, since all high contact vertices together number at most k and each sees at most two members of S. This gives k≤2s/(s−2) and finishes the bound in this case also.
+
+If the connectivity κ is at least three, every violating S, even without inclusion-minimality, obeys
+
+    (κ²−3κ+1)k ≤ κ(κ−1)(s−1).
+
+Indeed at least t−1≥s components avoid the low vertex entirely and each touches at least κ distinct members of S (otherwise their boundary would be a smaller separating set). Averaging shows some anchor has at least κ incident all-high components. Use the displayed inequality with a selection of exactly r=κ components. If every component avoids the low vertex, or there is no low vertex, t≥s+1 gives at least one anchor with r≥κ+1, allowing that stronger choice. These bounds restrict the sizes of possible cuts. They do not establish traceability for arbitrary nonminimum failing cuts.
