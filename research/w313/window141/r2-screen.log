@@ -1,0 +1,3 @@
+H1 normalized tuples 3438 survive prior propagation 3438 survive with 82 clauses 3438 survive with all 126 clauses 3438 first additional elimination None
+H2 normalized tuples 4924 survive prior propagation 4924 survive with 82 clauses 4924 survive with all 126 clauses 4922 first additional elimination ((5, 4, 5, 4), (65, 53, 67, 55))
+H3 normalized tuples 4924 survive prior propagation 4924 survive with 82 clauses 4924 survive with all 126 clauses 4924 first additional elimination None

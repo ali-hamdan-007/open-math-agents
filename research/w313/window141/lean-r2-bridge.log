@@ -1,0 +1,3 @@
+'OMA.Green130Window.Seed64.four_red_range_forces_progression' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.Green130Window.Seed64.r2_heights_6565' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.Green130Window.Seed64.r2_heights_5454' depends on axioms: [propext, Classical.choice, Quot.sound]
