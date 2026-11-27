@@ -64,4 +64,31 @@ by summing independent contributions across residue classes. Its
 mass-2 assertion still follows from the first-40 check. More
 generally the first-prime mass cutoff is below 2 for each odd
 prime ℓ≤29 on odd supports, even with K_ℓ+6, as certified by the
-integer upper bounds in check_prime1916.py.
+integer upper bounds in /tmp/check_prime1916.py.
+
+## Residue-specific mass cutoff
+
+One can improve the mass bound using primes in their actual residue
+classes. List the eligible primes of each class r in increasing order.
+Set c_r=2(d_r−1). If a witness has fewer than ℓ−1 additive steps
+after reserving b primes on each side, put s_r for the number reserved
+in residue class r. The total count in that class is at most
+c_r+d_r q_r+s_r. Its reciprocal mass is at most the sum of the first
+c_r terms of its prime list, the next q_r blocks of d_r terms, and
+s_r additional terms. Here a term is the reciprocal of the listed
+prime. The additional terms are bounded by the first s_r terms
+after the c_r baseline, since their indices are shifted up by d_r q_r.
+
+Thus a witness with fewer than ℓ−1 steps can have reciprocal mass
+no greater than the sum of the following three numbers:
+
+- The reciprocal mass of the first c_r primes from every residue.
+- The ℓ−2 largest block sums across all residue classes, using each
+  class's first ℓ−2 blocks of d_r primes after its baseline.
+- The 2b largest individual reciprocal terms across all classes
+  among the first 2b terms after each baseline.
+
+A mass strictly larger than this computable bound guarantees the
+same saturation. When b=3 and the support is odd, the bound is
+below 2 for every odd prime ℓ≤41. The verifier uses rounded-up
+integer reciprocals for both mass bounds.
