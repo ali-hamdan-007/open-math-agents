@@ -1,0 +1,14 @@
+Checking Green154EdgeCore.lean
+Checking Green154EdgeChunk00.lean
+Checking Green154EdgeChunk01.lean
+Checking Green154EdgeChunk02.lean
+Checking Green154EdgeChunk03.lean
+Checking Green154EdgeChunk04.lean
+Checking Green154EdgeChunk05.lean
+Checking Green154EdgeChunk06.lean
+Checking Green154EdgeChunk07.lean
+Checking Green154EdgeChunk08.lean
+Checking Green154EdgeChunk09.lean
+Checking Green154EdgeSeed.lean
+'OMA.Green154Edge.shifted_forces_progression' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.Green154Edge.reflected_shifted_forces_progression' depends on axioms: [propext, Classical.choice, Quot.sound]

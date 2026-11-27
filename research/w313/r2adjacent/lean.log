@@ -1,0 +1,8 @@
+'OMA.Green137Window.Seed27.shifted_forces_progression' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.Green137Window.Seed27.reflected_shifted_forces_progression' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'OMA.Green150Window.Seed14.shifted_forces_progression' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.Green150Window.Seed14.reflected_shifted_forces_progression' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
