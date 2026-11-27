@@ -266,8 +266,212 @@ theorem narrowed_odd_squarefree_three_five_mod_three {n m : ℕ}
     rw [←ZMod.natCast_mod p 3,←ZMod.natCast_mod q 3,h]
   exact ⟨p,q,hp,hq,hpq,hp4,hq8,hq11,h2qp,hmod,hm'⟩
 
+private theorem five_cubic_negative (p q D : ℤ) (hp : 23≤p) (hq : 11≤q) (hD : -12≤D) :
+    250-25*twiceSum p q+5*twicePairSum p q-2*(p^4*q+D) < 0 := by
+  let U := p-23
+  let V := q-11
+  let W := D+12
+  have hU : 0≤U := by dsimp [U]; omega
+  have hV : 0≤V := by dsimp [V]; omega
+  have hW : 0≤W := by dsimp [W]; omega
+  let P := 2*U^4*V+12*U^4+174*U^3*V+1044*U^3+5678*U^2*V+34188*U^2+
+    82406*U*V+500076*U+449072*V+2760528+2*W
+  have hpos : 0<P := by dsimp [P]; positivity
+  have he : -(250-25*twiceSum p q+5*twicePairSum p q-2*(p^4*q+D))=P := by
+    dsimp [twiceSum,twicePairSum,P,U,V,W]
+    ring
+  rw [←he] at hpos
+  exact neg_pos.mp hpos
+
+private theorem triple_root_not_five (p q a b c D : ℤ)
+    (hp : 23≤p) (hq : 11≤q) (hD : -12≤D)
+    (hL : 2*(a+b+c)=twiceSum p q) (hM : 2*(a*b+a*c+b*c)=twicePairSum p q)
+    (hZ : a*b*c=p^4*q+D) : a≠5 ∧ b≠5 ∧ c≠5 := by
+  have he : 250-25*twiceSum p q+5*twicePairSum p q-2*(p^4*q+D) =
+      2*(5-a)*(5-b)*(5-c) := by
+    rw [←hL,←hM,←hZ]
+    ring
+  have hneg := five_cubic_negative p q D hp hq hD
+  rw [he] at hneg
+  refine ⟨?_,?_,?_⟩
+  all_goals
+    intro h
+    rw [h] at hneg
+    norm_num at hneg
+
+set_option maxHeartbeats 2000000 in
+private theorem zmod_five_minus :
+    ∀ p q a b c : ZMod 5, p≠0 → q≠0 → a≠0 → b≠0 → c≠0 →
+      2*(a+b+c)=(p^2+p+1)*(q+1)+2*p^3 →
+      2*(a*b+a*c+b*c)=2*p^3*(p+q-1)+((p^2+p+1)*(q+1)+2*p^3)-2 →
+      a*b*c=p^4*q-12 → False := by
+  decide
+
+set_option maxHeartbeats 2000000 in
+private theorem zmod_five_plus :
+    ∀ p q a b c : ZMod 5, p≠0 → q≠0 → a≠0 → b≠0 → c≠0 →
+      2*(a+b+c)=(p^2+p+1)*(q+1)+2*p^3 →
+      2*(a*b+a*c+b*c)=2*p^3*(p+q-1)+((p^2+p+1)*(q+1)+2*p^3)-2 →
+      a*b*c=p^4*q+12 → (p=2 ∨ p=3) ∧ q=2 := by
+  decide
+
+private theorem cubic_gap_bound (p q a b c : ℤ) (hp : 2*q<p) (hq : 11≤q)
+    (hqa : q+1≠a) (hqb : q+1≠b) (hqc : q+1≠c)
+    (hL : 2*(a+b+c)=twiceSum p q) (hM : 2*(a*b+a*c+b*c)=twicePairSum p q)
+    (hZ : a*b*c=p^4*q+12) : p^2<q^3 := by
+  by_contra! hpow
+  have hp23 : 23≤p := by omega
+  let f (x : ℤ) := 2*x^3-twiceSum p q*x^2+twicePairSum p q*x-2*(p^4*q+12)
+  have hfac (x : ℤ) : f x=2*(x-a)*(x-b)*(x-c) := by
+    dsimp [f]
+    rw [←hL,←hM,←hZ]
+    ring
+  have hneg : f q<0 := by
+    have he : f q= -(p^2+p-1)*(q^3-q)-24 := by dsimp [f,twiceSum,twicePairSum]; ring
+    rw [he]
+    have hprod := mul_nonneg (show 0≤p^2+p-1 by nlinarith [sq_nonneg p]) (show 0≤q^3-q by
+      nlinarith [sq_nonneg q, mul_nonneg (show 0≤q by omega) (show 0≤q^2-1 by nlinarith)])
+    linarith
+  have hpos : 0<f (q+2) := by
+    have he : f (q+2)=4*p^3*(p-q-2)-(p^2+p)*(q^3+4*q^2+5*q+2)+
+        (q^3+8*q^2+17*q-14) := by dsimp [f,twiceSum,twicePairSum]; ring
+    rw [he]
+    have h₁ := mul_le_mul_of_nonneg_left (show 5*p≤12*(p-q-2) by omega)
+      (show 0≤p^3 by positivity)
+    have h₂ : 2*(q^3+4*q^2+5*q+2)≤3*q^3 := by
+      have hh := mul_nonneg (show 0≤q-11 by omega) (show 0≤q^2 by positivity)
+      nlinarith [sq_nonneg (q-5)]
+    have h₃ := mul_le_mul_of_nonneg_left (h₂.trans (mul_le_mul_of_nonneg_left hpow (by decide)))
+      (show 0≤p^2+p by positivity)
+    have h₄ := mul_le_mul_of_nonneg_right (show 12*(p^2+p)≤13*p^2 by
+      nlinarith [mul_nonneg (show 0≤p by omega) (show 0≤p-12 by omega)])
+      (show 0≤3*p^2 by positivity)
+    have h₅ : 0<p^4 := by positivity
+    have h₆ : 0≤q^3+8*q^2+17*q-14 := by
+      have : 0≤q^3 := by positivity
+      nlinarith
+    nlinarith only [h₁,h₃,h₄,h₅,h₆]
+  let s (x y : ℤ) : ℤ := if x<y then -1 else 1
+  have hs0 (x y : ℤ) (hxy : x≠y) : 0<s x y*(x-y) := by
+    unfold s
+    split <;> omega
+  have hs1 (y : ℤ) (hy : q≠y) (hy' : q+1≠y) (hy'' : q+2≠y) :
+      s q y=s (q+2) y := by
+    unfold s
+    by_cases h : q<y
+    · have h' : q+2<y := by omega
+      simp [h,h']
+    · have h' : ¬q+2<y := by omega
+      simp [h,h']
+  rw [hfac] at hneg hpos
+  have hn₁ : q≠a ∧ q≠b ∧ q≠c := by
+    refine ⟨?_,?_,?_⟩ <;> intro h <;> rw [←h] at hneg <;> norm_num at hneg
+  have hn₂ : q+2≠a ∧ q+2≠b ∧ q+2≠c := by
+    refine ⟨?_,?_,?_⟩ <;> intro h <;> rw [←h] at hpos <;> norm_num at hpos
+  have t₁ := mul_pos (mul_pos (hs0 q a hn₁.1) (hs0 q b hn₁.2.1)) (hs0 q c hn₁.2.2)
+  have t₂ := mul_pos (mul_pos (hs0 (q+2) a hn₂.1) (hs0 (q+2) b hn₂.2.1))
+    (hs0 (q+2) c hn₂.2.2)
+  rw [←hs1 a hn₁.1 hqa hn₂.1,←hs1 b hn₁.2.1 hqb hn₂.2.1,←hs1 c hn₁.2.2 hqc hn₂.2.2] at t₂
+  have e (x : ℤ) : (s q a*(x-a))*(s q b*(x-b))*(s q c*(x-c)) =
+      (s q a*s q b*s q c)*((x-a)*(x-b)*(x-c)) := by ring
+  rw [e] at t₁ t₂
+  have hz₁ : (q-a)*(q-b)*(q-c)<0 := by linarith
+  have hz₂ : 0<(q+2-a)*(q+2-b)*(q+2-c) := by linarith
+  have hv := pos_of_mul_pos_left t₂ hz₂.le
+  have := mul_neg_of_pos_of_neg hv hz₁
+  exact (not_lt_of_ge t₁.le this)
+
+set_option maxHeartbeats 1200000 in
+/-- The squarefree triple can only be the larger endpoint in the remaining odd
+p⁴q case. The two prime bases also satisfy the displayed residues modulo five. -/
+theorem odd_squarefree_three_five_orientation_mod_five {n m : ℕ}
+    (hn : n.primeFactorsList.length=3) (hm : m.primeFactorsList.length=5)
+    (hs : Squarefree n) (ho : Odd n)
+    (hgap : n+12=m ∨ m+12=n)
+    (hφ : n.totient+m=m.totient+n) (hσ : σ 1 n+m=σ 1 m+n) :
+    m+12=n ∧ ∃ p q : ℕ, p.Prime ∧ q.Prime ∧ p≠q ∧
+      p%4=3 ∧ q%8=3 ∧ 11≤q ∧ 2*q<p ∧ p%3≠q%3 ∧ p^2<q^3 ∧
+      (p%5=2 ∨ p%5=3) ∧ q%5=2 ∧ m=p^4*q := by
+  obtain ⟨p,q,hp,hq,hpq,hp4,hq8,hq11,h2q,hpq3,hm'⟩ :=
+    narrowed_odd_squarefree_three_five_mod_three hn hm hs ho hgap hφ hσ
+  obtain ⟨a,b,c,ha,hb,hc,hab,hac,hbc,hn'⟩ := squarefree_triple_shape hn hs
+  have hg := hgap
+  rw [hn',hm'] at hg hφ hσ
+  have ⟨hF,hK⟩ := fourth_times_prime_formulas hp hq hpq
+  have ⟨hF',hK'⟩ := triple_formulas ha hb hc hab hac hbc
+  have hL : 2*(a+b+c)=(p^2+p+1)*(q+1)+2*p^3 := by omega
+  have hP : a*b+a*c+b*c+1=p^3*(p+q-1)+(a+b+c) := by omega
+  have hpq1 : 1≤p+q := by omega
+  let D : ℤ := (a:ℤ)*b*c-(p:ℤ)^4*q
+  have hD : -12≤D := by
+    zify at hg
+    dsimp [D]
+    omega
+  have hz : (a:ℤ)*b*c=(p:ℤ)^4*q+D := by dsimp [D]; ring
+  have hp23 : (23:ℤ)≤p := by exact_mod_cast (show 23≤p by omega)
+  have hq11' : (11:ℤ)≤q := by exact_mod_cast hq11
+  have hLZ := hL
+  have hPZ := hP
+  zify [hpq1] at hLZ hPZ
+  have hMZ : 2*((a:ℤ)*b+(a:ℤ)*c+(b:ℤ)*c)=twicePairSum p q := by
+    dsimp [twicePairSum,twiceSum]
+    linarith only [hLZ,hPZ]
+  obtain ⟨ha5,hb5,hc5⟩ := triple_root_not_five p q a b c D hp23 hq11' hD hLZ hMZ hz
+  have nozero {x : ℕ} (hx : x.Prime) (hx5 : x≠5) : (x:ZMod 5)≠0 := by
+    intro he
+    have hd := (ZMod.natCast_eq_zero_iff x 5).mp he
+    rcases (Nat.dvd_prime hx).mp hd with hd|hd <;> omega
+  have hp0 := nozero hp (by omega)
+  have hq0 := nozero hq (by omega)
+  have ha0 := nozero ha (fun h => ha5 (by exact_mod_cast h))
+  have hb0 := nozero hb (fun h => hb5 (by exact_mod_cast h))
+  have hc0 := nozero hc (fun h => hc5 (by exact_mod_cast h))
+  have hL5 := congrArg (fun x : ℕ => (x : ZMod 5)) hL
+  push_cast at hL5
+  have hM5 := congrArg (fun x : ℤ => (x : ZMod 5)) hMZ
+  simp only [twicePairSum,twiceSum] at hM5
+  push_cast at hM5
+  rcases hgap with h|h
+  · have hg' : a*b*c+12=p^4*q := by simpa only [hn',hm'] using h
+    have H := congrArg (fun x : ℕ => (x:ZMod 5)) hg'
+    push_cast at H
+    have hZ5 : (a:ZMod 5)*b*c=(p:ZMod 5)^4*q-12 := eq_sub_of_add_eq H
+    exact (zmod_five_minus p q a b c hp0 hq0 ha0 hb0 hc0 hL5 hM5 hZ5).elim
+  · have hg' : p^4*q+12=a*b*c := by simpa only [hn',hm'] using h
+    have H := congrArg (fun x : ℕ => (x:ZMod 5)) hg'
+    push_cast at H
+    have hpqZ := zmod_five_plus p q a b c hp0 hq0 ha0 hb0 hc0 hL5 hM5 H.symm
+    have htwo : (2:ZMod 5).val=2 := by decide
+    have hthree : (3:ZMod 5).val=3 := by decide
+    have hq5 : q%5=2 := by
+      have hv := congrArg ZMod.val hpqZ.2
+      simpa only [ZMod.val_natCast,htwo,hthree] using hv
+    have hp5 : p%5=2 ∨ p%5=3 := by
+      rcases hpqZ.1 with h|h
+      · left
+        have hv := congrArg ZMod.val h
+        simpa only [ZMod.val_natCast,htwo,hthree] using hv
+      · right
+        have hv := congrArg ZMod.val h
+        simpa only [ZMod.val_natCast,htwo,hthree] using hv
+    have rootne {x : ℕ} (hx : x∣n) : (q:ℤ)+1≠x := by
+      obtain ⟨y,hy⟩ := hx
+      intro heq
+      have heq' : q+1=x := by exact_mod_cast heq
+      have hxodd := Nat.odd_iff.mp (Nat.odd_mul.mp (hy ▸ ho)).1
+      omega
+    have hda : a∣n := by rw [hn']; exact ⟨b*c, by ring⟩
+    have hdb : b∣n := by rw [hn']; exact ⟨a*c, by ring⟩
+    have hdc : c∣n := by rw [hn']; exact ⟨a*b, by ring⟩
+    have hzplus : (a:ℤ)*b*c=(p:ℤ)^4*q+12 := by exact_mod_cast hg'.symm
+    have hbound := cubic_gap_bound p q a b c (by exact_mod_cast h2q) hq11'
+      (rootne hda) (rootne hdb) (rootne hdc) hLZ hMZ hzplus
+    exact ⟨h,p,q,hp,hq,hpq,hp4,hq8,hq11,h2q,hpq3,by exact_mod_cast hbound,hp5,hq5,hm'⟩
+
 end A056777OddSquarefreeThreeFive
 
 #print axioms A056777OddSquarefreeThreeFive.narrowed_odd_squarefree_three_five
 
 #print axioms A056777OddSquarefreeThreeFive.narrowed_odd_squarefree_three_five_mod_three
+
+#print axioms A056777OddSquarefreeThreeFive.odd_squarefree_three_five_orientation_mod_five
