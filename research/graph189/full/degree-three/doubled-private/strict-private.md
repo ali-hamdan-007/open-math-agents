@@ -1,0 +1,20 @@
+# A strict support bound for every private
+
+Work in the doubled-private triangle with sole triple-visible remote `t`, common middle set `W` of order `k−4`, private vertices `P,Q,B,C`, and remote set `L` of order at least `2k−3`. For any private `J`, write `a` for its number of neighbors in `W`, `R=N(J)∩L`, `S=R−{t}`, and `H=N[L][R]` for the closed neighborhood of `R` inside the remote graph. We use the established bounds `a≥2`, `|H|≥k`, and `|H−R|≤a+1`. Every private has a solo remote, meaning a remote whose only middle neighbor is that private. Every nontriple remote has a private neighbor and has no common middle neighbor.
+
+For each of the four privates,
+```
+|S| + a + 2 ≥ k+1.
+```
+
+Indeed, `k≤|H|≤|R|+a+1≤|S|+a+2`. Suppose the last expression equals `k`. Then `|H|=k`, `t∈R`, and the boundary `D=H−R` has size `a+1`. The root, the two anchors other than the anchor of `J`, the `k−4−a` missed common middles, and the entire boundary `D` are distinct distance-two vertices of `J`. The first three types are reached via its own anchor, using the anchor triangle and common adjacency. Each boundary vertex is reached via `R`. These account for exactly `k` vertices. The even-distance hypothesis, including the vertex itself, therefore excludes every vertex at distance four from `J`.
+
+Fix `m∈L−H`. It is nontriple and has a private neighbor `I`. Take a common middle neighbor of `I`, which exists as every private has at least two. Via the anchor of `J`, that common middle, and `I`, there is a walk of length four from `J` to `m`. As `m` is neither adjacent to `J` nor in its exhaustive distance-two list, its distance is exactly three. The penultimate vertex of a shortest path belongs to that list. Neither the root nor any anchor can neighbor a remote by layering, and no common middle can neighbor the nontriple `m`. Hence `m` has a neighbor in `D`.
+
+Choose a solo `x` of `J`. Its closed remote neighborhood is contained in `H` and has size at least `k` by its degree and sole middle neighbor, so it equals `H`. Thus every vertex outside `H` in the remote layer is at distance two from `x`, via a boundary vertex. In addition, the anchor of `J` and its `a` common middle neighbors are at distance two through `J`. Choose any boundary vertex. It is nontriple because `t∈R`, and has a private neighbor different from `J` because it lies outside `R`. That private is also at distance two from the solo through the boundary vertex, distinct from every witness counted above. Altogether the solo has at least `(2k−3)−k+a+2≥k+1` distance-two vertices. This contradicts the even-distance bound, including for `a=2`.
+
+A lone-neighbor common middle gives `|S|≤k−4` for its sole private, so that private has `a≥3`. A common middle meeting two privates gives `|S|≤k−6` for either, so each has `a≥5`. Every private appears in at least one common neighborhood. If both singleton-anchor privates B and C occur in pairs, complementary pairs are forbidden, and they share the same twin partner, say P. The common neighborhoods of Q, B and C are then pairwise disjoint. If Q occurs in a pair it has at least five common neighbors, and `k−4≥15` gives `k≥19`. If Q only occurs singly, its established twin bound gives at least four, and `k−4≥14` gives `k≥18`. In the latter case P can pair only with B or C.
+
+If neither B nor C occurs in a pair, their disjoint lone neighborhoods occupy at least six common middles. When a pair occurs it must be P,Q, and at least five more common middles meet P. With no pair, the disjoint twin neighborhoods occupy at least eight more. Thus `k≥15` with a pair and `k≥18` with none.
+
+If only B occurs in a pair among B,C, C occupies at least three lone common middles. If P,Q occur together, P,Q,B each have at least five incidences outside those three; at most two incidences fit on a common middle, so at least eight further common middles are needed and `k≥15`. If P,Q never occur together, their neighborhoods are disjoint and at least one twin is paired with B. The twins require at least nine distinct common middles outside the neighborhood of C, so `k≥16`. Together these estimates exclude the entire template through `k=14`.
