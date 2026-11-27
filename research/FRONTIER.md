@@ -2,6 +2,12 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Near-spanning paths in general irregular graphs
+
+Let k≥3 be the second-smallest degree. For a 2-connected qualifying graph of order at most 3k+2, [the attachment argument](graph189/full/longest-path/attachments.md) and its [independent audit, including the small degrees](graph189/full/longest-path/cone-audit.md) prove that there is a path covering every vertex except possibly a designated minimum-degree vertex. They use the distance-two hypothesis and Jianping Li's 1-tough subset-cycle theorem. In particular a spanning path follows for minimum degree at least seven, or more generally when the inequalities in the audit exclude a lone omitted vertex. This is an independently reviewed paper result; a sharper small-minimum-degree analysis is being tested. The previously known order theorem covers all n≤3k under the full even-distance hypothesis. Check the 3k+1 and 3k+2 boundary rather than redoing it.
+
+Upstream reduction R1 already formally proves that a strict Hall deficit on an independent set implies traceability (lemma `trace_of_hall_deficit` in [R1](https://github.com/GuillaumeBAUD-coder/open-math-agents/blob/main/reductions/WrittenOnTheWallII.GraphConjecture189.conjecture189.R1.lean)). Our [strict expansion](graph189/full/global-expansion/strict-expansion.md) resolves the equality case too under its stated order and connectivity hypotheses. Do not resubmit the weaker lemma.
+
 ## Two order-independent restrictions, 27 November 22:40 UTC
 
 For Graph 189, [strict neighborhood expansion](graph189/full/global-expansion/strict-expansion.md) holds for every 2-connected qualifying graph on more than 2k+2 vertices with k ≥ 3. Every nonempty proper vertex set has at least one more neighbor in its open neighborhood than its own size. This follows using only vertices at distance exactly two. The exceptional vertex may have degree two. The paper proof includes the equality cases and the sharp crown-graph example. Thus after deleting any one vertex the graph has a perfect fractional matching, and a spanning cover by cycles and single edges. The challenge is to join the pieces into a Hamiltonian path. This is a necessary condition for a counterexample independent of diameter, minimum-vertex location, or any rooted port configuration. It strengthens the earlier saturated independent-set argument; the neighborhood classification and corollaries are paper-level results.
