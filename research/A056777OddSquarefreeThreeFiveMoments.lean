@@ -468,6 +468,184 @@ theorem odd_squarefree_three_five_orientation_mod_five {n m : ℕ}
       (rootne hda) (rootne hdb) (rootne hdc) hLZ hMZ hzplus
     exact ⟨h,p,q,hp,hq,hpq,hp4,hq8,hq11,h2q,hpq3,by exact_mod_cast hbound,hp5,hq5,hm'⟩
 
+set_option maxHeartbeats 1800000 in
+private theorem negative_sharp_discriminant (p q : ℤ) (hp : 23≤p) (hq : 29*p≤70*q) :
+    scaledDiscriminant p q 12 < 0 := by
+  let U := p-23
+  let V := 70*q-29*p
+  have hU : 0≤U := by dsimp [U]; omega
+  have hV : 0≤V := by dsimp [V]; omega
+  let c0 : ℤ := 2403716796067445186686389360+U*(1372459527095887592479466496+U*(361628144733141041153285376+U*(58222985448896711891716608+U*(6390878780772289890372672+U*(505065819550972484165760+U*(29568278933414371856160+U*(1298512064396999209536+U*(42785955404740676160+U*(1045114907226283008+U*(18409103874792896+U*(221824252323584+U*(1647405171312+U*(5838639040+U*(1827904))))))))))))))
+  let c1 : ℤ := 197280657948445250404317120+U*(110903391225402830723172672+U*(28772082605849105526280128+U*(4561165586053861675076160+U*(492954098940766485290304+U*(38355423730864527114432+U*(2210396180511519262656+U*(95528104701881499840+U*(3096061219965103680+U*(74320710890708416+U*(1284393199856320+U*(15132464586048+U*(108942182528+U*(361946624)))))))))))))
+  let c2 : ℤ := 146731586148712503419040+U*(76011019035194702499264+U*(18045738264251846831328+U*(2596284058024279753344+U*(252113798427792625440+U*(17407694618644958784+U*(876345106837510944+U*(32409895802685312+U*(873914076692576+U*(16755554494400+U*(216827234080+U*(1700379136+U*(6111104))))))))))))
+  let c3 : ℤ := 36507580065752402880+U*(17288993510411446208+U*(3721481303182344320+U*(480612921522981248+U*(41377674101069504+U*(2493544352928960+U*(107330336015488+U*(3299759547648+U*(71010508736+U*(1018718528+U*(8768384+U*(34304)))))))))))
+  let c4 : ℤ := 3027038472181360+U*(1298417823121216+U*(250638775757408+U*(28672378598720+U*(2152656064528+U*(110829558784+U*(3962794848+U*(97167040+U*(1563632+U*(14912+U*(64))))))))))
+  let C := c0 + V*(c1+V*(c2+V*(c3+V*c4)))
+  have hpos : 0<C := by
+    dsimp [C,c0,c1,c2,c3,c4]
+    positivity
+  have he : -(70:ℤ)^4 * scaledDiscriminant p q 12 = C := by
+    dsimp [scaledDiscriminant,twiceSum,twicePairSum,U,V,C,c0,c1,c2,c3,c4]
+    ring
+  have hprod : 0 < -(70:ℤ)^4 * scaledDiscriminant p q 12 := he ▸ hpos
+  exact neg_pos.mp (show -scaledDiscriminant p q 12 > 0 by nlinarith only [hprod])
+
+private theorem cubic_linear_positive (p q : ℤ) (hp : 2*q<p) (hq : 11≤q) :
+    2*twiceSum p q*q < twicePairSum p q := by
+  let U := p-(2*q+1)
+  let V := q-11
+  have hU : 0≤U := by dsimp [U]; omega
+  have hV : 0≤V := by dsimp [V]; omega
+  let C := 2*U^4 + 14*U^3*V + 162*U^3 + 34*U^2*V^2 + 789*U^2*V +
+    4578*U^2 + 32*U*V^3 + 1118*U*V^2 + 13023*U*V + 50578*U +
+    8*V^4 + 376*V^3 + 6628*V^2 + 51937*V + 152650
+  have hpos : 0<C := by
+    dsimp [C]
+    positivity
+  have he : twicePairSum p q-2*twiceSum p q*q=C := by
+    dsimp [twicePairSum,twiceSum,C,U,V]
+    ring
+  omega
+
+private theorem cubic_root_gt_q (p q x : ℤ) (hp : 2*q<p) (hq : 11≤q) (hx : 0≤x)
+    (hroot : 2*x^3-twiceSum p q*x^2+twicePairSum p q*x-2*(p^4*q+12)=0) :
+    q<x := by
+  by_contra! hxq
+  let f (z : ℤ) := 2*z^3-twiceSum p q*z^2+twicePairSum p q*z-2*(p^4*q+12)
+  have hL : 0≤twiceSum p q := by
+    have hp0 : 0≤p := by omega
+    have hq0 : 0≤q := by omega
+    dsimp [twiceSum]
+    positivity
+  have hM := cubic_linear_positive p q hp hq
+  have hdiff : f q-f x=(q-x)*(2*(q^2+q*x+x^2)+twicePairSum p q-twiceSum p q*(q+x)) := by
+    dsimp [f]
+    ring
+  have hprod : 0≤twiceSum p q*(q-x) := mul_nonneg hL (by omega)
+  have hqx : 0≤q*x := mul_nonneg (by omega) hx
+  have hinner : 0≤2*(q^2+q*x+x^2)+twicePairSum p q-twiceSum p q*(q+x) := by
+    nlinarith only [hprod,hqx,hM,sq_nonneg q,sq_nonneg x]
+  have hnon := mul_nonneg (show 0≤q-x by omega) hinner
+  have hqeval : f q= -(p^2+p-1)*(q^3-q)-24 := by dsimp [f,twicePairSum,twiceSum]; ring
+  have hprod' := mul_nonneg (show 0≤p^2+p-1 by nlinarith [sq_nonneg p]) (show 0≤q^3-q by
+    nlinarith [sq_nonneg q, mul_nonneg (show 0≤q by omega) (show 0≤q^2-1 by nlinarith)])
+  change f x=0 at hroot
+  nlinarith only [hroot,hqeval,hdiff,hnon,hprod']
+
+/-- In the remaining odd case the repeated prime exceeds 70/29 times the
+other prime, and every prime factor of the squarefree endpoint exceeds that other prime. -/
+theorem odd_squarefree_three_five_sharp_root_bounds {n m : ℕ}
+    (hn : n.primeFactorsList.length=3) (hm : m.primeFactorsList.length=5)
+    (hs : Squarefree n) (ho : Odd n)
+    (hgap : n+12=m ∨ m+12=n)
+    (hφ : n.totient+m=m.totient+n) (hσ : σ 1 n+m=σ 1 m+n) :
+    m+12=n ∧ ∃ p q : ℕ, p.Prime ∧ q.Prime ∧ p≠q ∧
+      p%4=3 ∧ q%8=3 ∧ 11≤q ∧ 70*q<29*p ∧ p%3≠q%3 ∧ p^2<q^3 ∧
+      (p%5=2 ∨ p%5=3) ∧ q%5=2 ∧ m=p^4*q ∧
+      ∀ x : ℕ, x.Prime → x∣n → q<x := by
+  obtain ⟨hg,p,q,hp,hq,hpq,hp4,hq8,hq11,h2q,hpq3,hpqBound,hp5,hq5,hm'⟩ :=
+    odd_squarefree_three_five_orientation_mod_five hn hm hs ho hgap hφ hσ
+  obtain ⟨a,b,c,ha,hb,hc,hab,hac,hbc,hn'⟩ := squarefree_triple_shape hn hs
+  rw [hn',hm'] at hg hφ hσ
+  have ⟨hF,hK⟩ := fourth_times_prime_formulas hp hq hpq
+  have ⟨hF',hK'⟩ := triple_formulas ha hb hc hab hac hbc
+  have hL : 2*(a+b+c)=(p^2+p+1)*(q+1)+2*p^3 := by omega
+  have hP : a*b+a*c+b*c+1=p^3*(p+q-1)+(a+b+c) := by omega
+  have hpq1 : 1≤p+q := by omega
+  zify [hpq1] at hL hP
+  have hM : 2*((a:ℤ)*b+(a:ℤ)*c+(b:ℤ)*c)=twicePairSum p q := by
+    dsimp [twicePairSum,twiceSum]
+    linarith only [hL,hP]
+  have hZ : (a:ℤ)*b*c=(p:ℤ)^4*q+12 := by exact_mod_cast hg.symm
+  have hdisc := discriminant_nonnegative p q a b c 12 hL hM hZ
+  have hp23 : (23:ℤ)≤p := by exact_mod_cast (show 23≤p by omega)
+  have hratio : 70*q<29*p := by
+    by_contra! h
+    exact (not_lt_of_ge hdisc) (negative_sharp_discriminant p q hp23 (by exact_mod_cast h))
+  change 2*((a:ℤ)+b+c)=twiceSum p q at hL
+  have hfactor (x : ℤ) :
+      2*x^3-twiceSum p q*x^2+twicePairSum p q*x-2*((p:ℤ)^4*q+12) =
+        2*(x-a)*(x-b)*(x-c) := by
+    rw [←hL,←hM,←hZ]
+    ring
+  refine ⟨by simpa only [hm',hn'] using hg,p,q,hp,hq,hpq,hp4,hq8,hq11,hratio,hpq3,hpqBound,hp5,hq5,hm',?_⟩
+  intro x hx hxn
+  rw [hn'] at hxn
+  rcases hx.dvd_mul.mp hxn with h|h
+  · rcases hx.dvd_mul.mp h with h|h
+    · have hxa : x=a := (Nat.dvd_prime ha).mp h |>.resolve_left hx.ne_one
+      subst x
+      exact_mod_cast (cubic_root_gt_q p q a (by exact_mod_cast h2q) (by exact_mod_cast hq11)
+        (Int.natCast_nonneg a) (by rw [hfactor]; ring))
+    · have hxb : x=b := (Nat.dvd_prime hb).mp h |>.resolve_left hx.ne_one
+      subst x
+      exact_mod_cast (cubic_root_gt_q p q b (by exact_mod_cast h2q) (by exact_mod_cast hq11)
+        (Int.natCast_nonneg b) (by rw [hfactor]; ring))
+  · have hxc : x=c := (Nat.dvd_prime hc).mp h |>.resolve_left hx.ne_one
+    subst x
+    exact_mod_cast (cubic_root_gt_q p q c (by exact_mod_cast h2q) (by exact_mod_cast hq11)
+      (Int.natCast_nonneg c) (by rw [hfactor]; ring))
+
+set_option maxHeartbeats 2000000 in
+/-- The three integer roots satisfy a product identity independent of the
+unrepeated prime parameter q. Each quadratic value consequently divides the
+fixed degree-sixteen expression in p. -/
+theorem cubic_root_quadratic_product (p q a b c : ℤ)
+    (hL : 2*(a+b+c)=(p^2+p+1)*(q+1)+2*p^3)
+    (hM : a*b+a*c+b*c+1=p^3*(p+q-1)+(a+b+c))
+    (hZ : a*b*c=p^4*q+12) :
+    let T (x : ℤ) := (p^2+p+1)*x^2-(2*p^3+p^2+p+1)*x+2*p^4
+    T a*T b*T c=2*(p^16+2*p^15-p^14-2*p^13+p^12-13*p^11-32*p^10-
+      29*p^9+2*p^8+29*p^7+72*p^6+234*p^5+438*p^4+492*p^3+432*p^2+216*p+72) := by
+  let h := p^2+p+1
+  let j := -(2*p^3+p^2+p+1)
+  let k := 2*p^4
+  let E (L M Z : ℤ) :=
+    8*h^3*Z^2+4*h^2*j*M*Z+2*h^2*k*M^2+2*h*j*k*L*M+
+      2*h*k^2*L^2+4*j*k^2*L+8*k^3+4*L*Z*(-2*h^2*k+h*j^2)+
+      4*M*(-2*h*k^2+j^2*k)+8*Z*(-3*h*j*k+j^3)
+  let T (x : ℤ) := h*x^2-(2*p^3+p^2+p+1)*x+k
+  have he : 8*(T a*T b*T c)=E (2*(a+b+c)) (2*(a*b+a*c+b*c)) (a*b*c) := by
+    dsimp [E,T,j]
+    ring
+  have hL' : 2*(a+b+c)=twiceSum p q := hL
+  have hM' : 2*(a*b+a*c+b*c)=twicePairSum p q := by
+    dsimp [twicePairSum]
+    nlinarith only [hM,hL']
+  rw [hL',hM',hZ] at he
+  have he' : E (twiceSum p q) (twicePairSum p q) (p^4*q+12) =
+      16*(p^16+2*p^15-p^14-2*p^13+p^12-13*p^11-32*p^10-
+      29*p^9+2*p^8+29*p^7+72*p^6+234*p^5+438*p^4+492*p^3+432*p^2+216*p+72) := by
+    dsimp [E,h,j,k,twiceSum,twicePairSum]
+    ring
+  rw [he'] at he
+  change T a*T b*T c=_
+  linarith only [he]
+
+/-- For a fixed repeated prime and a root, the positive quadratic coefficient
+allows reconstruction of the other prime by a single exact division. -/
+theorem cubic_root_recovers_unrepeated_prime (p q x : ℤ) (hp : 3≤p)
+    (hx : 2*x^3-((p^2+p+1)*(q+1)+2*p^3)*x^2+
+      (2*p^3*(p+q-1)+((p^2+p+1)*(q+1)+2*p^3)-2)*x
+      -2*(p^4*q+12)=0) :
+    let T := (p^2+p+1)*x^2-(2*p^3+p^2+p+1)*x+2*p^4
+    0<T ∧ q*T=2*x^3-(p^2+p+1+2*p^3)*x^2+(2*p^4+p^2+p-1)*x-24 := by
+  let T := (p^2+p+1)*x^2-(2*p^3+p^2+p+1)*x+2*p^4
+  let u := p-3
+  have hu : 0≤u := by dsimp [u]; omega
+  let C := 4*u^6+76*u^5+603*u^4+2550*u^3+6045*u^2+7594*u+3935
+  have hc : 0<C := by dsimp [C]; positivity
+  have he : 4*(p^2+p+1)*T=(2*(p^2+p+1)*x-(2*p^3+p^2+p+1))^2+C := by
+    dsimp [T,C,u]
+    ring
+  have hprod : 0<4*(p^2+p+1)*T := by
+    rw [he]
+    exact add_pos_of_nonneg_of_pos (sq_nonneg _) hc
+  have hp0 : 0≤p := by omega
+  refine ⟨pos_of_mul_pos_right hprod (by positivity),?_⟩
+  dsimp [T]
+  linear_combination -hx
+
 end A056777OddSquarefreeThreeFive
 
 #print axioms A056777OddSquarefreeThreeFive.narrowed_odd_squarefree_three_five
@@ -475,3 +653,9 @@ end A056777OddSquarefreeThreeFive
 #print axioms A056777OddSquarefreeThreeFive.narrowed_odd_squarefree_three_five_mod_three
 
 #print axioms A056777OddSquarefreeThreeFive.odd_squarefree_three_five_orientation_mod_five
+
+#print axioms A056777OddSquarefreeThreeFive.odd_squarefree_three_five_sharp_root_bounds
+
+#print axioms A056777OddSquarefreeThreeFive.cubic_root_quadratic_product
+
+#print axioms A056777OddSquarefreeThreeFive.cubic_root_recovers_unrepeated_prime

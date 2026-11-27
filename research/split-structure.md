@@ -73,3 +73,93 @@ on at most 41 vertices. This finite residual has not been exhausted.
   https://doi.org/10.1016/j.disc.2022.112826
 - Renjith and Sadagopan, “Hamiltonian Path in Split Graphs – a Dichotomy.”
   https://arxiv.org/abs/1711.09262
+
+## Traceability with at least five outsiders
+
+Give each outside vertex a demand of two distinct clique neighbors. Give
+two vertices of A demand one, for the path endpoints, and the other two
+demand two. All demanded neighbors must be distinct. Hall's theorem,
+applied to two labeled copies of every vertex of demand two, tests whether
+such an assignment exists.
+
+For a subset X of A, write N(X) for its collective clique neighbors, and
+write Q_s for an outsider's clique neighborhood. The minimum surplus
+available to X over all subsets of outsiders is
+
+```text
+f(X) = |N(X) outside all groups|
+       + sum over s of min(|N(X) intersect Q_s|, |Q_s| - 2).
+```
+
+Indeed, for one group, leaving its outsider outside the Hall subset
+contributes the number of clique neighbors in the intersection. Including
+the outsider contributes the whole group's size and subtracts its demand
+of two. The groups are disjoint, so these choices minimize independently.
+It suffices to check f(X) against the total demand of X. Hall subsets
+containing only some copies of a selected vertex give weaker inequalities.
+
+The original center u contributes to every nonempty X outside all groups.
+For a singleton X, there is at least one other clique neighbor, contributing
+at least one since every outsider group has at least three vertices.
+For a subset X of size at least three, all group vertices have a neighbor
+in X because each sees at least two of the four vertices of A. Thus f(X)
+is at least one plus the number of groups, enough for any demand if there
+are at least five groups.
+
+If a group misses a pair X, each of its clique vertices sees exactly the
+two vertices of A outside X. Within a group there is at most one such pair.
+Two groups cannot miss different pairs. Choose a clique vertex in each
+group. Their stable neighbor sets each consist of the corresponding
+two-element complement in A and their respective outsider. Distinct pairs
+would give at least four exclusive stable neighbors between the two clique
+vertices, inducing a double star on at least six vertices. Consequently
+there is at most one pair missed by any group. Give both members of that
+pair demand one if it exists. Their pair has supply at least two by the
+singleton bound and monotonicity. Every remaining pair is met by all
+groups and again has supply at least one plus the number of groups.
+
+The assignment supplied by Hall forms disjoint stable-centered blocks.
+Every demand-two vertex lies between its two assigned clique neighbors.
+The two demand-one blocks have a stable endpoint and a clique endpoint.
+Place those blocks at the ends of the path and concatenate all other
+blocks and unused clique vertices using clique edges. This is a spanning
+path.
+
+The remaining split case has at most four outside groups. The bounded
+counterexample argument then keeps at most ten marked clique vertices,
+at most eight additional clique vertices filling marked groups, and at
+most eight stable vertices. If supplementary groups are needed to bring
+the number to two, the number of added clique vertices is at most six
+including filling marked groups. Thus the combined arguments give a
+counterexample bound of 26 vertices.
+
+## The four-group case
+
+With four groups the same Hall argument works whenever f(A) is at least six.
+Triples require at most five, and pairs other than the exceptional pair
+are met by every group. If f(A) is less than six, every group has exactly
+three clique vertices and u is the sole nongroup clique vertex seeing A.
+
+For clique rows in different groups, their core neighbor sets differ in at
+most one entry. The two distinct outsider neighbors already consume two of
+the three allowed private leaves. If all core rows have size two, rows in
+different groups must coincide. It follows that all rows coincide and two
+core vertices have only one neighbor, which is impossible.
+
+Otherwise select a size-three row P in one group S, and let a be the core
+vertex missing from P. Any row outside S must be a subset of P, so the two
+other rows of S must both contain a to give a three neighbors. Take any
+row R in another group. It cannot have size three because it would have to
+equal P and could not be within distance one of a row containing a. Thus
+R is a pair contained in P, and both rows of S containing a must equal
+R together with a. Every row in another group must be within distance one
+of both distinct triples P and R together with a, so it must equal R. The
+unique vertex of P outside R then has only two neighbors, u and the
+clique vertex giving row P. This contradicts minimum degree three.
+
+Thus at least four outsiders always suffice for the split graph to be
+traceable. The witness construction now keeps at most ten marked clique
+vertices and six further clique vertices, and at most seven stable
+vertices. The row-u mark lies in no group, and the worst 23-vertex bound
+requires six added clique vertices and three groups. This already reduces
+the split residual to at most 23 vertices.
