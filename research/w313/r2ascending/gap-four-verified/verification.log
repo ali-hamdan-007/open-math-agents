@@ -1,0 +1,14 @@
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+'OMA.GreenR2GapFourEdges.impossible' depends on axioms: [propext, Classical.choice, Quot.sound]
+Verified 80 current replay outputs in /tmp/w313gap4edge/endpoint
+Verified 71 current replay outputs in /tmp/w313-2118.NrZlu6
+'OMA.GreenR2GapFourEdges.gap_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.GreenR2GapFourEdges.h3_iff_gap_at_least_five_and_nonalternating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+w313-r2-h3-gap-four-edges-src.tar.gz 0c263a9e3dc406209b228afb4f5fcd7a6a8ddb3c585dc6ab3b01434dda137912 {'.': 3, 'endpoint/': 81}
+w313-r2-h3-gap-four-shared-src.tar.gz 6fd7755e20acb5ccfa5d711a1af91329bf3e8a6ae20c1c24c5270dab1c7e18e5 {'shared/': 72}
+w313-r2-h3-central-gap-four-src.tar.gz 7d2d0260b23836a5abe71aa42a58fc0cd611d3e38b26caffb79d5999317583b6 {'.': 24}
+w313-r2-h3-gap-one-through-three-src.tar.gz f3ad0f43bb7075d2252faa4eb255439ca4e39f289c5928804cafa7b68f9b2cf4 {'gap-two/': 47, 'gap-three/': 73}
+Audited 347 current project imports
+Axiom audit passed
