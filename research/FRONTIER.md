@@ -2,6 +2,10 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Minimum degree four is now covered
+
+A new [longest-path rotation and packing proof](graph189/full/longest-path/degree-four.md) shows traceability at minimum degree four for **all orders n≤3k+2**. The proof uses 2-connectivity and the exact-distance-two bound only. The [independent audit](graph189/full/longest-path/pivot-audit.md), [endpoint-index verifier](graph189/full/longest-path/rotation_core.py), and [binary-word verifier](graph189/full/longest-path/audit-rotation.py) cover every permitted order in the exceptional finite range. Five parameter triples remain after that computation; all five are eliminated by a hand argument. With the earlier minimum-degree-two result and the degree-at-least-five proof, **any counterexample to the full conjecture with n≤3k+2 must have minimum degree exactly three**, and it must have n=3k+1 or n=3k+2 by the earlier 3k bound. This is an independently checked paper proof with finite computations, not a full Lean verdict. Next track: how a near-spanning path can omit the unique degree-three vertex at either of these two orders.
+
 ## Adjacent separators and near-spanning paths
 
 For the full Graph 189 hypothesis, **every graph with an adjacent separating pair is traceable**. Removing such a pair disconnects the graph. [The main paper argument](graph189/full/adjacent-cut/adjacent-separator.md) and [the shallow-component extension](graph189/full/adjacent-cut/shallow-adjacent.md) cover the large degrees. For k=3,4,5 two finite path algorithms independently checked every allowed profile. The [audit](graph189/full/adjacent-cut/adjacent-cut-audit.md) records the coverage argument and how the paths lift back. This extends the earlier cut-vertex case: in any counterexample, the vertices of every separating pair must be nonadjacent. This is not a proof excluding all two-vertex separators.

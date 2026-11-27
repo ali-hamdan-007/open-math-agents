@@ -1,13 +1,7 @@
 """Independent forward subset-DP replacement for the checker's path search."""
 from pathlib import Path
 from importlib.util import module_from_spec, spec_from_file_location
-from time import time
-p = Path('/tmp/ali2230')
-def gate():
-    assert (p / 'working').exists() and not (p / 'PAUSE').exists()
-    assert time() - float((p / 'heartbeat').read_text()) < 360
-gate()
-spec = spec_from_file_location("separators", p / 'globalcut/check_small_separators.py')
+spec = spec_from_file_location("separators", Path(__file__).with_name('check_small_separators.py'))
 checker = module_from_spec(spec)
 spec.loader.exec_module(checker)
 def check_path(adj, acceptable):
@@ -33,5 +27,4 @@ def check_path(adj, acceptable):
     return False
 checker.spanning_path = check_path
 for k in (3,4,5):
-    gate()
     print(k, checker.verify(k), flush=True)
