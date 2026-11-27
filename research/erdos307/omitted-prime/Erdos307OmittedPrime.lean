@@ -23,7 +23,7 @@ theorem dicksonTrace_add_mul {R : Type*} [CommRing R] (a b : R) (k : ℕ) :
     simp only [pow_succ]
     ring
 
-private theorem numer_union {S T : Finset ℕ} (h : Disjoint S T) :
+theorem numer_union_of_disjoint {S T : Finset ℕ} (h : Disjoint S T) :
     numer (S ∪ T) = numer S * denom T + denom S * numer T := by
   have dv {U : Finset ℕ} {u : ℕ} (hu : u ∈ U) : u ∣ denom U :=
     Finset.dvd_prod_of_mem id hu
@@ -68,7 +68,7 @@ theorem dickson_omitted_prime {P Q : Finset ℕ} {ell : ℕ} [Fact ell.Prime]
   have hp : (denom P : ZMod ell) ≠ 0 := nonzero hP (fun h => hout (mem_union_left _ h))
   have hq : (denom Q : ZMod ell) ≠ 0 := nonzero hQ (fun h => hout (mem_union_right _ h))
   have hN : denom (P ∪ Q) = denom Q * denom P := (Finset.prod_union hdis).trans (mul_comm _ _)
-  rw [numer_union hdis, hpq, hqp, hN,
+  rw [numer_union_of_disjoint hdis, hpq, hqp, hN,
     Nat.cast_add, Nat.cast_mul, Nat.cast_mul, Nat.cast_mul, mul_pow, ← pow_two, ← pow_two,
     dicksonTrace_add_mul, ← pow_mul, ← pow_mul,
     show 2 * ((ell-1)/2) = ell-1 by obtain ⟨k,hk⟩ := hell; omega,

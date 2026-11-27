@@ -1,0 +1,6 @@
+'OMA.GreenR2GapThree.h3_of_gap_at_least_four_and_nonalternating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'OMA.GreenR2GapThree.h3_iff_gap_at_least_four_and_nonalternating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

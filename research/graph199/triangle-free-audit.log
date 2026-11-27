@@ -1,0 +1,7 @@
+'Graph199TriangleFree.degree_eq_connectivity_or_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph199TriangleFree.square_exceptions_card_add_degree_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph199TriangleFree.square_exceptions_at_most_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph199TriangleFree.unique_common_neighbor_partner' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph199TriangleFree.square_matching_with_deficiency' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph199TriangleFree.square_matching' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph199TriangleFree.square_matching_of_tree_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
