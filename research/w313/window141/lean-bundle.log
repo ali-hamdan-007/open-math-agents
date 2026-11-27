@@ -1,0 +1,18 @@
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+'OMA.Green160NearWitness.forces_progression' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.Green160NearWitness.reflected_forces_progression' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.Green141Window.Seed43.shifted_forces_progression' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.Green141Window.Seed43.reflected_shifted_forces_progression' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'OMA.Green141Window.Seed73.shifted_forces_progression' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.Green141Window.Seed73.reflected_shifted_forces_progression' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'OMA.Green130Window.Seed64.shifted_forces_progression' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.Green130Window.Seed64.reflected_shifted_forces_progression' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'OMA.Green130Window.Seed64.four_red_range_forces_progression' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.Green130Window.Seed64.r2_heights_6565' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OMA.Green130Window.Seed64.r2_heights_5454' depends on axioms: [propext, Classical.choice, Quot.sound]
