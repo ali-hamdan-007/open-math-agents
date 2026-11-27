@@ -1,0 +1,1 @@
+'C8SingleVertex.single_vertex_obstruction' depends on axioms: [propext, Quot.sound]
