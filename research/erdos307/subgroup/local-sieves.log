@@ -1,0 +1,3 @@
+mod 7: subgroup and separate tests pass; actual products reject
+mod 5: both projections and both separate swaps pass; every joint row fails
+six-prime test: internal, 2-adic, and all odd partitions checked
