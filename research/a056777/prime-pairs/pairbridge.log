@@ -1,0 +1,1 @@
+'A056777.SmallPairs.exact_residual_of_pair_barrier' depends on axioms: [propext, Classical.choice, Quot.sound]

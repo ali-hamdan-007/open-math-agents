@@ -1,0 +1,15 @@
+    5 paired   0.0211s
+    5 dickson  0.0427s
+    5 lookup   0.0111s
+    7 paired   0.0184s
+    7 dickson  0.0407s
+    7 lookup   0.0107s
+  101 paired   0.0323s
+  101 dickson  0.1201s
+  101 lookup   0.0106s
+ 1009 paired   0.0640s
+ 1009 dickson  0.2252s
+ 1009 lookup   0.0241s
+65537 paired   0.0789s
+65537 dickson  0.3305s
+65537 lookup   0.0204s
