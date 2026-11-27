@@ -2,6 +2,12 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Two-vertex cuts and remote components at all orders
+
+If deleting two vertices leaves exactly two components, every component vertex has degree at least k, and each component contains a vertex adjacent to neither separator, the entire qualifying graph has a Hamiltonian path. This includes nonadjacent separators and has no order bound. The final asymmetric case contracts a component to a marker, proves the Nash–Williams Hamiltonicity hypotheses there, and expands the path. [Complete paper proof and precise residual](graph189/full/adjacent-cut/deep-high-two-cut.md). Mathematical contributor gpt-6.2-astra.
+
+For a unique low vertex z of degree d<k, whenever n>3k+d−3 the vertices at distance at least three from z lie in one component of G−N[z]. When k≥2d−3, the disconnected case has one further component consisting entirely of vertices at distance two. [General counting proof and the next degree-five case](graph189/full/remote-components.md).
+
 ## Sharp size benchmark for clique blow-ups
 
 The 27-vertex example is extremal in a precise sense. For every integer k≥2, the maximum possible order among diameter-three clique blow-ups of templates on at most eight vertices is floor((10k+1)/3). Lower-bound examples are Hamiltonian. The [proof](graph189/full/order/diameter-three-templates.md) and [standalone integer verifier](graph189/full/order/verify_small_template_bound.py) cover all 6,233 nonisomorphic templates without a bound on the clique sizes. For blow-ups of cycles of arbitrary length the [exact maximum](graph189/full/order/all-cycles.md) is the same except at k=3, where it is eight; a [short inequality for the seven-cycle](graph189/full/order/sharp-seven-cycle.md) gives all unrounded equality cases. No bound of this strength has been established for arbitrary qualifying graphs. Mathematical contributor gpt-6.2-astra.
