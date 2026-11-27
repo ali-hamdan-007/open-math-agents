@@ -1,6 +1,6 @@
 # Independent audit of the irregular split-ball theorem
 
-The argument in [the split-ball proof](../split-ball/proof.md) is sound at paper level. For a finite connected simple graph of minimum degree $k\ge2$, assume each vertex has at most $k$ vertices at positive even distance. If a degree-$k$ vertex $z$ is a cut vertex of its own induced radius-two ball, the graph has a Hamiltonian cycle. In Conjecture 189 this applies when $\delta=\sigma$ and this specific ball exists. Degrees above the minimum and the graph diameter can be arbitrary.
+The argument in [the split-ball proof](../split-ball/proof.md) is sound at paper level. For a finite connected simple graph of minimum degree $k\ge2$, assume each vertex has at most $k$ vertices at positive even distance. If a degree-$k$ vertex $z$ is a cut vertex of an induced radius-two ball, the graph has a Hamiltonian cycle. The relocation argument below reduces this to a ball centered at $z$. In Conjecture 189 this applies when $\delta=\sigma$ and this specific ball exists. Degrees above the minimum and the graph diameter can be arbitrary.
 
 ## Independent split-ball checks
 
@@ -30,7 +30,17 @@ If $u=0$ and $m>0$, use a prescribed endpoint $p_0\in P$. If $2m<k$, all $X$-deg
 
 When $m=0$, both $U,V$ are nonempty because $P,Q$ need outer neighbors. Without a $U$-$V$ edge all cross-side paths use $z$. At a remote in $U$, the $a$ anchors of $A$ are at distance two, the $b$ anchors of $B$ are at distance four, and any remote of $V$ is at distance six. Those $k+1$ distinct witnesses force a $U$-$V$ edge, and the two marked paths use that edge's endpoints. The proof also applies at $k=2$, where the balanced $u=0$ case or the closure inequalities remain valid.
 
-The initial count above is independent of the regular split-ball Lemma 2.2 of Asratian–Granholm. That published lemma begins with a cut vertex of any radius-two ball and uses regularity to move the split to a ball centered at the cut vertex. For the irregular theorem the split at the degree-$k$ center is an explicit hypothesis. The manuscript is a paper proof; a Lean proof of the necessary closure and endpoint transfer has not been audited here. [Asratian–Granholm, Lemma 2.2](https://arxiv.org/pdf/2107.07037)
+The initial count above is independent of the regular split-ball Lemma 2.2 of Asratian–Granholm. That published lemma starts at any cut vertex of any radius-two ball in a regular graph. The irregular proof needs the cut vertex itself to have minimum degree. The manuscript is a paper proof; a Lean proof of the necessary closure and endpoint transfer has not been audited here. [Asratian–Granholm, Lemma 2.2](https://arxiv.org/pdf/2107.07037)
+
+## Moving the split to a minimum-degree cut vertex
+
+The two proofs developed independently by the closure and audit workers agree on the following relocation argument. Suppose $z\ne x$ is a cut vertex of $B_2(x)$. Then $x$ is adjacent to $z$, since a vertex at distance two from $x$ could not be an internal vertex of a shortest path of length at most two from $x$ to any other vertex of its ball. Let $C$ be the component of $B_2(x)-z$ containing $x$, let $A=N(z)\cap C$, and let $B=N(z)\setminus C$. Write $p=|A|,\ q=|B|$, so $p+q=k$, and both are positive. In fact all vertices of $B_2(x)$ lying outside $C\cup\{z\}$ belong to $B$: any shortest path from $x$ to such a vertex has length two and must use $z$.
+
+The neighbors of $x$ outside $N[z]$ form a set $W$ of size at least $k-p=q$, because its only possible other neighbors are $z$ and the other $p-1$ members of $A$. They are all at distance two from $z$. A vertex $b\in B$ has at most $q$ neighbors in $B_2(x)$, namely $z$ and the other $B$ vertices. Hence it has at least $k-q=p$ neighbors $Y$ outside $B_2(x)$. Every such vertex is at distance two from $z$: its edge to $b$ gives the path, and an edge to $z$ would place it in $B_2(x)$. The cap at $z$ enforces $|W|=q$, $|Y|=p$, and $N_2(z)=W\sqcup Y$. Now $x$ must see every other member of $A$ to reach degree $k$. Thus $A\cup W$ is contained in $N[x]$ and no vertex there has a neighbor in $Y$ outside $B_2(x)$. The original split prevents any edge from $A\cup W$ to $B$. So $B_2(z)-z$ is disconnected across the nonempty sets $A\cup W$ and $B\cup Y$.
+
+If instead $z$ is the unique minimum-degree vertex, with $\deg(z)=\delta<\sigma$ in the original conjecture, it cannot cut any ball. For its own ball, each component minus $z$ would have at least $\sigma$ vertices, while there are at most $\delta+\sigma<2\sigma$ vertices available. For a ball centered at a different vertex, the same construction produces disjoint sets of at least $\sigma-p$ and $\sigma-q$ distance-two witnesses at $z$, because $x$ and $b$ have degree at least $\sigma$. Their combined size is at least $2\sigma-\delta>\sigma$.
+
+For comparison, if $\delta=\sigma=k$ and a higher-degree vertex $z$ cuts its own ball, the ball still has exactly two components after deleting $z$. If it had $j\ge3$ components, each has at least $k$ vertices, so $d(z)+k\ge jk$. Any component with $a_i$ neighbors of $z$ contributes $d(z)-a_i$ distance-two witnesses to an anchor in that component. Thus each $a_i\ge d(z)-k$, implying $d(z)\le jk/(j-1)$. This contradicts $d(z)\ge(j-1)k$ for $j\ge3$. With two components, the same distance-two count bounds the number of anchors on each side by $k$. In a 2-connected graph each side must have an edge to the distance-three layer, so each side has an anchor that sees a remote at distance two. This tightens both anchor-size bounds to $k-1$. These inequalities do not give the two component sizes used by the prescribed-endpoint closure.
 
 ## The all-2-connected-balls complement
 
@@ -63,3 +73,16 @@ $$
 2_a,\ 1,\ 5,\ 2_b,\ 0_a,\ 4,\ 3_a,\ 6,\ 0_b,\ 3_b,\ 2_a,
 $$
 visiting each group in any internal order. The cycle successor sends any independent set injectively into its neighborhood. This demonstrates a limitation of both published sufficient criteria in the exact residual, while the graph itself is traceable. The base and unequal-expansion obstruction were checked by elementary counts; independent breadth-first searches confirmed the base and checked the unequal expansion for $2\le t\le8$, including every one-vertex deletion in each radius-two ball and the displayed Hamiltonian cycle.
+
+## Current upstream scope
+
+The live merged-PR search found [#2971](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/2971), [#5336](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/5336) and [#6181](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/6181). The matching open-PR search returned no result. #6181 is a reduction of the diameter-four-or-five step. It proves the triangle-free subcase in its own checked module and leaves separate diameter-four and diameter-five cases with triangles. This is consistent with the global triangle-free theorem already established internally in #5336. The externally submitted [PR #70](https://github.com/umaia1234/agentic-conjectures/pull/70) remains a partial low-$\sigma$ computational result, distinct from these reductions.
+
+| Exact unresolved reduction input in the audited tree | Additional graph premises |
+|---|---|
+| $\mathrm{R1.H1.R1.H1}$ | Diameter three, a triangle, $\delta\le2$ |
+| $\mathrm{R1.H1.R1.H2}$ | Diameter three, a triangle, $\delta\ge3$ |
+| $\mathrm{R1.H2.R1.H1}$ | Diameter four, a triangle |
+| $\mathrm{R1.H2.R1.H2}$ | Diameter five, a triangle, every distance-five pair has an endpoint of degree less than $\sigma$ |
+
+All leaves retain connectedness, $\delta+\sigma+1<n\le(\delta+1)(\sigma+1)$, the original full even-distance bound, and the neighborhood condition on every independent set. The irregular split-ball theorem establishes a paper-level subfamily under $\delta=\sigma$; the all-balls local obstruction explains why a direct appeal to either published Asratian theorem does not discharge the complementary leaves. No current result here supplies every input to the composed kernel proof.

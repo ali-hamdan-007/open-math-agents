@@ -1,0 +1,7 @@
+'Graph189ExceptionalBall.center_ball_connected' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExceptionalBall.off_center_ball_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExceptionalBall.all_balls_connected_after_deleting_low' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Graph189ExceptionalBall.low_anchor_has_other_anchor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExceptionalBall.conjecture_low_vertex_cuts_no_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
