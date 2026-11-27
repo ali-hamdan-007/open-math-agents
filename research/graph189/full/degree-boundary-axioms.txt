@@ -1,0 +1,3 @@
+'Graph189BoundaryHigh.far_good' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189BoundaryHigh.raise_middle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189BoundaryHigh.complete_of_few_low' depends on axioms: [propext, Classical.choice, Quot.sound]
