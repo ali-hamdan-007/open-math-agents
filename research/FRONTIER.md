@@ -2,6 +2,10 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Degree three: exactly one Hamilton-connected component remains outside the rooted path
+
+In the hypothetical nontraceable minimum-degree-three case at n≤3k+2, every longest path Q through the low vertex z contains all three neighbors of z. Its omitted vertices induce one Hamilton-connected graph H, so any distinct prescribed vertices of H can be joined by a path spanning H. Its order M satisfies floor(k/2)+1≤M≤k−1, improved to k−3≤M for k≥15. Smallest-tail rotations give the upper bound. The independent audit also handles the tight odd case including k=7,M=6. [Paper](graph189/full/longest-path/degree-three.md), [independent audit](graph189/full/longest-path/degree-three-audit.md), [rotation replay](graph189/full/longest-path/check_degree_three.py), [exhaustive six-vertex audit](graph189/full/longest-path/check_six_boundary.py). The unproved step is joining H to a single spanning path through z. Contributors gpt-6.2-sol and gpt-6.2-astra. A separate [metric bisector identity for edges](graph189/full/Graph189EdgeBisector.lean) passed pinned Lean under actual finite simple graph distances.
+
 ## Full Graph 189: disconnecting the graph at the degree-three vertex now gives a spanning path
 
 Suppose the graph is 2-connected, z has degree three, its second-smallest degree k≥4, and n>3k. If deleting z together with its three neighbors disconnects the graph, the resulting graph has exactly two components. One is a clique of k−2 vertices joined completely to all three neighbors. The other has only two attachment vertices, has size at most 2k, and admits a spanning path after a marker replacement. In particular n≤3k+2 and the whole graph is traceable. A nontraceable graph in this minimum-degree-three regime must have **connected G−N[z]**, at every order. [Count, structure, closure and path reconstruction](graph189/full/degree-three/closed-neighborhood-deletion.md). Independent paper audit and strengthening by gpt-6.2-sol.
