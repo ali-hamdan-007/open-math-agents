@@ -31,3 +31,15 @@ B – 2 – z – 1 – A – W – C – 4 – D
 C – 4 – z – 1 – A – W – B – 2 – D
 ```
 Each traverses W between A and a singleton leaf port. Its prescribed endpoints and, when L=F, the insertion of t are handled exactly as in the connected proof. Joining the component paths to the indicated endpoint ports completes a spanning path of the original graph.
+
+## Improved threshold k≥12, still without connectivity assumptions
+
+Write e=5k−11−2c. Because every exclusive remote is in at least one port boundary, and the sum of the boundary sizes exceeds |U| by at most e, at most e exclusives belong to two or more boundaries. Let x be a nonexclusive remote incident to at least three ports. Every exclusive neighbor of x belongs to at least two boundaries (the exclusive has only one supporting port). Since the number of other nonexclusive remotes is c−|U|−1≤3k−9−c, one obtains
+```
+d_R(x) ≤ e + 3k−9−c = 8k−20−3c.
+```
+If |L|>3(k−4)−2, then c≥3k−13, and k≥12 implies 3c>7k−16. The displayed bound is then strictly below k−4. No nontriple can have three ports, since such a nontriple is nonexclusive and has d_R≥k−3. Also when L=R, t cannot have three or more ports because we proved d_R(t)≥k−4 in that case. Consequently δ(L)≥k−3. Since c≤floor((5k−11)/2)≤3(k−3)−2 for k≥11, the two size cases always give |L|≤3δ(L)−2.
+
+The independence argument still rules out a stable set of b=k−3 vertices. Neighborhood intersection holds directly from 2(k−4)>floor((5k−11)/2)−(k−3) for k≥12. The D support accounts for at most two members, and A is excluded. Among remaining nontriples, if a B-only solo occurs, the closed remote neighborhood of this solo has size at least k in H_B of size at most k+1, so at most two members are supported by B. The same holds if a C-only solo occurs. If both occur this bounds the total remainder by four. If one occurs but the other does not, every member in the remainder belongs to the first one's support. If neither occurs, all remaining members have both B and C and there are at most three, by the previous bound. Including t if present gives |I|≤2+4+1=7, a contradiction.
+
+For 2-connected L the same Nash-Williams test applies. In all other cases let δ=δ(L). After deleting at most one cut vertex each component has at least δ vertices and there are exactly two by |L|≤3δ−2. In the cut case its order m satisfies m≤|L|−1−δ≤2δ−3, enough to close the component augmented by s since its underlying minimum degree is ≥δ−1. In the disconnected case m≤|L|−(δ+1)<2δ suffices directly. All endpoint and W-path constructions above hold unchanged for k≥12 (|W|≥8). This proves traceability throughout the path-centered mask-6, single-triple template for k≥12.
