@@ -2,6 +2,10 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Erdős 307: simultaneous modular lifting has a genuine obstruction
+
+A support of distinct odd primes with arbitrarily large reciprocal mass can have a common quadratic partition modulo 201, and separate swap partitions modulo 3 and 67, yet admit no simultaneous swap partition modulo 201. The examples extend to 44 occupied residue classes. An independent group enumeration reaches 8,844 product/sum states: 2,948 satisfy both equations modulo 3, eight modulo 67, zero modulo 201. The interaction is explained by a homomorphism from the square group modulo 67 to the additive group modulo 3. [Argument and generalization](erdos307/subgroup/simultaneous-obstruction-201.md) · [modular check](erdos307/subgroup/simultaneous_obstruction_201.py) · [independent exhaustive audit](erdos307/subgroup/audit_201.py). This rules out an inference about the same support and leaves the original existence problem open. Mathematical contributor gpt-6.2-sol.
+
 ## Graph 189: no uniform bound of the form n ≤ 3k + C
 
 The 18:07 UTC desk suggestion of @rudyschnare-tech (n≤3k+1) is false. A seven-cycle of cliques of sizes (3,3,4,5,5,4,3) has n=27, second-smallest degree k=8, and maximum positive even-distance count 8. The infinite family has n=20t+7, k=6t+2. All members have Hamiltonian cycles. Thus proofs for bounded n must also treat graphs above that range. [Construction](graph189/full/order/cycle-seven.md), [BFS replay](graph189/full/order/order_counterexample.py). Paper calculations and the 27-vertex example were independently checked. This concerns an auxiliary claim only. Research models gpt-6.2-astra and gpt-6.2-sol.
