@@ -1,0 +1,9 @@
+# A nontriple remote cannot be adjacent to every triple-visible remote
+
+In the d=1 triangle template use the notation of singleton-complete.md. The arbitrary-T arguments show: each p_i touches W, and each w touches at most one private. Thus every w touches at least one triple (otherwise it has at most 3+(k-5)+1=k-1 neighbors). The sets W_i of common neighbors of p_i are nonempty and disjoint and each a_i=|W_i|<=k-6. For R_i=N_C(p_i), the induced closed C-neighborhood H_i of R_i has size at most 2k-7: all its vertices outside R_i plus z, two foreign anchors and k-4-a_i missed W are at distance two from p_i, so |H_i|<=|R_i|+a_i+1<=k-2+k-6+1.
+
+Suppose x in C outside T is adjacent to all T. Its closed neighborhood K in G[C] contains T. Let D be the external C-boundary of K and L=C minus (K union D). At distance two from x are all W through triple neighbors, an anchor through a private, and every member of D, giving |D|<=3. Taking a private neighbor p_i of x, we have K inside H_i, whence |L|>=2k-2-(2k-7)-3=2. No R_j touches nontriple vertices in both K and L: their respective closed C-neighborhoods have at least k-1 members, lie in K union D and L union D respectively, and would require |H_j|>=2k-5.
+
+At least two privates touch K outside T. This follows directly if x has two private neighbors; otherwise |K|>=k since x is exclusive, and any one private covers at most k-2-|T| nontriples while |K minus T|>=k-|T|. As all T lie in K, every member of L is exclusive to the remaining private p_h. Its remote degree forces |L|+|D|>=k, giving |L|>=k-3. A representative of W_h sees all L via p_h, x via a triple, and z and both other privates, exceeding the cap. The same proof works when T lies in K union D and all W are at distance two from x.
+
+In particular |T|=1 is impossible: t's possible nonremote neighbors are the k-4 W and the three privates, at most k-1, so t must have a nontriple remote neighbor x.
