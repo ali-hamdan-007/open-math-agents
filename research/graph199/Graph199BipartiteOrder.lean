@@ -158,7 +158,7 @@ theorem same_color_common_neighbors {col : V → Bool}
   · exact h.resolve_left hxy
   · exact (hcol hxv (hxyCol.trans (colR hvy).symm)).elim
 
-private theorem vertexConnectivity_le_degree (v : V) :
+theorem vertexConnectivity_le_degree (v : V) :
     vertexConnectivity G ≤ G.degree v := by
   classical
   unfold vertexConnectivity
