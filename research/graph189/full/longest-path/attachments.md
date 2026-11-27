@@ -44,30 +44,30 @@ Given any two attachment indices of \(z\) on a longest path, let \(g\) be their 
 \]
 The gaps are at least three, so the two shifts of each attachment index are all distinct. They give \(2\delta\) vertices at distance two from \(z\), proving \(2\delta\leq k\).
 
-## The cone is 1-tough when \(n\leq3k+2\) and \(k\geq7\)
+## The cone is 1-tough when \(n\leq3k+2\) and \(k\geq3\)
 
-Assume \(G\) is 2-connected, \(n\leq3k+2\), and \(k\geq7\). Choose a least-degree vertex \(z\) even when all vertices are high, and put \(X=V(G)\setminus\{z\}\). Then \(\alpha(G[X])\leq k+2\). In an independent set of size \(k+3\), one vertex would have another member at distance at least three by its distance-two cap. Their neighborhoods are disjoint from one another and from the independent set. Both degrees are at least \(k\), requiring at least \(3k+3\) vertices.
+Assume \(G\) is 2-connected, \(n\leq3k+2\), and \(k\geq3\). Choose a least-degree vertex \(z\) even when all vertices are high, and put \(X=V(G)\setminus\{z\}\). Then \(\alpha(G[X])\leq k+2\). In an independent set of size \(k+3\), one vertex would have another member at distance at least three by its distance-two cap. Their neighborhoods are disjoint from one another and from the independent set. Both degrees are at least \(k\), requiring at least \(3k+3\) vertices.
 
 Let \(H\) be the cone obtained by adding a universal vertex to \(G\). Any cut of \(H\) leaving at least two components includes the universal vertex. Thus a failure of 1-toughness gives a set \(S\subseteq V(G)\) with \(s=|S|\), and \(t\geq s+2\) components in \(G-S\). Since \(G\) is 2-connected, \(s\geq2\). Every component meeting \(X\) has size at least \(k-s+1\), since a vertex of \(X\) in it has at most \(s\) neighbors outside the component. Every component has neighbors in at least two distinct vertices of \(S\), because a unique such vertex would be a cut vertex of \(G\). If a component of order at least two has only one of its own vertices touching \(S\), this vertex would likewise be a cut vertex. So a nonsingleton component has at least two vertices that touch \(S\).
 
 Suppose all components meet \(X\). Choosing representatives in \(X\) shows \(t\leq k+2\), so \(s\leq k\).
 
-- For \(2\leq s\leq k-2\), the order satisfies \(n\geq s+(s+2)(k-s+1)\geq4k-2\). The latter inequality follows by concavity in \(s\) and evaluating both ends. This exceeds \(3k+2\).
+- For \(2\leq s\leq k-2\), the order satisfies \(n\geq s+(s+2)(k-s+1)\geq4k-2\). The latter inequality follows by concavity in \(s\) and evaluating both ends. This exceeds \(3k+2\) for \(k\geq5\). The only smaller nonempty interval is \((k,s)=(4,2)\), forcing four components of size three. An all-\(X\) component exists, and one of its vertices sees all of \(S\), hence at least two vertices in each of the three other components at distance two.
 - For \(s=k-1\), at most one vertex is available in excess of \(k+1\) components of size two. At least two such components consist entirely of \(X\)-vertices. Each of those vertices is adjacent to every member of \(S\). From one such vertex, every other component contributes a distinct distance-two witness through \(S\), and the second such pair contributes two. This exceeds \(k\).
 - For \(s=k\), there are exactly \(k+2\) components with at most \(2k+2\) vertices in total. There is a singleton of \(X\), whose vertex sees all of \(S\) and at least one vertex in every other component at distance two. This gives \(k+1\) witnesses.
 
 Otherwise a component is the singleton \(z\), and all other components meet \(X\). Thus \(t-1\leq k+2\) and \(s\leq k+1\).
 
-- For \(3\leq s\leq k-2\), \(n\geq 1+s+(s+1)(k-s+1)\geq4k-4\) by concavity; this exceeds \(3k+2\).
-- For \(s=k-1\), at most two vertices are available in excess of \(k\) pairs and \(z\). There are at least two \(X\)-pairs, each entirely adjacent to \(S\). From a vertex in one pair, all \(t-1\geq k\) other components contribute at least one distance-two witness and the other pair gives a second one.
+- For \(3\leq s\leq k-2\), \(n\geq 1+s+(s+1)(k-s+1)\geq4k-4\) by concavity. For \(k\geq7\) this exceeds \(3k+2\). The only smaller pairs compatible with the order bound are \((k,s)=(5,3),(6,3),(6,4)\), leaving respectively one, zero or zero excess vertices beyond the lower bound. In all three cases some \(X\)-component has minimum size and every \(X\)-component has order at most \(k\), so all its vertices touch \(S\). A vertex in a minimum component sees all of \(S\), hence every vertex in the other \(X\)-components as well as \(z\) at distance two, exceeding \(k\).
+- For \(s=k-1\), at most two vertices are available in excess of \(k\) pairs and \(z\). There is at least one \(X\)-pair, since \(k\geq3\), and its vertices are adjacent to every member of \(S\). From a vertex in this pair, each of the other \(t-2\geq k-1\) \(X\)-components has at least two vertices touching \(S\). With \(z\) these give at least \(2(k-1)+1>k\) distance-two witnesses.
 - For \(s=k\) or \(s=k+1\), at least \(s+1\) components lie in \(X\), on at most \(3k+1-s<2(s+1)\) vertices. Thus one is an \(X\)-singleton. Its vertex sees all but at most one member of \(S\). Every other component has at least two distinct neighbors in \(S\), so contributes a distance-two witness through a shared neighbor. There are at least \(k+1\) such components.
-- For \(s=2\), there are exactly three \(X\)-components. Their minimum sizes \(k-1\) leave at most two extra vertices, so one has size \(k-1\), all of whose vertices see both members of \(S\). At least one other \(X\)-component has size at most \(k\), so every vertex of it sees \(S\), contributing at least \(k-1\) witnesses to the distance-two set of a vertex in the minimum component. The third \(X\)-component contributes at least two of its vertices touching \(S\), and \(z\) contributes one. This gives at least \(k+2\) witnesses.
+- For \(s=2\) and \(k\geq4\), there are exactly three \(X\)-components. Their minimum sizes \(k-1\) leave at most two extra vertices, so one has size \(k-1\), all of whose vertices see both members of \(S\). At least one other \(X\)-component has size at most \(k\), so every vertex of it sees \(S\), contributing at least \(k-1\) witnesses to the distance-two set of a vertex in the minimum component. The third \(X\)-component contributes at least two of its vertices touching \(S\), and \(z\) contributes one. This gives at least \(k+2\) witnesses.
 
 This proves 1-toughness of \(H\).
 
 ## Consequence using Li's subset circumference theorem
 
-For \(k\geq7\) and \(n\leq3k+2\), let \(G\), \(X\), and \(H\) be as above. Suppose \(X\) contains an independent triple in \(H\). Each member of \(X\) has ambient degree at least \(k+1\) in \(H\). Therefore the minimum ambient degree sum \(\sigma_3^H(X)\) of an independent triple from \(X\) is at least \(3(k+1)\geq n+1=|V(H)|\). Jianping Li's Theorem 8, for a 1-tough graph with this ambient degree-sum threshold, gives a cycle containing at least
+For \(k\geq3\) and \(n\leq3k+2\), let \(G\), \(X\), and \(H\) be as above. Suppose \(X\) contains an independent triple in \(H\). Each member of \(X\) has ambient degree at least \(k+1\) in \(H\). Therefore the minimum ambient degree sum \(\sigma_3^H(X)\) of an independent triple from \(X\) is at least \(3(k+1)\geq n+1=|V(H)|\). Jianping Li's Theorem 8, for a 1-tough graph with this ambient degree-sum threshold, gives a cycle containing at least
 \[
  \min\bigl\{|X|,\ |X|+\tfrac13\sigma_3^H(X)-\alpha(H[X])\bigr\}
  \ \geq\ |X|-1
@@ -76,7 +76,7 @@ vertices of \(X\). Remove the universal vertex if the cycle contains it, or dele
 
 If \(X\) has no independent triple, then \(\alpha(H)\leq3\). The cone is 3-connected because \(G\) is 2-connected. The Chvátal–Erdős theorem supplies a Hamilton cycle in \(H\), giving a spanning path in \(G\).
 
-The almost-spanning conclusion proves that \(G\) is traceable whenever \(2\delta>k\) or \(n<(\delta-1)(\lfloor k/2\rfloor+2)+4\). In particular \(\delta\geq7\) suffices throughout \(n\leq3k+2\), since the right side of (2) is at least \(3k+13\). The distance-two hypothesis alone suffices for the 2-connected version stated here. For the full Graph Conjecture 189 hypothesis, non-2-connected graphs are separately covered by Easwar–Johari, Theorem B. The \(3k+2\) traceability extension here applies for \(k\geq7\).
+The almost-spanning conclusion proves that \(G\) is traceable whenever \(2\delta>k\) or \(n<(\delta-1)(\lfloor k/2\rfloor+2)+4\). In particular \(\delta\geq7\) suffices throughout \(n\leq3k+2\), since the right side of (2) is at least \(3k+13\). The distance-two hypothesis alone suffices for the 2-connected version stated here. For the full Graph Conjecture 189 hypothesis, non-2-connected graphs are separately covered by Easwar–Johari, Theorem B. The separate attachment-packing argument improves the minimum-degree requirement to \(\delta\geq5\).
 
 ### References
 

@@ -2,6 +2,12 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Adjacent separators and near-spanning paths
+
+For the full Graph 189 hypothesis, **every graph with an adjacent separating pair is traceable**. Removing such a pair disconnects the graph. [The main paper argument](graph189/full/adjacent-cut/adjacent-separator.md) and [the shallow-component extension](graph189/full/adjacent-cut/shallow-adjacent.md) cover the large degrees. For k=3,4,5 two finite path algorithms independently checked every allowed profile. The [audit](graph189/full/adjacent-cut/adjacent-cut-audit.md) records the coverage argument and how the paths lift back. This extends the earlier cut-vertex case: in any counterexample, the vertices of every separating pair must be nonadjacent. This is not a proof excluding all two-vertex separators.
+
+The [attachment packing proof](graph189/full/longest-path/gap-packing.md) strengthens the order result: if the graph has at most 3k+2 vertices and its minimum degree is at least five, it has a spanning path. It uses only the exact-distance-two cap in the 2-connected case. With the earlier unrestricted 3k order result and the all-diameter minimum-degree-two proof, only minimum degrees three and four remain at orders 3k+1 and 3k+2. Both conclusions have independent proof review; the universal Lean conjecture remains open.
+
 ## Near-spanning paths in general irregular graphs
 
 Let k≥3 be the second-smallest degree. For a 2-connected qualifying graph of order at most 3k+2, [the attachment argument](graph189/full/longest-path/attachments.md) and its [independent audit, including the small degrees](graph189/full/longest-path/cone-audit.md) prove that there is a path covering every vertex except possibly a designated minimum-degree vertex. They use the distance-two hypothesis and Jianping Li's 1-tough subset-cycle theorem. In particular a spanning path follows for minimum degree at least seven, or more generally when the inequalities in the audit exclude a lone omitted vertex. This is an independently reviewed paper result; a sharper small-minimum-degree analysis is being tested. The previously known order theorem covers all n≤3k under the full even-distance hypothesis. Check the 3k+1 and 3k+2 boundary rather than redoing it.
