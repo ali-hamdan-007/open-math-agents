@@ -33,13 +33,56 @@ def balanced_base(primes):
     return sides
 
 
+def one_by_two_candidates(A, U, n, v, minimum_left, minimum_right, counts):
+    """Yield every arithmetic one-left/two-right closing of the given bases.
+
+    A,U are the left product and cofactor, n,v the right counterparts.
+    Assume gcd(A,n)=gcd(v,n)=1 and U>0. The closing members on the right
+    are ordered and distinct. No primality or upper bounds are applied.
+    """
+    mod = n * n
+    k = A * n - U * v
+    if k <= 0:
+        counts["nonpositive"] += 1
+        return
+    if gcd(k, mod) != 1:
+        counts["nonunit"] += 1
+        return
+    residue = (v * A * pow(k, -1, mod)) % mod
+    floor = max(minimum_left, (v * A) // k + 1)
+    b0 = floor + (residue - floor) % mod
+    r0, rr = divmod(k * b0 - v * A, mod)
+    q0, rq = divmod(U * b0 + A, n)
+    assert rr == rq == 0 and r0 > 0 and q0 > 0
+
+    # For any eligible b >= b0, the right pair c<=d has sum r and
+    # product q. R(b)=q/r decreases strictly towards n*U/k. Since
+    # c<=2R(b) and c-R(b)=c*c/r, c is in this interval for every b.
+    c_min = max(minimum_right, (n * U) // k + 1)
+    c_max = (q0 * r0**2 + 4 * q0**2) // r0**3
+    if c_min > c_max:
+        counts["empty_interval"] += 1
+        return
+    for c in range(c_min, c_max + 1):
+        counts["right_candidates"] += 1
+        # The symmetric breeder equation recovers d uniquely for c.
+        d, rem = divmod(A * A + n * U * c, k * c - n * U)
+        if rem or d <= c:
+            continue
+        b, rem = divmod(n * c * d - A, U)
+        if rem or b < b0 or (b - residue) % mod:
+            continue
+        assert A * b == v * c * d + n * (c + d)
+        counts["arithmetic_completions"] += 1
+        yield b, c, d
+
+
 def two_pair_candidates(left, right, primes, first_bound, *, globally_first=False):
     m, n = prod(left), prod(right)
     md = sum(m // p for p in left)
     v = sum(n // q for q in right)
     base = set(left) | set(right)
     assert len(base) == len(left) + len(right) and gcd(m, n) == gcd(v, n) == 1
-    mod = n * n
     counts = dict(first=0, nonpositive=0, nonunit=0, empty_interval=0,
                   right_candidates=0, arithmetic_completions=0)
     hits = []
@@ -50,39 +93,8 @@ def two_pair_candidates(left, right, primes, first_bound, *, globally_first=Fals
             continue
         counts["first"] += 1
         A, U = m * a, md * a + m
-        k = A * n - U * v
-        if k <= 0:
-            counts["nonpositive"] += 1
-            continue
-        if gcd(k, mod) != 1:
-            counts["nonunit"] += 1
-            continue
-        residue = (v * A * pow(k, -1, mod)) % mod
-        floor = max(a + 1, (v * A) // k + 1)
-        b0 = floor + (residue - floor) % mod
-        r0, rr = divmod(k * b0 - v * A, mod)
-        q0, rq = divmod(U * b0 + A, n)
-        assert rr == rq == 0 and r0 > 0 and q0 > 0
-
-        # For any eligible b >= b0, the right pair c<=d has sum r and
-        # product q. R(b)=q/r decreases strictly towards n*U/k. Since
-        # c<=2R(b) and c-R(b)=c*c/r, c is in this interval for every b.
-        c_min = max(2, (n * U) // k + 1, a + 1 if globally_first else 2)
-        c_max = (q0 * r0**2 + 4 * q0**2) // r0**3
-        if c_min > c_max:
-            counts["empty_interval"] += 1
-            continue
-        for c in range(c_min, c_max + 1):
-            counts["right_candidates"] += 1
-            # The symmetric breeder equation recovers d uniquely for c.
-            d, rem = divmod(A * A + n * U * c, k * c - n * U)
-            if rem or d <= c:
-                continue
-            b, rem = divmod(n * c * d - A, U)
-            if rem or b < b0 or (b - residue) % mod:
-                continue
-            assert A * b == v * c * d + n * (c + d)
-            counts["arithmetic_completions"] += 1
+        for b, c, d in one_by_two_candidates(
+                A, U, n, v, a + 1, a + 1 if globally_first else 2, counts):
             if len({a, b, c, d}) != 4 or base.intersection((a, b, c, d)):
                 continue
             if all(is_prime(p) for p in (b, c, d)):
