@@ -52,7 +52,14 @@ theorem verified157 (n : ℕ) (hn : n < 1024) :
   have eq : 32*b + n%32 = n := by dsimp [b]; omega
   simpa only [eq] using checkedBlock157 hh (show n%32 < 32 by omega)
 
-theorem normalized157_bound := bound_actual157 verified157
+theorem normalized157_bound (s z t : ℝ) (hs : s ^ 2 = 3) (hz : z ^ 3 = 3*z+1)
+    (points : Finset (ℝ × ℝ))
+    (hpoint : ∀ p ∈ points, ∀ q ∈ base form157,
+      distanceSq p (Point.eval q s z) = t ∨
+        ∃ v ∈ small157, distanceSq p (Point.eval q s z) = v.eval s z)
+    (hbase : ∀ p ∈ points, ∀ q ∈ base form157, p ≠ Point.eval q s z)
+    (hsmall : ∀ q ∈ small157, t ≠ q.eval s z) : points.card ≤ 3 :=
+  bound_actual157 verified157 s z t hs hz points hpoint hbase hsmall
 
 end Erdos1082
 

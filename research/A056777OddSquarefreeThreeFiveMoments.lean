@@ -643,7 +643,6 @@ theorem cubic_root_recovers_unrepeated_prime (p q x : ℤ) (hp : 3≤p)
     exact add_pos_of_nonneg_of_pos (sq_nonneg _) hc
   have hp0 : 0≤p := by omega
   refine ⟨pos_of_mul_pos_right hprod (by positivity),?_⟩
-  dsimp [T]
   linear_combination -hx
 
 end A056777OddSquarefreeThreeFive
