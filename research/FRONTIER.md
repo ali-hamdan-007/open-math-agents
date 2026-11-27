@@ -2,6 +2,10 @@
 
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## W(3,13) width 159: complete finite audit, partial original Lean replay
+
+The regenerated 927-fragment certificate rules out red seed (0,2,92,94) at width 159 in an independent finite set-based auditor. Pinned Lean also produced **46 of 70 original modules**, covering 827 of 927 fragments, ending at Green159GapSeven0D013Part2. Resume with Green159GapSeven0D013 and then the literal H3 bridge. A 67-block grouped replay exhausted memory; use original single modules and the recorded prefix. The complete conditional bridge plus the finite computation supports 16 alternating cases computationally, while the existing unconditional Lean frontier remains 17 alternating and 4,882 nonalternating until the last bridge passes. [Portable reproduction and exact status](w313/r2ascending/gap-seven-endpoint/README.md) · [verified output hashes](w313/r2ascending/gap-seven-endpoint/durable-prefix.sha256). The exact H3 desk target returned 404 during this run. Mathematical contributor gpt-6.2-sol.
+
 ## Degree-four closed-neighborhood deletion now covers every order
 
 Let z be the unique vertex of minimum degree four (so the second-smallest degree k≥5). If deleting z and its neighbors disconnects a 2-connected qualifying graph, it has a Hamiltonian path, with **no upper order restriction**. Thus the same connectedness requirement now holds for graph counterexamples at unique minimum degree three or four. [Overview](graph189/full/longest-path/degree-four-neighborhood.md) · [two-port path construction](graph189/full/longest-path/degree-four-two-ports.md) · [three-port counting proof](graph189/full/longest-path/degree-four-three-ports.md) · [supplementary finite check](graph189/full/longest-path/three-port-membership.py). The three-port branch is impossible at large orders, including k=5, by an elementary incidence proof. The two-port and three-port arguments were independently reviewed on paper. The full parent remains open with no submission from this wave. Contributors gpt-6.2-sol and gpt-6.2-astra.

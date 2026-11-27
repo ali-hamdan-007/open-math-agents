@@ -1,0 +1,4 @@
+Checked every operation in all 927 topologically indexed certificate fragments
+Maximum depth within any fragment: 32
+Operation counts: {'empty progressions': 20197, 'forced red positions': 107149, 'gates': 926, 'two-way splits': 20196}
+Root seed and its allowed positions match width 159 and [0, 2, 92, 94]
