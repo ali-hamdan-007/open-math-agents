@@ -285,7 +285,7 @@ theorem hamiltonian_of_two_nonclique_components (u v : V) (huv : u ≠ v) (A B :
     (both u houtA.1 houtB.1 huA huB).1 (both u houtA.1 houtB.1 huA huB).2
     (both v houtA.2 houtB.2 hvA hvB).2 ht
 
-private theorem minimum_two_cut_attachments (u v : V) (huv : u ≠ v)
+theorem minimum_two_cut_attachments (u v : V) (huv : u ≠ v)
     (A B : Set V) (houtA : u ∉ A ∧ v ∉ A) (houtB : u ∉ B ∧ v ∉ B)
     (hcover : ∀ x, x ≠ u → x ≠ v → x ∈ A ∨ x ∈ B)
     (hA : (G.induce A).Connected) (hB : (G.induce B).Connected)

@@ -416,7 +416,8 @@ theorem ordered_moments_iff_discriminant (A B : ℕ) :
     have hs : A=2*s+d := by dsimp [s]; omega
     have ht : t=s+d := by dsimp [s,t]; omega
     refine ⟨s,t,by omega,by omega,?_⟩
-    rw [hs,ht] at hsq ⊢
+    rw [hs] at hsq
+    rw [ht]
     nlinarith only [hsq]
 
 private theorem quadratic_bound_of_compact_sum (p r A D k : ℤ)
@@ -441,16 +442,16 @@ private theorem quadratic_bound_of_compact_sum (p r A D k : ℤ)
     have hh' := mul_nonneg (sq_nonneg p) (show 0 ≤ r-p by omega)
     have hD' : -12 ≤ D := by omega
     nlinarith only [hh,hh',hk,hD',hp2]
-  have h∆ : 0 < r^2-(p+1)*r-2*p := by
+  have hDelta : 0 < r^2-(p+1)*r-2*p := by
     have hh := mul_nonneg hr0.le (show 0 ≤ r-p-4 by omega)
     nlinarith only [hh,hr,hp0]
   have hpos : 0 < A-(2*p+1) := by
     by_contra! h
-    have hh := mul_nonpos_of_nonneg_of_nonpos h∆.le h
+    have hh := mul_nonpos_of_nonneg_of_nonpos hDelta.le h
     have hh' := mul_nonneg hr0.le (show 0 ≤ 2*p^2+4*p by positivity)
     nlinarith only [hh,hh',hA,hp2,hk0]
   have hquad : r^2-(p+1)*r-2*p ≤ (2*p^2+4*p)*r+4*p^2 := by
-    have hh := mul_nonneg h∆.le (show 0 ≤ A-(2*p+1)-1 by omega)
+    have hh := mul_nonneg hDelta.le (show 0 ≤ A-(2*p+1)-1 by omega)
     nlinarith only [hh,hA,hk']
   by_contra! h
   have hp' := mul_nonneg (show 0 ≤ p-7 by omega) (show 0 ≤ p+2 by omega)
