@@ -49,7 +49,7 @@ def main():
         data = source.read_bytes()
         digest = hashlib.sha256(data)
         for dep in imports.findall(data.decode()):
-            if dep.startswith(("FormalConjectures", "Graph189")):
+            if dep.startswith("FormalConjectures") or dep in files:
                 digest.update(compile_module(dep).encode())
         signature = digest.hexdigest()
         local = build / relative
