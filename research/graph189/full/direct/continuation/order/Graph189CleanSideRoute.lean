@@ -1,3 +1,4 @@
+import Graph189DenseRootedRoute
 import Graph189MarkedLowCut
 import Graph189ConnectedMarkedRoute
 
@@ -78,10 +79,39 @@ theorem high_route (A : Finset V) (i : V) {k r : ℕ} (large : 15≤k) (few : r�
   exact region A i (d:=k-1) (b:=r) (by omega) (by omega) con min (by omega)
     (card_pos.mp (by omega)) (by omega)
 
+/-- On an all-high side the actual path loss is at most the number of nonports.
+At zero excess, open a spanning path at a prescribed contact using the half-degree bound. -/
+theorem high_route_sharp (A : Finset V) (i : V) {k r : ℕ} (large : 11≤k) (few : r≤7)
+    (con : (G.induce (A:Set V)).Connected)
+    (min : ∀v : A,k-1≤(G.induce (A:Set V)).degree v)
+    (size : A.card≤2*k-2+r) (marks : (A.filter (G.Adj i)).Nonempty)
+    (miss : (A.filter (fun v => ¬G.Adj i v)).card≤k-1+r) : Route G A i r := by
+  classical
+  obtain ⟨z,zP⟩ := marks
+  let z' : A := ⟨z,(mem_filter.mp zP).1⟩
+  have bound := (G.induce (A:Set V)).degree_lt_card_verts z'
+  change (G.induce (A:Set V)).degree z' < Fintype.card A at bound
+  rw [Fintype.card_coe] at bound
+  have degree := min z'
+  by_cases pos : 0<r
+  · have result := region A i (d:=k-1) (b:=r-1) (by omega) (by omega) con min
+      (by omega) ⟨z,zP⟩ (by omega)
+    simpa only [Nat.sub_add_cancel pos] using result
+  letI : Nontrivial A := Fintype.one_lt_card_iff_nontrivial.mp (by rw [Fintype.card_coe]; omega)
+  obtain ⟨y,p,hp⟩ := Graph189DenseRootedRoute.from_vertex z' min (by rw [Fintype.card_coe]; omega)
+  let f := (Embedding.induce (G:=G) (A:Set V)).toHom
+  refine ⟨_,_,p.map f,hp.isPath.map Subtype.val_injective,(mem_filter.mp zP).2,?_,?_⟩
+  · intro v hv
+    rw [Walk.support_map] at hv
+    obtain ⟨u,_,rfl⟩ := List.mem_map.mp hv
+    exact u.property
+  · rw [Walk.support_map,List.length_map,hp.length_support,Fintype.card_coe]
+    omega
+
 /-- If deleting the low vertex disconnects this side, the two dense end
 pieces have a marked spanning route. Otherwise rotate a longest path
 in its connected high part and charge the low vertex to the loss. -/
-theorem low_route (A : Finset V) (i : V) {k r : ℕ} (large : 15≤k) (few : r≤7)
+theorem low_route (A : Finset V) (i : V) {k r : ℕ} (large : 11≤k) (few : r≤7)
     (con : (G.induce (A:Set V)).Connected) {z : V} (za : z∈A)
     (min : ∀v : A,v.val≠z → k-1≤(G.induce (A:Set V)).degree v)
     (size : A.card≤2*k-2+r) (enough : 4≤(A.filter (G.Adj i)).card)

@@ -2,6 +2,10 @@
 
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Connectivity two at every order from degree 13
+
+For a minimum separating pair, the only previous gap at degrees 13 and 14 was the case with many private contacts and one possible low vertex. A prescribed-start path spans the all-high side when it is dense. Otherwise its loss is at most the number of nonports. At least four contacts on the other side permit joining through the same separator vertex. The resulting path omits at most ten vertices, within the available two-cut bound. Lean verifies the original conclusion under the original even-distance hypothesis. The underlying path rotation uses work by @carl2sheriff and @philipsaint. [Two-cut theorem](graph189/full/direct/continuation/root/Graph189TwoConnectivity.lean) · [Prescribed-start lemma](graph189/full/direct/continuation/order/Graph189DenseRootedRoute.lean) · [All-connectivity degree-33 Linux replay](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46142414545/job/140971072238)
+
 ## All orders from degree 33, and the ordinary longest-path gap
 
 At vertex connectivity four the exact graph incidence bounds now certify degrees 33, 34 and 35 as well. Applied to every reselected minimum separator in the proof, these bounds give traceability at every order. As a result the original conjecture is proved for **every k≥33**, regardless of order or connectivity. For k=6 the independent Linux replay has now completed successfully. Large-order instances with 7≤k≤32 remain. [High-degree theorem](graph189/full/direct/continuation/root/Graph189AllHighOrders.lean) · [Four-cut graph bounds](graph189/full/direct/continuation/global/kappa4/Graph189FourCutSaturationFacts.lean) · [Degree-six kernel replay](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46140963283/job/140966572594)

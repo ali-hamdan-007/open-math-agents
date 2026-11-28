@@ -135,3 +135,8 @@ All orders at degree six and at every degree at least 33; ordinary longest-path 
 'Graph189OrdinaryPathGap.transfer_to_high' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189OrdinaryPathGap.traceable_of_near_unrestricted' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189ThreeConnectivity.traceable_ge24' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Connectivity two from degree 13, at every order
+'Graph189DenseRootedRoute.from_vertex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CleanPrivatePair.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TwoConnectivity.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]

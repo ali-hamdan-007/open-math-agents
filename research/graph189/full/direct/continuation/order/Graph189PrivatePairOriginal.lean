@@ -10,7 +10,7 @@ variable {A B S : Finset V} {p q : V}
 exceptional vertex in either component or at either anchor. -/
 theorem traceable (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 15≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S)
+    (large : 13≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S)
     (pair : S={p,q}) (ne : p≠q) (sc : S.card≤G.vertexConnectivity)
     (a : ∀x∈A,¬(G.Adj x p ∧ G.Adj x q)) (b : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q))
     (conA : (G.induce (A:Set V)).Connected) (conB : (G.induce (B:Set V)).Connected) :

@@ -13,7 +13,7 @@ variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph
 Choosing a globally smallest side makes the recut available in either orientation. -/
 private theorem mixed (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 15≤G.secondSmallestDegree) {A B S : Finset V} {p q : V}
+    (large : 13≤G.secondSmallestDegree) {A B S : Finset V} {p q : V}
     (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
     (pair : S={p,q}) (ne : p≠q) (conB : (G.induce (B:Set V)).Connected)
     (common : ∃u∈A,∀i∈S,G.Adj u i) (free : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q))
@@ -38,10 +38,10 @@ private theorem mixed (hc : G.Connected)
     (fun x xa xp => by by_contra xq; exact pOnly ⟨x,xa,xp,xq⟩) chosen
 
 /-- The original graph has a Hamiltonian path at connectivity two for all
-orders and every second-smallest degree at least fifteen. -/
+orders and every second-smallest degree at least thirteen. -/
 theorem traceable (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 15≤G.secondSmallestDegree) (conn : G.vertexConnectivity=2) :
+    (large : 13≤G.secondSmallestDegree) (conn : G.vertexConnectivity=2) :
     ∃a b,∃r : G.Walk a b,r.IsHamiltonian := by
   classical
   have point (v : V) : G.distEven v≤G.secondSmallestDegree+1 := by
