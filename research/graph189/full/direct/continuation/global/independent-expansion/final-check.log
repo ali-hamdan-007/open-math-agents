@@ -1,0 +1,2 @@
+'Graph189IndependentExpansion.expansion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189IndependentExpansion.hall_after_deletion' depends on axioms: [propext, Classical.choice, Quot.sound]

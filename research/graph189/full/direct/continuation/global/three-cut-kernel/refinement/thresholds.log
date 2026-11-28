@@ -1,0 +1,2 @@
+compiler started 2026-11-28T09:52:03Z
+'Graph189ThreeCutThresholds.quotas' depends on axioms: [propext, Classical.choice, Quot.sound]

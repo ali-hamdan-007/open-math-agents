@@ -4,6 +4,13 @@ Updated 28 November 2026. This research branch contains local Lean results. The 
 
 
 
+
+## Graph 189 connectivity three reaches k at least 37 and the two-cut recut core is certified
+
+The exact original-graph connectivity-three theorem is locally kernel-checked at every order for k at least 37. The isolated threshold, upper-order and graph-facing modules all report only the three standard axioms. The non-Hamiltonian minimum-deletion lift itself now applies from k at least 20 at connectivity three.
+
+The novel final two-cut recut module also passed warning-as-error and a fresh consumer import. It certifies the arm-distance implication, the gate-row budget, existence of the required high contact, and the final `n <= 3k+2` bound from the recut layout. The remaining kappa-two task is a graph-facing bridge from every unresolved minimum-cut configuration to those checked hypotheses. Separately, the independent-set expansion theorem and its Hall-after-deletion form are now locally kernel-checked; the finite sharpness and two-switch factor replays are computational checks, not official verdicts. The exact parent remains open.
+
 ## Graph 189 connectivity four and the moderate band gain kernel closures
 
 Under the exact original hypotheses, every graph with vertex connectivity four and second-smallest degree k at least 37 is traceable at every order. The graph-facing theorem, its source audit and a fresh external consumer import all report only `propext`, `Classical.choice` and `Quot.sound`. Separately, every nontraceable two-connected candidate with k at least 7 and minimum degree at least three has order at least `4k-5`. Consequently the whole moderate band `n <= 3k+2` is traceable for k at least 8; the previously checked degree-two theorem supplies the complementary minimum-degree case.

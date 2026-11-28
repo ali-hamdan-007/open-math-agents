@@ -1,0 +1,2 @@
+compiler started 2026-11-28T09:54:03Z
+'Graph189CompletionLinkedFour.critical_fixed' depends on axioms: [propext, Classical.choice, Quot.sound]
