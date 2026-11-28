@@ -2,6 +2,14 @@
 
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## All-order proofs at connectivity two from degree 12 and connectivity at least five from degree 19
+
+For a minimum five-cut containing the low vertex, the weighted removable-vertex bound charges its degree deficit once, while the cut inequality charges it k times. A deficit of two would already contradict the two bounds for k≥19. If the low vertex belongs to no minimum cut, completing it raises the connectivity. In both alternatives the integer width bound excludes every residual degree through 24. [Five-connectivity theorem](graph189/full/direct/continuation/root/Graph189FiveConnectivity19.lean) · [Independent kernel](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46145167457/job/140979521577)
+
+At k=12 the separating-pair argument joins paths with at most ten vertices missed. Its order and loss bounds hold simultaneously. The strengthened small-exterior theorem excludes losses of eight, nine, and ten, and the ordinary path gap handles the smaller losses. [Two-cut theorem](graph189/full/direct/continuation/root/Graph189TwoConnectivity.lean) · [Two-cut Linux replay](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46144881449/job/140978609067)
+
+The separator paper’s almost-spanning-path theorem now holds for **every** degree and connectivity. Under the exact original cap, any path omitting at most ceil(k/2)+1 vertices implies a Hamiltonian path. The independent replay imports the settled low-degree, cut-vertex and degree-two cases. [Theorem](graph189/full/direct/continuation/root/ordinary-gap/Graph189AllDegreePathGap.lean) · [Linux replay](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46144881449/job/140978608916)
+
 ## Five-connectivity at degree 25 and upstream acceptance of the cut-vertex case
 
 The original graph conclusion holds at every order for k≥25 and connectivity at least five. At k=25, a minimum five-cut containing the low vertex forces its degree to be 24. A hypothetical counterexample then has order at least 139, which contradicts the integer width bound and degree ceiling. Excluding that location raises the order index, and the existing six-index theorem handles the rest. [Lean proof](graph189/full/direct/continuation/root/Graph189FiveConnectivity25.lean)

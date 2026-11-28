@@ -1,3 +1,4 @@
+import Graph189TwelvePathOrder
 import Graph189CleanPairOrder
 import Graph189PrivateContactProfile
 import Graph189CleanSideRoute
@@ -12,9 +13,9 @@ variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V]
 variable {G : SimpleGraph V} [DecidableRel G.Adj] {A B S : Finset V} {p q : V}
 
 /-- The clean case of the two common-free sides in the original
-separating-pair paper, at all orders for k≥13 and with any low vertex. -/
+separating-pair paper, at all orders for k≥12 and with any low vertex. -/
 theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 13≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S)
+    (large : 12≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S)
     (pair : S={p,q}) (ne : p≠q) (sc : S.card≤G.vertexConnectivity)
     (clean : Graph189CleanSideCounts.Clean G A p q) (freeB : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q))
     (conA : (G.induce (A:Set V)).Connected) (conB : (G.induce (B:Set V)).Connected) :
@@ -32,15 +33,15 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
     by_cases higher : 3≤G.vertexConnectivity
     · have h := Graph189RotationLinked.base_order bad point (l:=3) (by decide) higher (by omega)
       change 4*(k-3+2)≤Fintype.card V+1 at h
-      change 13≤k at large
+      change 12≤k at large
       omega
     · have eq : G.vertexConnectivity=2 := by omega
       have h := Graph189OnePortCover.additional_index hc cap conn (by rw [eq]; omega) bad
       rw [eq] at h
       change 4*(k-3+2)≤Fintype.card V+1 at h
-      change 13≤k at large
+      change 12≤k at large
       omega
-  change 13≤k at large
+  change 12≤k at large
   have up := Graph189CleanPairOrder.nonport_order hc point sides pair ne sc
     (by change 3*k+2<Fintype.card V; omega) clean
   change Fintype.card V+R A+R B+_ ≤4*k+2 at up
@@ -94,7 +95,7 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
       (conC : (G.induce (C:Set V)).Connected) (conD : (G.induce (D:Set V)).Connected)
       (high : ∀x∈C,k≤G.degree x) (z : V) (zD : z∈D) (others : ∀x∈D,x≠z → k≤G.degree x)
       (orderC : C.card≤2*k-2+R C) (orderD : D.card≤2*k-2+R D)
-      (enough : 7+R D≤D.card) (nonports : R C+R D≤7) : False := by
+      (enough : 7+R D≤D.card) (nonports : R C+R D≤7) (joint : Fintype.card V+R C+R D≤4*k+2) : False := by
     obtain ⟨i,inS,many⟩ := chooseAnchor enough
     obtain ⟨v,vC,vi⟩ := (cut.contacts_of_minimum (fun T lt =>
       Graph189CutSides.connected_after_smaller_deletion T (lt.trans_le sc)) inS).1
@@ -110,6 +111,10 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
         omega) orderD many (pc i inS C D cut freeC)
     obtain ⟨u,v,w,hw,near⟩ := Graph189TwoSoleNearest.join_routes cut inS leftRoute rightRoute
     rw [size] at near
+    by_cases twelve : k=12
+    · apply bad (Graph189TwelvePathOrder.traceable hc cap conn twelve w hw (R C+R D+3)
+        (by omega) (by omega) ?_)
+      omega
     exact bad (Graph189PairLinearGap.traceable_under_five hc cap conn (by omega)
       (by change Fintype.card V+11<5*k; omega) w hw (by
         change Fintype.card V+3≤w.support.length+k
@@ -118,19 +123,19 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
   · by_cases opposite : ∀v∈B,k≤G.degree v
     · obtain ⟨z,zb⟩ := sides.right_nonempty
       exact join sides clean.private_ports freeB conA conB high z zb
-        (fun v h _ => opposite v h) ordA ordB (by omega) few
+        (fun v h _ => opposite v h) ordA ordB (by omega) few (by omega)
     push Not at opposite
     obtain ⟨z,zb,low⟩ := opposite
     exact join sides clean.private_ports freeB conA conB high z zb
       (fun v _ ne => (degree_pair (G:=G) v z ne).resolve_right (not_le.mpr low))
-      ordA ordB (by omega) few
+      ordA ordB (by omega) few (by omega)
   push Not at high
   obtain ⟨z,za,low⟩ := high
   have highB (x : V) (xb : x∈B) : k≤G.degree x := (degree_pair (G:=G) x z
     (fun eq => Finset.disjoint_left.mp sides.apart za (eq ▸ xb))).resolve_right (not_le.mpr low)
   exact join sides.swap freeB clean.private_ports conB conA highB z za
     (fun v _ ne => (degree_pair (G:=G) v z ne).resolve_right (not_le.mpr low))
-    ordB ordA (by omega) (by omega)
+    ordB ordA (by omega) (by omega) (by omega)
 
 #print axioms traceable
 end Graph189CleanPrivatePair

@@ -143,3 +143,9 @@ Connectivity two from degree 13, at every order
 'Graph189FiveConnectivity.traceable_ge25' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189LinkedDegreeSum.linked_contra_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189WeightedCriticalOrder.order' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Degree-independent ordinary gap, connectivity two from 12, and connectivity at least five from 19
+'Graph189OrdinaryPathGap.traceable_of_near' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TwelvePathOrder.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TwoConnectivity.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189FiveConnectivity.traceable_ge19' depends on axioms: [propext, Classical.choice, Quot.sound]

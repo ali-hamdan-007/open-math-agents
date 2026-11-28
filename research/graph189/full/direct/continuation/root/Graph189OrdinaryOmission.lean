@@ -12,17 +12,17 @@ variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph
 /-- Remove a single minimum-degree vertex from the exterior of a longest
 path. The remaining vertices have half-degree up to a loss of one. In the
 small-exterior range they therefore admit all prescribed spanning paths. -/
-theorem small_exterior_order {x y : V} (p : G.Walk x y) (hp : p.IsPath)
+theorem small_exterior_order_extended {x y : V} (p : G.Walk x y) (hp : p.IsPath)
     (longest : ∀ {a b}, ∀ r : G.Walk a b, r.IsPath → r.length ≤ p.length)
     (cap : ∀ v, G.distEven v ≤ G.secondSmallestDegree+1) (minimum : ∀ v, 3≤G.degree v)
     {m : ℕ} (size : (p.support.toFinsetᶜ : Finset V).card=m) (two : 2≤m)
-    (small : m+3≤G.secondSmallestDegree) :
+    (small : m+2≤G.secondSmallestDegree) :
     (G.secondSmallestDegree+1)/2+1≤m ∧ m*(G.secondSmallestDegree+3-m) ≤ Fintype.card V+2 := by
   classical
   let k := G.secondSmallestDegree
   let E := p.support.toFinsetᶜ
   change E.card=m at size
-  change m+3≤k at small
+  change m+2≤k at small
   obtain ⟨z,hz⟩ := G.exists_minimal_degree_vertex
   let W := E.erase z
   have wsize : m-1≤W.card := by
@@ -65,7 +65,7 @@ theorem small_exterior_order {x y : V} (p : G.Walk x y) (hp : p.IsPath)
   change p.support.length+E.card=Fintype.card V at total
   have floor : (k+1)/2+1≤m := by omega
   let H := G.induce (W : Set V)
-  have internal (w : W) : k ≤ 2*(H.degree w+1) := by
+  have internal (w : W) : k ≤ 2*(H.degree w+1) ∧ (z∉E → k≤2*H.degree w) := by
     let D := G.neighborFinset w.val \ p.support.toFinset
     have half := (high_exterior_half p hp longest (out _ (mem_erase.mp w.property).2)
       (quota _) (high _ w.property) minimum unique).2
@@ -80,6 +80,9 @@ theorem small_exterior_order {x y : V} (p : G.Walk x y) (hp : p.IsPath)
       · exact (card_erase_add_one h).ge
       · simp [erase_eq_of_notMem h]
     have := high _ w.property
+    refine ⟨by omega,fun absent => ?_⟩
+    have nz : z∉D := fun h => absent (mem_compl.mpr (mem_sdiff.mp h).2)
+    rw [erase_eq_of_notMem nz] at eq
     omega
   have hc (a b : W) (ne : a≠b) : ∃ q : H.Walk a b, q.IsHamiltonian := by
     apply Graph189TerminalLeafClosure.prescribed_of_supergraph (G:=H) le_top _
@@ -89,6 +92,14 @@ theorem small_exterior_order {x y : V} (p : G.Walk x y) (hp : p.IsPath)
     have d2 := internal v
     change Fintype.card W+1≤H.degree u+H.degree v
     rw [Fintype.card_coe]
+    by_cases member : z∈E
+    · have count := card_erase_add_one member
+      change W.card+1=E.card at count
+      have du := d1.1
+      have dv := d2.1
+      omega
+    have du := d1.2 member
+    have dv := d2.2 member
     omega
   let j := k+1-m
   have counts (w : V) (hw : w∈W) : j≤((univ : Finset (Fin p.support.length)).filter
@@ -114,6 +125,15 @@ theorem small_exterior_order {x y : V} (p : G.Walk x y) (hp : p.IsPath)
   change m*(k+3-m)≤_
   rw [offset,Nat.mul_comm m,bookkeeping]
   omega
+
+/-- The original three-vertex margin follows from the stronger exterior bound. -/
+theorem small_exterior_order {x y : V} (p : G.Walk x y) (hp : p.IsPath)
+    (longest : ∀ {a b}, ∀ r : G.Walk a b, r.IsPath → r.length ≤ p.length)
+    (cap : ∀ v, G.distEven v ≤ G.secondSmallestDegree+1) (minimum : ∀ v, 3≤G.degree v)
+    {m : ℕ} (size : (p.support.toFinsetᶜ : Finset V).card=m) (two : 2≤m)
+    (small : m+3≤G.secondSmallestDegree) :
+    (G.secondSmallestDegree+1)/2+1≤m ∧ m*(G.secondSmallestDegree+3-m) ≤ Fintype.card V+2 :=
+  small_exterior_order_extended p hp longest cap minimum size two (by omega)
 
 /-- At every order and every connectivity at least two, a path missing at
 most k+1−floor((k+2)/4) vertices suffices for traceability at k≥26. -/
