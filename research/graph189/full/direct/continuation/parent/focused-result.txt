@@ -1,0 +1,8 @@
+Lean 4.33.1, one worker thread
+Focused conditional parent compilation: exit 0
+Errors: 0
+Inherited linter warnings: 18
+Graph189ParentAssembly.lean SHA-256: 04ad4c9bea4ef4af6bf48226a0c54cd3458b0ce8c121221273c9a9d721845af0
+Graph189ParentFocused.lean SHA-256: 93e6070f0f262673573c71c6fb30000ef5d7826cfe577630312f982a37e87942
+Graph189ParentFocused.olean SHA-256: 7e7e9a2a97e78bd3f9b86c9d8a98ca0f660f2e8535049aa9a73cde08e0f54a74
+'Graph189ParentAssembly.parent_of_two_connected_cases' depends on axioms: [propext, Classical.choice, Quot.sound]

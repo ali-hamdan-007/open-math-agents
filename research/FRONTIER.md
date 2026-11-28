@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • exact parent glue checked and the graph-to-width test certified
+
+The 3,679-line focused assembly of the exact parent proposition completed in pinned Lean 4.33.1. Its theorem parent_of_two_connected_cases derives the entire registered conclusion using the cut-vertex proof and two explicit remaining two-connected hypotheses. The kernel lists only propext, Classical.choice and Quot.sound; 18 linter warnings were inherited from upstream. The original-import source, reproducible focused transformation, axiom output and respective hashes are under parent/. This is a checked conditional theorem. OMA.solution for the parent still requires proving the two displayed hypotheses.
+
+Every true counterexample must pass the exact executable widthPossible predicate; all steps from the original graph to this Boolean condition are kernel-proved. The actual graph also satisfies 3(n/k−9)²≤k+1 whenever n/k≥9 and no Hamilton path exists. See verify/Graph189WidthReplayBridge.lean and global/arity/final/Graph189GraphTail.lean. The exterior argument now has a checked replacement inequality for arbitrary detours in a longest original-graph path as well as prescribed endpoints obtained by stripping terminal leaves.
+
+
 ## Graph 189 • new graph-to-order theorems and the infinite numerical tail
 
 The minimum-cut product and the degree bound at every cut label now compile on the original graph. The proofs construct the two anticomplete populations directly from a disconnected induced complement, recover real contacts by restoring one vertex at a time, and apply the genuine graph cap (order/Graph189MinimumCut.lean). The maximum-degree width now implies the continuous endpoint rejection used by the numeric replay (verify/Graph189WidthInterval.lean). Given the cut-order, width and population inequalities, the infinite-domain argument in global/arity/final/Graph189InfiniteTail.lean proves s<100 and k<4s²+8s−2 in the Lean kernel. The finite projection itself is an executable replay; the full inclusion theorem for its output still has outstanding premises.

@@ -1,0 +1,103 @@
+Graph189ParentFocused.lean:70:0: warning: automatically included section variable(s) unused in theorem `OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2.degree_pair`:
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+Graph189ParentFocused.lean:110:0: warning: automatically included section variable(s) unused in theorem `OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2.dist_iso`:
+  [Fintype V]
+  [DecidableEq V]
+  [Fintype W]
+  [DecidableEq W]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+Graph189ParentFocused.lean:128:0: warning: automatically included section variable(s) unused in theorem `OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2.second_iso`:
+  [DecidableEq V]
+  [DecidableEq W]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq V] [DecidableEq W] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+Graph189ParentFocused.lean:144:0: warning: automatically included section variable(s) unused in theorem `OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2.rot`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+Graph189ParentFocused.lean:159:0: warning: automatically included section variable(s) unused in theorem `OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2.getD_zero`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+Graph189ParentFocused.lean:164:0: warning: automatically included section variable(s) unused in theorem `OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2.getD_last`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+Graph189ParentFocused.lean:175:12: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+Graph189ParentFocused.lean:178:0: warning: automatically included section variable(s) unused in theorem `OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2.exists_longest`:
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+Graph189ParentFocused.lean:579:0: warning: automatically included section variable(s) unused in theorem `OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2.longer_of_perm`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+Graph189ParentFocused.lean:612:37: warning: Variable name `hconn` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hconn
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+Graph189ParentFocused.lean:717:0: warning: automatically included section variable(s) unused in theorem `OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2.dist_two`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+Graph189ParentFocused.lean:831:0: warning: automatically included section variable(s) unused in theorem `OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2.lemma3a`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+Graph189ParentFocused.lean:839:36: warning: Variable name `hconn` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hconn
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+Graph189ParentFocused.lean:955:12: warning: This simp argument is unused:
+  hcon.2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hcon.1, hy, Ne.symm hcon.2, hnd]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Graph189ParentFocused.lean:1149:39: warning: Try `simp at h` instead of `simpa using h`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+Graph189ParentFocused.lean:1300:14: warning: This simp argument is unused:
+  hcon.2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hcon.1, hy', Ne.symm hcon.2, hnd]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'Graph189ParentAssembly.parent_of_two_connected_cases' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,7 @@
+Graph189ExteriorGap.lean:9:0: warning: automatically included section variable(s) unused in theorem `Graph189ExteriorGap.gap_length_of_detour`:
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+'Graph189ExteriorGap.gap_length_of_detour' depends on axioms: [propext, Classical.choice, Quot.sound]
