@@ -112,3 +112,7 @@ Graph189LowAnchorOriginal 5d6fc53768f954047a13184632a2d86f152209757acdcc3d7101c4
 
 Graph189MarkedLowCut 482f48cbff6d6365ce2857112d2b100e358db02a5b95f9f80a399a6dce0c365c
 'Graph189MarkedLowCut.of_cut' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Independent Linux replay of the exact registered child, 2026-11-28 10:50 UTC.
+https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46135948159/job/140951158759
+'Graph189ModerateComplete.moderate' depends on axioms: [propext, Classical.choice, Quot.sound]

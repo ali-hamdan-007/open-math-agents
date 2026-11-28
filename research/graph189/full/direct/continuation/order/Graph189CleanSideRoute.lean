@@ -1,4 +1,5 @@
 import Graph189MarkedLowCut
+import Graph189ConnectedMarkedRoute
 
 open SimpleGraph Finset Graph189DenseSideRoute
 namespace Graph189CleanSideRoute
@@ -35,29 +36,55 @@ theorem loss {A B S : Finset V} (sides : Graph189CutSides.CutSides G A B S) {p q
   rw [←G.card_neighborFinset_eq_degree]
   exact count.trans (Nat.add_le_add_left one _)
 
-theorem high_route (A : Finset V) (i : V) {k r : ℕ} (large : 26≤k) (few : r≤7)
+/-- On a connected region the pivot collision permits a mark outside
+the opened cycle as well. The cost is the order excess plus one. -/
+private theorem region (W : Finset V) (i : V) {d b : ℕ} (pos : 1≤d) (nontriv : 1<W.card)
+    (con : (G.induce (W:Set V)).Connected) (minH : ∀v : W,d≤(G.induce (W:Set V)).degree v)
+    (size : W.card≤2*d+1+b) (marks : (W.filter (G.Adj i)).Nonempty)
+    (room : (W.filter (fun v => ¬G.Adj i v)).card<2*d) : Route G W i (b+1) := by
+  classical
+  let H := G.induce (W:Set V)
+  let M := (W.filter (G.Adj i)).subtype (fun v => v∈W)
+  have cnt : M.card=(W.filter (G.Adj i)).card := by
+    change ((W.filter (G.Adj i)).subtype (fun v => v∈W)).card=_
+    rw [card_subtype,filter_eq_self.mpr (fun v h => (mem_filter.mp h).1)]
+  have non : M.Nonempty := card_pos.mp (by rw [cnt]; exact marks.card_pos)
+  have sum := card_filter_add_card_filter_not (s:=W) (p:=G.Adj i)
+  letI : Nontrivial W := Fintype.one_lt_card_iff_nontrivial.mp (by simpa using nontriv)
+  obtain ⟨x,xM,y,w,hw,len⟩ := Graph189ConnectedMarkedRoute.route con M non (u:=d) (loss:=b)
+    pos minH (fun v _ => minH v) (by change Fintype.card W≤_; simpa using size)
+    (by change Fintype.card W<2*d+M.card; rw [Fintype.card_coe]; omega)
+  let f := (Embedding.induce (G:=G) (W:Set V)).toHom
+  let r := w.map f
+  have actual : x.val∈W.filter (G.Adj i) := mem_subtype.mp xM
+  refine ⟨x.val,y.val,r,hw.map Subtype.val_injective,(mem_filter.mp actual).2,?_,?_⟩
+  · intro v hv
+    rw [show r.support=w.support.map f from Walk.support_map _ _] at hv
+    obtain ⟨v',_,rfl⟩ := List.mem_map.mp hv
+    exact v'.property
+  · change Fintype.card W≤w.support.length+(b+1) at len
+    simpa [r] using len
+
+theorem high_route (A : Finset V) (i : V) {k r : ℕ} (large : 15≤k) (few : r≤7)
     (con : (G.induce (A:Set V)).Connected)
     (min : ∀v : A,k-1≤(G.induce (A:Set V)).degree v)
     (size : A.card≤2*k-2+r) (marks : 4≤(A.filter (G.Adj i)).card)
     (miss : (A.filter (fun v => ¬G.Adj i v)).card≤k-1+r) :
-    Route G A i (2*r+1) := by
+    Route G A i (r+1) := by
   classical
   have upper := card_le_card (filter_subset (G.Adj i) A)
-  obtain ⟨x,hx⟩ := card_pos.mp (show 0<(A.filter (G.Adj i)).card by omega)
-  obtain ⟨a,b,w,hw,start,inside,len⟩ := from_region A i (d:=k-1) (b:=r) (t:=r+1)
-    (by omega) min (by omega) (by omega) (Or.inr con)
-    ⟨x,(mem_filter.mp hx).1,(mem_filter.mp hx).2⟩ (by omega) (by omega)
-  exact ⟨a,b,w,hw,start,inside,by omega⟩
+  exact region A i (d:=k-1) (b:=r) (by omega) (by omega) con min (by omega)
+    (card_pos.mp (by omega)) (by omega)
 
 /-- If deleting the low vertex disconnects this side, the two dense end
 pieces have a marked spanning route. Otherwise rotate a longest path
 in its connected high part and charge the low vertex to the loss. -/
-theorem low_route (A : Finset V) (i : V) {k r : ℕ} (large : 26≤k) (few : r≤7)
+theorem low_route (A : Finset V) (i : V) {k r : ℕ} (large : 15≤k) (few : r≤7)
     (con : (G.induce (A:Set V)).Connected) {z : V} (za : z∈A)
     (min : ∀v : A,v.val≠z → k-1≤(G.induce (A:Set V)).degree v)
     (size : A.card≤2*k-2+r) (enough : 4≤(A.filter (G.Adj i)).card)
     (miss : (A.filter (fun v => ¬G.Adj i v)).card≤k-1+r) :
-    Route G A i (2*r+3) := by
+    Route G A i (r+2) := by
   classical
   let R := A.erase z
   let J := G.induce (A:Set V)
@@ -88,12 +115,10 @@ theorem low_route (A : Finset V) (i : V) {k r : ℕ} (large : 26≤k) (few : r�
     change k-2≤Y.card
     omega
   obtain ⟨v,mv⟩ := card_pos.mp (show 0<(R.filter (G.Adj i)).card by omega)
-  by_cases ok : R.card≤2*(k-2)+1 ∨ (G.induce (R:Set V)).Connected
-  · obtain ⟨a,b,w,hw,iv,range,len⟩ := from_region R i (d:=k-2) (t:=r+2) (b:=r) (by omega)
-      minR (by omega) (by omega) ok ⟨v,(mem_filter.mp mv).1,(mem_filter.mp mv).2⟩ (by omega) (by omega)
+  by_cases connectedR : (G.induce (R:Set V)).Connected
+  · obtain ⟨a,b,w,hw,iv,range,len⟩ := region R i (d:=k-2) (b:=r) (by omega) (by omega)
+      connectedR minR (by omega) ⟨v,mv⟩ (by omega)
     exact ⟨a,b,w,hw,iv,fun v hv => (mem_erase.mp (range v hv)).2,by omega⟩
-  push_neg at ok
-  have growth := ok.1
   letI : Nontrivial A := Fintype.one_lt_card_iff_nontrivial.mp (by rw [Fintype.card_coe]; omega)
   let P := (A.filter (G.Adj i)).subtype (fun v => v∈A)
   have cardP : P.card=(A.filter (G.Adj i)).card := by
@@ -110,7 +135,7 @@ theorem low_route (A : Finset V) (i : V) {k r : ℕ} (large : 26≤k) (few : r�
     let f : (J.induce {v : A | v∉({z'}:Finset A)}) →g G.induce (R:Set V) :=
       { toFun := fun v => ⟨v.val.val,mem_erase.mpr ⟨fun eq => v.property (mem_singleton.mpr (Subtype.ext eq)),v.val.property⟩⟩
         map_rel' := fun h => h }
-    apply ok.2 (SimpleGraph.Connected.map f (fun v => ?_) connected)
+    apply connectedR (SimpleGraph.Connected.map f (fun v => ?_) connected)
     have vr := mem_erase.mp v.property
     refine ⟨⟨⟨v.val,vr.2⟩,fun eq => vr.1 (congrArg Subtype.val (mem_singleton.mp eq))⟩,rfl⟩
   have minJ (v : A) (diff : v≠z') : k-2+1≤J.degree v := by
@@ -129,7 +154,7 @@ theorem low_route (A : Finset V) (i : V) {k r : ℕ} (large : 26≤k) (few : r�
     exact v'.property
   · have eq : result.support.length=q.support.length := by simp [result]
     rw [eq,hq.length_support]
-    change A.card≤Fintype.card A+(2*r+3)
+    change A.card≤Fintype.card A+(r+2)
     rw [Fintype.card_coe]
     omega
 

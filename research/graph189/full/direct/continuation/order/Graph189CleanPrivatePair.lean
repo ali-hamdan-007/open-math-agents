@@ -3,7 +3,7 @@ import Graph189PrivateContactProfile
 import Graph189CleanSideRoute
 import Graph189TwoSoleNearest
 import Graph189OnePortThreeCut
-import Graph189OrdinaryOmission
+import Graph189NearPathLinearOrder
 
 open Finset SimpleGraph Graph189DenseSideRoute
 open OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R1
@@ -12,9 +12,9 @@ variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V]
 variable {G : SimpleGraph V} [DecidableRel G.Adj] {A B S : Finset V} {p q : V}
 
 /-- The clean case of the two common-free sides in the original
-separating-pair paper, at all orders for k≥26 and with any low vertex. -/
+separating-pair paper, at all orders for k≥15 and with any low vertex. -/
 theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 26≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S)
+    (large : 15≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S)
     (pair : S={p,q}) (ne : p≠q) (sc : S.card≤G.vertexConnectivity)
     (clean : Graph189CleanSideCounts.Clean G A p q) (freeB : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q))
     (conA : (G.induce (A:Set V)).Connected) (conB : (G.induce (B:Set V)).Connected) :
@@ -32,15 +32,15 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
     by_cases higher : 3≤G.vertexConnectivity
     · have h := Graph189RotationLinked.base_order bad point (l:=3) (by decide) higher (by omega)
       change 4*(k-3+2)≤Fintype.card V+1 at h
-      change 26≤k at large
+      change 15≤k at large
       omega
     · have eq : G.vertexConnectivity=2 := by omega
       have h := Graph189OnePortCover.additional_index hc cap conn (by rw [eq]; omega) bad
       rw [eq] at h
       change 4*(k-3+2)≤Fintype.card V+1 at h
-      change 26≤k at large
+      change 15≤k at large
       omega
-  change 26≤k at large
+  change 15≤k at large
   have up := Graph189CleanPairOrder.nonport_order hc point sides pair ne sc
     (by change 3*k+2<Fintype.card V; omega) clean
   change Fintype.card V+R A+R B+_ ≤4*k+2 at up
@@ -68,7 +68,7 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
       (free : ∀x∈X,¬(G.Adj x p ∧ G.Adj x q)) (con : (G.induce (X:Set V)).Connected)
       (ord : X.card≤2*k-2+R X) (marks : 4≤(X.filter (G.Adj p)).card)
       (miss : (X.filter (fun x => ¬G.Adj p x)).card≤k-1+R X) (rx : R X≤7)
-      (high : ∀x∈X,k≤G.degree x) : Route G X p (2*R X+1) :=
+      (high : ∀x∈X,k≤G.degree x) : Route G X p (R X+1) :=
     Graph189CleanSideRoute.high_route X p large rx con (fun v => by
       have := Graph189CleanSideRoute.loss cut pair free v
       have := high v.val v.property
@@ -77,18 +77,19 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
       (free : ∀x∈X,¬(G.Adj x p ∧ G.Adj x q)) (con : (G.induce (X:Set V)).Connected)
       (ord : X.card≤2*k-2+R X) (marks : 4≤(X.filter (G.Adj p)).card)
       (miss : (X.filter (fun x => ¬G.Adj p x)).card≤k-1+R X) (rx : R X≤7)
-      {z : V} (za : z∈X) (low : G.degree z<k) : Route G X p (2*R X+3) :=
+      {z : V} (za : z∈X) (low : G.degree z<k) : Route G X p (R X+2) :=
     Graph189CleanSideRoute.low_route X p large rx con za (fun v diff => by
       have := Graph189CleanSideRoute.loss cut pair free v
       have high := (degree_pair (G:=G) v.val z diff).resolve_right (not_le.mpr low)
       change k≤G.degree v.val at high
       omega) ord marks miss
-  have join {a b : ℕ} (la : Route G A p a) (lb : Route G B p b) (budget : a+b≤18) : False := by
+  have join {a b : ℕ} (la : Route G A p a) (lb : Route G B p b) (budget : a+b≤10) : False := by
     obtain ⟨x,y,w,hw,near⟩ := Graph189TwoSoleNearest.join_routes sides (show p∈S by simp [pair]) la lb
     rw [size] at near
-    exact bad (Graph189OrdinaryOmission.traceable_of_near hc cap conn large w hw (by
-      change Fintype.card V≤w.support.length+k+1-(k+2)/4
-      omega))
+    exact bad (Graph189PairLinearGap.traceable_under_five hc cap conn (by omega)
+      (by change Fintype.card V+11<5*k; omega) w hw (by
+        change Fintype.card V+3≤w.support.length+k
+        omega))
   by_cases highA : ∀ x∈A,k≤G.degree x
   · have la := getHigh sides clean.private_ports conA ordA marksA missA (by omega) highA
     by_cases highB : ∀ x∈B,k≤G.degree x

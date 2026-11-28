@@ -99,7 +99,7 @@ private theorem tight_pair (hc : G.Connected)
   have member : z=p ∨ z=q := by simpa [form] using zin
   rcases member with rfl|rfl
   · exact finish q diff form
-  · exact finish p diff.symm (by simpa only [pair_comm] using form)
+  · exact finish p diff.symm (form.trans (Finset.pair_comm _ _))
 
 /-- A two-cut puts the graph below the actual order floor whenever its
 order plus five is strictly less than four times the second degree. -/

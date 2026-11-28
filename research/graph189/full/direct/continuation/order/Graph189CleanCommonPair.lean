@@ -45,7 +45,7 @@ theorem traceable (hc : G.Connected)
   have eq : A.filter (fun y => ¬(G.Adj p y ∨ G.Adj q y))=
       A.filter (fun y => G.dist p y≠1 ∧ G.dist q y≠1) := by
     ext y
-    simp only [mem_filter,dist_eq_one_iff_adj,not_or]
+    simp only [mem_filter,ne_eq,dist_eq_one_iff_adj,not_or]
   change P.card+_=A.card at pop
   rw [eq] at pop
   change P.card+R A=A.card at pop

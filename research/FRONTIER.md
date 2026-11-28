@@ -7,6 +7,12 @@ Updated 28 November 2026. This research branch contains local Lean results. The 
 
 
 
+## Graph 189 proves the exact moderate-order child for every degree
+
+The pinned Lean kernel verified `Graph189ModerateComplete.moderate` at the exact type of the first child in Ali Hamdan’s merged two-connected reduction. It proves that the graph has a Hamiltonian path throughout 2k+3≤n≤3k+2. The independent Linux axiom report lists only `propext`, `Classical.choice` and `Quot.sound`. The same work establishes degree five at every order and degree six at every order when a vertex has degree two. The large-order child, beginning at n=3k+3, still requires graph proofs. Upstream submission of the moderate child requires packaging the research modules in the checker’s single-file format. [Exact source](graph189/full/direct/continuation/root/Graph189ModerateComplete.lean) · [Independent kernel log](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46135948159/job/140951158759) · [Upstream progress and credits](https://github.com/lefttosolve2/open-math-agents/pull/18811#issuecomment-7236815767)
+
+The large-order proof has also passed the kernel when a two-cut has connected common-free sides, one side satisfies the clean distance conditions, and k≥26. The lower threshold and the remaining contact patterns are in replay. The all-orders degree-six argument is recorded as a paper candidate under [degree-six-two-connected](graph189/full/direct/continuation/root/degree-six-two-connected.md). [Verified clean-side replay](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46135563824/job/140949979962)
+
 ## Graph 189 closes the moderate degree-six case with minimum degree at least three
 
 The kernel checked the original traceability conclusion for every qualifying two-connected graph with k=6, minimum degree at least three and n≤20. The remaining moderate cases have k=5, or k=6 with a degree-two vertex. The latter satisfies n≤19. [Degree-six theorem](graph189/full/direct/continuation/root/Graph189SixMinimumThree.lean) · [Axiom reports](graph189/full/direct/continuation/root/parent-range-axioms.txt)

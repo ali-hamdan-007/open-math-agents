@@ -97,7 +97,7 @@ theorem low_route (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
     change G.degree v.val≤J.degree v+S.card at bd
     omega
   obtain ⟨a,aP,b,q,hq⟩ := Graph189MarkedLowCut.of_cut (G:=J) con z' P (d:=k-3) (by omega)
-    minJ (by rw [Fintype.card_coe]; omega) marks disc
+    minJ (by change Fintype.card A≤3*(k-3); rw [Fintype.card_coe]; omega) marks disc
   let f := (Embedding.induce (G:=G) (A:Set V)).toHom
   let r := q.map f
   have aports : a.val∈A.filter (G.Adj i) := mem_subtype.mp aP
@@ -107,7 +107,9 @@ theorem low_route (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
     obtain ⟨v',_,rfl⟩ := List.mem_map.mp hv
     exact v'.property
   · have eq : r.support.length=q.support.length := by simp [r]
-    rw [eq,hq.length_support,Fintype.card_coe]
+    rw [eq,hq.length_support]
+    change A.card≤Fintype.card A+5
+    rw [Fintype.card_coe]
     omega
 
 /-- At two connected sides of an original two-cut, a singly nearest high

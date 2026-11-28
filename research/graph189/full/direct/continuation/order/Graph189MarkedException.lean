@@ -52,7 +52,9 @@ theorem route (hc : G.Connected) (z : V) (P : Finset V) {d : ℕ} (large : 3≤d
   let q := r.map f
   have xP : x.val∈P := (mem_erase.mp (mem_subtype.mp xT)).2
   exact ⟨x.val,xP,y.val,q,hr.map Subtype.val_injective,by
+    change Fintype.card V≤q.support.length+3
     have length : q.support.length=r.support.length := by simp [q]
+    rw [length]
     omega⟩
 
 #print axioms route

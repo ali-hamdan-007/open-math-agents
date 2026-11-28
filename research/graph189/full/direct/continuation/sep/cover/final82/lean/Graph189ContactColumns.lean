@@ -64,13 +64,14 @@ theorem two_step_metric {a b z : V} (different : a≠b) (missing : ¬G.Adj a b)
   have h := SimpleGraph.edist_eq_two_iff.mpr ⟨different,missing,⟨z,az,bz⟩⟩
   simp [SimpleGraph.dist,h]
 
-/-- Both contact populations are charged to distinct vertices at genuine ambient
-distance two from the first exterior vertex. The longest path is arbitrary. -/
-theorem cross_positions_le_path_shell [DecidableEq V] (p : G.Walk x y) (hp : p.IsPath)
+/-- The cross-contact count with its explicit indices on the longest path. -/
+theorem cross_position_witnesses [DecidableEq V] (p : G.Walk x y) (hp : p.IsPath)
     (longest : ∀ {u v}, ∀ r : G.Walk u v, r.IsPath → r.length ≤ p.length)
     {a b : V} (ha : a∉p.support) (hb : b∉p.support) (ab : G.Adj a b) :
-    (contactPositions p a).card + (contactPositions p b).card ≤
-      (p.support.toFinset.filter (fun z => G.dist a z=2)).card := by
+    let A := contactPositions p a
+    let B := contactPositions p b
+    (crossIndices A B).card=A.card+B.card ∧
+    (∀ i∈crossIndices A B, i<p.support.length ∧ G.dist a (p.getVert i)=2) := by
   classical
   let A := contactPositions p a
   let B := contactPositions p b
@@ -118,6 +119,20 @@ theorem cross_positions_le_path_shell [DecidableEq V] (p : G.Walk x y) (hp : p.I
     · obtain ⟨hB,hA⟩ := Finset.mem_sdiff.mp h
       obtain ⟨ri,ci⟩ := (mem_contactPositions p b i).mp hB
       exact ⟨ri,two_step_metric (different _) (fun h => hA ((mem_contactPositions p a i).mpr ⟨ri,h.symm⟩)) ab ci⟩
+  exact ⟨card_crossIndices A B (fun i h => (inside i h).1) separate,shell⟩
+
+/-- Both contact populations are charged to distinct vertices at genuine ambient
+distance two from the first exterior vertex. The longest path is arbitrary. -/
+theorem cross_positions_le_path_shell [DecidableEq V] (p : G.Walk x y) (hp : p.IsPath)
+    (longest : ∀ {u v}, ∀ r : G.Walk u v, r.IsPath → r.length ≤ p.length)
+    {a b : V} (ha : a∉p.support) (hb : b∉p.support) (ab : G.Adj a b) :
+    (contactPositions p a).card + (contactPositions p b).card ≤
+      (p.support.toFinset.filter (fun z => G.dist a z=2)).card := by
+  classical
+  let A := contactPositions p a
+  let B := contactPositions p b
+  obtain ⟨count,shell⟩ := cross_position_witnesses p hp longest ha hb ab
+  change (crossIndices A B).card=A.card+B.card at count
   have inj : Set.InjOn p.getVert ((crossIndices A B : Finset ℕ) : Set ℕ) := by
     intro i hi j hj same
     exact hp.getVert_injOn (by change i ≤ p.length; have := (shell i hi).1; have := p.length_support; omega)
@@ -127,7 +142,7 @@ theorem cross_positions_le_path_shell [DecidableEq V] (p : G.Walk x y) (hp : p.I
     obtain ⟨i,hi,rfl⟩ := Finset.mem_image.mp hz
     exact Finset.mem_filter.mpr ⟨List.mem_toFinset.mpr (p.getVert_mem_support i),(shell i hi).2⟩
   have bound := Finset.card_le_card incl
-  rw [Finset.card_image_of_injOn inj,card_crossIndices A B (fun i h => (inside i h).1) separate] at bound
+  rw [Finset.card_image_of_injOn inj,count] at bound
   exact bound
 
 #print axioms cross_positions_le_path_shell
