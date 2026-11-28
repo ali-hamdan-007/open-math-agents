@@ -1,0 +1,3 @@
+'Graph189DeletionOrders.orders_of_high_deletion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189DeletionOrders.orders_at_minimum_with_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189DeletionOrders.search_loop_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]

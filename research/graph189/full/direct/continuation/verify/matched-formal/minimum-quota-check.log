@@ -1,0 +1,2 @@
+'Graph189MinimumQuotas.private_impossible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189MinimumQuotas.small_common_impossible' depends on axioms: [propext, Classical.choice, Quot.sound]

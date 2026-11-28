@@ -1,0 +1,3 @@
+compiler started Graph189TerminalGraph 2026-11-28T07:08:12Z
+'Graph189TerminalGraph.terminal_band' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TerminalGraph.exists_valid_band' depends on axioms: [propext, Classical.choice, Quot.sound]

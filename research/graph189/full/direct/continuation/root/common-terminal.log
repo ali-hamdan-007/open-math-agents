@@ -1,0 +1,4 @@
+compiler started 2026-11-28T07:10:51Z
+'Graph189CommonTerminal.cut_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CommonTerminal.three_common' depends on axioms: [propext, Classical.choice, Quot.sound]
+compiler completed 2026-11-28T07:11:43Z

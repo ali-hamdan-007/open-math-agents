@@ -1,0 +1,2 @@
+started Graph189ResidualPrivatePort.lean 07:13:19
+'Graph189ResidualPrivatePort.double_cover' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,3 @@
+started Graph189ResidualDoubleCharge.lean 07:06:50
+'Graph189ResidualDoubleCharge.budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ResidualDoubleCharge.within_cut' depends on axioms: [propext, Classical.choice, Quot.sound]

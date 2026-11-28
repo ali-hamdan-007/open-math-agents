@@ -1,0 +1,2 @@
+'Graph189PrivateQuota.residual_singleton_quota' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189PrivateQuota.private_from_residual' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,8 @@
+import Graph189TerminalGraph
+#check Graph189TerminalGraph.terminal_band
+#print axioms Graph189GraphPopulation.actual_order_upper
+#print axioms Graph189EffectiveDeficit.low_witnesses
+#print axioms Graph189ActualScalarWidth.bounds
+#print axioms Graph189TerminalGraph.terminal_band
+#check Graph189TerminalGraph.exists_valid_band
+#print axioms Graph189TerminalGraph.exists_valid_band
