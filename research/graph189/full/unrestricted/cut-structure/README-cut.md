@@ -16,7 +16,7 @@ Suppose three disjoint sides S,T,U have the same gate. The sets T,U and the gate
 
 This formalizes the obstruction to three components sharing a single cut vertex directly from Graph 189's assumptions. Theorem 5.8 of Easwar and Johari proves a stronger statement about the entire block tree on paper. The supplied handwritten argument in `unique-cut.md` deduces uniqueness of the cut vertex without requiring a block-tree development. The remaining rooted path result in their proof of the complete cut-vertex case is Lemma 5.10.
 
-[Upstream reduction 11081](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/11081) · [Easwar and Johari, sections 5.8–5.11](https://arxiv.org/abs/2609.11719)
+[Upstream reduction 11081](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/11081) · [Easwar and Johari, Theorems 5.8 and 5.11](https://arxiv.org/abs/2609.11719)
 
 ## Verification
 
@@ -27,4 +27,8 @@ lean -DwarningAsError=true -o Graph189CutCore.olean Graph189CutCore.lean
 lean -DwarningAsError=true -o Graph189CutInterface.olean Graph189CutInterface.lean
 ```
 
-The core file has passed warning-free kernel checking. Its axiom report lists only `propext`, `Classical.choice`, and `Quot.sound`.
+Both files passed warning-free kernel checking. Each axiom report lists only `propext`, `Classical.choice`, and `Quot.sound`.
+
+## Completed branch
+
+The complete large-order cut-vertex branch is proved by `Graph189CutH1.cut_vertex_case`. See `rooted-components.md` for the proof, `h1-modules.sha256` for the full source manifest, and `h1.log` for the final warning-free kernel audit. The stronger structural uniqueness statement has its own independent exact interface in `Graph189UniqueInterface.lean`.
