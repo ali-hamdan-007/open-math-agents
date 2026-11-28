@@ -1,0 +1,22 @@
+# A shallow four-cut side opposite a high vertex with just one nearest anchor
+
+Suppose k≥16, κ=4, S is a minimum four-cut with sides A,B, all high A vertices are ports, no anchor meets every high A vertex, and each high B nonport has anchor-depth two. If at least one such B vertex has a unique nearest anchor, G is traceable. The low vertex may lie anywhere. The case of high B vertices of greater depth is treated in global/cut4/shallow-large-degree.md.
+
+Suppose n≥6k−10, as otherwise the connectivity-four moderate-order theorem applies. Write a for the high A vertices, p for the high B ports, d₁ for the high B nonports with one nearest anchor, d₂ for the rest, and x=p+d₁. Thus n≤5+a+x+d₂. For each anchor i occurring as the unique nearest anchor of a high B nonport, a B port along a two-step geodesic must have only i as its anchor. This port spends at least 3 even slots in B or S, by the boundary of its closed internal neighborhood. Consequently at most k−3 A vertices touch i. The corresponding high B nonport sees every high A vertex missing i at distance four, by passage through S and the high-pair distance bound. Its second layer has at least four vertices from the existence of a high A noncontact at distance four, so a≤(k−3)+(k−4)≤2k−4.
+
+Use the rotation worker's representative lemma from global/cut4/shallow-large-degree.md. There is a list of q≤4 A ports covering all four labels and such that, for each label of a singly-nearest high B nonport, at least one selected high A port misses that label. Indeed take an inclusion-minimal family fulfilling these conditions: at five or more representatives each needs a distinct coordinate where either coverage or the high noncontact would fail on its deletion. Two representatives cannot be unique for the two opposite specifications of the same coordinate because at least one other high representative exists. All q roots see the requested high B ports or nonports at positive even distance. A root of support r spends at least 4−r outside B. The four anchors have distinct B contacts by the minimum-cut Hall matching. At a matched contact for any given label, the positive-even sets of all roots with that label overlap, so all but one of those incidences may be removed. For a low matched contact one may discard all its incidences from the high-vertex count. With the support union of order four, summing boundary and duplicate losses gives
+
+    x=p+d₁ ≤ qk−4q+4 ≤ 4k−12.
+
+Write E for the number of anchor/high-port distance-two incidences on both sides. The anchor quotas give E+d₁+2d₂≤4k. For any opposite pair of high ports at odd distance, their distance is three and some separating anchor is at distance two from one and adjacent to the other. At each such incidence there are at most k opposite adjacent ports, using the quota of an opposite contact of that anchor. Hence there are ≤kE odd pairs. Write W=Σ(4−r) over all high A vertices, where r is its number of labels. After their own-side boundary charges the A-root quotas have at most ak−W remaining slots; these must include all even opposite port pairs, and at least (a−k+3)d₁ pairs with high singly-nearest B nonports. The latter bound holds even if its coefficient is negative. Thus
+
+    ap+(a−k+3)d₁ ≤ ak−W+kE,
+    n ≤ 5+2k+(3/2)a+(1−a/(2k))x−(W+3d₁)/(2k).
+
+Let t be the largest high A port support size. If one such port touches t labels, it sees their union of high B contacts and spends at least 4−t outside B. The other 4−t label neighborhoods in B each have size at most k, giving p≤(5−t)k−4+t. For any p_max derived this way substitute d₁≥x−p_max in the order bound. Its right-hand side remains increasing with x, since a≤2k−4. The uncorrected bound after x=4k−12 is 6k−7−(k−12)a/(2k), still to subtract the W and d₁ savings. Since every high A vertex has ≤t anchor contacts and at most a internal neighbors allowing the one possible low, a≥k−t.
+
+* If t=1, W≥3a. Dropping the d₁ savings yields n≤6k−7−a(k−9)/(2k). Since a≥k−1, the numerator exceeds 6k for all k≥16: at 16 it is at least 105>96, and (k−1)(k−9)−6k is increasing thereafter.
+* If t=2, W≥2a and p≤3k−2. At x=4k−12 the d₁ deduction uses at least k−10. Therefore n≤6k−7−(a+3)(k−10)/(2k). The numerator is ≥(k+1)(k−10)>6k for k≥16.
+* If t≥3, use W≥0, p≤2k−1 and a≥k−4. The numerator of the full deduction from 6k−7 is at least (k−12)(k−4)+3(2k−11)>6k for k≥16.
+
+Each case gives n<6k−10, the desired contradiction.

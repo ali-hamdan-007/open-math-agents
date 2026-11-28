@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • every four-cut at k≥16, and unrestricted degree twelve
+
+Every qualifying graph of vertex connectivity four and second-smallest degree k≥16 has a spanning path. This supersedes the k≥94 checkpoint. Both the unbounded large side and the unique low vertex are allowed. A separate argument handles three or more components after deleting the cut, including degrees 16–18 where the earlier two-component theorem did not apply. The papers are `order/four-cut-shallow-common-anchor.md`, `order/four-cut-shallow-sole-nearest.md`, `global/cut4/no-singleton-large-side.md`, and `order/four-cut-multiple-components.md`, alongside the prior two-sided calculations. The papers have independent mathematical signoff and no end-to-end Lean verdict.
+
+All qualifying graphs with k≤12 are now covered. At k=12 the only prior residual was connectivity four. A longest-path reduction leaves 1,095 small exact arithmetic cases. All 1,095 returned UNSAT in both the original and independent local runs, 12,908 labelled inputs were covered, and six actual-graph controls returned SAT with their exact BFS populations. See `sep/k12/traceability-k12.md` and `verify/k12/`. Degree eleven also has a second, 475-case computational proof, independent of the one-below-half analytic argument. At connectivity four the remaining degrees are 13, 14 and 15, subject to the current frontier. At arbitrary connectivity, `sep/k12/even-two-below.md` and `odd-two-below.md` advance the threshold for higher degrees; `root/cross-order-import.log` independently imports the previously compiled general cut-product theorem. The full conjecture remains open.
+
+
 ## Graph 189 • connectivity four at k≥94; tools for all remaining separators
 
 Every qualifying graph of vertex connectivity four with k≥94 has a spanning path, with no side-size cap or restriction on the unique low vertex. The all-orders paper proof `global/cut4/shallow-large-degree.md`, relative to `research/graph189/full/direct/continuation/`, has been independently reviewed. Its coverage includes the case in which every high vertex on one side touches the separator. If both sides have high nonports, or neither does, the cutoff already drops to k≥16 (see `verify/four-cut-deep-all-sizes.md` and `verify/four-cut-all-high-ports.md`). Further work focuses on the mixed case in the remaining degree range and on separator sizes five and above.
