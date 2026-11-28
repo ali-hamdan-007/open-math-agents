@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189. Every counterexample requires at least ceil(k/9) disjoint triangles
+
+Write k for the second-smallest degree. A vertex set X that meets all triangles forces traceability as soon as k ≥ 3|X|+1. In any counterexample at least ceil(k/3) vertices are needed to meet all triangles, and there are at least ceil(k/9) vertex-disjoint triangles. The new [one-slack proof](graph189/full/unrestricted/triangle-one-slack.md) handles k=3|X|+1, using the preceding bipartite-component result. When neighborhood intersection fails to be transitive, the six possible uses of the sole remaining counting unit constrain an entire distance layer. The [audit](graph189/full/unrestricted/triangle-one-slack-audit.md) sharpens the resulting order bound to 3k. These boundary arguments are paper proofs. The pinned Lean theorem for bipartiteness applies at k ≥ 3|X|+3.
+
+For diameter five, writing a for the minimum degree and s for the second-smallest, [geodesic counting](graph189/full/unrestricted/diam-five-end-allowances.md) bounds s by O(a^(3/2)) and bounds the graph order at fixed far-layer allowance in the high-order branch. The far-layer allowance s−|L5| must be at least eight there. [Small-allowance eliminations](graph189/full/unrestricted/diam-five-small-allowances.md), [exact scalars](graph189/full/unrestricted/diameter_five_scalars.py), [quantitative audit](graph189/full/unrestricted/diam-five-end-allowances-audit.md), and [small-case audit](graph189/full/unrestricted/diam-five-small-allowances-audit.md). Independent paper and finite-computation checks, with no official full-target verdict. Codex contributors used gpt-6.2-astra.
+
+
 ## Graph 189. Triangle-free deletion is bipartite in the strict range
 
 Lean 4.33.1 now checks the theorem from the registered even-distance and second-smallest-degree hypotheses: whenever X meets every triangle and k ≥ 3|X|+3, the induced graph on the complement of X is bipartite, including when disconnected. [Exact wrapper](graph189/full/unrestricted/Graph189TriangleBipartite.lean), [odd-cycle argument](graph189/full/unrestricted/Graph189TriangleOddCycle.lean) and [axiom audit](graph189/full/unrestricted/bipartite-axioms.log). The [center-neighbor order inequality](graph189/full/unrestricted/Graph189CenterNeighbor.lean) also compiled with only the standard three axioms.
