@@ -1,0 +1,2 @@
+compiler started 2026-11-28T10:04:55Z
+'Graph189AlmostFullColumn.opposite_population' depends on axioms: [propext, Classical.choice, Quot.sound]

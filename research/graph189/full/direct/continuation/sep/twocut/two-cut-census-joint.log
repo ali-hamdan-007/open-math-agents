@@ -1,0 +1,5 @@
+Started at 2026-11-28T10:09:34Z
+'Graph189TwoCutCensusArithmetic.common_free' depends on axioms: [propext, Quot.sound]
+'Graph189TwoCutCensusArithmetic.both_private' depends on axioms: [propext, Quot.sound]
+'Graph189TwoCutCensusArithmetic.both_private_omissions' depends on axioms: [propext, Quot.sound]
+'Graph189TwoCutParity.complementary_rows' depends on axioms: [propext, Classical.choice, Quot.sound]

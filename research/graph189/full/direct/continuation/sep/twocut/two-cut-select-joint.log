@@ -1,0 +1,6 @@
+Started at 2026-11-28T10:16:47Z
+'Graph189ThreeLargeComponents.three_sides' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ThreeLargeComponents.no_three_nonsingleton' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TwoCutSelect.exists_connected_least_cut' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TwoCutSelect.exists_least_cut' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TwoCutSelect.connected_side' depends on axioms: [propext, Classical.choice, Quot.sound]
