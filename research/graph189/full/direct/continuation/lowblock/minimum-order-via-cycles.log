@@ -1,0 +1,4 @@
+'Graph189ExteriorDegreeCycle.minimum_completion_half_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorDegreeCycle.minimum_order_of_cycle_exclusion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

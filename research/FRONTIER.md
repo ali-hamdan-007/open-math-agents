@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Pinned cycle and matching results for Graph 189
+
+For a minimum-degree deletion that remains nontraceable, every longest deletion path now has an actual exterior cycle of at least ceil(k/2) vertices in Lean, without a connectivity or order hypothesis beyond the precise source statement. If instead the deletion path misses one vertex, the checked swap-and-insertion theorem gives a Hamiltonian path in the original graph. The arbitrary-completion exterior cycle and critical-order reduction are also checked. `lowblock/Graph189MinimumOrderViaCycles.lean` and `lowblock/Graph189CriticalOrderViaCycles.lean` state precisely the external classical cycle-exclusion hypothesis. On the moderate track, the real matched-port order theorem now only needs prescribed paths between the selected ports; buffered leaf and actual component results are kernel-checked. Its fresh full import checks 23 declarations, with the three standard axioms only. See `sep/cover/final82/lean/full-import.log` under `research/graph189/full/direct/continuation/`. These local theorem checks do not establish the entire registered conjecture.
+
+
 ## Every valid Graph 189 band excluded in Lean
 
 The geometry now closes for every valid band, including the unbounded synthetic family and all 113 numerical rows. `root/Graph189ExcludeValid.lean` is a theorem about the original finite graph, arbitrary minimum separator, both possible support families and all placements of the low vertex. Combined with `global/arity/final/Graph189TerminalGraph.lean`, the new `root/Graph189StructuralConclusion.lean` gives an actual Hamiltonian path assuming only the two structural lower-order bounds in the range s≥5, k≥26, 3s<k. Every numerical and terminal contact/recut condition is now derived inside Lean, with only propext, Classical.choice, Quot.sound. The designated lower bounds and remaining low-connectivity classes are still separate obligations. All paths are relative to `research/graph189/full/direct/continuation/`.

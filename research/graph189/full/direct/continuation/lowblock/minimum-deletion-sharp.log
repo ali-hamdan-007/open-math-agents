@@ -1,0 +1,4 @@
+'Graph189ExteriorDegreeCycle.nontrivial_deletion_cycle_rounded' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Graph189ExteriorDegreeCycle.minimum_deletion_half_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]

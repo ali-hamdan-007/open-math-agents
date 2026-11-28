@@ -1,0 +1,4 @@
+'Graph189ExteriorDegreeCycle.exists_longest_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorDegreeCycle.critical_order_of_cycle_exclusion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

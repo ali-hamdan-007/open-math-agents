@@ -1,0 +1,3 @@
+'Graph189ExteriorGap.whole_core_order_of_connectivity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorGap.matching_at_component_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorGap.matching_at_buffered_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]

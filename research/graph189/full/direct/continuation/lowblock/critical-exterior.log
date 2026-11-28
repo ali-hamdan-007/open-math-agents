@@ -1,0 +1,7 @@
+'Graph189ExteriorDegreeCycle.minimum_completion_exterior_of_nontraceable_deletion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Graph189ExteriorDegreeCycle.arbitrary_completion_exterior' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorDegreeCycle.minimum_completion_exterior_of_gap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
