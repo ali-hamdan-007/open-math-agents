@@ -1,0 +1,3 @@
+'Graph189ExteriorDegreeCycle.independent_omits_at_most_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorDegreeCycle.high_isolated_saturation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorDegreeCycle.unique_high_isolated' depends on axioms: [propext, Classical.choice, Quot.sound]

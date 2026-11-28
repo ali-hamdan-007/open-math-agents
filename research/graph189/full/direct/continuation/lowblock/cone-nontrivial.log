@@ -1,0 +1,4 @@
+'Graph189ExteriorDegreeCycle.deletion_exterior_local_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorDegreeCycle.nontrivial_deletion_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorDegreeCycle.deletion_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorDegreeCycle.path_of_exterior_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]

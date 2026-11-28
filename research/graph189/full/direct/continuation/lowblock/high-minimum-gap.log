@@ -1,0 +1,8 @@
+'Graph189ExteriorDegreeCycle.gap_of_no_hamiltonian_low_deletion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Graph189ExteriorDegreeCycle.near_longest_has_hamiltonian_low_deletion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Graph189ExteriorDegreeCycle.high_min_all_paths_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorDegreeCycle.high_min_longest_gap' depends on axioms: [propext, Classical.choice, Quot.sound]

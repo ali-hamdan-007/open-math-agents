@@ -1,0 +1,2 @@
+'Graph189ExteriorGap.selected_vertex_matching_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorGap.exterior_vertex_matching_order' depends on axioms: [propext, Classical.choice, Quot.sound]

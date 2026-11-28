@@ -1,0 +1,2 @@
+'Graph189ExteriorDegreeCycle.minimum_deletion_exterior_edge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorDegreeCycle.minimum_deletion_long_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]

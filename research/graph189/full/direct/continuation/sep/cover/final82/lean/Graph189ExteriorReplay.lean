@@ -1,0 +1,31 @@
+import Graph189GatewaySelection
+import Graph189ExteriorClosure
+import Graph189ExteriorHalf
+import Graph189MidpointExchange
+import Graph189OneExceptionalPair
+import Graph189ActualExteriorComponent
+import Graph189LeafBlockOrder
+
+#print axioms Graph189GatewayRank.choose_gateways
+#print axioms Graph189TerminalLeafClosure.prescribed_of_sup_edge
+#print axioms Graph189TerminalLeafClosure.exterior_one_low
+#print axioms Graph189TerminalLeafClosure.exterior_dense_set
+#print axioms Graph189ExteriorGap.gap_length_of_detour
+#print axioms Graph189ExteriorGap.exterior_order_with_tails
+#print axioms Graph189ExteriorGap.exterior_order_one_exceptional_pair
+#print axioms Graph189ExteriorGap.exterior_hamilton_connected_matching
+#print axioms Graph189ExteriorGap.selected_vertex_matching_order
+#print axioms Graph189ExteriorGap.cross_positions_le_path_shell
+#print axioms Graph189ExteriorGap.contact_card_neighbors
+#print axioms Graph189ExteriorGap.exterior_contact_degree
+#print axioms Graph189ExteriorGap.cross_contact_degree
+#print axioms Graph189ExteriorGap.adjacent_ambient_degree_sum
+#print axioms Graph189ExteriorGap.high_exterior_half
+#print axioms Graph189ExteriorGap.high_outside_order_gap
+#print axioms Graph189ExteriorGap.swap_contact_midpoint
+#print axioms Graph189ExteriorGap.hall_at_least
+#print axioms Graph189ExteriorGap.hall_on_dense_vertices
+#print axioms Graph189ExteriorGap.matching_at_component_boundary
+#print axioms Graph189ExteriorGap.matching_at_buffered_boundary
+#print axioms Graph189ExteriorGap.actual_component_order
+#print axioms Graph189ExteriorGap.buffered_order_avoiding_port
