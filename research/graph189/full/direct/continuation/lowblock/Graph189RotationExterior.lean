@@ -107,15 +107,15 @@ private theorem rotate {x y : V} (p : G.Walk x y) (hp : p.IsPath) {i L : ℕ}
     simp
   exact ⟨_,r.copy start rfl,(Walk.isPath_copy _ _ _).mpr path,by simpa using len,by simpa [supp] using sets⟩
 
-/-- If all cycles are short, one initial segment of a longest path contains
-at least d distinct reachable endpoints and their entire neighborhoods. -/
-theorem degree_window (z : V) {d L : ℕ} (two : 2 ≤ L)
-    (minimum : ∀ v, d ≤ G.degree v)
-    (short : ∀ v (q : G.Walk v v), q.IsCycle → q.length ≤ L) :
-    ∃ B E : Finset V, d ≤ E.card ∧ E ⊆ B ∧ B.card ≤ L ∧
-      ∀ v ∈ E, G.neighborFinset v ⊆ B := by
+/-- A longest path with a high initial endpoint supplies a rotation window
+even when one vertex elsewhere in the graph has smaller degree. -/
+theorem degree_window_at {x y : V} (p : G.Walk x y) (hp : p.IsPath)
+    (mx : ∀ {u v}, ∀ q : G.Walk u v, q.IsPath → q.length≤p.length)
+    {d L : ℕ} (two : 2≤L) (degree : d≤G.degree x)
+    (short : ∀ v (q : G.Walk v v), q.IsCycle → q.length≤L) :
+    ∃ B E : Finset V, d≤E.card ∧ E⊆B ∧ B.card≤L ∧
+      ∀ v∈E, G.neighborFinset v⊆B := by
   classical
-  obtain ⟨x,y,p,hp,mx⟩ := exists_longest (G:=G) z
   let B := (p.support.take L).toFinset
   let N := G.neighborFinset x
   let idx (v : V) := p.support.idxOf v
@@ -147,7 +147,7 @@ theorem degree_window (z : V) {d L : ℕ} (two : 2 ≤ L)
   have enough : d ≤ E.card := by
     change d ≤ (N.image prev).card
     rw [card_image_of_injOn inj]
-    exact (minimum x).trans_eq (G.card_neighborFinset_eq_degree x).symm
+    exact degree.trans_eq (G.card_neighborFinset_eq_degree x).symm
   have sub : E ⊆ B := by
     intro v hv
     obtain ⟨w,hw,rfl⟩ := mem_image.mp hv
@@ -171,6 +171,17 @@ theorem degree_window (z : V) {d L : ℕ} (two : 2 ≤ L)
     exact bound
   have lengthB : B.card ≤ L := (List.toFinset_card_le _).trans (List.length_take_le _ _)
   exact ⟨B,E,enough,sub,lengthB,constrained⟩
+
+/-- If all cycles are short, one initial segment of a longest path contains
+at least d distinct reachable endpoints and their entire neighborhoods. -/
+theorem degree_window (z : V) {d L : ℕ} (two : 2 ≤ L)
+    (minimum : ∀ v, d ≤ G.degree v)
+    (short : ∀ v (q : G.Walk v v), q.IsCycle → q.length ≤ L) :
+    ∃ B E : Finset V, d ≤ E.card ∧ E ⊆ B ∧ B.card ≤ L ∧
+      ∀ v ∈ E, G.neighborFinset v ⊆ B := by
+  classical
+  obtain ⟨x,y,p,hp,mx⟩ := exists_longest (G:=G) z
+  exact degree_window_at p hp mx two (minimum x) short
 
 /-- A graph with a sufficiently large minimum degree either has a long cycle
 or contains a Hamilton-connected induced subgraph of at least that degree. -/
