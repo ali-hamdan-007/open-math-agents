@@ -1,0 +1,21 @@
+# Replay checkpoint for the two parent cases
+
+This branch contains working Lean sources as well as declarations that have passed the kernel. The exact parent is open. The last checked moderate-order result at this checkpoint is [Graph189ModerateSeven.original](Graph189ModerateSeven.lean). The all-orders connectivity bounds and the audits for the checked results are in [the graph-facing range table](parent-ranges.md).
+
+## Moderate order
+
+The degree-five source [Graph189FiveOriginal](../verify/Graph189FiveOriginal.lean) brings together the high-minimum proof and the degree-two case. [Graph189FiveOneLowRoutes.three_between](../verify/Graph189FiveOneLowRoutes.lean) passed pinned Lean with the three standard axioms. The integrated degree-five theorem is under replay. It imports the short-order proof by @carl2sheriff, which credits earlier path constructions by @computerfreak97 and @philipsaint. [Upstream source PR](https://github.com/lefttosolve2/open-math-agents/pull/22587)
+
+The degree-six source [Graph189ModerateSix](Graph189ModerateSix.lean) handles a degree-two vertex by the short-order protected-path exchange. With minimum degree at least three it applies the ordinary path rotation at order twenty and the protected exchange after deletion of the exceptional vertex. The factored [ordinary rotation window](../lowblock/Graph189OrdinaryRotationWindow.lean) has passed a separate strict replay. The assembled degree-six theorem is under replay.
+
+## Large order
+
+For the separating pair in [the full paper](../sep/unrestricted-two-cuts.md), the first private-representative inequality is already kernel-checked. The sources for the complementary distance layers, marked paths and the final join in the clean case are now saved in [the graph-facing assembly](../order/Graph189CleanPrivatePair.lean). Its imports and the [branch argument](../order/clean-two-cut-replay.md) identify the individual claims under replay.
+
+There is a direct proof of the marked path needed when both common-free sides have order at most 2k−1. Consider a longest path. Predecessors of neighbors of its first endpoint form a set of reachable endpoints, as do successors of neighbors of its last endpoint. Each set has size equal to the degree of its corresponding endpoint. If the two sets avoid all marked vertices and their total size exceeds the unmarked population, they share an index j. The first endpoint sees j+1 and the last endpoint sees j−1. These two edges close a cycle through the path except at j. Whenever that cycle meets a mark, opening the cycle there gives the required path. The proof is being checked in [Graph189MarkedRotation](../order/Graph189MarkedRotation.lean).
+
+On an entirely high private side of order at most 2k−1, the internal minimum degree is at least k−1. Ore traceability gives a spanning path. Two contacts of the chosen anchor suffice for the preceding count and at least one survives the omission of j. On the opposite side delete the exceptional low vertex when it exists, marking all true contacts of either anchor. The resulting graph has minimum degree at least k−2 and order at most 2k−2. If connected, its longest path omits at most one vertex, and three surviving marks suffice to open a cycle losing at most one further vertex. If disconnected, use the two dense pieces in [Graph189MarkedLowCut](../order/Graph189MarkedLowCut.lean). The anchor chosen by this second path is available on the entirely high side. Including the extra separator vertex and the low vertex, the two routes omit at most five vertices. The new routing argument and its application are working proof material at this checkpoint.
+
+## Reproduction and attribution
+
+Use the pinned Lean, Mathlib and formal-conjectures revisions in [the replay instructions](parent-ranges.md). The independent checker [replay-parent-ranges.py](../verify/replay-parent-ranges.py) records each module's build and axiom output and rejects a proof containing a placeholder. The research sources must pass this process before they can support a claim on the official desk. The fork preserves the complete short-order source with its Git blob and credits. Research integration by Ali Hamdan with Codex. [Upstream progress record](https://github.com/lefttosolve2/open-math-agents/pull/18811#issuecomment-7236815767)
