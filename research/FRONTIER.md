@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • connectivity at least a third, degrees through 18, and fixed cuts five and six
+
+Every qualifying graph with second-smallest degree k≤18 has a spanning path. At every degree, so does every graph with vertex connectivity s≥ceil(k/3). Independently audited proofs are in `sep/cover/third-connectivity.md`, `sep/cover/k16.md`, and `sep/cover/k17-k18.md`, relative to `research/graph189/full/direct/continuation/`. Separate audited arguments eliminate all graphs with connectivity five when k≥210, and six when k≥1874 (`global/arity/effective-five-six.md` with its two base proofs). They permit arbitrary graph order and include the possible low vertex.
+
+A necessary order bound for any counterexample is n≥(s+1)(k−s+2)−1. If a minimum-degree vertex belongs to no minimum separator it is stronger, n≥(s+2)(k−s+1)−1. The proof makes one minimum-degree vertex universal, then uses a longest cycle of that augmented graph and actual distances of the original graph. See `root/universal-minimum-order.md`. The unrestricted root/second-layer-cover estimate has a separate fresh Lean 4.33.1 kernel import (`root/Graph189LayerCover.lean`, `root/layer-cover-import.log`), using propext, Classical.choice and Quot.sound. These are research results on the fork. The exact parent has no full proof here.
+
+
 ## Graph 189 • every graph of connectivity at most four; every graph with k≤15
 
 The combined mathematical proof now covers every qualifying graph of vertex connectivity at most four, at any degree and order. Separate arguments finish the previously missing degrees 13, 14 and 15. Furthermore every graph with connectivity at least floor(k/2)−2 is traceable. Together these statements prove every instance with second-smallest degree k≤15. The first remaining pair is k=16 and connectivity five. A counterexample must simultaneously satisfy k≥16 and 5≤κ≤floor(k/2)−3.
