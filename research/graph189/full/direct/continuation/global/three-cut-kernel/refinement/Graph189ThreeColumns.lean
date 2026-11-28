@@ -31,15 +31,15 @@ theorem nonport_second (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B
   omega
 
 /-- Either the small-side contacts are private or every target is covered
-by at most k+v ports together with the three second-layer columns. -/
-theorem concentration (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
+by at most k+v ports together with the separator second-layer columns. -/
+theorem concentration_general (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
     (cap : ∀ v,G.distEven v≤1+G.secondSmallestDegree)
     (xs : X⊆A) (ys : Y⊆B) (xh : ∀ a∈X,G.secondSmallestDegree≤G.degree a)
     (yh : ∀ b∈Y,G.secondSmallestDegree≤G.degree b)
-    (many : G.secondSmallestDegree<X.card) (three : S.card=3) {v : ℕ}
+    (many : G.secondSmallestDegree<X.card) {v : ℕ}
     (q : ∀ i∈S,(Y.filter (G.Adj i)).card≤v) :
     (∑ i∈S,(X.filter (G.Adj i)).card)≤X.card ∨
-      Y.card≤G.secondSmallestDegree+v+∑ i∈S,(Y.filter (fun b => G.dist i b=2)).card := by
+      Y.card≤G.secondSmallestDegree+(S.card-2)*v+∑ i∈S,(Y.filter (fun b => G.dist i b=2)).card := by
   classical
   let supp (a : V) := S.filter (fun i => G.Adj i a)
   let col (i : V) := Y.filter (G.Adj i)
@@ -62,7 +62,7 @@ theorem concentration (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B 
     have cs : C.card=2 := by simp [C,ne]
     have ds := card_sdiff_add_card_eq_card csub
     change D.card+C.card=S.card at ds
-    have d : D.card=1 := by omega
+    have d : D.card=S.card-2 := by omega
     have close : col i ∪ col j⊆evenOthers G a := by
       intro b hb
       have one (l : V) (al : G.Adj a l) (member : b∈col l) : b∈evenOthers G a := by
@@ -73,11 +73,11 @@ theorem concentration (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B 
       exact (mem_union.mp hb).elim (one i ia.symm) (one j ja.symm)
     have both := (card_le_card close).trans (even_others_card
       (show G.distEven a≤G.secondSmallestDegree+1 by have h := cap a; omega))
-    have rest : (D.biUnion col).card≤v := by
+    have rest : (D.biUnion col).card≤(S.card-2)*v := by
       apply card_biUnion_le.trans
       calc
         _ ≤ ∑ _i∈D,v := Finset.sum_le_sum fun l hl => q l (mem_sdiff.mp hl).1
-        _ = v := by simp [d]
+        _ = (S.card-2)*v := by simp [d]
     have incl : Y⊆((col i∪col j)∪D.biUnion col)∪S.biUnion layer := by
       intro b hb
       by_cases port : ∃ l∈S,G.Adj l b
@@ -96,9 +96,21 @@ theorem concentration (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B 
     have ports := card_union_le (col i∪col j) (D.biUnion col)
     have layers : (S.biUnion layer).card≤∑ i∈S,(layer i).card := card_biUnion_le
     right
-    change Y.card≤G.secondSmallestDegree+v+∑ i∈S,(layer i).card
+    change Y.card≤G.secondSmallestDegree+(S.card-2)*v+∑ i∈S,(layer i).card
     omega
 
 #print axioms nonport_second
+/-- Three labels leave a single unpaired column. -/
+theorem concentration (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
+    (cap : ∀ v,G.distEven v≤1+G.secondSmallestDegree)
+    (xs : X⊆A) (ys : Y⊆B) (xh : ∀ a∈X,G.secondSmallestDegree≤G.degree a)
+    (yh : ∀ b∈Y,G.secondSmallestDegree≤G.degree b)
+    (many : G.secondSmallestDegree<X.card) (three : S.card=3) {v : ℕ}
+    (q : ∀ i∈S,(Y.filter (G.Adj i)).card≤v) :
+    (∑ i∈S,(X.filter (G.Adj i)).card)≤X.card ∨
+      Y.card≤G.secondSmallestDegree+v+∑ i∈S,(Y.filter (fun b => G.dist i b=2)).card := by
+  simpa [three] using concentration_general hc cut cap xs ys xh yh many q
+
+#print axioms concentration_general
 #print axioms concentration
 end Graph189ThreeColumns

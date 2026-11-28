@@ -115,10 +115,10 @@ variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V]
 variable {G : SimpleGraph V} [DecidableRel G.Adj]
 
 /-- The four-cut upper-order bound and the minimum-deletion lower-order
-bound prove the original statement at connectivity four and degree at least 37. -/
-theorem traceable (hc : G.Connected)
+bound prove the original statement at connectivity four and degree at least 36. -/
+theorem traceable_of_36 (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (four : G.vertexConnectivity=4) (large : 37≤G.secondSmallestDegree) :
+    (four : G.vertexConnectivity=4) (large : 36≤G.secondSmallestDegree) :
     ∃ a b : V, ∃ p : G.Walk a b, p.IsHamiltonian := by
   classical
   obtain ⟨z,hz⟩ := G.exists_minimal_degree_vertex
@@ -142,7 +142,7 @@ theorem traceable (hc : G.Connected)
     rw [four] at lower
     have lowerN : 6*G.secondSmallestDegree≤Fintype.card V+19 := by norm_num at lower; omega
     have lowerZ : 6*(G.secondSmallestDegree:ℤ)≤(Fintype.card V:ℤ)+19 := by exact_mod_cast lowerN
-    have largeZ : (37:ℤ)≤G.secondSmallestDegree := by exact_mod_cast large
+    have largeZ : (36:ℤ)≤G.secondSmallestDegree := by exact_mod_cast large
     have deletion (u : V) : (G.induce {v : V | v≠u}).Connected := by
       have eq : {v : V | v∉({u} : Finset V)} = {v : V | v≠u} := by
         ext v
@@ -152,5 +152,13 @@ theorem traceable (hc : G.Connected)
     exact exclude hc (fun v => by simpa only [Nat.add_comm 1] using point v) deletion four
       (Or.inr ⟨largeZ,by omega⟩)
 
+/-- The original all-order threshold for connectivity four. -/
+theorem traceable (hc : G.Connected)
+    (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (four : G.vertexConnectivity=4) (large : 37≤G.secondSmallestDegree) :
+    ∃ a b : V, ∃ p : G.Walk a b, p.IsHamiltonian :=
+  traceable_of_36 hc cap four (by omega)
+
+#print axioms traceable_of_36
 #print axioms traceable
 end Graph189FourCut

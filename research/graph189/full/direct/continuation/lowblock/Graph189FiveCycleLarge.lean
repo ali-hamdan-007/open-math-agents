@@ -43,7 +43,7 @@ theorem excluded (hcG : G.Connected)
       disjoint_left.mpr (fun w hw hf => (mem_sdiff.mp (mem_inter.mp hf).2).2 (mem_inter.mp hw).2))]
     congr 1
     ext w
-    simp only [mem_union,mem_inter,mem_sdiff]
+    simp only [F,mem_union,mem_inter,mem_sdiff]
     constructor
     · rintro (⟨ng,hW⟩|⟨ng,hE,hW⟩)
       · exact ⟨ng,mem_compl.mp (inc hW)⟩
@@ -93,6 +93,7 @@ theorem excluded (hcG : G.Connected)
     · exact ⟨u,uf,by omega⟩
     · exact ⟨v,vf,by omega⟩
   have three := Graph189FiveCycleLinks.component_three W F two minF anchors ⟨w,wf⟩ (by
+    change 3≤(G.neighborFinset w∩W).card+(G.neighborFinset w∩F).card
     rw [parts]
     have h := (high_exterior_half p hp mx (outside wf).1 (quota _) high minimum (fun _ _ => unique)).2
     omega)

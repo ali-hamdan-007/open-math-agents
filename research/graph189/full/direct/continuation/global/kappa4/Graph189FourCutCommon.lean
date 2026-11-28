@@ -1,4 +1,5 @@
 import Graph189CutFamilies
+import Graph189CrossBoundaryProduct
 import Graph189MinimumCutOrder
 import Graph189MinimumQuotas
 
@@ -9,7 +10,7 @@ namespace Graph189FourCut
 /-- The two high-order ranges for the four-cut population argument. -/
 def Range (k n : ℕ) : Prop :=
   ((26 : ℤ) ≤ k ∧ 6 * (k : ℤ) ≤ (n : ℤ) + 10) ∨
-  ((37 : ℤ) ≤ k ∧ 6 * (k : ℤ) ≤ (n : ℤ) + 19)
+  ((36 : ℤ) ≤ k ∧ 6 * (k : ℤ) ≤ (n : ℤ) + 19)
 
 private theorem large_population {k x y d : ℤ} (hk : 0 < k) (hd : 0 ≤ d)
     (margin : 3*d < 2*k) (total : 6*k-d ≤ x+y) (orient : x ≤ y)
@@ -23,15 +24,22 @@ private theorem large_population {k x y d : ℤ} (hk : 0 < k) (hd : 0 ≤ d)
   nlinarith
 
 private theorem population_bounds {k n x y : ℤ}
-    (region : (26 ≤ k ∧ 6*k ≤ n+10) ∨ (37 ≤ k ∧ 6*k ≤ n+19))
+    (region : (26 ≤ k ∧ 6*k ≤ n+10) ∨ (36 ≤ k ∧ 6*k ≤ n+19))
     (nonneg : 0 ≤ x) (total : n-5 ≤ x+y) (orient : x ≤ y)
-    (product : x*y ≤ x*k+4*k*k) :
+    (product : x*y ≤ x*k+4*k*k)
+    (charged : x*y+4*x ≤ x*k+4*k*k+4*k) :
     4*k < y ∧ 16*k-44+x < 4*y ∧ (x ≤ k → 12*k-12+x < 3*y) := by
   have hk : 0 < k := by rcases region with ⟨_,_⟩|⟨_,_⟩ <;> omega
   have big : 4*k < y := by
     rcases region with ⟨_,_⟩|⟨_,_⟩
     · exact large_population (d:=15) hk (by decide) (by omega) (by omega) orient product
-    · exact large_population (d:=24) hk (by decide) (by omega) (by omega) orient product
+    · by_cases boundary : k = 36
+      · subst k
+        by_contra! upper
+        have first := mul_nonneg (show 0 ≤ x-(192-y) by omega) (show 0 ≤ y-32 by omega)
+        have second := mul_nonneg (show 0 ≤ 144-y by omega) (show 0 ≤ y-80 by omega)
+        nlinarith
+      · exact large_population (d:=24) hk (by decide) (by omega) (by omega) orient product
   have extra := mul_nonneg nonneg (show 0 ≤ y-(4*k+1) by omega)
   have small : 3*x < 4*k := by
     by_contra! fail
@@ -74,12 +82,15 @@ theorem two_common (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
   have cp (v : V) : G.distEven v ≤ k+1 := by simpa only [k,Nat.add_comm] using cap v
   have total := Graph189MinimumQuotas.high_population_lower cut
   have prod := cut.high_product hc sm cap
+  have debited := Graph189CrossBoundaryProduct.high_product cut hc sm cap
+  change X.card*Y.card+X.card*S.card ≤ X.card*k+S.card*(k*k)+S.card*k at debited
   change X.card*Y.card ≤ X.card*k+S.card*(k*k) at prod
   change (Fintype.card V : ℤ)-S.card-1 ≤ (X.card:ℤ)+Y.card at total
-  rw [four] at prod total
+  rw [four] at prod total debited
   have prodZ : (X.card:ℤ)*Y.card ≤ X.card*k+4*((k:ℤ)*k) := by exact_mod_cast prod
+  have debitZ : (X.card:ℤ)*Y.card+X.card*4 ≤ X.card*k+4*((k:ℤ)*k)+4*k := by exact_mod_cast debited
   have bounds := population_bounds (k:=(k:ℤ)) (n:=(Fintype.card V:ℤ)) (x:=(X.card:ℤ))
-    (y:=(Y.card:ℤ)) region (by positivity) (by omega) (by exact_mod_cast orient) (by nlinarith)
+    (y:=(Y.card:ℤ)) region (by positivity) (by omega) (by exact_mod_cast orient) (by nlinarith) (by nlinarith)
   obtain ⟨large,noPrivate,noResidual⟩ := bounds
   have big : S.card*k < Y.card := by rw [four]; exact_mod_cast large
   have room : (S.card+1)*k+S.card+1 < Fintype.card V := by

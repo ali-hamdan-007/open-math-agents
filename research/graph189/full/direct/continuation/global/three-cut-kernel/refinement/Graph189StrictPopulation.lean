@@ -29,7 +29,12 @@ theorem with_bound (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
   change X.card*Y.card+X.card*S.card≤X.card*k+(∑ i∈S,(A1 i).card)+
     ∑ i∈S,((A1 i).card*(B2 i).card+(A2 i).card*(B1 i).card) at base
   have a1 (i : V) (hi : i∈S) : (A1 i).card≤q := by
-    simpa only [A1,dist_comm (v:=i),dist_eq_one_iff_adj] using ca i hi
+    have eq : A1 i=X.filter (G.Adj i) := by
+      ext x
+      simp only [A1,mem_filter,dist_eq_one_iff_adj]
+      exact and_congr_right (fun _ => G.adj_comm x i)
+    rw [eq]
+    exact ca i hi
   have b1 (i : V) (hi : i∈S) : (B1 i).card≤q := by
     simpa only [B1,dist_eq_one_iff_adj] using cb i hi
   have first : (∑ i∈S,(A1 i).card)≤S.card*q := by

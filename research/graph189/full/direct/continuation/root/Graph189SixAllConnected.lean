@@ -1,3 +1,5 @@
+import Graph189CutH1
+import Graph189ParentConnectivity
 import Graph189SixThreeConnected
 import Graph189FiveCycleAttached
 import Graph189FiveCycleLarge
@@ -76,6 +78,30 @@ theorem traceable (hcG : G.Connected)
   change p.support.length+E.card=Fintype.card V at pop
   exact Graph189SixThreeConnected.traceable_of_four hcG cap degree minimum p hp (by omega)
 
+/-- At order twenty or greater the original degree-six assumptions force
+minimum degree three. The cut-vertex and two-connected cases exhaust all graphs. -/
+theorem large (hc : G.Connected)
+    (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (degree : G.secondSmallestDegree=6) (order : 20≤Fintype.card V) :
+    ∃ a b, ∃ p : G.Walk a b, p.IsHamiltonian := by
+  classical
+  have point (v : V) : G.distEven v≤1+G.secondSmallestDegree :=
+    (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap
+  by_cases survives : ∀ z : V,(G.induce {v : V | v≠z}).Connected
+  swap
+  · push Not at survives
+    exact Graph189CutH1.cut_vertex_case G hc point (by omega) survives
+  have conn := Graph189ParentConnectivity.two_of_deletions hc (by omega) survives
+  have minimum (v : V) : 3≤G.degree v := by
+    by_contra! small
+    have lower := Graph189CutSides.connectivity_le_degree (G:=G) v
+    have two : G.degree v=2 := by omega
+    have n := Graph189LayerCutoff.order_of_small_degree G hc v 6 (fun u => by have := point u; omega) (by omega)
+    rw [two] at n
+    omega
+  exact traceable hc cap degree conn minimum
+
+#print axioms large
 #print axioms exterior_four
 #print axioms traceable
 end Graph189SixAllConnected
