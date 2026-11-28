@@ -1,0 +1,5 @@
+compiler started Graph189CompletionRows 2026-11-28T07:29:21Z
+'Graph189Completion.RowsRepresent.degree_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.RowsRepresent.forcedTwo_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.RowsRepresent.disconnected_after_delete' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.maskRows_represent' depends on axioms: [propext, Classical.choice, Quot.sound]

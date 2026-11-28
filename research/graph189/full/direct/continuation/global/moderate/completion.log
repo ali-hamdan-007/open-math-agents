@@ -1,0 +1,6 @@
+compiler started Graph189Completion 2026-11-28T07:14:04Z
+'Graph189Completion.hasPath_of_list' depends on axioms: [propext, Quot.sound]
+'Graph189Completion.hasPath_induce_of_list' depends on axioms: [propext, Quot.sound]
+'Graph189Completion.forbid_edge_of_tooLong' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.force_edge_at_saturated' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.forcedTwo_card_le' depends on axioms: [propext, Classical.choice, Quot.sound]

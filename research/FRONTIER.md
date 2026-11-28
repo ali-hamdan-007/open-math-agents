@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 structural range reduced to a published cycle theorem and the one-missing-vertex case
+
+In `root/Graph189NearViaCycles.lean`, the pinned Lean kernel now verifies for every original qualifying connected graph with vertex connectivity s≥5 and second-smallest degree k≥26, 3s<k, that either G is traceable or deleting a minimum-degree vertex leaves a traceable graph, provided the named classical exterior-cycle property holds at s and s+1 for each universal-vertex completion. The proof derives the structural order inequalities from the genuine graphs in all low-vertex placements. `lowblock/Graph189BondyCycleInterface.lean` provides a separate, explicit reduction of the classical property to a published longest-cycle inequality under its hypotheses. The exterior-cycle inputs and the general implication from a one-missing-vertex path still require formal proofs. `root/near-via-cycles.log` records the local axiom audit. This result is a conditional part of the full parent proof.
+
+
 ## Pinned cycle and matching results for Graph 189
 
 For a minimum-degree deletion that remains nontraceable, every longest deletion path now has an actual exterior cycle of at least ceil(k/2) vertices in Lean, without a connectivity or order hypothesis beyond the precise source statement. If instead the deletion path misses one vertex, the checked swap-and-insertion theorem gives a Hamiltonian path in the original graph. The arbitrary-completion exterior cycle and critical-order reduction are also checked. `lowblock/Graph189MinimumOrderViaCycles.lean` and `lowblock/Graph189CriticalOrderViaCycles.lean` state precisely the external classical cycle-exclusion hypothesis. On the moderate track, the real matched-port order theorem now only needs prescribed paths between the selected ports; buffered leaf and actual component results are kernel-checked. Its fresh full import checks 23 declarations, with the three standard axioms only. See `sep/cover/final82/lean/full-import.log` under `research/graph189/full/direct/continuation/`. These local theorem checks do not establish the entire registered conjecture.

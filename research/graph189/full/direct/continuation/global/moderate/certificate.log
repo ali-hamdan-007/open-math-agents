@@ -1,0 +1,3 @@
+compiler started Graph189CompletionCertificate 2026-11-28T07:15:01Z
+'Graph189Completion.checker_path_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.Rejection.sound' depends on axioms: [propext, Classical.choice, Quot.sound]

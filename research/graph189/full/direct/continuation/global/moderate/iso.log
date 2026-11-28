@@ -1,0 +1,4 @@
+compiler started Graph189CompletionIso 2026-11-28T07:29:11Z
+'Graph189Completion.Feasible.mapIso' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.Rejection.excludes_isomorphic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.Rejection.excludes_relabel' depends on axioms: [propext, Classical.choice, Quot.sound]
