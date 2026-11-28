@@ -3,6 +3,13 @@
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189: a small-common-neighborhood routing theorem
+
+In the same six degree-three templates, put d=max_t |N_W(t)| over triple-visible remotes. If k >= 11d+130, the graph is traceable for arbitrary h and with no remote-core connectivity assumption. The proof bounds the independent sets of the remote core using exceptional supports, constructs one or two Hamilton-connected core pieces, closes the universal-port reservoir using the aggregate W-deficit bound, inserts low-incidence ports and triples on cycle edges, and gives a rooted final assembly. See [small common neighborhoods](graph189/full/unrestricted/degree-three-small-common-neighborhoods.md) and its [audit](graph189/full/unrestricted/degree-three-small-common-neighborhoods-audit.md).
+
+Together with the large-common-neighborhood theorem, any surviving sufficiently large instance must have a genuinely mixed triple-to-W incidence distribution. This is an audited paper theorem, not a Lean or official checker verdict.
+
+
 ## Graph 189: a large-common-neighborhood routing theorem
 
 In the six remaining high-order degree-three templates, let h be the number of triple-visible remotes, e the number of exceptional ports, and W the universal ports. If k-h >= e(e+1)+3 and every triple-visible remote has at least h+e+1 neighbors in W, then the graph is traceable, with no connectivity assumption on the nontriple remote layer. Closure creates a prescribed W-endpoint route through the triples and high ports; low exceptional ports insert on remote-cycle edges, while disconnected or cut remote layers split into two Hamilton-connected pieces. The f=7,b=3 extremal visibility profile is handled separately. The paper proof and [independent audit](graph189/full/unrestricted/degree-three-large-common-neighborhoods-audit.md) are at [large common neighborhoods](graph189/full/unrestricted/degree-three-large-common-neighborhoods.md).
