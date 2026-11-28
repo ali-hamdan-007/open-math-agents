@@ -1,0 +1,6 @@
+profiles 546 max bound 10
+h=9 mask=36 boundary=266 degree=0 connected=0
+h=10 mask=4 boundary=4 degree=4 connected=0
+h=11 mask=0 boundary=0 degree=0 connected=0
+h=12 mask=0 boundary=0 degree=0 connected=0
+h=13 mask=0 boundary=0 degree=0 connected=0
