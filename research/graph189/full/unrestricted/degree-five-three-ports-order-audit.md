@@ -1,0 +1,7 @@
+# Independent audit of the (3,3) uniform order bound
+
+For h>k an anchor misses at least one port, as otherwise every remote is a distance-two witness. Thus the earlier per-port bound k−1 is valid. In the sole-anchor case a common neighbor of the port p and its anchor α cannot be z, a K or R vertex, or another anchor (since p has only one anchor). It must be one of at most one other port adjacent to α. Hence at least k−2 neighbors of α distinct from p are nonneighbors of p, all outside R and all at distance two. In the multiple-anchor case every K vertex meets at least four of the five anchors, so all of K and z are at distance two from p. This proves |B_p|≤2 in both cases.
+
+A singleton-contact remote x has at most |S_p|−1 neighbors in S_p, and one in P, hence needs an additional neighbor outside S_p∪P. There is no fourth layer or other component with edges to x. The additional neighbor y therefore has a port q different from p, and x lies in B_q. This shows |X|≤Σ|B_p|≤6, as claimed. Counting port incidences gives 2h−6≤3k−3. Therefore h≤floor((3k+3)/2). For k≥7 one has 2k−1>(3k+3)/2, so all h≥2k−1 are excluded.
+
+Together with h≥2k−3 from n>3k+2 and the established constructions at h=2k−3 and 2k−2, this covers the entire disconnected (a,s)=(3,3) pair for k≥7. At the high orders, the bound actually rules out h=2k−2 for k≥8 and h=2k−3 for k≥10. Thus in this application of the first-order theorem only k=7 can reach h=2k−2. It does not cover other degree-five parameter pairs or the larger Graph189 conjecture.

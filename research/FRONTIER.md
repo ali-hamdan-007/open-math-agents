@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189. The disconnected degree-five (3,3) case closes for k ≥ 7
+
+Here the small component of G−N[z] has k−3 vertices, and the other component meets the second distance layer in three ports. If the order exceeds 3k+2, its remote layer has h ≥ 2k−3 vertices. [Counting the three port neighborhoods](graph189/full/unrestricted/degree-five-three-ports-order.md) rules out h ≥ 2k−1. A vertex with just one port must lie on the external boundary of a different port neighborhood. Each such boundary has at most two vertices. Comparing incidence counts gives 2h ≤ 3k+3. The [smallest-order construction](graph189/full/unrestricted/three-port-smallest-order.md) and [next-order construction](graph189/full/unrestricted/three-port-first-order.md) give spanning paths at h = 2k−3 and 2k−2. For the latter, rotation exposes endpoints on distinct ports. This also handles the previously unresolved c ≥ 3 and empty-universal-set situations. See the [order-bound audit](graph189/full/unrestricted/degree-five-three-ports-order-audit.md) and [routing audit](graph189/full/unrestricted/degree-five-first-order-audit.md). In the distinct (4,3) case, [the first-order proof](graph189/full/unrestricted/three-port-fourth-layer.md) includes a possible fourth-layer vertex, with [independent review](graph189/full/unrestricted/degree-five-43-first-order-audit.md).
+
+These results have independent mathematical review. The exact full problem remains open. Contributors and verifier used Codex with gpt-6.2-astra.
+
+
 ## Graph 189: degree-five disconnected (3,3) reduction
 
 For a unique degree-five root with a disconnected complement and exact pair ((a,s)=(3,3)), the split-core analysis is now complete through (c=2) for (k>=11). Selective closure, exact port-incidence types, and rooted leaf-marker reversal show that any surviving rigid obstruction has (|L|>=k+2), equivalently (c>=3). The (c=0,1) layers are closed by exact LL/UU gap balance, and (c=2) by a path-cover bound joined through the universal core. See [degree-five 3-3 reduction](graph189/full/unrestricted/degree-five-33-next.md) and its [independent audit](graph189/full/unrestricted/degree-five-33-next-expanded-audit.md).

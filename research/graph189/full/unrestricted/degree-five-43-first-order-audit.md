@@ -1,0 +1,7 @@
+# Independent verification of (4,3) at h=2k−2
+
+Audited split/three-port-fourth-layer.md, SHA-256 13561ccf7b37b1f324aa548a08f721fd767f9cfa6f90b8d214fae2eb2acd31b7. Its proof is valid for k≥7, with zero or one fourth-layer vertex. The optional f has no port neighbor and has at least k original neighbors in R. A triple-contact vertex sees at distance two at least 2k−4−d_R(x) core vertices and at least two distinct anchors. An anchor meeting all ports would see ≥2k−3 remote vertices, so the k−1 contact bound persists. A disconnected core is two (k−1)-cliques and cannot contain f. The equality-form nontraceable connected join again has an independent side of size k in which every vertex has degree k−2, excluding f there. Its equally colored two-port independent side exceeds the port bound.
+
+For the new endpoint case, fix an endpoint x other than f. If the opposite endpoint is f, its ≥k rotations give ≥k distinct candidate endpoints outside {x}, at most one of which is f. If x has multiple ports use any non-f candidate. If x meets only p and all non-f candidates also meet only p, at least k vertices including x lie in S_p. Thus a path ending at f always yields a path with a valid pair. When both initial endpoints meet only the same p, the ≥k−1 rotations at the far endpoint yield either such a path ending at f, a distinct assignment immediately, or ≥k members of S_p counting x. This supplies the required end ports for the same three-port shell splice.
+
+Scope: the result is exactly at h=2k−2; higher (4,3) orders and the four-port families are separate.
