@@ -13,9 +13,7 @@ If one side has a u-private contact, at most k−1 members of the opposite side 
 Call a side whose ports are all private clean if each high port is at distance two from its opposite anchor and every high nonport is at distance two from both. If such a side is not clean, the opposite side has order at most 2k−1, under the high-nonport coverage above. Here and below an opposite side that has common ports is allowed. For a high nonport singly nearest p, every opposite high vertex missing p is at distance four, as both anchor routes cost at least four, and p is another even witness. Opposite p-contacts number at most k−1 since the original side has a p-private contact. This bounds its opposite side by 2k−2 high vertices. For a high p-private port v at distance at least three from q, opposite p-contacts are at distance two and opposite high vertices at p-distance at least three at distance four. The vertex v has an internal distance-two witness since it cannot be internally universal. Thus at most k−1 opposite high vertices are outside p-distance two. At most k−1 opposite vertices are at p-distance two, reserving a witness in the original deep side (or its shallow, common-free side with both private types). Allowing one low vertex proves the claimed bound. The latter far-private-port argument also applies to a high private port of a side having other common ports as long as a local second-layer witness for its own anchor exists.
 
 Whenever side X has high private representatives of both types, each at distance two from the opposite anchor, the opposite side S satisfies
-[
- |S| le 2k-2+w_S+t_S-T_S,
-]
+    |S| ≤ 2k-2+w_S+t_S-T_S
 where T_S is its number of common ports. Each representative sees its opposite anchor, all S ports of its own type (including common ports), and all S nonports singly nearest its opposite anchor at distance four. The inequality adds the two quotas. No adjacency between the two chosen representatives is required.
 
 A 2-connected side in which every high vertex loses at most j neighbors to the anchors has a cycle of length at least min(|S|,2k−2j) by Fan's circumference theorem, since at most one internal vertex has degree below k−j. From any prescribed port one can take a path up to that cycle and open the cycle at its first contact, thus covering at least as many vertices.
@@ -35,9 +33,7 @@ On a wholly high side with two endblocks, both anchors have available noncut por
 If neither side is clean, both have at most 2k−1 vertices by the defect count. Each side path can lose at most one vertex, by its cycle or leaf construction. The unused anchor is within the allowed budget.
 
 Otherwise let D be clean and write d=|D|, l for the indicator that D contains the low vertex, b for its number of high nonports, w=w_C and t=t_C. The two anchor quotas and the clean D representatives give
-[
- d-l+b+(r_C-t)+wle2k,qquad |C|le2k-2+w+t .
-]
+    d-l+b+(r_C-t)+w≤2k,  |C|≤2k-2+w+t 
 Here all high D ports count once and all high D nonports twice. If b≥1 then d≥k+1, since a high nonport has all its neighbors inside D. Thus 2w≤k−1+l−b. If t=1 then l=0 and this gives w+t≤floor(k/2); otherwise w≤h. When b=0, D's unique nonport is low, l=1, d≥k and t=0, so w≤floor((k+1)/2)=h. In every case |C|≤2k−2+h while d≤2k+1≤2k−2+h.
 
 With two cycle routes, the C deficit is at most w+t. If D also has a positive deficit, the sum of deficits is at most w+t+d−2k+2≤2+l+t−b−(r_C−t)≤3. If C is a cut-vertex side, even at the coarsest D cycle deficit ≤3 the total side losses are ≤4≤h. If D is a cut-vertex side, d≥2k−1, hence 2w≤2k−d+l−b≤2. Its loss and the C loss total at most three. Two cut-vertex sides lose only the possible low. Joining through one anchor misses at most h+1.
@@ -49,10 +45,8 @@ Suppose only D has common ports and C is common-free. If C's only nonport is the
 First suppose D has a high nonport. Its common port supplies |P_C|≤k, while a high D nonport sees all high C nonports at distance four and has at least two second-layer witnesses. Thus |C|≤2k−2+l_C, where l_C indicates the presence of the low vertex in C. If C fails cleanliness, |D|≤2k−1. The resulting C and D cycle deficits total at most four, and replacing either by a cut-vertex path costs at most one unless there is a singleton low leaf. In this small-size alternative the latter leaf can be removed as described above: the remaining side has order ≤2k−2, hence its Fan deficit is ≤2 and its block-route misses at most b. Including z, its loss is ≤3, and C is wholly high with |C|≤2k−2. A side with a cut vertex needs a port in the leaf interior at which its path begins; after removing z, at least one leaf of S' has such a port. Indeed if not, an original leaf away from b would have had no noncut port and its articulation would separate G. In the two-leaf path this suffices since the opposite side, being wholly high, can match either anchor. This also applies to the singleton-leaf alternatives below.
 
 If C is clean, write w=w_D, t=t_D, T=T_D≥1 and b for its number of high nonports in C. The private-representative and anchor counts give
-[
- |D|le2k-2+w+t-T,qquad
- |C|-l_C+b+(r_D-t)+w+2le2k .
-]
+    |D|≤2k-2+w+t-T
+    |C|-l_C+b+(r_D-t)+w+2≤2k 
 The last two places are the p,q incidences. Since |C|≥k+1 and b≥1, 2w≤k−4+l_C. In particular w+t≤h−1, and if l_C=1 then t=0 and w≤h−2. Consequently |D|≤2k−4+h. Its Fan deficit is at most w+t+2−T≤h, and at most h−1 when C could lose a vertex. Cut-vertex paths again suffice. For a singleton low leaf z in D, t=0 because z is a port and T≥1. The side D−z, if 2-connected, supplies a path losing at most max(0,|D|−1−(2k−4)) inside it; after allowing z this costs at most max(1,|D|−(2k−4))≤h overall. If it has a cut vertex the chain construction loses at most z and b, hence at most two; C is wholly high of order ≤2k−2, so spans. These counts include at most h losses before the final one-anchor gluing.
 
 It remains that D's only nonport is the low z. There are at least k−1 high D ports, excluding the minimum clique already bounded. If z sees both anchors at distance two, its distances on C differ by one from those of any common port, so |C|≤2k−2. Otherwise it has distance two only from p and all its neighbors are p-private. If some high D private is far from its opposite anchor, the earlier private-defect bound gives |C|≤2k−1. If all are near their opposite anchors, choose a p-private neighbor e of z. Then d(z,q)=3. The vertex e sees q, all C p-ports and all singly q-nearest nonports. The vertex z sees p at two, all C q-ports at four (routes cost at least 2+2 via p and exactly 3+1 via q), and every C nonport near p at four. This covers C completely, so |C|≤2k−2. For the size of D, if C fails cleanliness then |D|≤2k−1; otherwise the private-representative inequality gives |D|≤2k−2+w_D+t_D−T_D≤2k−2, since w_D≤1 and t_D=0. Hence both components fall in the same small-size regime. There is no singleton low leaf here since z is not a port, and a singleton low nonport leaf would have ambient degree one. The side deficits total at most four.
@@ -62,9 +56,7 @@ It remains that D's only nonport is the low z. There are at least k−1 high D p
 Only an all-high shallow D opposite a deep low-containing C remains. A common C port is settled by shallow-high-two-cut.md, and if D lacks one private type it is the all-common clique, also settled there. Thus C is common-free and D has both private types. Each private D port sees the opposite anchor at two, since it needs k−1 internal neighbors and its own private class has at most k−1 members. Let T be the common D port count. The size d of D is at least k and at most 2k−2−T. If T=0, D is Hamiltonian by its internal minimum degree ≥k−1. If T≥2, its minimum degree ≥k−2 suffices, and if T=1 only one vertex has smaller internal degree than k−1 and all nonadjacent internal degree sums are at least 2k−3≥d. Thus D always spans from any prescribed port via its cycle.
 
 Write w=w_C, t=t_C. The D representatives give |C|≤2k−2+w+t. If T>0 also |P_C|≤k and r_C+w≤2k−(d−T)−2+t by the two anchor budgets. Adding the implied lower bounds r_C≥|C|−k and w≥|C|−2k+2−t gives
-[
- 2|C|le5k-(d-T)-4+2tle5k-4,
-]
+    2|C|≤5k-(d-T)-4+2t≤5k-4
 using d−T≥2 and t≤1. Thus |C|≤2k−2+h. Its cycle or leaf route loses at most h, and the one-anchor join suffices.
 
 If T=0, the anchor budget gives 2w≤2k−d≤k. The analogous bound |C|≤2k−2+h follows unless k is even, t=1, w=h and d=k. In that exception D is a clique (private ports have k−1 internal neighbors), so we can use a spanning p,D,q segment, orienting it to meet whichever port starts the C path. No anchor is omitted. The order of C is at most 2k−1+h, giving Fan deficit at most h+1. If C is a cut-vertex side, the one extra size unit leaves its core Hamilton-connected for k≥10: the tighter inequality needed in the leaf containing the low is k−h≥5, valid there. The two side paths in this final case therefore miss at most h+1 vertices in all. This completes the proof.

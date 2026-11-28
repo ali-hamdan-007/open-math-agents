@@ -14,3 +14,15 @@ Suppose k=6, r=3, and all three cliques have order c≥3. For each clique K put 
 If every selected clique were isometrically deletable one vertex at a time in order of nondecreasing original degree, the preceding paper would therefore prove a contradiction, without imposing any upper bound on saturated degrees. Indeed detours are local to the radius-two ball of the current center, simultaneous deletion preserves second degree at least k−1 by exclusion of outcome 2, the saturated vertices are covered at even distance, and the path-recovery argument now holds in every case. There is thus some selected clique K for which this deletion order first fails at a member v, after i prior members of K have been removed. In the current induced graph there are nonadjacent neighbors a,b of v whose only common neighbor is v. In the original graph their common neighbors can only be v and some of the deleted members of K. In particular their whole common-neighbor set is nonempty, saturated and a clique.
 
 It remains to see that this very v has d(v)≥b(v)+q, even if larger-degree saturated members of K are present. The local isometry proof in the preceding paper applies under the sole assumption d(v)<b(v)+q at the current vertex. Explicitly, two exterior neighbors retain degree sum at least b(v)+k and so force the strict local wedge bound after i deletions. At i=0 the same bound works for any neighbor pair. At i≥1 with a remaining internal neighbor, c=|K|≥3 means k+c−2≤d(v)<b(v)+q≤k+q. Hence c≤q+1, q≥2 and i≤c−2≤q−1, using only v's upper bound. The remaining internal neighbor has current degree at least d(v)−i by deletion order. A high exterior neighbor gives local excess at most zero and n−i>3k+1. A low exterior neighbor gives k−δ≤q−c+1≤q−1−i from the same upper bound on v; this again satisfies the strict local wedge inequality. These contradictions exclude a failed deletion at v under its numerical upper bound, proving outcome 1.
+
+## Every member of a smallest witnessing clique has large degree
+
+Under exclusion of outcome 2, minimize s=|W| among pairs of nonadjacent vertices with nonempty common-neighbor set W that is a clique of saturated vertices. Every proper subset T of W deletes isometrically. Otherwise the first failed single deletion in some ordering of T yields a nonadjacent pair whose entire common-neighbor set in G is a nonempty subset of T, contradicting minimality. Thus for every v∈W the graph G−(W∖{v}) preserves all survivor distances, including the even cap k. In this graph a,b have precisely one common neighbor v, and each of the degrees of a,b,v is smaller by s−1. Also e(v)=k remains exact since the other W members were adjacent to v. Writing D=n−3k−1, the general local wedge bound now gives
+
+    d(v)≥d(a)+d(b)−k−s+1+ceil((D−s+1)/k).
+
+At s=1 this is at least b(v)+q. At s≥2 both endpoint degrees are at least k+s−1 by exclusion of the low-degree clique completion, as a,b meet all of W. Therefore every v in W satisfies
+
+    d(v)≥ k+ceil((D+(k−1)(s−1))/k).
+
+In particular if Δ−k=q, the smallest W has size at most two, and size two is possible only when D is congruent to 1 modulo k.

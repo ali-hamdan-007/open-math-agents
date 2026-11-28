@@ -9,3 +9,16 @@ In particular the side condition holds whenever some high nonport has just one n
 ## An anchor far from all the other anchors
 
 Suppose instead that S contains an anchor a at ambient distance at least four from every other anchor, and each component supplies a high neighbor of a. Then n≤4k−s+1 again. Fix such a port u in one component. Its only anchor neighbor is a. Every opposite high port x has distance two from u if it touches a. Otherwise a path of length at most three from u to x would have to cross S. On a three-edge path some crossing anchor is adjacent to u or to x. If adjacent to u, this is a, and the final two edges reach x; following those by x's incident edge to another anchor contradicts distance at least four between a and that anchor. If the crossing anchor is adjacent to x, reaching it within two steps of u gives the same contradiction via a,u. A shorter path would require a common incident anchor. Thus the distance to x is exactly four by the high-pair bound. All opposite high ports are even from u, so each side has at most k high ports. Each side also has at most k−s high nonports, using an opposite high nonport's second and fourth layers. Adding the anchor set and the possible sole low vertex proves the inequality. In a high-order residual with three anchors and wholly high sides, the graph on the anchors that joins pairs at ambient distance at most three must therefore be connected.
+
+## The remaining two-nearest-anchor case on a small side
+
+Let s=3, k≥24, both sides wholly high, and suppose a putative nontraceable graph has a small side C of size <2k−5. Then every pair in C is adjacent or has a common neighbor in C since its internal minimum degree is at least k−3. The prescribed-pair path result in paths-through-two-sides.md gives |D|≥3k−9. Suppose y∈C is a nonport with exactly two closest anchors a,b. Write P_a=N(a)∩D, P_b=N(b)∩D. Their sizes are at most k, since a port of C on the corresponding anchor sees all these opposite ports at distance two. All vertices in D−(P_a∪P_b) have distance four from y. Thus
+
+    3k−9 ≤ |D| ≤ 3k−3,
+    (k−|P_a|)+(k−|P_b|)+|P_a∩P_b| ≤ 3k−3−|D| ≤ 6.
+
+In particular no C port touches both a,b: if it did it would see all of P_a∪P_b even, whereas |P_a∪P_b|≥|D|−(k−3)>k. There are therefore distinct neighbors u,v of y in C with singleton supports {a},{b}. The three positive-even sets of y,u,v cover D, by the same crossing distance argument and the routes through a,b. For each root its nonneighbors within C apart from itself are at exact distance two. The two distinct anchors in A(y) are also at even distance from y, beyond the covered D and these internal misses. Consequently
+
+    Σ_{w∈{y,u,v}} (|C|−1−d_C(w)) ≤ 3k−|D|−2 ≤ 7.
+
+This holds for every choice of those u,v. In particular the third anchor has at most seven neighbors in C: none can be adjacent to y or equal y. If D is wholly high with its ambient-degree-k universal ports forming a clique, the improved threshold |D|≥3k−7 reduces the respective budget bounds from six to four and from seven to five. These near-equalities impose no upper bound on the maximum degree of G.
