@@ -1,0 +1,4 @@
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+12a15ae5a9cd452b1149e0034e2cadf94b90b780e1aa87f397c9594540697ba2  /tmp/graph189-parent.14pVR3/rot/Graph189CrossPivot.lean
+'Graph189CrossPivot.no_crossed_pivots' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CrossPivot.no_crossed_pivots' depends on axioms: [propext, Classical.choice, Quot.sound]

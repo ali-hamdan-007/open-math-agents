@@ -1,0 +1,37 @@
+# Remote endpoints, first-port capacity and an exterior-edge linkage
+
+Let G be a hypothetical 2-connected counterexample. Fix one longest nonspanning path, with vertex set H, and its two-ended rotation family. Let R be the attainable endpoints, Γ their compatibility graph (the two endpoints can occur together), and r the number of high endpoints. “High” means degree at least k. The independently proved endpoint bound gives r≥k+ceil(k/2), and Γ is connected with minimum degree at least k. Its connectedness follows directly since each new rotation changes just one end of a path. Every R vertex misses every omitted vertex. By the established diameter and distance-five theorems, an odd-distance pair of high vertices that are nonadjacent is at distance three.
+
+## First-port capacity
+
+Fix high omitted x, and let U be the high attainable endpoints at distance three from x. For a neighbor a of x, let U(a) consist of the endpoints in U at distance two from a. These are precisely the endpoints having a length-three geodesic to x with first port a from x. Put d_x=deg(x), and let c(x,a)=|N(x)∩N(a)|. The d_x−1−c(x,a) vertices of N(x) outside N[a] are also distance two from a, and are disjoint from U. Hence
+
+    |U(a)| ≤ k−d_x+1+c(x,a).
+
+If b belongs to the second layer of x, every remote endpoint adjacent to b uses every a∈N(x)∩N(b) as a possible first port. Its number of remote endpoint neighbors is thus bounded by the minimum of the displayed quantities over those a. In particular, taking D=max_{a∼x}(k−d_x+1+c(x,a)), if U is nonempty, there are at least ceil(|U|/D) paths of length three to x from distinct members of U that are disjoint off x. Indeed, in the layered network U→N₂(x)→N(x)→x, a vertex separator meeting all these paths must account for all U sources. Any source accounts for one, and any internal vertex for at most D. The usual unit vertex-capacity Menger theorem gives the bound.
+
+Summing the first-port capacities gives a scalar bound in terms of T(x), the number of triangles containing x:
+
+    |U| ≤ d_x(k−d_x+1)+2T(x).
+
+For any adjacent high omitted y, put d_y=deg(y) and c=c(x,y). All d_y−1−c vertices of N(y) outside N[x] are at distance two from x, and none belongs to R. Thus at most k−d_y+1+c high endpoints can be even-distance from x. All remaining high endpoints belong to U, giving |U|≥r+d_y−k−1−c. Combining the two estimates and using d_x(k−d_x+1)=k−(d_x−k)(d_x−1) gives
+
+    2T(x)+c ≥ ceil(k/2)−1+(d_y−k)+(d_x−k)(d_x−1).
+
+The same estimate holds at y with x,y exchanged. Since c≤T(x), every high vertex of a high–high omitted edge lies in at least ceil((ceil(k/2)−1)/3) triangles. If the edge xy itself lies in no triangle, the denominator improves to two. The triangles are counted in G.
+
+## Two distinct exterior terminals
+
+For adjacent high omitted x,y, let M contain all high attainable endpoints at distance three from both. Fix two compatible e,f in M. Consider the layered network from e,f through last ports B at distance two from {x,y}, then first ports A at distance one from {x,y}, and then the two sinks x,y. Include all geodesics of length three to both targets. The layers are disjoint, since both sources are at distance three from both targets. In particular x and y cannot serve as first ports on these geodesics.
+
+If two vertex-disjoint geodesics do not link the two sources to different targets, Menger's theorem supplies a single vertex on every route. It must be an internal vertex, since either source reaches either sink. A bottleneck in the first-port layer forces the union of all possible first ports of each source to be precisely the same singleton; that first port is adjacent to both x and y. A bottleneck in the last-port layer forces the set of all possible last ports of each source to be precisely the same singleton b. In this case possible first ports of either source are exactly N(b)∩A. In both cases the sources have identical sets of possible first ports.
+
+Consequently, in a component K of Γ[M] with at least two vertices, if no compatible pair has such a disjoint linkage, then all members of K have the same nonempty set of first ports. If it is a singleton, every route from every member of K uses that common first port. If it has more than one member, the last-port singleton case occurs on every edge of K and propagates a single fixed last port throughout K. For either alternative, every source in K is at distance two from any fixed first port, so |K|≤k. If c(x,y)=0, only the fixed-last-port alternative can occur. Removing the possible low endpoint and the even-distance endpoints of either x or y excludes at most 3+2c−(d_x−k)−(d_y−k) vertices from R. At c=0, if |M|>k but none of the compatible pairs links, deleting at most three vertices disconnects Γ into components of order at least k−2 and at most k. For k≥3 isolated components are either absent under this degree bound or still obey the size-one estimate.
+
+There is a direct path extension when the disjoint linkage puts its gates sufficiently close. For each of the two geodesics take its last vertex in H as one goes from its source to its exterior target. These two gates are distinct. Between the gates the exterior tails of the geodesics, joined by xy, form a path with τ distinct exterior vertices, where 2≤τ≤4. If on any path spanning H the interval between the gates has fewer than τ internal vertices, replace that interval by the exterior path to get a longer path. The two outer tails on the H path must also each contain at least τ vertices, since one can keep the whole H suffix (or prefix) at its near gate and append all τ exterior vertices without entering the other gate.
+
+## Why simultaneous witnesses cannot by themselves yield a splice
+
+Choose k≥3, s≥2, and an integer L>2k. Form a separator clique S of order s and s+1 disjoint cliques of order L joined completely to S. Add a further component K_{k,k} from which only two vertices, one from each part, are joined to each vertex of S. The graph is 2-connected, and its minimum degree is k. Deleting S leaves s+2 components, whereas any path can meet at most s+1 of them. A longest path visits every large clique, using all of S, and misses the K_{k,k} component. Indeed this walk is realizable, and substituting even the entirety of the smaller component for a large one decreases the possible order. The entire large-clique vertex set gives attainable endpoints across the family of all paths with that longest vertex set; any two vertices from distinct cliques can occur as endpoints. In fact this also holds inside one rotation family: rotations via clique chords change the endpoint within the same terminal clique, and rotations through S vertices change the terminal clique, preserving the endpoint at the other end. These operations can put any distinct pair of cliques at the ends.
+
+Take unported adjacent vertices x,y of the bipartite component. They have no common neighbor. Every large-clique endpoint has distance three to both. Distinct separator vertices give disjoint three-edge geodesics to the distinct terminals from any compatible endpoints in different cliques. On every spanning path of H, distinct separator gates have an entire L-vertex clique between them; the exterior splice cannot improve the path. This graph violates the even-distance bound: a large-clique vertex sees sL vertices in the other large cliques at distance two. It witnesses the precise limitation of an argument based on the simultaneous geodesics and minimum degree alone.

@@ -1,0 +1,11 @@
+# The near-spanning case has one Hamilton-connected exterior at every order
+
+Let a 2-connected qualifying graph be nontraceable, with δ≥3, k its second-smallest degree. Suppose there is a path P spanning all vertices except z. The standard unrooted longest-path attachment bound forces z to be the unique vertex of degree below k: if z were high, its at least k neighbor positions, which avoid endpoints and consecutive positions of P, would have at least k+1 distinct nonneighbor shifts at distance two. Thus deg(z)=δ. Let m be the minimum number of vertices omitted by a path containing z. The existing rooted omitted-component argument (longest-path/attachments.md and the first section of longest-path/gap-packing.md) uses only the distance-two cap for the following assertions: each component omitted by a longest path through z has at least floor(k/2)+1 vertices and minimum internal degree at least floor(k/2). Their proofs apply without the small-order condition used subsequently in those source files.
+
+Each of the δ+1 intervals of P left by its δ attachment vertices has at least m vertices. For an internal interval replace the whole interval by z between its bounding attachment vertices. For either outside tail delete the tail and append z at its bounding attachment. In each case the resulting path contains z and omits exactly the removed interval. Hence n≥1+δ+(δ+1)m. In particular gaps have at least floor(k/2)+1≥2 interior vertices, so the two shifts about each attachment are all distinct. They witness 2δ≤k.
+
+The order theorem now gives n≤1+δ+k+δ(k+1−δ), by monotonicity of t(k+1−t) up to t=δ when 2δ≤k. Combining bounds yields (δ+1)m≤(δ+1)k−δ(δ−1). Since δ(δ−1)/(δ+1)=δ−2+2/(δ+1), integrality gives
+
+    floor(k/2)+1 ≤ m ≤ k−δ+1.
+
+The upper bound is at most k−2, so the omitted graph has just one component. Its minimum degree is at least floor(k/2) and 2 floor(k/2)≥m+1. By the Hamilton-connected Ore criterion this component has a spanning path between every two prescribed distinct vertices. When k=2δ the bounds force m=δ+1 and the component is a clique. The resulting problem, in this near-spanning branch at all orders, is to insert this Hamilton-connected component into the complementary long path through z. This consequence is on paper.

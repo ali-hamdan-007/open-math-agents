@@ -1,0 +1,3 @@
+'Graph189ThirdLayer.third_layer_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ThirdLayer.third_layer_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ThirdLayer.order_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
