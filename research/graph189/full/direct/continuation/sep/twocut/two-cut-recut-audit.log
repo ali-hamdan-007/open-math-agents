@@ -1,0 +1,5 @@
+Started at 2026-11-28T09:53:23Z
+'Graph189TwoCutRecut.opposite_arm_distances' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TwoCutRecut.final_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TwoCutRecut.gate_arm_row' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TwoCutRecut.exists_high_q_contact' depends on axioms: [propext, Classical.choice, Quot.sound]

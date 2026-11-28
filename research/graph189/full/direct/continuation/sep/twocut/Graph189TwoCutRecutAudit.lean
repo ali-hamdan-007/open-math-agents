@@ -1,0 +1,6 @@
+import Graph189TwoCutRecut
+
+#print axioms Graph189TwoCutRecut.opposite_arm_distances
+#print axioms Graph189TwoCutRecut.final_bound
+#print axioms Graph189TwoCutRecut.gate_arm_row
+#print axioms Graph189TwoCutRecut.exists_high_q_contact

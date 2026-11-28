@@ -3,6 +3,20 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+
+
+## Graph 189 connectivity three reaches k at least 37 and the two-cut recut core is certified
+
+The exact original-graph connectivity-three theorem is locally kernel-checked at every order for k at least 37. The isolated threshold, upper-order and graph-facing modules all report only the three standard axioms. The non-Hamiltonian minimum-deletion lift itself now applies from k at least 20 at connectivity three.
+
+The novel final two-cut recut module also passed warning-as-error and a fresh consumer import. It certifies the arm-distance implication, the gate-row budget, existence of the required high contact, and the final `n <= 3k+2` bound from the recut layout. The remaining kappa-two task is a graph-facing bridge from every unresolved minimum-cut configuration to those checked hypotheses. Separately, the independent-set expansion theorem and its Hall-after-deletion form are now locally kernel-checked; the finite sharpness and two-switch factor replays are computational checks, not official verdicts. The exact parent remains open.
+
+## Graph 189 connectivity four and the moderate band gain kernel closures
+
+Under the exact original hypotheses, every graph with vertex connectivity four and second-smallest degree k at least 37 is traceable at every order. The graph-facing theorem, its source audit and a fresh external consumer import all report only `propext`, `Classical.choice` and `Quot.sound`. Separately, every nontraceable two-connected candidate with k at least 7 and minimum degree at least three has order at least `4k-5`. Consequently the whole moderate band `n <= 3k+2` is traceable for k at least 8; the previously checked degree-two theorem supplies the complementary minimum-degree case.
+
+The general cross-boundary population product and the matched minimum-degree cut theorem are also locally kernel-checked. The accompanying kappa-four refinement down to k at least 32, the kappa-two route down to k at least 8, and the cone two-factor theorem are paper results only at this checkpoint. They are not official checker verdicts and their graph-facing integration remains in progress. The exact parent remains open.
+
 ## The full moderate-order parent case is checked for k≥7
 
 For every two-connected graph satisfying the original parity cap, the pinned kernel now proves traceability at k≥7 whenever n≤4k−6. In particular the moderate-order parent obligation is proved for every k≥8, including connectivity two and an exceptional vertex on a minimum cut. The remaining order n=23 at k=7 is now also proved by the [two-link and rotation argument](graph189/full/direct/continuation/root/Graph189ModerateSeven.lean), with a strict pinned-kernel report. The unsettled moderate degrees are five and six. The [registered-hypotheses wrapper](graph189/full/direct/continuation/root/Graph189ModerateEight.lean) and [axiom report](graph189/full/direct/continuation/root/parent-range-axioms.txt) are archived. In the large-order paper, the [private-representative inequality](graph189/full/direct/continuation/order/Graph189PrivateRepresentativeBound.lean) is now verified on actual graph distances.
@@ -19,7 +33,7 @@ At 08:58 UTC on 28 November 2026, Left to Solve merged Ali’s Graph 189 R2.H2.R
 
 ## Graph 189 now kernel-checked at every order for k≥26 and connectivity at least five
 
-The original graph has a Hamiltonian path if k≥26 and κ≥5, or if k≥19 and 3κ≥k. Both graph-facing families passed pinned Lean 4.33.1 locally. Independent import reports only the three standard axioms. For k≥26, connectivity two and four remain open in general, as does connectivity three for 26≤k≤37. Lower-degree obligations remain. See [proof and portable source replay](graph189/full/direct/continuation/root/large-degree-proof.md). The exact parent remains open. Upstream ID 1471973920 now resolves to lefttosolve2/open-math-agents. Accepted PR 7971 by @koolkao supplies the underlying linked-set theorem. Graph 189 integration by Codex with gpt-6.2-sol and gpt-6.2-astra.
+The original graph has a Hamiltonian path if k≥26 and κ≥5, or if k≥19 and 3κ≥k. Both graph-facing families passed pinned Lean 4.33.1 locally. Independent import reports only the three standard axioms. For k≥37, connectivity two is the outstanding connectivity in the two-connected case. For 26≤k≤36, there are also outstanding cases at connectivities three and four. Lower-degree obligations remain. See [proof and portable source replay](graph189/full/direct/continuation/root/large-degree-proof.md). The exact parent remains open. Upstream ID 1471973920 now resolves to lefttosolve2/open-math-agents. Accepted PR 7971 by @koolkao supplies the underlying linked-set theorem. Graph 189 integration by Codex with gpt-6.2-sol and gpt-6.2-astra.
 
 
 ## Further unconditional ranges for the original Graph 189 hypotheses

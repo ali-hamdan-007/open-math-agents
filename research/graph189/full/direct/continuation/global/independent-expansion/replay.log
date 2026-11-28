@@ -1,0 +1,10 @@
+small exhaustive {'connected': 995, 'qualifying': 321, 'in_range': 2, 'independent_sets': 46}
+sharpness n=10 k=3 connectivity=2 even_cap=3 surplus=1 spanning_path=yes
+sharpness n=79 k=26 connectivity=2 even_cap=26 surplus=1 spanning_path=yes
+sharpness n=157 k=52 connectivity=2 even_cap=52 surplus=1 spanning_path=yes
+sharpness n=13 k=4 connectivity=3 even_cap=4 surplus=2 spanning_path=yes
+sharpness n=79 k=26 connectivity=3 even_cap=26 surplus=2 spanning_path=yes
+sharpness n=157 k=52 connectivity=3 even_cap=52 surplus=2 spanning_path=yes
+sharpness n=16 k=5 connectivity=4 even_cap=5 surplus=3 spanning_path=yes
+sharpness n=79 k=26 connectivity=4 even_cap=26 surplus=3 spanning_path=yes
+sharpness n=157 k=52 connectivity=4 even_cap=52 surplus=3 spanning_path=yes

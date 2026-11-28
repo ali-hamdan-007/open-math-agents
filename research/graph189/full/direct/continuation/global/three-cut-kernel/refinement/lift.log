@@ -1,0 +1,2 @@
+compiler started 2026-11-28T09:54:11Z
+'Graph189LowConnectivityLift.minimum_deletion' depends on axioms: [propext, Classical.choice, Quot.sound]
