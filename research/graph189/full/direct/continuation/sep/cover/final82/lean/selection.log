@@ -1,0 +1,8 @@
+Graph189GatewaySelection.lean:26:60: warning: This simp argument is unused:
+  List.disjoint_left
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [List.nodup_append', hn, hzL]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'Graph189GatewayRank.choose_gateways' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • exact parent assembly and second finite replay
+
+The conditional assembly is in parent/Graph189ParentAssembly.lean. It includes the genuine original reduction, the complete cut-vertex proof, and Ali’s officially accepted R2.H2.R1 reduction. Its conclusion is the registered conjecture; its explicit remaining inputs are two Hamilton-path theorems for two-connected graphs. Source links, hashes, and both outstanding statements are in parent/parent-assembly.md. Use this as a research base, not a project solution. Parent formalization continues. 
+
+The independent Lean implementation under global/arity/final/ reproduced all 102 order intervals and caps from the finite parameter rectangle using an executable assertion. The two terminal branch inequalities are kernel-proved and the per-band tests are kernel-checked. Further verified modules derive contacts and walk separation at a minimum cut, select distinct high-degree gateways in an actual graph, and certify a prescribed-leaf edge closure and leaf endpoints.
+
+
 ## Graph 189 • machine-checked maximum degree, layer width, and finite comparisons
 
 The paper argument is in the next section. In the pinned Lean 4.33.1 environment two further statements now follow from the literal full-parent graph hypotheses: Δ ≤ 3k and w(n−Δ−k−2) ≤ kΔ, with w the rounded degree-retaining width defined in verify/Graph189RootWidth.lean (natural subtraction). All three graphs' invariants are taken directly from G. The assembled width proof includes the high third-layer cardinality, retained wedge and incidence cancellation. These compiled with warnings treated as errors and only propext, Classical.choice and Quot.sound. Replay scripts sit beside the modules. Two other lemmas bound common neighbors across a low center and provide a second predecessor. 

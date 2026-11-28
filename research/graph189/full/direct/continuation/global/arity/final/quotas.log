@@ -1,0 +1,2 @@
+'Graph189FiniteDomain.private_quota_impossible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189FiniteDomain.small_common_quota_impossible' depends on axioms: [propext, Classical.choice, Quot.sound]

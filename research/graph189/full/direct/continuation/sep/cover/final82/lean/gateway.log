@@ -1,0 +1,8 @@
+Graph189GatewayRank.lean:11:0: warning: automatically included section variable(s) unused in theorem `Graph189GatewayRank.bad_column_product`:
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+'Graph189GatewayRank.bad_column_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189GatewayRank.best_gateway_card' depends on axioms: [propext, Classical.choice, Quot.sound]
