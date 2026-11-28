@@ -1,5 +1,9 @@
 # Left to Solve research frontier
 
+## Long endblock cycle contradiction
+
+The [three-connector cycle bound](graph189/full/direct/continuation/root/bounded-order/Graph189ExteriorCycleSpan.lean) keeps the full exterior component in the vertex count. In the large-leaf branch, [any cycle of length at least 2q−1 now gives a kernel-checked contradiction](graph189/full/direct/continuation/root/bounded-order/Graph189LongLeafCycle.lean). Here q is the internal degree of a minimizing high noncut vertex in the leaf interior. The paper supplies the cycle via Fan’s circumference theorem in the endblock, which is two-connected and has at most one vertex of degree below q. The cycle existence is a separate formal obligation. The concurrently saved [leaf tail proof](graph189/full/direct/continuation/root/bounded-order/Graph189LeafBlockTail.lean) independently reaches the same ceil(k/2) tail length as the short-leaf construction.
+
 ## Leaf blocks of the optimized exterior component
 
 The [short endblock branch](graph189/full/direct/continuation/root/bounded-order/Graph189ShortLeafOrder.lean) is kernel-closed for the full remaining interval. The [leaf selection](graph189/full/direct/continuation/root/bounded-order/Graph189ExteriorLeaf.lean) minimizes a side with one exit, avoids a specified exceptional low vertex, and proves every interior vertex is a noncut of the whole component. A [rooted route into the remainder](graph189/full/direct/continuation/root/bounded-order/Graph189LeafRemainder.lean) contains at least ceil(k/2) vertices, including in the one-low case. The [tail construction](graph189/full/direct/continuation/root/bounded-order/Graph189ShortLeafRoutes.lean) joins it to a spanning path of the leaf interior through the gate. Two buffered contacts or the internal-degree contact count force an order larger than 5k−5.

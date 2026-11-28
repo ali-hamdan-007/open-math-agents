@@ -279,3 +279,9 @@ research/graph189/full/direct/continuation/root/bounded-order/Graph189ShortLeafR
 
 research/graph189/full/direct/continuation/root/bounded-order/Graph189ShortLeafOrder.lean sha256 370a440b28067c2ef8dbc29a2c027eacb4b0a6d46d235223484f52bdf6e724a9
 'Graph189ExteriorLeaf.no_short_leaf' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189ExteriorCycleSpan.lean sha256 c508adb3a57fef0c62c439826f096c48e0f44453e7d95f8926c668d9fa80be98
+'Graph189ExteriorLeaf.cycle_span' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189LongLeafCycle.lean sha256 aeb3155f91bf63158de86f5694b35854f37178f1dce6d22f777aefd66816a224
+'Graph189ExteriorLeaf.no_long_leaf_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]
