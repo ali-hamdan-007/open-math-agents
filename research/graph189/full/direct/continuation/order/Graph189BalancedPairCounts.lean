@@ -27,9 +27,9 @@ theorem two_contacts (hc : G.Connected) (point : ∀v,G.distEven v≤G.secondSma
       · exact (nonadj (e ▸ pw)).elim
   exact one_lt_card.mpr ⟨v,mem_filter.mpr ⟨va,vp.symm⟩,w,mem_filter.mpr ⟨wa,pw⟩,vw.ne⟩
 
-theorem port_count (hc : G.Connected) (point : ∀v,G.distEven v≤G.secondSmallestDegree+1)
+theorem port_count_from_nine (hc : G.Connected) (point : ∀v,G.distEven v≤G.secondSmallestDegree+1)
     (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
-    (pair : S={p,q}) (ne : p≠q) (large : 12≤G.secondSmallestDegree)
+    (pair : S={p,q}) (ne : p≠q) (large : 9≤G.secondSmallestDegree)
     (left : 2*G.secondSmallestDegree≤A.card+6) (right : 2*G.secondSmallestDegree≤B.card+6)
     (marksP : 2≤(A.filter (G.Adj p)).card) (marksQ : 2≤(A.filter (G.Adj q)).card) :
     4≤(A.filter (fun v => ∃i∈S,G.Adj i v)).card := by
@@ -84,7 +84,7 @@ theorem port_count (hc : G.Connected) (point : ∀v,G.distEven v≤G.secondSmall
   have coverB := cover B
   change 2*k≤A.card+6 at left
   change 2*k≤B.card+6 at right
-  change 12≤k at large
+  change 9≤k at large
   obtain ⟨b,bb⟩ := card_pos.mp (show 0<(D B).card by omega)
   have deep : Deep G B S b := (mem_filter.mp bb).2
   have row := Graph189BoundaryDebit.even_quota hc sides.swap (fun T h =>
@@ -103,5 +103,14 @@ theorem port_count (hc : G.Connected) (point : ∀v,G.distEven v≤G.secondSmall
   change (D A).card+2≤k at row
   omega
 
+theorem port_count (hc : G.Connected) (point : ∀v,G.distEven v≤G.secondSmallestDegree+1)
+    (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
+    (pair : S={p,q}) (ne : p≠q) (large : 12≤G.secondSmallestDegree)
+    (left : 2*G.secondSmallestDegree≤A.card+6) (right : 2*G.secondSmallestDegree≤B.card+6)
+    (marksP : 2≤(A.filter (G.Adj p)).card) (marksQ : 2≤(A.filter (G.Adj q)).card) :
+    4≤(A.filter (fun v => ∃i∈S,G.Adj i v)).card :=
+  port_count_from_nine hc point sides sc pair ne (by omega) left right marksP marksQ
+
+#print axioms port_count_from_nine
 #print axioms port_count
 end Graph189BalancedPair

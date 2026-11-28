@@ -8,9 +8,9 @@ variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph
 variable {A B S : Finset V} {p q : V}
 
 /-- A shallow side containing a common port and both private types,
-opposite a common-free side, forces an original Hamiltonian path at k≥12. -/
-theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 12≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
+opposite a common-free side, forces an original Hamiltonian path at k≥11. -/
+theorem of_eleven (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (large : 11≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
     (pair : S={p,q}) (ne : p≠q) (shallow : ∀x∈A,G.secondSmallestDegree≤G.degree x → ∃i∈S,G.Adj i x)
     (free : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q)) (common : ∃x∈A,∀i∈S,G.Adj x i)
     (privateP : ∃x∈A,G.Adj x p ∧ ¬G.Adj x q) (privateQ : ∃x∈A,G.Adj x q ∧ ¬G.Adj x p) :
@@ -45,12 +45,21 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
     exact (degree_pair (G:=G) x y diff).elim (low hx) (low hy))
   obtain ⟨_,other⟩ := Graph189PrivateContactProfile.population hc sides.swap pair ne sc point free
   change A.card≤2*k-2+R.card at other
-  apply Graph189BalancedPair.traceable hc cap large sides sc pair ne
+  apply Graph189BalancedPair.of_eleven hc cap large sides sc pair ne
   · change A.card+1≤2*k
-    change 12≤k at large
+    change 11≤k at large
     omega
   · change B.card+1≤2*k
     omega
 
+theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (large : 12≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
+    (pair : S={p,q}) (ne : p≠q) (shallow : ∀x∈A,G.secondSmallestDegree≤G.degree x → ∃i∈S,G.Adj i x)
+    (free : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q)) (common : ∃x∈A,∀i∈S,G.Adj x i)
+    (privateP : ∃x∈A,G.Adj x p ∧ ¬G.Adj x q) (privateQ : ∃x∈A,G.Adj x q ∧ ¬G.Adj x p) :
+    ∃x y, ∃r : G.Walk x y,r.IsHamiltonian :=
+  of_eleven hc cap (by omega) sides sc pair ne shallow free common privateP privateQ
+
+#print axioms of_eleven
 #print axioms traceable
 end Graph189ShallowMixedPair

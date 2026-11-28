@@ -1,3 +1,4 @@
+import Graph189NearDegreeWindow
 import Graph189BalancedSideRoutes
 import Graph189AdjacentDeepPair
 import Graph189BalancedPairCounts
@@ -10,8 +11,8 @@ variable {A B S : Finset V} {p q : V}
 
 /-- Every balanced actual separating pair, with arbitrary position of
 the low vertex, supplies a Hamiltonian path in the original graph. -/
-theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 12≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S)
+theorem of_eleven (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (large : 11≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S)
     (sc : S.card≤G.vertexConnectivity) (pair : S={p,q}) (ne : p≠q)
     (sizeA : A.card+1≤2*G.secondSmallestDegree) (sizeB : B.card+1≤2*G.secondSmallestDegree) :
     ∃x y, ∃r : G.Walk x y,r.IsHamiltonian := by
@@ -23,7 +24,7 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
   · exact Graph189AdjacentDeepPair.unrestricted hc cap sides sc pair adjacent (by omega)
   by_cases small : Fintype.card V+5<4*k
   · exact Graph189OnePortCover.below_four hc cap conn (by omega) small
-  have big : 3*G.secondSmallestDegree+2<Fintype.card V := by change 3*k+2<_; change 12≤k at large; omega
+  have big : 3*G.secondSmallestDegree+2<Fintype.card V := by change 3*k+2<_; change 11≤k at large; omega
   have point (v : V) : G.distEven v≤G.secondSmallestDegree+1 := by
     simpa only [Nat.add_comm] using (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap
   have many (c : Fin 3 ↪ (G.induce {v : V | v∉S}).ConnectedComponent) :=
@@ -45,10 +46,15 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
   have sum := card_union_le A B
   change A.card+1≤2*k at sizeA
   change B.card+1≤2*k at sizeB
-  change 12≤k at large
+  change 11≤k at large
   have left : 2*k≤A.card+6 := by omega
   have right : 2*k≤B.card+6 := by omega
-  have order : Fintype.card V+11<5*k := by omega
+  have order : Fintype.card V≤5*k-5 := by omega
+  by_cases minimum : 3≤G.minDegree
+  swap
+  · obtain ⟨z,hz⟩ := G.exists_minimal_degree_vertex
+    have deg := Graph189CutSides.connectivity_le_degree (G:=G) z
+    exact Graph189DegreeTwoOriginal.traceable hc cap conn z (by omega) (by omega)
   have reversePair : S={q,p} := pair.trans (Finset.pair_comm _ _)
   have join {C D : Finset V} (part : Graph189CutSides.CutSides G C D S)
       (highC : ∀x∈C,k≤G.degree x) (z : V) (zD : z∈D) (highD : ∀x∈D,x≠z → k≤G.degree x)
@@ -59,7 +65,7 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
     have cq := two_contacts hc point part sc reversePair (fun e => adjacent e.symm) big
     have dp := two_contacts hc point part.swap sc pair adjacent big
     have dq := two_contacts hc point part.swap sc reversePair (fun e => adjacent e.symm) big
-    have enough := port_count hc point part.swap sc pair ne large loD loC dp dq
+    have enough := port_count_from_nine hc point part.swap sc pair ne (by omega) loD loC dp dq
     obtain ⟨i,si,routeD⟩ := Graph189BalancedSideRoutes.exceptional (by omega : 10≤k)
       part.swap pair ne conD zD highD hiD enough
     have routeC : Route G C i 3 := by
@@ -68,8 +74,8 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
       · exact Graph189BalancedSideRoutes.high (by omega : 10≤k) part reversePair ne.symm conC highC hiC cq
     obtain ⟨a,b,r,hr,near⟩ := Graph189TwoSoleNearest.join_routes part si routeC routeD
     rw [sz] at near
-    exact Graph189PairLinearGap.traceable_under_five hc cap conn (by omega) order r hr (by
-      change Fintype.card V+3≤r.support.length+k
+    exact Graph189ExteriorLeaf.traceable_of_near_degree hc cap (by omega) order minimum r hr (by
+      change Fintype.card V+2≤r.support.length+k
       omega)
   by_cases highA : ∀x∈A,k≤G.degree x
   · by_cases highB : ∀x∈B,k≤G.degree x
@@ -86,5 +92,13 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
   exact join sides.swap highB z zA (fun x _ ne => (degree_pair (G:=G) x z ne).resolve_right (not_le.mpr l))
     conB conA right left sizeB sizeA
 
+theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (large : 12≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S)
+    (sc : S.card≤G.vertexConnectivity) (pair : S={p,q}) (ne : p≠q)
+    (sizeA : A.card+1≤2*G.secondSmallestDegree) (sizeB : B.card+1≤2*G.secondSmallestDegree) :
+    ∃x y, ∃r : G.Walk x y,r.IsHamiltonian :=
+  of_eleven hc cap (by omega) sides sc pair ne sizeA sizeB
+
+#print axioms of_eleven
 #print axioms traceable
 end Graph189BalancedPair

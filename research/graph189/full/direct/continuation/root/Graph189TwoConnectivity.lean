@@ -1,3 +1,4 @@
+import Graph189PrivateEleven
 import Graph189BothCommonPair
 import Graph189PrivatePairOriginal
 import Graph189MixedDeepOriginal
@@ -13,7 +14,7 @@ variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph
 Choosing a globally smallest side makes the recut available in either orientation. -/
 private theorem mixed (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 12≤G.secondSmallestDegree) {A B S : Finset V} {p q : V}
+    (large : 11≤G.secondSmallestDegree) {A B S : Finset V} {p q : V}
     (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
     (pair : S={p,q}) (ne : p≠q) (conB : (G.induce (B:Set V)).Connected)
     (common : ∃u∈A,∀i∈S,G.Adj u i) (free : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q))
@@ -23,7 +24,7 @@ private theorem mixed (hc : G.Connected)
   by_cases hasDeep : ∃y,Deep G A S y
   · obtain ⟨y,deep⟩ := hasDeep
     obtain ⟨z,za,com⟩ := common
-    exact Graph189MixedDeepOriginal.traceable hc cap (by omega) sides.swap pair ne sc conB free deep za com
+    exact Graph189MixedDeepOriginal.of_eleven hc cap (by omega) sides.swap pair ne sc conB free deep za com
   have shallow (x : V) (xa : x∈A) (high : G.secondSmallestDegree≤G.degree x) : ∃i∈S,G.Adj i x := by
     by_contra! miss
     exact hasDeep ⟨x,xa,high,miss⟩
@@ -32,16 +33,16 @@ private theorem mixed (hc : G.Connected)
   · exact Graph189MissingPrivateMixed.traceable hc cap (by omega) sides sc pair ne conB shallow free
       (fun x xa xq => by by_contra xp; exact qOnly ⟨x,xa,xq,xp⟩) chosen
   by_cases pOnly : ∃x∈A,G.Adj x p ∧ ¬G.Adj x q
-  · exact Graph189ShallowMixedPair.traceable hc cap (by omega) sides sc pair ne shallow free common pOnly qOnly
+  · exact Graph189ShallowMixedPair.of_eleven hc cap (by omega) sides sc pair ne shallow free common pOnly qOnly
   exact Graph189MissingPrivateMixed.traceable hc cap (by omega) sides sc
     (pair.trans (Finset.pair_comm _ _)) ne.symm conB shallow (fun x xb h => free x xb h.symm)
     (fun x xa xp => by by_contra xq; exact pOnly ⟨x,xa,xp,xq⟩) chosen
 
 /-- The original graph has a Hamiltonian path at connectivity two for all
-orders and every second-smallest degree at least twelve. -/
-theorem traceable (hc : G.Connected)
+orders and every second-smallest degree at least eleven. -/
+theorem of_eleven (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 12≤G.secondSmallestDegree) (conn : G.vertexConnectivity=2) :
+    (large : 11≤G.secondSmallestDegree) (conn : G.vertexConnectivity=2) :
     ∃a b,∃r : G.Walk a b,r.IsHamiltonian := by
   classical
   have point (v : V) : G.distEven v≤G.secondSmallestDegree+1 := by
@@ -72,7 +73,17 @@ theorem traceable (hc : G.Connected)
   by_cases b : C B
   · exact mixed hc cap large sides.swap sc rfl ne conA b (free a)
       (Or.inr (least B A {p,q} sides.swap size))
-  exact Graph189PrivatePairOriginal.traceable hc cap large sides rfl ne sc (free a) (free b) conA conB
+  by_cases twelve : 12≤G.secondSmallestDegree
+  · exact Graph189PrivatePairOriginal.traceable hc cap twelve sides rfl ne sc (free a) (free b) conA conB
+  exact Graph189SmallPrivatePair.private_eleven hc cap (by omega) minimum (by omega) sides rfl ne sc
+    (free a) (free b) conA conB
+
+theorem traceable (hc : G.Connected)
+    (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (large : 12≤G.secondSmallestDegree) (conn : G.vertexConnectivity=2) :
+    ∃a b,∃r : G.Walk a b,r.IsHamiltonian :=
+  of_eleven hc cap (by omega) conn
 
 end Graph189TwoConnectivity
 #print axioms Graph189TwoConnectivity.traceable
+#print axioms Graph189TwoConnectivity.of_eleven

@@ -1,5 +1,9 @@
 # Formalization of the full Graph 189 paper argument
 
+## Connectivity two at every order from degree eleven
+
+Lean proves the original Hamiltonian-path conclusion for every graph of vertex connectivity two with second-smallest degree at least eleven, at every order. At degree eleven the stronger path gap covers balanced sides. The clean mixed case counts an opposite common port in both anchor columns, and the large shallow case uses the sharper mixed census from the parallel branch. This leaves degrees seven through ten at connectivity two. The strict circumference theorem remains the input for the separate three-connected assembly. [Combined theorem](Graph189TwoConnectivity.lean)
+
 ## Current separating-pair proof
 
 At second-smallest degree eleven, [both sides without common contacts](bounded-order/Graph189PrivateEleven.lean) now give a Hamiltonian path throughout the residual order window. A clean side bounds the combined number of nonports, so the two path losses together with the unused separator vertex total at most nine. If neither side is clean, the existing defective-side bound puts both orders below twice the second-smallest degree. The [balanced common-free theorem](bounded-order/Graph189SmallPrivatePair.lean) applies in this latter case for every k≥7. The [independent Linux check](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46154963128) also verified the stronger path gap and the three-connected assembly with its explicit circumference hypothesis.

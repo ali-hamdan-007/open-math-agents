@@ -1,3 +1,4 @@
+import Graph189CommonContactDebit
 import Graph189CleanPairOrder
 import Graph189PrivateContactProfile
 import Graph189OnePortThreeCut
@@ -9,10 +10,10 @@ variable {A B S : Finset V} {p q : V}
 
 /-- In the mixed case of the separating-pair paper a common contact on B
 sees every A-port at distance two. Combined with both clean counts, this
-already places the graph below the graph-facing order floor when k≥12. -/
-theorem traceable (hc : G.Connected)
+already places the graph below the graph-facing order floor when k≥11. -/
+theorem of_eleven (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 12≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S)
+    (large : 11≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S)
     (pair : S={p,q}) (ne : p≠q) (sc : S.card≤G.vertexConnectivity)
     (clean : Graph189CleanSideCounts.Clean G A p q)
     {x : V} (xb : x∈B) (xp : G.Adj x p) (xq : G.Adj x q) :
@@ -49,8 +50,12 @@ theorem traceable (hc : G.Connected)
   change P.card+_=A.card at pop
   rw [eq] at pop
   change P.card+R A=A.card at pop
-  obtain ⟨_,opp⟩ := Graph189PrivateContactProfile.population hc sides pair ne sc point clean.private_ports
-  change B.card≤2*k-2+R B at opp
+  have opp := Graph189PrivateContactProfile.order_of_common hc sides.swap pair ne sc point clean.private_ports
+    ⟨x,xb,fun i hi => by
+      rcases (show i=p ∨ i=q by simpa [pair] using hi) with rfl|rfl
+      · exact xp
+      · exact xq⟩
+  change B.card+3≤2*k+R B at opp
   have all : (univ : Finset V)⊆(A∪B)∪S := by
     intro y _
     rcases sides.cover y with h|h|h
@@ -61,9 +66,19 @@ theorem traceable (hc : G.Connected)
   rw [card_univ,size] at total
   have ab := card_union_le A B
   change P.card≤k at limit
-  change 12≤k at large
+  change 11≤k at large
   change Fintype.card V+5<4*k
   omega
 
+theorem traceable (hc : G.Connected)
+    (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (large : 12≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S)
+    (pair : S={p,q}) (ne : p≠q) (sc : S.card≤G.vertexConnectivity)
+    (clean : Graph189CleanSideCounts.Clean G A p q)
+    {x : V} (xb : x∈B) (xp : G.Adj x p) (xq : G.Adj x q) :
+    ∃u v, ∃r : G.Walk u v,r.IsHamiltonian :=
+  of_eleven hc cap (by omega) sides pair ne sc clean xb xp xq
+
+#print axioms of_eleven
 #print axioms traceable
 end Graph189CleanCommonPair

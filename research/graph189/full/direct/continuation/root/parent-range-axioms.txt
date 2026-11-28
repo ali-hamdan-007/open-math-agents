@@ -326,3 +326,27 @@ research/graph189/full/direct/continuation/root/bounded-order/Graph189SmallPriva
 research/graph189/full/direct/continuation/root/bounded-order/Graph189PrivateEleven.lean sha256 f93a1e8e8164307dd22955ec2785c778ad8a614738729c4ce2242f7a4941e61c
 'Graph189SmallPrivatePair.clean_eleven' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189SmallPrivatePair.private_eleven' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/order/Graph189BalancedPairCounts.lean sha256 59edf47087ee9ee4d1e8390fd7467ce68fafc2447fb1ec2930993c774caf9150
+'Graph189BalancedPair.port_count_from_nine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189BalancedPair.port_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/order/Graph189BalancedPair.lean sha256 4420d998c87cbd1beb67e24cbb3d3b9b446593e76571839b6fa202e1e354ed50
+'Graph189BalancedPair.of_eleven' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189BalancedPair.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/order/Graph189CleanCommonPair.lean sha256 47aca5bf655e7d1c4779807d054c4ffed7dd573f426cabe34393253ae7d0afd0
+'Graph189CleanCommonPair.of_eleven' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CleanCommonPair.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/order/Graph189MixedDeepOriginal.lean sha256 0f95012a8ba6c187b9fb8d42908b38f578421aa68c77d07fd31aab7ae9b35ce2
+'Graph189MixedDeepOriginal.of_eleven' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189MixedDeepOriginal.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/order/Graph189ShallowMixedPair.lean sha256 4a3fde412d0f355b0a89b0f23ca144b20b53d72eae2081051cb741818ff44f7c
+'Graph189ShallowMixedPair.of_eleven' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ShallowMixedPair.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/Graph189TwoConnectivity.lean sha256 57bc00523a510484adfe61011162ff84eedfe057170974cc43dcf3e5cc93ca2a
+'Graph189TwoConnectivity.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TwoConnectivity.of_eleven' depends on axioms: [propext, Classical.choice, Quot.sound]
