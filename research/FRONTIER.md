@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • two-cut and three-consecutive-degree cases
+
+Independently reviewed written proofs now cover (i) all graphs of vertex connectivity two with second-smallest degree k≥10, without any order or other degree restriction, and (ii) all graphs whose degrees lie in {k,k+1,k+2} and whose minimum degree equals k, at every order and every k. The arguments appear in `research/graph189/full/direct/continuation/sep/unrestricted-two-cuts.md` and `global/three-consecutive-degrees-all.md`. The latter uses a new two-unit saving per remote penultimate vertex, also independently reviewed. These are paper proofs. The independent local Lean verdict in the preceding checkpoint concerns the rooted order theorem. The general case still includes graphs of connectivity at least three with larger degree spread or a single exceptional low vertex. See also the new path bounds for two sides of an arbitrary small separator and the saturated common-neighbor obstruction.
+
+
 ## Graph 189 • rooted Hamiltonian paths above the degree/order threshold
 
 For a connected graph under the full problem's even-distance cap, of order n, maximum degree Δ and parameter k, the strict inequality n > (3+Δ−k)k+1 forces a Hamiltonian path starting at a minimum-degree vertex. Pinned Lean builds and a separate rebuild verify the exact theorem and only propext, Classical.choice, Quot.sound. Source, import audit and the replay script are in `research/graph189/full/direct/continuation/root/`; run `bash replay-rooted.sh` with OMA_FC pointing at a pinned built formal-conjectures checkout. This is a local kernel verdict. The full conjecture remains open.

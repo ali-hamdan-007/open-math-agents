@@ -1,0 +1,18 @@
+# Routing one side of order up to three internal minimum degrees
+
+Let S be a minimum vertex cut of order s≥2 in a 2-connected qualifying Graph 189 graph. Suppose G−S consists of C and D, k≥5s, D is wholly high, |C|≤2k−3s−1, |D|≤3(k−s)−2, and every a∈S has at least 2s high neighbors in C. Call vertices outside S with a neighbor in S ports. Any of the following hypotheses suffices for a spanning path.
+
+* C contains a high nonport.
+* D has at most k−s nonports.
+
+The first condition implies the second. If D has any nonport, all its nonports are high and at distance exactly four from a chosen high nonport x of C, by the ambient high-pair diameter bound. The second layer from x separates x from these vertices, so has size at least s. Both layers count towards the cap at x.
+
+Write d=k−s. Every port of D sees at least 2s distinct vertices of C at distance two through any incident anchor.
+
+Every vertex of D has internal degree at least d. If D had an independent set I of order d+1, each pair in I would share a common internal neighbor: otherwise their two neighborhoods and I would give |D|≥3d+1. Everyone in I would see its d peers at distance two, leaving space for at most s additional even witnesses. This excludes ports, and D has too few nonports. Therefore α(D)≤d.
+
+If D is 2-connected, Nash–Williams' theorem gives a spanning cycle, since δ(D)≥max(α(D),(|D|+2)/3). Opening the cycle provides a spanning path with one endpoint any desired port. If D has a cut vertex, each leaf block has at least d noncut vertices plus its articulation. There cannot be three leaf blocks. With exactly two, the block-cut tree is a path; any internal nonbridge block has a noncut vertex (there are only two cut vertices of D in that block), hence order at least d+1. Such a block is disjoint from the ≥d noncut vertices of each of the two leaves, impossible. There can be at most one intervening bridge, as two successive bridges would give a degree-two vertex and d>2. In each leaf B there is a noncut port u (otherwise B's articulation v disconnects G), and |B|≤|D|−d≤2d−2. Add a marker adjacent to u and v. All vertices other than v and the marker have degree at least d, so closure completes them to a clique. The articulation has at least two original neighbors in B; traverse from u through the clique, end at a neighbor of v different from u, and return through v and the marker. Reversing closure supplies a spanning u,v-path in B. Joining the two block paths yields a D-spanning path with port endpoints.
+
+Select a port endpoint in D and one of its neighboring anchors r. Assign every member of S−{r} to C, reserving two distinct high C neighbors for each. Choose a joining high neighbor c of r, and, if C contains a low vertex z, a high neighbor y of z inside C different from c. There is a choice because C is connected, has at least 2s high vertices and r has 2s high neighbors in C. Reserving the terminals of the s−1 markers can avoid c,y by the same greedy bound 2s in two-side-routing.md. If z∈S the 2s-contact hypothesis applies to z too. Invoke the same degree-sum closure for the high part of C plus the assigned markers and, if necessary, the endpoint marker yc. This yields a spanning path of C and the assigned anchors ending at c, with z prepended in the low-in-C case. Join c to the port endpoint in D through r. This proves the claim.
+
+Without the routing size assumptions, if both sides contain a high nonport, they have at most k−s high nonports each by this same second-layer separator. If each side also contains a port neighboring all of S, the opposite port sets have order at most k each. Hence n≤s+2k+2(k−s)+1=4k−s+1, allowing for the possible low nonport. At connectivity ≥3 and k≥13 this is in the coordinator’s settled order range.
