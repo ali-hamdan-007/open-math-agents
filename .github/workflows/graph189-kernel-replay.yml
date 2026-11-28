@@ -64,7 +64,7 @@ jobs:
               seen.add(name)
               if name.startswith('Mathlib'):
                   math.add(name);return
-              src=fc/pathlib.Path(*name.split('.')).with_suffix('.lean') if name.startswith('FormalConjectures') else modules.get(name)
+              src=fc/pathlib.Path(*name.split('.')).with_suffix('.lean') if name.startswith('FormalConjectures.') else modules.get(name)
               if src is None:return
               for dep in re.findall(r'^(?:public\s+)?import\s+(?:all\s+)?([\w.]+)',src.read_text(),re.M):visit(dep)
           for name in targets:visit(name)
