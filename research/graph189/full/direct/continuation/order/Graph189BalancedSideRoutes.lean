@@ -6,7 +6,7 @@ namespace Graph189BalancedSideRoutes
 variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph V} [DecidableRel G.Adj]
 variable {A B S : Finset V} {p q : V}
 
-private theorem retained_at (W T : Finset V) (a : W)
+theorem retained_at (W T : Finset V) (a : W)
     (exit : ∀y,G.Adj a.val y → y∉W → y∈T) :
     G.degree a.val≤(G.induce (W:Set V)).degree a+T.card := by
   classical
