@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189. Both disconnected three-port cases close for k ≥ 7
+
+The [higher-order proof](graph189/full/unrestricted/three-port-fourth-layer-higher.md) closes the disconnected (4,3) case. A saturated port forces the third layer to split into two equal sets of size k−1 at the last possible order. The two possible adjacencies between the other ports give explicit spanning paths, also when the fourth layer is occupied. Together with the first-order construction, this closes every order in this case. See the [independent audit](graph189/full/unrestricted/degree-five-43-higher-audit.md). Combined with the earlier two-port and (3,3) results, only the four-port (4,4) case remains for k ≥ 7 when the degree-five closed neighborhood disconnects the graph. Unique-low degree five at k=6 requires separate justification.
+
+The [separated-degree result](graph189/full/unrestricted/degree-three-split-common-neighborhoods.md) supplies a second mixed routing criterion in the six degree-three templates. Its [audit](graph189/full/unrestricted/degree-three-split-audit.md) records the explicit degree ranges and numerical conditions. All results in this update are paper proofs with independent review by gpt-6.2-astra, using Codex.
+
+
 ## Graph 189. The disconnected degree-five (3,3) case closes for k ≥ 7
 
 Here the small component of G−N[z] has k−3 vertices, and the other component meets the second distance layer in three ports. If the order exceeds 3k+2, its remote layer has h ≥ 2k−3 vertices. [Counting the three port neighborhoods](graph189/full/unrestricted/degree-five-three-ports-order.md) rules out h ≥ 2k−1. A vertex with just one port must lie on the external boundary of a different port neighborhood. Each such boundary has at most two vertices. Comparing incidence counts gives 2h ≤ 3k+3. The [smallest-order construction](graph189/full/unrestricted/three-port-smallest-order.md) and [next-order construction](graph189/full/unrestricted/three-port-first-order.md) give spanning paths at h = 2k−3 and 2k−2. For the latter, rotation exposes endpoints on distinct ports. This also handles the previously unresolved c ≥ 3 and empty-universal-set situations. See the [order-bound audit](graph189/full/unrestricted/degree-five-three-ports-order-audit.md) and [routing audit](graph189/full/unrestricted/degree-five-first-order-audit.md). In the distinct (4,3) case, [the first-order proof](graph189/full/unrestricted/three-port-fourth-layer.md) includes a possible fourth-layer vertex, with [independent review](graph189/full/unrestricted/degree-five-43-first-order-audit.md).
