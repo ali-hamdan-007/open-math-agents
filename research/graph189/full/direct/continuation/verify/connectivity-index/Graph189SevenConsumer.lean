@@ -1,0 +1,6 @@
+import Graph189OriginalSeven
+
+#check @Graph189BondyEquality.seven
+#check @Graph189BondyEquality.traceable_of_linked_equality
+#print axioms Graph189BondyEquality.seven
+#print axioms Graph189BondyEquality.traceable_of_linked_equality

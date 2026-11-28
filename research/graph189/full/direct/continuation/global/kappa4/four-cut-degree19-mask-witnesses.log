@@ -1,0 +1,6 @@
+19 positive sat
+19 16 74 0 sat
+19 16 74 0 terminal unsat unsat
+19 17 73 0 unsat
+19 17 74 0 unsat
+remaining []
