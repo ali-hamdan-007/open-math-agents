@@ -1,0 +1,2 @@
+'Graph189MatchedRooted.of_matched_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189MatchedRooted.of_linear_order' depends on axioms: [propext, Classical.choice, Quot.sound]

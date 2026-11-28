@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • both small degrees and the matched root and exterior path bounds
+
+In the two-connected residual left by the existing parent assembly, all cases k≤2 now have a pinned proof. verify/Graph189LowDegreeResidual.lean proves that if distance four occurs in this range, the second layer would be a singleton separator, and uses the previously checked degree-two traceability theorem.
+
+verify/matched-formal/Graph189MatchedRootWidth.lean and Graph189MatchedRooted.lean yield the strengthened root-width and degree-excess bounds from the genuine graph. Lean and Python also agreed on 366 endpoint evaluations over the 64 bands. sep/cover/final82/lean contains the independently formalized path replacement, prescribed endpoint and matching results. Graph189ExteriorMatching supplies an actual graph-order lower bound (J+2)N+J from a Hamilton-connected exterior set and matched path contacts. The full block and cut reductions still need assembly. These are local results on the fork.
+
+
 ## Graph 189 • complete scalar certificate and a critical-connectivity theorem
 
 For arbitrary integer parameters satisfying the listed graph inequalities with s≥5 and k≥26, Graph189ScalarConclusion.terminal_band proves s≤8 and produces a valid terminal band with lower endpoint ≤n. There are 113 terminal degree rows. Both the finite and infinite parts now run in the ordinary pinned kernel. See global/arity/final/certified-scalar-reduction.md, terminal-113.tsv and replay-certified.sh. The original graph still has to supply all order-lift hypotheses, and the terminal geometric argument must be joined to this result.

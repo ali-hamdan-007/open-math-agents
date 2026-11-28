@@ -2,7 +2,7 @@ import Graph189TraceClosurePublic
 
 open SimpleGraph
 namespace Graph189ExteriorGap
-variable {V : Type*} [DecidableEq V] {G : SimpleGraph V} {x y a b : V}
+variable {V : Type*} {G : SimpleGraph V} {x y a b : V}
 
 /-- Splicing a path outside a longest path, between consecutive marked positions
 or from an end, forces the replaced interval to have at least as many vertices. -/
@@ -12,6 +12,7 @@ theorem gap_length_of_detour (p : G.Walk x y) (hp : p.IsPath)
     (q : G.Walk a b) (hq : q.IsPath) (disjoint : List.Disjoint q.support p.support)
     (left : ∀ z∈A.getLast?, G.Adj z a) (right : ∀ z∈B.head?, G.Adj b z) :
     q.support.length ≤ J.length := by
+  classical
   let L := (A ++ q.support) ++ B
   have pnd := hp.support_nodup
   have pc := p.isChain_adj_support

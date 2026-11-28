@@ -7,6 +7,7 @@ namespace Graph189GatewayRank
 
 variable {V : Type*} [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
 
+omit [DecidableEq V] in
 /-- At threshold t, each weak column costs t missed incidences in the rows. -/
 theorem bad_column_product (W Z : Finset V) (a t : ℕ)
     (row : ∀ w∈W, (Z.filter (fun z => ¬G.Adj w z)).card ≤ a) :

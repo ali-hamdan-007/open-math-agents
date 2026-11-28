@@ -1,0 +1,3 @@
+'Graph189LowDegreeResidual.two_in_layer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189LowDegreeResidual.diam_le_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189LowDegreeResidual.low_degree_residual' depends on axioms: [propext, Classical.choice, Quot.sound]

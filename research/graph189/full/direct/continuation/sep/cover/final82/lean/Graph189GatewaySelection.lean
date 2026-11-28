@@ -23,7 +23,7 @@ theorem choose_gateways (W Z : Finset V) (a g : ℕ) (hg : g≤Z.card)
       omega
     obtain ⟨z,hz,unused⟩ := Finset.not_subset.mp nsub
     have hzL : z∉L := by simpa using unused
-    refine ⟨L++[z],by simp [hl],by simp [List.nodup_append',List.disjoint_left,hn,hzL],?_⟩
+    refine ⟨L++[z],by simp [hl],by simp [List.nodup_append',hn,hzL],?_⟩
     intro i hi
     by_cases old : i<L.length
     · simpa [List.getElem_append_left old] using all i old

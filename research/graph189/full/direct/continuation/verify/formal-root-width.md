@@ -29,3 +29,23 @@ Set OMA_FC to the pinned checkout and run verify/replay-root-width.sh to rebuild
 Graph189WidthInterval.necessary_interval specializes the rounded bound, the maximum-degree ceiling and the rooted Hamilton-path theorem to arbitrary counterexamples satisfying the original graph hypotheses. For n>4k+2, set L=k+max(0,⌈(n−3k−1)/k⌉) and F(d)=(n−d−k−2)(2(n−2k)+k(d−k))−(k+1)kd. The theorem gives L≤3k and min(F(L),F(3k))≤0. Its integer proof uses concavity to eliminate the unknown actual maximum degree, with exact rounding and casts. Pinned Werror compilation printed the three standard axioms; source SHA-256 13ed672e6d039fe7a9c7ea78b04f88cd6540ed49700bcf75eba7b19596cde7fd.
 
 Graph189WidthInterval.replay_widthPossible then imports the actual executable's definition and proves that its Boolean result is true for every counterexample to the registered conjecture. The adapter passed the same pinned kernel, with just the three standard axioms. Its SHA-256 is 6786547e2aa14d5865795d060cb7132d440e55c6a091ecd87af36e695a17bcfd. Use verify/replay-root-width.sh --replay-test for this full chain. The individual prints are in verify/width-interval.log and verify/width-replay.log.
+
+Graph189WidthMonotone.lean proves acceptance at n implies acceptance at every smaller m for k>0, and rejection at m implies rejection at every larger n, for the precise Boolean widthPossible test. This justifies the skip and break in the enumeration. Graph189SmallerSide.lean proves x≤smallerSide(s,k,x+y) for every x≤y with xy≤kx+sk². The proof unfolds the imperative binary search and bounds every feasible population through its early exit. Both modules passed pinned Werror with the standard three axioms and are included in the --replay-test command.
+
+## The matched width and rooted bounds for the 64-band replay
+
+Let $e=d-k$ and write $w_0$ for the rounded width above. For $k\ge3$ and $d\ge k$, the matched width is the least $D\ge w_0$ satisfying either $D\ge d$, or both
+
+$$
+D\ge 2+e,\qquad
+2n\le 6k+D+f_k(\lfloor K/2\rfloor)+f_k(\lceil K/2\rceil),
+\qquad K=D-2-e,
+$$
+
+where $f_k(t)=t(k-t-1)$. The fallback $D\ge d$ is exactly where the Python loop stops testing $K\le k-3$. The finite minimum has an admissible candidate at $\max(d,w_0)$. Its Lean specification and the proof on each actual three-edge geodesic are in `matched-formal/Graph189MatchedRootWidth.lean`. That module uses the matched inequalities for both wedges and the balanced-capacity estimate in `matched-formal/Graph189MatchedPack.lean`. Existing column cancellation then yields $w(n-d-k-2)_+\le kd$ as `Graph189MatchedRootWidth.root_matched_width_bound` under exactly the registered Graph 189 assumptions.
+
+The two degree-excess tests in the matched replay come from `matched-formal/Graph189MatchedRooted.lean`. For $k\ge3$, order above $3k+1+(k-2)e$ guarantees a Hamiltonian path from a minimum-degree vertex. When $2e+1\le k$, the sufficient cutoff sharpens to $3k+1+f_k(e)$. The proofs reuse the rooted successor argument and the genuine matched wedge bound.
+
+The named modules passed Lean 4.33.1 with warnings treated as errors. The axiom audits in `matched-formal/matched-width-check.log` and `matched-formal/matched-rooted-check.log` report `propext`, `Classical.choice`, and `Quot.sound`. Run `matched-formal/check.sh --all Graph189MatchedPack Graph189MatchedRootWidth Graph189MatchedRooted` with the existing checked inputs to replay this part.
+
+The diagnostic evaluation compared the executable Lean minimum with Python `minimum_width` at both order endpoints in each of the 64 bands, testing the lower admissible excess, its successor, and the maximum excess. All 366 distinct inputs agreed. The result is recorded in `matched-formal/matched-width-replay-comparison.log`.

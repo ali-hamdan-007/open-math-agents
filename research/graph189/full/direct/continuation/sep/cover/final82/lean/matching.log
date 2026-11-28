@@ -1,0 +1,7 @@
+Graph189ExteriorMatching.lean:8:8: warning: automatically included section variable(s) unused in theorem `_private.Graph189ExteriorMatching.0.Graph189ExteriorGap.route_of_induced_hamilton`:
+  [Fintype V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+'Graph189ExteriorGap.exterior_hamilton_connected_matching' depends on axioms: [propext, Classical.choice, Quot.sound]

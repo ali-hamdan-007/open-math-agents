@@ -1,0 +1,3 @@
+'Graph189MatchedRootWidth.geodesic_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189MatchedRootWidth.root_matched_width_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189MatchedRooted.of_matched_order' depends on axioms: [propext, Classical.choice, Quot.sound]
