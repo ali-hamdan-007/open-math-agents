@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 moderate order and unique minimum separators
+
+When n≤3k+2 and k≥max(3s+3,6s−5), the contact-rooted path proof gives a sharper direct alternative for the moderate case. A counterexample must have a unique low vertex z of degree s, and every minimum separating set must equal its neighborhood N(z). The equality case on the large side forces the smaller side to be a clique, recovering the last vertex; three high components can be joined with two separator vertices. The mathematical argument received independent review. The arithmetic bounds alone passed the pinned Lean kernel (`root/Graph189ModerateCounts.lean`, `root/moderate-counts.log`). The graph routing and this consequence remain paper-level. See `root/moderate-minimum-cuts.md` under `research/graph189/full/direct/continuation/`. The parent remains unsubmitted.
+
+
 ## Graph 189 • both asymptotic order bounds have one kernel-certified construction
 
 root/Graph189SyntheticBand.lean now certifies the construction in synthetic-high-order.md on the entire unbounded range. For s≥5 and k>6(s−1), violation of either proposed upper order gives a valid Band with endpoints n and cap k+floor(k/(s−1)). The proof uses integer algebra and division, with no finite scan. Graph189SyntheticBand.high_order passed pinned Lean with only propext, Classical.choice and Quot.sound. The new result makes one geometric valid-band contradiction sufficient for both upper orders and all finite terminal rows. The lower order and lifted lower order remain separate graph obligations.
