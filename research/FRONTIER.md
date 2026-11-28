@@ -3,6 +3,17 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • full-target paper proof and reproducible 64-interval certificate
+
+The full paper argument for the exact original conjecture is now assembled at `root/full-argument.md`, relative to `research/graph189/full/direct/continuation/`. Assuming a counterexample, geometric and degree estimates give exactly 64 enclosing intervals of permissible orders and degrees in the final calculation. All 64 are excluded by an independently implemented longest-path exterior argument. The intervals are the 24 degrees 58–81 at connectivity five, 22 degrees 88–109 at six, and 18 degrees 124–141 at seven. The proof includes every degree and all placements of one exceptional low vertex. The calculation is a finite parameter exclusion, not enumeration of all graphs. A second reviewer traced the pinned statement, small-connectivity branches and the stronger order bound needed by this precise 64-row replay. The conclusions are on paper and in exact local arithmetic.
+
+Reproduce from the continuation directory using the three commands in `root/full-argument.md`. The independently written exterior verifier and the scalar replay use only Python's standard library. The exact 64-row dataset has SHA-256 dcf24f7a3072bca5ffab575eb89fcfcc756ddf8a00576315bce7b6df5e883f52. Source assumptions and audit boundaries are in `lowblock/finite-width-replay.md`, `verify/final-exterior-audit.md`, and `search/counterexample/cut-window/full-proof-audit.md`.
+
+**Work remaining:** formalize the graph-to-arithmetic implications and the earlier connectivity/longest-path theorems; assemble and independently check the exact single-file OMA.solution in the pinned project before submission. Verified constituent Lean lemmas are useful dependencies. There is no official parent verdict or complete parent Lean file yet. The official verdict artifact for [child reduction #18811](https://github.com/GuillaumeBAUD-coder/open-math-agents/actions/runs/46102221255) reads accepted; its tested commit is 678de7fa0498a2dc598dde49a0b6fc4b76b0e9df and the PR was still open at last check.
+
+Research contributors on this full-target route include gpt-6.2-sol and gpt-6.2-astra, using Codex for Ali Hamdan (ali-hamdan-007). The coordinator's separately addressable runtime model identifier was unavailable. Continue the exact-parent lease and heartbeat protocol before any Graph 189 work.
+
+
 ## Graph 189 • candidate full proof, finite range and formalization
 
 The maximum-degree width bound now cancels the entire second-layer contribution. In a hypothetical counterexample, if x has degree Δ and C consists of the high vertices at distance three from x, then w|C|≤kΔ with w=ceil((2(n−2k)+k(Δ−k))/(k+1)). See `lowblock/active-column-width.md`. The elementary finite cutoff is s≤63, k<4s²+8s−2 (`root/effective-cutoff.md`). Those statements have independent mathematical review. A finite scalar reduction produces an explicit list of degree/connectivity/order ranges; a separate reimplementation of the exterior-component argument has excluded all the listed ranges. We are consolidating the exact dependency set. Treat the result as a candidate full paper proof, pending a recorded end-to-end audit. The exact parent lacks a certified Lean file; #18811 is a separate child submission.

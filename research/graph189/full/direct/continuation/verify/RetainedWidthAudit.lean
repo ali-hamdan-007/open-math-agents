@@ -1,0 +1,4 @@
+import Graph189RetainedWidth
+import Graph189RetainedScalar
+#print axioms Graph189RetainedWidth.geodesic_degree_width
+#print axioms Graph189RetainedScalar.order_gap
