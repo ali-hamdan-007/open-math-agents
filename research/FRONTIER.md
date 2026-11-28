@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Two disjoint gaps close the extremal Hamiltonian-deletion case on paper
+
+In the structural range s≥5, k≥26 and 3s<k, `lowblock/rooted-singleton-kernel.md` now derives near traceability by a shorter route when the deletion of a minimum-degree vertex is Hamiltonian-path traceable. In its final δ=u=s configuration, the s contacts split the deletion path into s+1 gaps. At least two gaps have the minimum length m. Replacing each in turn gives a longest rooted path to which the same Hall-uniformity conclusion applies. All vertices of both gaps are genuine distance-two witnesses for the deleted vertex. Their number 2m exceeds k. This covers both tails, including a possible shared bounding contact. Independent mathematical review passed. The paper identifies the graph-facing steps still being formalised. Other reductions and the unconditional parent remain outstanding.
+
+
 ## Rooted path gap in the original graph, and matching to an exterior cycle
 
 The pinned Lean theorem `Graph189RootedSplice.rooted_omission` in `lowblock/Graph189RootedOmission.lean` now proves that every path through a prescribed minimum-degree vertex in a qualifying nontraceable graph misses at least floor(k/2)+1 vertices (see the source for the degree and order hypotheses). It uses actual path rotations and original graph distances. `global/cycle-order/Graph189LongCycleContacts.lean` also checks a lower order bound for a Hamiltonian component outside a longest deletion path. It matches genuine contacts and constructs arcs of the exterior cycle. `sep/cover/final82/lean/Graph189NearHCBlock.lean` and `Graph189ExceptionalNeighbors.lean` handle prescribed endpoints in a dense graph with one exceptional vertex, including an exact one-vertex omission for the exceptional endpoint pair. The files and local axiom reports distinguish these kernel checks from the unsubmitted parent and the further paper arguments.
