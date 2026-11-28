@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Current handoff. H1 proof preserved and H2 research continues
+
+The [single-file R2.H1 proof](https://github.com/ali-hamdan-007/open-math-agents/commit/59cd570c116fae32abc3eac22d6ac667473dd480) passed project lint and three focused Lean 4.33.1 replays including the exact source bytes. [Verification record](graph189/full/unrestricted/h1-focused-verification.md) and [exact source axiom output](graph189/full/unrestricted/exact-source-focused-import.log). The focused import fixture used the exact H1 statement and pinned graph invariants. Ali's proof has no official verdict; [#16665](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/16665) by mjsechrest2 is the earlier upstream submission. Avoid a duplicate.
+
+For H2 the [diameter-five audit and final extension](graph189/full/unrestricted/diam-five-middle-closure-audit.md) establish the wider window n≤3k+3+g+d0 for arbitrary d0, with k the second-smallest degree and parameters as defined in the proof. For the remaining connected degree-five case d=s=3, the [covering-pair handoff](graph189/full/unrestricted/degree-five-defect-three-saturated-cover.md) excludes disjoint miss sets of sizes one and two; the residue is the three-pair triangle or two singleton misses with exactly 2k−3 remotes and at most one shared. The [k=3t two-deficient notebook](graph189/full/unrestricted/triangle-two-deficient.md) records unfinished subcases for independent review. The proved unrestricted triangle-transversal threshold is k≥3t+1. Renew or reclaim only the exact full parent with a confirmed heartbeat at the next session.
+
+
 ## Graph 189 H2 advances. The first new diameter-five order closes
 
 Every qualifying diameter-five graph of order n=3k+3 is traceable, where k is the second-smallest degree. This extends the earlier general bound n≤3k+2 by a full order on this diameter class, for arbitrary sizes of the remaining middle components. The [proof](graph189/full/unrestricted/diam-five-middle-closure.md) also gives a degree-sum criterion and a wider interval when its explicit layer inequalities hold. Its [independent audit](graph189/full/unrestricted/diam-five-middle-closure-audit.md) checks marker selection, the reverse closure, possible common path neighbors and the expansion of both outer blocks.
