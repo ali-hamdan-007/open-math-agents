@@ -1,0 +1,6 @@
+n 15 p 11 b 3 exteriors 3
+n 15 p 10 b 4 exteriors 9
+n 15 p 9 b 5 exteriors 22
+n 15 p 8 b 6 exteriors 24
+n 15 p 7 b 7 exteriors 46
+k 4 n 15 patterns 72 direct 28 propagation 44 left 0

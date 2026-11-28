@@ -1,0 +1,22 @@
+exterior order 1: 1 isomorphism classes
+exterior order 2: 2 isomorphism classes
+exterior order 3: 4 isomorphism classes
+4 3 {'attachment patterns before path test': 30, 'mandatory path meets gap bound': 26, 'excluded by completion constraints': 4}
+exterior order 4: 11 isomorphism classes
+4 4 {'attachment patterns before path test': 70, 'mandatory path meets gap bound': 26, 'excluded by completion constraints': 44}
+exterior order 5: 34 isomorphism classes
+4 5 {'attachment patterns before path test': 72, 'mandatory path meets gap bound': 28, 'excluded by completion constraints': 44}
+exterior order 6: 156 isomorphism classes
+4 6 {'attachment patterns before path test': 72, 'mandatory path meets gap bound': 28, 'excluded by completion constraints': 44}
+exterior order 7: 1044 isomorphism classes
+4 7 {'attachment patterns before path test': 72, 'mandatory path meets gap bound': 28, 'excluded by completion constraints': 44}
+{
+  "4": {
+    "counts": {
+      "attachment patterns before path test": 72,
+      "mandatory path meets gap bound": 28,
+      "excluded by completion constraints": 44
+    },
+    "examples": []
+  }
+}
