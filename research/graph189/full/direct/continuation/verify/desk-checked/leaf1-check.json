@@ -1,0 +1,24 @@
+{
+  "file": "proofs/WrittenOnTheWallII.GraphConjecture189.conjecture189.R2.H2.R1.H1.R1.H1.lean",
+  "type": "step",
+  "problem": "WrittenOnTheWallII.GraphConjecture189.conjecture189.R2.H2.R1.H1.R1.H1",
+  "ok": true,
+  "kind": "open",
+  "polarity": "proof",
+  "theorem": "OMA.solution",
+  "imports": "OMAReductions.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2_H2_R1_H1_R1",
+  "errors": [],
+  "target": "OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2_H2_R1_H1_R1.H1",
+  "needsReduction": "WrittenOnTheWallII.GraphConjecture189.conjecture189.R2.H2.R1.H1.R1",
+  "verdict": "accepted",
+  "reason": "kernel accepted; axioms within propext, Classical.choice, Quot.sound",
+  "sourceCommit": "a5b9bf0dea31d557c9ec7a2cd530983d449adc16",
+  "ciCommit": "bcdb206eb464ccb0ad7dae63adcad23dad10825b",
+  "bytes": 249488,
+  "sha256": "a2ece1e175ce1243d08355484c4c736baf08c74bca56132b6da50148d705ad15",
+  "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

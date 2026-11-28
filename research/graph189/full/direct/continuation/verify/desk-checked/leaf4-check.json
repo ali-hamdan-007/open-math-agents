@@ -1,0 +1,28 @@
+{
+  "file": "proofs/WrittenOnTheWallII.GraphConjecture189.conjecture189.R2.H2.R1.H1.R1.H4.lean",
+  "type": "step",
+  "problem": "WrittenOnTheWallII.GraphConjecture189.conjecture189.R2.H2.R1.H1.R1.H4",
+  "ok": true,
+  "kind": "open",
+  "polarity": "proof",
+  "theorem": "OMA.solution",
+  "imports": "OMAReductions.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2_H2_R1_H1_R1",
+  "errors": [],
+  "target": "OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2_H2_R1_H1_R1.H4",
+  "needsReduction": "WrittenOnTheWallII.GraphConjecture189.conjecture189.R2.H2.R1.H1.R1",
+  "verdict": "accepted",
+  "reason": "kernel accepted; axioms within propext, Classical.choice, Quot.sound",
+  "sourceCommit": "93acb66772ab4ed46e7df037350d553b8e9d61f6",
+  "ciCommit": "7cbf8a96e2011621a11c77dbc6eedc4c92f17883",
+  "bytes": 445363,
+  "sha256": "2fbf60213b6b9cc6a8d3190c418dc032b9ab348f38a6dc0a65ec5e5885f9a492",
+  "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "workflowRun": 46139332318,
+  "workflowJob": 140961564668,
+  "artifact": 15260972126,
+  "artifactDigest": "sha256:6c52a5e4abab9383c9754736d0e6e0ad425b353e30e70ea694eae323ecc95e9f"
+}

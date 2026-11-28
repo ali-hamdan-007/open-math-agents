@@ -122,7 +122,7 @@ theorem two_full_gaps_on_protected_path (p : G.Walk x y) (hp : p.IsPath)
       m≤f (i.val+1)-f i.val-1 := by
     obtain ⟨lc,rc⟩ := coordinate_neighbors p z _ _ (loBound i) (endBound i) (before i) (after i)
     obtain ⟨c,v,r,hr,on,sz,_,_⟩ := full_exterior_splice p hp root insideRoot E m size outside
-      a b ne routes uniform _ _ _ (segment_split p (f i.val) (hi i) (loBound i)) (keeps i safe) lc rc
+      a b ne routes uniform _ _ _ (by rw [pathSegment,←List.take_add,Nat.add_sub_of_le (loBound i),List.take_append_drop]) (keeps i safe) lc rc
     have atMost := longest r hr on
     have rp := r.length_support
     have pp := p.length_support

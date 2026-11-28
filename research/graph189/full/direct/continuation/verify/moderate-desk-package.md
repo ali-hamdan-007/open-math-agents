@@ -25,6 +25,13 @@ python3 "$VERIFY/pack-moderate-split.py" "$BUILD" "$OUT" --dependencies "$OUT/ke
 
 The generated reduction has the official child as its first import. Each generated proof imports that new reduction, declares its graph lemmas, then proves the corresponding proposition as `OMA.solution`. The reports directory records the declarations retained from each module. The generator keeps the exact merged ancestor reductions as imports, and reconciles the identical cut-vertex and path-closure sources found in older focused builds. The kernel extractor records source positions, including private helpers. A private-name collision smoke test with two independent modules passed pinned Lean.
 
-The generated reduction and four preliminary leaf files passed the official static linter. The reduction also passed the local pinned checker with the exact focused target. Official single-file kernel replays and official acceptance are separate milestones.
+The exact reduction passed the pinned checker. Its axiom report contains propext, Classical.choice and Quot.sound. Each leaf passed as a modular Linux theorem and as an eligible single-file `OMA.solution` in an isolated run of the official checker. Each solution uses the same three axioms. These successful checker runs preceded upstream submission and review. [Preserved submission files and checker records](desk-checked/) · [SHA-256 for the uncompressed sources](desk-checked/SHA256SUMS)
 
-The four proof-body manifests from the [independent Linux job](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46138454950/job/140958894706) are in [moderate-leaf-manifests.tar.gz](moderate-leaf-manifests.tar.gz). Extract the archive in a fresh directory and pass its path with `--dependencies`. The original and specialized H1 and all four exact helper types passed the pinned kernel.
+| Leaf | Verified source bytes | Exact submission | Checker record |
+| --- | ---: | --- | --- |
+| H1 | 249,488 | [Source](desk-checked/leaf1.lean.gz) | [Verdict](desk-checked/leaf1-check.json) |
+| H2 | 184,841 | [Source](desk-checked/leaf2.lean.gz) | [Verdict](desk-checked/leaf2-check.json) |
+| H3 | 337,474 | [Source](desk-checked/leaf3.lean.gz) | [Verdict](desk-checked/leaf3-check.json) |
+| H4 | 445,363 | [Source](desk-checked/leaf4.lean.gz) | [Verdict](desk-checked/leaf4-check.json) |
+
+The [2,980-byte reduction](desk-checked/reduction.lean) was byte-identical across both checker revisions. The first exact replay supplies the archived H1 source. Its later siblings come from a second replay that restored implicit graph instances and field lemmas and disambiguated notation under the complete Mathlib import. The [archived manifests](moderate-leaf-manifests.tar.gz) identify the kernel dependencies for all four leaves. Their gzip archive has SHA-256 `b03e1fc6b68944f6a0e75bdcb9cbe7c5a3c68b33ffbabbba470aafec12fc7b09`.

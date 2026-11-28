@@ -32,7 +32,7 @@ theorem three_of_disconnected_side (sides : Graph189CutSides.CutSides G A B S)
   let b' : B := ⟨b,bb⟩
   obtain ⟨c,ac⟩ : ∃ c : A, ¬(G.induce (A:Set V)).Reachable a' c := by
     by_contra! all
-    exact disc (connected_iff_exists_forall_reachable.mpr ⟨a',all⟩)
+    exact disc ((connected_iff_exists_forall_reachable _).mpr ⟨a',all⟩)
   have same : H.connectedComponentMk (liftA a')≠H.connectedComponentMk (liftA c) := by
     intro eq
     obtain ⟨p⟩ := ConnectedComponent.exact eq
@@ -51,9 +51,15 @@ theorem three_of_disconnected_side (sides : Graph189CutSides.CutSides G A B S)
     H.connectedComponentMk (liftA c),H.connectedComponentMk (liftB b')]
   refine ⟨⟨values,?_⟩⟩
   intro i j e
-  fin_cases i <;> fin_cases j <;> first | rfl | exact (same e).elim | exact (same e.symm).elim |
-    exact (opposite a' e).elim | exact (opposite a' e.symm).elim |
-    exact (opposite c e).elim | exact (opposite c e.symm).elim
+  fin_cases i <;> fin_cases j
+  all_goals first
+    | rfl
+    | exact (same e).elim
+    | exact (same e.symm).elim
+    | exact (opposite a' e).elim
+    | exact (opposite a' e.symm).elim
+    | exact (opposite c e).elim
+    | exact (opposite c e.symm).elim
 
 /-- The original two-cut implication needs no connectedness assumptions on
 the chosen sides and allows the low vertex on either side or the separator. -/

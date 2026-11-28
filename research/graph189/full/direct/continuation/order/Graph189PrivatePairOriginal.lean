@@ -1,6 +1,5 @@
 import Graph189CleanPrivatePair
-import Graph189DirtySideOrder
-import Graph189BalancedPair
+import Graph189DirtyPrivatePair
 
 open SimpleGraph Finset
 namespace Graph189PrivatePairOriginal
@@ -21,11 +20,10 @@ theorem traceable (hc : G.Connected)
   · exact Graph189CleanPrivatePair.traceable hc cap large sides pair ne sc cleanA b conA conB
   by_cases cleanB : Graph189CleanSideCounts.Clean G B p q
   · exact Graph189CleanPrivatePair.traceable hc cap large sides.swap pair ne sc cleanB a conB conA
-  have point (v : V) : G.distEven v≤G.secondSmallestDegree+1 := by
-    simpa only [Nat.add_comm] using (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap
-  exact Graph189BalancedPair.traceable hc cap (by omega) sides sc pair ne
-    (Graph189DirtySideOrder.order hc point sides.swap pair ne sc conB b cleanB)
-    (Graph189DirtySideOrder.order hc point sides pair ne sc conA a cleanA)
+  by_cases big : 3*G.secondSmallestDegree+2<Fintype.card V
+  · exact Graph189DirtyPrivatePair.traceable hc cap (by omega) big sides pair ne sc a b conA conB cleanA cleanB
+  have size : S.card=2 := by simp [pair,ne]
+  exact Graph189OnePortCover.below_four hc cap (size ▸ sc) (by omega) (by omega)
 
 #print axioms traceable
 end Graph189PrivatePairOriginal

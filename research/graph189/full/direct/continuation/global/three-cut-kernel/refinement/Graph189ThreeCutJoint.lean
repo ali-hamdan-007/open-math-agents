@@ -1,4 +1,4 @@
-import Graph189ThreeCutThresholds
+import Graph189ThreeDensityWindow
 import Graph189FullLabelExit
 import Graph189TwoRootRecut
 
@@ -121,13 +121,35 @@ private theorem supported_quotas (hc : G.Connected) (cut : Graph189CutSides.CutS
 private theorem supported_room {k n : ℕ} (region : Supported k n) : 4*k+4<n :=
   region.elim (fun h => order_room h.1 h.2) Graph189ThreeCutThresholds.order_room
 
+def Covered (k n : ℕ) : Prop := Supported k n ∨ (33≤k ∧ k≤36 ∧ 5*k≤n+11)
+
+private theorem covered_room {k n : ℕ} (region : Covered k n) : 4*k+4<n := by
+  rcases region with old|⟨lo,_,floor⟩
+  · exact supported_room old
+  · omega
+
+private theorem covered_quotas (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
+    (minimum : S.card = G.vertexConnectivity) (three : S.card=3)
+    (cap : ∀ v, G.distEven v ≤ 1+G.secondSmallestDegree)
+    (region : Covered G.secondSmallestDegree (Fintype.card V))
+    (orient : (A.filter (fun v => G.secondSmallestDegree ≤ G.degree v)).card ≤
+      (B.filter (fun v => G.secondSmallestDegree ≤ G.degree v)).card) :
+    let k : ℤ := G.secondSmallestDegree
+    let x : ℤ := (A.filter (fun v => G.secondSmallestDegree ≤ G.degree v)).card
+    let y : ℤ := (B.filter (fun v => G.secondSmallestDegree ≤ G.degree v)).card
+    3*k<y ∧ (9*k-15+x<3*y ∨ ((A.card:ℤ)<2*k ∧ 12*k<2*x+3*y+12)) ∧ (x≤k → 6*k+x<2*y) := by
+  rcases region with old|⟨lo,hi,floor⟩
+  · obtain ⟨big,privateBound,last⟩ := supported_quotas hc cut minimum three cap old orient
+    exact ⟨big,Or.inl privateBound,last⟩
+  · exact Graph189ThreeDensityWindow.quotas hc cut minimum three cap lo hi floor orient
+
 /-- Every smaller high side has a common anchor and a high vertex joined to
 all three anchors. Each high vertex of that side has at least two contacts. -/
-theorem supported_ports (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
+theorem covered_ports (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
     (minimum : S.card = G.vertexConnectivity) (three : S.card=3)
     (deletion : ∀ z : V, (G.induce {v : V | v≠z}).Connected)
     (cap : ∀ v, G.distEven v ≤ 1+G.secondSmallestDegree)
-    (region : Supported G.secondSmallestDegree (Fintype.card V))
+    (region : Covered G.secondSmallestDegree (Fintype.card V))
     (orient : (A.filter (fun v => G.secondSmallestDegree ≤ G.degree v)).card ≤
       (B.filter (fun v => G.secondSmallestDegree ≤ G.degree v)).card) :
     (∃ i∈S, ∀ a∈A, G.secondSmallestDegree≤G.degree a → G.Adj a i) ∧
@@ -137,8 +159,9 @@ theorem supported_ports (hc : G.Connected) (cut : Graph189CutSides.CutSides G A 
   let k := G.secondSmallestDegree
   let X := A.filter (fun v => k≤G.degree v)
   let Y := B.filter (fun v => k≤G.degree v)
-  have data := supported_quotas hc cut minimum three cap region orient
-  change 3*(k:ℤ)<Y.card ∧ 9*(k:ℤ)-15+X.card<3*(Y.card:ℤ) ∧
+  have data := covered_quotas hc cut minimum three cap region orient
+  change 3*(k:ℤ)<Y.card ∧ (9*(k:ℤ)-15+X.card<3*(Y.card:ℤ) ∨
+      ((A.card:ℤ)<2*k ∧ 12*(k:ℤ)<2*X.card+3*Y.card+12)) ∧
     ((X.card:ℤ)≤k → 6*(k:ℤ)+X.card<2*(Y.card:ℤ)) at data
   obtain ⟨largeY,notPrivate,notResidual⟩ := data
   have big : S.card*k<Y.card := by
@@ -146,7 +169,7 @@ theorem supported_ports (hc : G.Connected) (cut : Graph189CutSides.CutSides G A 
     exact_mod_cast largeY
   have nbig : (S.card+1)*k+S.card+1<Fintype.card V := by
     rw [three]
-    exact supported_room region
+    exact covered_room region
   have big' := big.trans_le (card_le_card (show Y⊆B from filter_subset _ _))
   have sm (T : Finset V) (lt : T.card<S.card) := Graph189CutSides.connected_after_smaller_deletion (G:=G) T (lt.trans_eq minimum)
   have cp (v : V) : G.distEven v≤k+1 := by simpa only [k,Nat.add_comm] using cap v
@@ -166,7 +189,12 @@ theorem supported_ports (hc : G.Connected) (cut : Graph189CutSides.CutSides G A 
       have q := Graph189PrivateQuota.private_from_residual hc cut cp contacts privatePorts debit
       change ((X.card:ℤ)+Y.card)*S.card ≤ ((S.card:ℤ)*k-S.card*((S.card:ℤ)-1)+X.card+1)*S.card+X.card at q
       rw [three] at q
-      omega
+      rcases notPrivate with old | ⟨smallA,strong⟩
+      · omega
+      · have density := Graph189ThreePrivateDensity.dense_private_quota hc cut sm three
+          (by exact_mod_cast smallA) cp contacts privatePorts
+        change 2*X.card+3*Y.card+12≤12*k at density
+        omega
     · have equal : (S.filter (fun i => ∃ y∈X, ¬G.Adj y i))=S := filter_eq_self.mpr missed
       rw [equal,three] at few
       omega
@@ -219,6 +247,18 @@ theorem supported_ports (hc : G.Connected) (cut : Graph189CutSides.CutSides G A 
   change 2≤(Graph189PortLabels.support G S v).card
   omega
 
+theorem supported_ports (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
+    (minimum : S.card = G.vertexConnectivity) (three : S.card=3)
+    (deletion : ∀ z : V, (G.induce {v : V | v≠z}).Connected)
+    (cap : ∀ v, G.distEven v ≤ 1+G.secondSmallestDegree)
+    (region : Supported G.secondSmallestDegree (Fintype.card V))
+    (orient : (A.filter (fun v => G.secondSmallestDegree ≤ G.degree v)).card ≤
+      (B.filter (fun v => G.secondSmallestDegree ≤ G.degree v)).card) :
+    (∃ i∈S, ∀ a∈A, G.secondSmallestDegree≤G.degree a → G.Adj a i) ∧
+    (∃ a∈A, G.secondSmallestDegree≤G.degree a ∧ ∀ i∈S, G.Adj a i) ∧
+    ∀ a∈A, G.secondSmallestDegree≤G.degree a → 2≤(S.filter (G.Adj a)).card :=
+  covered_ports hc cut minimum three deletion cap (Or.inl region) orient
+
 theorem small_side_ports (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
     (minimum : S.card = G.vertexConnectivity) (three : S.card=3)
     (deletion : ∀ z : V, (G.induce {v : V | v≠z}).Connected)
@@ -241,13 +281,13 @@ variable {G : SimpleGraph V} [DecidableRel G.Adj]
 
 /-- The original even-distance cap forces an upper bound on the order
 of every qualifying graph of vertex connectivity three. -/
-theorem excludes_supported (hc : G.Connected)
+theorem excludes_covered (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp) ≤ 1+G.secondSmallestDegree)
-    (three : G.vertexConnectivity=3) (region : Supported G.secondSmallestDegree (Fintype.card V)) : False := by
+    (three : G.vertexConnectivity=3) (region : Covered G.secondSmallestDegree (Fintype.card V)) : False := by
   classical
   let k := G.secondSmallestDegree
   let H (P : Finset V) := P.filter (fun v => k≤G.degree v)
-  have roomOrder := supported_room region
+  have roomOrder := covered_room region
   have room : G.vertexConnectivity<Fintype.card V-1 := by omega
   have point (v : V) : G.distEven v≤1+G.secondSmallestDegree :=
     (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap
@@ -258,7 +298,7 @@ theorem excludes_supported (hc : G.Connected)
     simp [three]
   have uniform (W F T : Finset V) (cut : Graph189CutSides.CutSides G W F T)
       (eq : T.card=G.vertexConnectivity) (orientation : (H W).card≤(H F).card) :=
-    (supported_ports hc cut eq (eq.trans three) deletion point region orientation).2.2
+    (covered_ports hc cut eq (eq.trans three) deletion point region orientation).2.2
   obtain ⟨U,F,S,minimum,sides⟩ := Graph189GraphPopulation.minimum_sides (G:=G) room
   have select : ∃ A B : Finset V, Graph189CutSides.CutSides G A B S ∧ (H A).card≤(H B).card := by
     rcases le_total (H U).card (H F).card with h|h
@@ -266,10 +306,10 @@ theorem excludes_supported (hc : G.Connected)
     · exact ⟨F,U,sides.swap,h⟩
   obtain ⟨A,B,cut,orient⟩ := select
   have ss := minimum.trans three
-  obtain ⟨common,full,_⟩ := supported_ports hc cut minimum ss deletion point region orient
+  obtain ⟨common,full,_⟩ := covered_ports hc cut minimum ss deletion point region orient
   obtain ⟨i,hi,all⟩ := common
   obtain ⟨a,aa,ah,whole⟩ := full
-  have giant := (supported_quotas hc cut minimum ss point region orient).1
+  have giant := (covered_quotas hc cut minimum ss point region orient).1
   have many : S.card*G.secondSmallestDegree < (H B).card := by
     rw [ss]
     exact_mod_cast giant
@@ -277,6 +317,11 @@ theorem excludes_supported (hc : G.Connected)
   obtain ⟨j,_,b,hb,bh,support,enough⟩ := Graph189FullLabelExit.full_exit hc cut point'
     (by omega) many aa ah whole hi all
   exact Graph189FourCut.private_recut hc cut minimum point (by omega) hb bh support enough uniform
+
+theorem excludes_supported (hc : G.Connected)
+    (cap : (univ.image (distEven G)).max' (by simp) ≤ 1+G.secondSmallestDegree)
+    (three : G.vertexConnectivity=3) (region : Supported G.secondSmallestDegree (Fintype.card V)) : False :=
+  excludes_covered hc cap three (Or.inl region)
 
 theorem excludes_high (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp) ≤ 1+G.secondSmallestDegree)

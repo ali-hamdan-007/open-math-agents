@@ -13,6 +13,8 @@ def main():
     parser.add_argument("formal_conjectures", type=Path)
     parser.add_argument("build", type=Path)
     parser.add_argument("targets", nargs="+")
+    parser.add_argument("--modular-cut", action="store_true",
+                        help="Use the modular cut-vertex proof in the parent assembly.")
     args = parser.parse_args()
     fc = args.formal_conjectures.resolve()
     build = args.build.resolve()
@@ -23,7 +25,7 @@ def main():
     env["LEAN_PATH"] = os.pathsep.join([str(build), env.get("LEAN_PATH", "")])
     files = {}
     for source in sorted(graph.rglob("*.lean"), key=lambda p: (
-        "continuation" not in p.parts, "verify" not in p.parts, len(p.parts), str(p)
+        "continuation" not in p.parts, "verify" not in p.parts, "refinement" not in p.parts, len(p.parts), str(p)
     )):
         files.setdefault(source.stem, source)
     for source in sorted(graph.parent.glob("*.lean")):
@@ -32,7 +34,8 @@ def main():
     parent = verify.parent / "parent"
     subprocess.run([
         sys.executable, str(parent / "make-focused.py"), str(parent / "Graph189ParentAssembly.lean"),
-        str(fc / "FormalConjectures/WrittenOnTheWallII/GraphConjecture189.lean"), str(focused)
+        str(fc / "FormalConjectures/WrittenOnTheWallII/GraphConjecture189.lean"), str(focused),
+        *(["--modular-cut"] if args.modular_cut else [])
     ], check=True)
     files[focused.stem] = focused
     imports = re.compile(r"^(?:public\s+)?import\s+(?:all\s+)?(\w+(?:\.\w+)*)", re.M)

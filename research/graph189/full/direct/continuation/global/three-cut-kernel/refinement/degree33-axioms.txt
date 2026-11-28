@@ -1,0 +1,5 @@
+Pinned Lean 4.33.1, 2026-11-28.
+'Graph189ThreeDensityWindow.quotas' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ThreeConnectivity.traceable_ge33' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ThreeConnectivity.traceable_ge37' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ThreeConnectivity.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]

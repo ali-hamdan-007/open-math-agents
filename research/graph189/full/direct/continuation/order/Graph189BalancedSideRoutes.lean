@@ -68,14 +68,15 @@ theorem high {k : ℕ} (large : 10≤k) (sides : Graph189CutSides.CutSides G A B
     (by change Fintype.card A<2*(k-1)+P.card; rw [Fintype.card_coe]; omega)
   let f := (Embedding.induce (G:=G) (A:Set V)).toHom
   let r := w.map f
-  refine ⟨x.val,y.val,r,hw.map Subtype.val_injective,(mem_filter.mp (mem_subtype.mp xP)).2,?_,?_⟩
+  refine ⟨_,_,r,hw.map Subtype.val_injective,(mem_filter.mp (mem_subtype.mp xP)).2,?_,?_⟩
   · intro v seen
     rw [show r.support=w.support.map f from Walk.support_map _ _] at seen
     obtain ⟨u,_,rfl⟩ := List.mem_map.mp seen
     exact u.property
   · change Fintype.card A≤w.support.length+(2+1) at len
     rw [Fintype.card_coe] at len
-    simpa [r] using len
+    have mapped : r.support.length=w.support.length := by simp [r]
+    omega
 
 /-- A balanced side containing the possible low vertex starts from an
 actual port and loses at most five vertices. -/
@@ -137,7 +138,7 @@ theorem exceptional {k : ℕ} (large : 10≤k) (sides : Graph189CutSides.CutSide
     obtain ⟨_,i,si,ix⟩ := mem_filter.mp (mem_subtype.mp xP)
     let f := (Embedding.induce (G:=G) (A:Set V)).toHom
     let r := w.map f
-    refine ⟨i,si,x.val,y.val,r,hw.isPath.map Subtype.val_injective,ix,?_,?_⟩
+    refine ⟨i,si,_,_,r,hw.isPath.map Subtype.val_injective,ix,?_,?_⟩
     · intro v seen
       rw [show r.support=w.support.map f from Walk.support_map _ _] at seen
       obtain ⟨u,_,rfl⟩ := List.mem_map.mp seen
@@ -173,7 +174,7 @@ theorem exceptional {k : ℕ} (large : 10≤k) (sides : Graph189CutSides.CutSide
   obtain ⟨_,i,si,ix⟩ := mem_filter.mp (mem_subtype.mp xM)
   let f := (Embedding.induce (G:=G) (W:Set V)).toHom
   let r := w.map f
-  refine ⟨i,si,x.val,y.val,r,hw.map Subtype.val_injective,ix,?_,?_⟩
+  refine ⟨i,si,_,_,r,hw.map Subtype.val_injective,ix,?_,?_⟩
   · intro v seen
     rw [show r.support=w.support.map f from Walk.support_map _ _] at seen
     obtain ⟨u,_,rfl⟩ := List.mem_map.mp seen

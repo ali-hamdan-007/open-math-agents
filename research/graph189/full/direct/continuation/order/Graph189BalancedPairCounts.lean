@@ -92,7 +92,8 @@ theorem port_count (hc : G.Connected) (point : ∀v,G.distEven v≤G.secondSmall
   have actual : (D A).filter (fun x => Even (G.dist b x))=D A := filter_eq_self.mpr (by
     intro x xD
     obtain ⟨_,_,_,_,four⟩ := nearest hc sides.swap point deep (mem_filter.mp xD).2
-    simp [four])
+    rw [four]
+    decide)
   have empty : Graph189PortLabels.support G S b=∅ := eq_empty_iff_forall_notMem.mpr (by
     intro i hi
     obtain ⟨si,e⟩ := mem_filter.mp hi
