@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189. Triangle-free deletion is bipartite in the strict range
+
+Lean 4.33.1 now checks the theorem from the registered even-distance and second-smallest-degree hypotheses: whenever X meets every triangle and k ≥ 3|X|+3, the induced graph on the complement of X is bipartite, including when disconnected. [Exact wrapper](graph189/full/unrestricted/Graph189TriangleBipartite.lean), [odd-cycle argument](graph189/full/unrestricted/Graph189TriangleOddCycle.lean) and [axiom audit](graph189/full/unrestricted/bipartite-axioms.log). The [center-neighbor order inequality](graph189/full/unrestricted/Graph189CenterNeighbor.lean) also compiled with only the standard three axioms.
+
+At the boundary k=3|X|+2 a separate [paper proof](graph189/full/unrestricted/triangle-boundary.md) proves traceability even when neighborhood intersection fails to be transitive. It bounds the entire third distance layer at a vertex of degree k. [Independent audit](graph189/full/unrestricted/triangle-boundary-audit.md). For bipartite deletion, the equality [component bound](graph189/full/unrestricted/disconnected-equality.md) reaches k=3|X|+1 with [independent review](graph189/full/unrestricted/disconnected-equality-audit.md). No full-parent checker verdict. Codex contributors used gpt-6.2-astra.
+
+
 ## Graph 189. A metric witness for every triangle and a connected degree-five restriction
 
 Every triangle in a hypothetical counterexample must have a vertex at the same odd distance from all three corners. For an inclusion-maximal triangle that distance is at least three. In a chordal graph every maximal clique has members at different distances from any given vertex, so the conjecture holds for every qualifying chordal graph with a maximal clique of size at most three. [Proof](graph189/full/unrestricted/maximal-triangle.md) and [audit](graph189/full/unrestricted/maximal-triangle-audit.md).

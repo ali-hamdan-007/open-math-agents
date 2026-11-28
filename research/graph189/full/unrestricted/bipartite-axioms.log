@@ -1,0 +1,5 @@
+'Graph189TriangleTransversal.no_odd_cycle_one_low' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TriangleTransversal.induce_bipartite_of_two_cap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TriangleTransversal.induce_bipartite_of_conjecture189' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
