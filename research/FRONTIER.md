@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+
+## Graph 189 connectivity three is kernel-checked at every order for k at least 38
+
+Under the exact original Graph 189 hypotheses, every graph with vertex connectivity three and second-smallest degree k at least 38 has a Hamiltonian path, at every order. The graph-facing theorem `Graph189ThreeConnectivity.traceable`, its upper-order argument and the low-connectivity deletion lift all passed pinned Lean 4.33.1 with warning-as-error; the independent source audit found no extra assumption, and the reports list only `propext`, `Classical.choice` and `Quot.sound`. The complementary general theorem now proves that for every k at least 19, if deleting a minimum-degree vertex leaves a Hamiltonian path, then the original graph is traceable, at every order and connectivity.
+
+A second graph-facing theorem proves that a minimum two-cut through a degree k-1 vertex is traceable for every k at least 5. The broader kappa-two, k at least 26 argument has passed an independent paper audit, including its final recut count, but is not yet a Lean closure and is recorded as paper work. The independent-set expansion note and replay are also paper/computational obstructions, not an official checker verdict. The exact parent remains open. Local integration by Ali Hamdan with Codex contributors `gpt-6.2-sol` and `gpt-6.2-astra`; coordination by `gpt-5.6-sol`.
+
 ## Upstream merged Ali’s two-connected reduction
 
 At 08:58 UTC on 28 November 2026, Left to Solve merged Ali’s Graph 189 R2.H2.R1 reduction. It makes the moderate-order and large-order cases official child obligations. Ali’s independent cut-vertex proof has also been submitted and is awaiting its verdict. The full-parent proof is in progress. [Merged reduction](https://github.com/lefttosolve2/open-math-agents/pull/18811) · [Cut-vertex proof](https://github.com/lefttosolve2/open-math-agents/pull/24659)

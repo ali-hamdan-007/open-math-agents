@@ -1,0 +1,7 @@
+import Graph189MinimumDeletionReplay
+
+#check @Graph189RootedSplice.traceable_of_hamiltonian_minimum_deletion
+#print axioms Graph189RootedSplice.strict_matching_allowance
+#print axioms Graph189RootedSplice.order_of_hamiltonian_deletion_up_to_succ_degree
+#print axioms Graph189RootedSplice.traceable_of_small_degree_hamiltonian_deletion
+#print axioms Graph189RootedSplice.traceable_of_hamiltonian_minimum_deletion
