@@ -285,3 +285,13 @@ research/graph189/full/direct/continuation/root/bounded-order/Graph189ExteriorCy
 
 research/graph189/full/direct/continuation/root/bounded-order/Graph189LongLeafCycle.lean sha256 aeb3155f91bf63158de86f5694b35854f37178f1dce6d22f777aefd66816a224
 'Graph189ExteriorLeaf.no_long_leaf_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189TwoConnectedCoreOrder.lean sha256 2f23b719ec7e2dab428acb026dfb0146d107c49f0ab702a5f505432bf817913a
+'Graph189ExteriorLeaf.no_large_component' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseComponentRoutes.lean sha256 926ed3ac44066847d1795362255deef250e905dcb03ed08b8092bc8f3d68be5c
+'Graph189ExteriorLeaf.dense_component_routes' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseMatching.lean sha256 7b2845c2caad5d1ec7d641ca684c03b76e072e9210d17c01a47d7b3bd212c3f7
+'Graph189ExteriorLeaf.near_match_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorLeaf.dense_component_size' depends on axioms: [propext, Classical.choice, Quot.sound]

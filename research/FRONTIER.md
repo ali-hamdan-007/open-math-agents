@@ -1,5 +1,9 @@
 # Left to Solve research frontier
 
+## The two-connected exterior component and its exceptional pair
+
+In the remaining order window, a two-connected chosen component of order m≥2q is [excluded as soon as the paper’s cycle of length 2q is supplied](graph189/full/direct/continuation/root/bounded-order/Graph189TwoConnectedCoreOrder.lean). Here q is the least internal degree among high vertices. For m<2q the [spanning tail and prescribed-ends paths](graph189/full/direct/continuation/root/bounded-order/Graph189DenseComponentRoutes.lean) exist in the actual exterior. At most one unordered pair of ends can lose a vertex. The [matching theorem](graph189/full/direct/continuation/root/bounded-order/Graph189DenseMatching.lean) then proves m≤k−2 directly from three-connectivity and n≤5k−5. The long-cycle existence and the subsequent common-contact contradiction remain separate steps. The long-endblock implication also [passed independent Linux kernel replay](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46152031381/job/141000537629).
+
 ## Long endblock cycle contradiction
 
 The [three-connector cycle bound](graph189/full/direct/continuation/root/bounded-order/Graph189ExteriorCycleSpan.lean) keeps the full exterior component in the vertex count. In the large-leaf branch, [any cycle of length at least 2q−1 now gives a kernel-checked contradiction](graph189/full/direct/continuation/root/bounded-order/Graph189LongLeafCycle.lean). Here q is the internal degree of a minimizing high noncut vertex in the leaf interior. The paper supplies the cycle via Fan’s circumference theorem in the endblock, which is two-connected and has at most one vertex of degree below q. The cycle existence is a separate formal obligation. The concurrently saved [leaf tail proof](graph189/full/direct/continuation/root/bounded-order/Graph189LeafBlockTail.lean) independently reaches the same ceil(k/2) tail length as the short-leaf construction.

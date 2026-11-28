@@ -1,5 +1,7 @@
 # Formalization of the full Graph 189 paper argument
 
+The [two-connected component order argument](bounded-order/Graph189TwoConnectedCoreOrder.lean) excludes m≥2q once the circumference witness is available. In the complementary range the [prescribed routes](bounded-order/Graph189DenseComponentRoutes.lean) and [three-contact size bound](bounded-order/Graph189DenseMatching.lean) now give m≤k−2 in Lean, including a possible degree-two exceptional vertex inside the component.
+
 The [short leaf block](bounded-order/Graph189ShortLeafOrder.lean) is excluded across the residual range. [Selecting an actual leaf](bounded-order/Graph189ExteriorLeaf.lean) and [extending its tail through the articulation](bounded-order/Graph189ShortLeafRoutes.lean) are proved. The other leaf alternative, of order at least twice its minimum interior degree minus one, uses the circumference bound for a two-connected graph with one exceptional low vertex.
 
 The [single checked counterexample window](Graph189SmallOrderWindow.lean) is now 7≤k≤21 and 4k−5≤n≤5k−5. The [choice of exterior component](bounded-order/Graph189ChosenExterior.lean), [local graph-to-arithmetic inequalities](bounded-order/Graph189OptimalNeighborhood.lean), [Hamilton-connected high neighborhood](bounded-order/Graph189OptimalHighCore.lean), and [matching with tail extensions](bounded-order/Graph189OptimalPorts.lean) have pinned kernel proofs. They supply the first part of the five-times-order paper’s graph argument. The endblock, cycle, and tail arguments that force the final order remain.
