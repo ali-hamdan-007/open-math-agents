@@ -1,0 +1,2 @@
+started Graph189DebitedCutProduct.lean 09:57:42
+'Graph189DebitedCutProduct.with_columns' depends on axioms: [propext, Classical.choice, Quot.sound]

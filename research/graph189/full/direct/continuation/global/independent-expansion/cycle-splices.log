@@ -1,0 +1,12 @@
+The explicit factor replay tested all crossing two-edge switches at k=11,26,52
+and connectivity 2,3,4. Each of the nine instances had zero direct mergers.
+Each verified the two prescribed switches and the resulting spanning cone cycle.
+
+The exact numerical filter excluded a two-cycle factor in a counterexample
+for every 11 <= k <= 300 at n=3k+2 and connectivity three.
+It reproduced the uniform lower bound k-8 on the exterior cycle size
+for every 13 <= k <= 300 at n=5k and connectivity two.
+
+At k=26 the least exterior order surviving these necessary conditions is
+21 at n=130 or n=127, and 22 at n=126, for connectivity two, three and four.
+Survival is a numerical condition and does not assert a realizing graph.

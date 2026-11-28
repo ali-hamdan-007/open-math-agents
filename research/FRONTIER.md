@@ -5,6 +5,13 @@ Updated 28 November 2026. This research branch contains local Lean results. The 
 
 
 
+
+## Graph 189 certifies the actual two-cut layout and equality-case structure
+
+The genuine two-cut layout constructor now passes pinned Lean and a fresh consumer import. From the stated large-side contact hypotheses it builds the actual gate-arm partition, a genuine recut, the forced opposite contact and the private high contact, with only the three standard axioms. The next graph-facing shallow wrapper is still being debugged and is not certified.
+
+The exact-column debited cut product and Bondy equality-case structure also pass locally with only the standard axioms. The latter extracts the complete exterior clique, its exact cyclic anchor set and successor degrees at equality order. The final Hamiltonian gluing is independently checked on paper but not yet in Lean. Independent paper audits now support connectivity three down to k at least 25 and connectivity four down to k at least 31; the locally kernel-checked graph-facing thresholds remain 37 for each. The factor-cycle splice notes are paper/computational reductions, not official verdicts. The exact parent remains open.
+
 ## Graph 189 connectivity three reaches k at least 37 and the two-cut recut core is certified
 
 The exact original-graph connectivity-three theorem is locally kernel-checked at every order for k at least 37. The isolated threshold, upper-order and graph-facing modules all report only the three standard axioms. The non-Hamiltonian minimum-deletion lift itself now applies from k at least 20 at connectivity three.
