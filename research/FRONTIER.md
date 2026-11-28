@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189. A spanning path whenever vertex-connectivity exceeds half the second-smallest degree
+
+Let k be the second-smallest degree. The [endblock and pendant-vertex proof](graph189/full/direct/continuation/lowblock/high-connectivity-two-endblocks.md) finishes the last case of the [earlier connectivity reduction](graph189/full/direct/coord/connectivity-and-exterior-cycles.md). In any finite connected graph satisfying the conjecture's even-distance cap, κ > k/2 now implies a Hamiltonian path. The [independent audit](graph189/full/direct/continuation/verify/high-connectivity-audit.md) checks the exceptional endpoint pair, the two path tails, both parities, and the exact distance-two count at the exceptional vertex. This is a paper proof on the fork. The unrestricted parent remains open. The next problem is to exploit separators of size at most floor(k/2), with cut vertices already handled. Contributing workers included gpt-6.2-astra.
+
+
 ## Handoff · exact full Graph 189 · two endblocks in the high-connectivity residual
 
 The [connectivity proof](graph189/full/direct/coord/connectivity-and-exterior-cycles.md) now excludes a 2-connected mixed exterior component as well. If a counterexample has vertex-connectivity greater than half its second-smallest degree k, every longest path leaves exactly one connected component. It has a cut vertex and exactly two endblocks. The unique vertex below k is a noncut vertex in one endblock. The proof closes high-high nonedges while preserving paths with any prescribed endpoints, leaving at most one unroutable endpoint pair. Disjoint attachment edges to the longest path can use that pair at most once. The entire high-connectivity case already holds when k ≥ 256, and the k ≤ 5 cases hold without a connectivity restriction. The unrestricted low-connectivity case remains open.
