@@ -3,6 +3,14 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189: degree-five disconnected (3,3) reduction
+
+For a unique degree-five root with a disconnected complement and exact pair ((a,s)=(3,3)), the split-core analysis is now complete through (c=2) for (k>=11). Selective closure, exact port-incidence types, and rooted leaf-marker reversal show that any surviving rigid obstruction has (|L|>=k+2), equivalently (c>=3). The (c=0,1) layers are closed by exact LL/UU gap balance, and (c=2) by a path-cover bound joined through the universal core. See [degree-five 3-3 reduction](graph189/full/unrestricted/degree-five-33-next.md) and its [independent audit](graph189/full/unrestricted/degree-five-33-next-expanded-audit.md).
+
+This is an independently audited paper reduction, not a Lean formalization or official checker verdict. It does not settle the remaining (c>=3) family or the full conjecture.
+
+
+
 ## Graph 189: mixed common-neighborhood routing
 
 In each of the six remaining high-order degree-three templates, let (g) be the number of triple-visible remotes with at least (h+e+1) neighbours in (W), and let (r=h-g). If (k >= 2g+7r+84), the graph is traceable, with no connectivity assumption on the nontriple remote layer. The proof applies the earlier arbitrary-triple machinery with the effective parameter (K=k-g), handles the exceptional (f=7,b=3) visibility profile using a high-triple witness, routes disconnected and cut layers through two Hamilton-connected pieces, and checks all insertion, outer-closure, and endpoint counts. See [mixed common neighborhoods](graph189/full/unrestricted/degree-three-mixed-common-neighborhoods.md) and its [independent audit](graph189/full/unrestricted/degree-three-mixed-common-neighborhoods-audit.md).
