@@ -1,6 +1,6 @@
 # The remaining low-minimum cases at second-smallest degree four
 
-This candidate proof uses the finite-graph detours from the [tied-minimum case](degree-four-tied.md). The graph-to-path arguments below still require a full Lean replay. Write z for the unique low vertex, δ for its degree and n for order. The checked layer-cover bound gives n≤δ+11. The registered cut-vertex and short-order cases allow two-connectivity and δ≥2. Every other vertex has degree at least four, and each vertex has at most four distance-two witnesses.
+The verified proof uses the finite-graph detours from the [tied-minimum case](degree-four-tied.md). Write z for the unique low vertex, δ for its degree and n for order. The checked layer-cover bound gives n≤δ+11. The registered cut-vertex and short-order cases allow two-connectivity and δ≥2. Every other vertex has degree at least four, and each vertex has at most four distance-two witnesses.
 
 A port is a position of an ordinary longest path P adjacent to an omitted vertex. Each port is internal. Distinct ports on one row are nonconsecutive. For a component W of at least two omitted vertices there are two disjoint contact edges to P, by two-connectivity. If every possible endpoint of those edges starts a t-vertex path in W, and their two endpoints can be joined by a d-vertex path in W, then P has at least 2t+d+2 vertices. This counts two tails and one interior interval.
 
@@ -32,4 +32,6 @@ If their union contained a third position, the Hall sharpening would give three 
 
 Exchange this gap for the omitted triangle. The new Q is still longest through z. A retained bounding mark touches every old gap vertex by the new common marks result. Thus from an originally omitted vertex x all three old gap vertices are at distance two. If it was a tail, the two shifts adjacent to the far mark give two more witnesses outside it. If it was the middle gap, the predecessor of the first mark and successor of the second give two more. This contradicts the four-witness cap.
 
-Independent review checked the component classification, both tail exchanges and the protected middle-gap exchange. The full low-minimum implication remains a paper result.
+The complete theorem is [Graph189FourOriginal.traceable_four](Graph189FourOriginal.lean). Its hypotheses are the original connectedness and maximum-even bound together with second-smallest degree four. The pinned Lean 4.33.1 kernel reports only `propext`, `Classical.choice` and `Quot.sound`. Its low-degree components include the [single-neighbor exclusion](Graph189FourSingleNeighbor.lean), the [three-omission bound](Graph189FourLowExterior.lean), the [triangle exchange](Graph189FourLowTriangle.lean) and the [degree-two protected path](Graph189FourProtected.lean).
+
+For minimum degree three, the Lean proof also uses a shorter conclusion when the only omitted vertex is z. The ordinary path then spans G−z. A longest path through z with m omissions would satisfy 4+4m≤n≤14, while every omitted vertex has at least two neighbors in the omitted set. Consequently m is either zero or at least three, and the upper bound forces zero.

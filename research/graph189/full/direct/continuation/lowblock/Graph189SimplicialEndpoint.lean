@@ -57,5 +57,42 @@ theorem prescribed_of_simplicial (x y : V) (ne : x≠y)
       exact prescribed_of_incident_edge ax missing (Or.inl (Or.inl rfl)) (by omega)
         (ih _ strict (incl.trans le_sup_left))
 
+/-- At even order at least six, Dirac degree with at most two vertices
+attaining equality gives a spanning path between any specified endpoints. -/
+theorem prescribed_of_two_exceptions {d : ℕ} (order : Fintype.card V=2*d) (three : 3 ≤ d)
+    (half : ∀ v, d ≤ G.degree v) (L : Finset V) (few : L.card≤2)
+    (better : ∀ v∉L, d < G.degree v) (x y : V) (ne : x≠y) :
+    ∃ p : G.Walk x y, p.IsHamiltonian := by
+  classical
+  let K : SimpleGraph V := {
+    Adj a b := G.Adj a b ∨ (a≠b ∧ (a∉L ∨ b∉L))
+    symm := ⟨fun _ _ h => h.elim (fun e => Or.inl e.symm)
+      (fun h => Or.inr ⟨h.1.symm,h.2.symm⟩)⟩
+    loopless := ⟨fun a h => h.elim (G.irrefl) (fun h => h.1 rfl)⟩ }
+  have incl : G ≤ K := fun _ _ h => Or.inl h
+  apply prescribed_of_supergraph (H:=K) incl
+  · intro a b h missing
+    obtain ⟨_,ha|hb⟩ := h.resolve_left missing
+    · have := better a ha
+      have := half b
+      omega
+    · have := better b hb
+      have := half a
+      omega
+  apply prescribed_of_supergraph (H:=⊤) le_top _ (complete_prescribed x y ne)
+  intro a b hab missing
+  have inA : a∈L := by by_contra h; exact missing (Or.inr ⟨hab.ne,Or.inl h⟩)
+  have inB : b∈L := by by_contra h; exact missing (Or.inr ⟨hab.ne,Or.inr h⟩)
+  have near (v : V) (inside : v∈L) : (Lᶜ : Finset V).card ≤ K.degree v := by
+    apply card_le_card
+    intro z hz
+    have out := mem_compl.mp hz
+    exact (K.mem_neighborFinset _ _).mpr (Or.inr ⟨fun h => out (h ▸ inside),Or.inr out⟩)
+  have x1 := near a inA
+  have x2 := near b inB
+  rw [card_compl] at x1 x2
+  omega
+
+#print axioms prescribed_of_two_exceptions
 #print axioms prescribed_of_simplicial
 end Graph189TerminalLeafClosure

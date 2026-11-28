@@ -6,16 +6,16 @@ namespace Graph189FourTerminalGap
 open Graph189ExteriorGap
 variable {V : Type*} [Fintype V] [DecidableEq V] {G : SimpleGraph V} {a b : V}
 
-/-- An unmarked three-vertex interval charged through a common neighbor
-contradicts the four-witness quota for an exterior vertex with two marks.
+/-- An unmarked interval of m vertices charged through common neighbors
+gives at least m+2 exact-distance-two witnesses at a vertex with two marks.
 The interval may be a tail or an interior gap. -/
-theorem impossible_of_exact (p : G.Walk a b) (hp : p.IsPath) {x : V} (outside : x ∉ p.support)
-    {i j lo hi : ℕ} (left : 0 < i) (spaced : i+2 ≤ j) (right : j+1 < p.support.length)
+theorem impossible_of_exact_length (p : G.Walk a b) (hp : p.IsPath) {x : V} (outside : x ∉ p.support)
+    {i j lo hi m : ℕ} (left : 0 < i) (spaced : i+2 ≤ j) (right : j+1 < p.support.length)
     (marks : contactPositions p x = {i,j})
-    (bound : hi ≤ p.support.length) (size : lo+3=hi)
+    (bound : hi ≤ p.support.length) (size : lo+m=hi)
     (unmarked : ∀ h ∈ Ico lo hi, h ≠ i ∧ h ≠ j)
     (via : ∀ h ∈ Ico lo hi, ∃ w, G.Adj x w ∧ G.Adj (p.getVert h) w)
-    (quota : (univ.filter (fun y => G.dist x y=2)).card ≤ 4) : False := by
+    (quota : (univ.filter (fun y => G.dist x y=2)).card ≤ m+1) : False := by
   classical
   let J := Ico lo hi
   let W : Finset ℕ := {i-1,i+1,j-1,j+1}
@@ -64,7 +64,7 @@ theorem impossible_of_exact (p : G.Walk a b) (hp : p.IsPath) {x : V} (outside : 
     · exact shifts _ hv
     have r := (mem_Ico.mp member).2.trans_le bound
     exact ⟨r,charge _ r (unmarked _ member) (via _ member)⟩
-  have count : T.card=5 := by
+  have count : T.card=m+2 := by
     have jcard : J.card=hi-lo := Nat.card_Ico _ _
     rw [show T=insert u (insert v J) from rfl,card_insert_of_notMem (by simpa [ne] using uout),
       card_insert_of_notMem vout,jcard]
@@ -83,16 +83,25 @@ theorem impossible_of_exact (p : G.Walk a b) (hp : p.IsPath) {x : V} (outside : 
   rw [card_image_of_injOn inj,count] at large
   omega
 
-/-- The original even-distance formulation of the same terminal obstruction. -/
-theorem impossible (p : G.Walk a b) (hp : p.IsPath) {x : V} (outside : x ∉ p.support)
+theorem impossible_of_exact (p : G.Walk a b) (hp : p.IsPath) {x : V} (outside : x ∉ p.support)
     {i j lo hi : ℕ} (left : 0 < i) (spaced : i+2 ≤ j) (right : j+1 < p.support.length)
     (marks : contactPositions p x = {i,j})
     (bound : hi ≤ p.support.length) (size : lo+3=hi)
     (unmarked : ∀ h ∈ Ico lo hi, h ≠ i ∧ h ≠ j)
     (via : ∀ h ∈ Ico lo hi, ∃ w, G.Adj x w ∧ G.Adj (p.getVert h) w)
-    (cap : G.distEven x ≤ 5) : False := by
+    (quota : (univ.filter (fun y => G.dist x y=2)).card ≤ 4) : False :=
+  impossible_of_exact_length p hp outside left spaced right marks bound size unmarked via quota
+
+/-- The original even-distance formulation of the same terminal obstruction. -/
+theorem impossible_of_length (p : G.Walk a b) (hp : p.IsPath) {x : V} (outside : x ∉ p.support)
+    {i j lo hi m : ℕ} (left : 0 < i) (spaced : i+2 ≤ j) (right : j+1 < p.support.length)
+    (marks : contactPositions p x = {i,j})
+    (bound : hi ≤ p.support.length) (size : lo+m=hi)
+    (unmarked : ∀ h ∈ Ico lo hi, h ≠ i ∧ h ≠ j)
+    (via : ∀ h ∈ Ico lo hi, ∃ w, G.Adj x w ∧ G.Adj (p.getVert h) w)
+    (cap : G.distEven x ≤ m+2) : False := by
   classical
-  apply impossible_of_exact p hp outside left spaced right marks bound size unmarked via
+  apply impossible_of_exact_length p hp outside left spaced right marks bound size unmarked via
   let T := univ.filter (fun y => G.dist x y=2)
   have missing : x ∉ T := by simp [T]
   have sub : insert x T ⊆ univ.filter (fun y => Even (G.dist x y)) := by
@@ -103,9 +112,20 @@ theorem impossible (p : G.Walk a b) (hp : p.IsPath) {x : V} (outside : x ∉ p.s
   have count := card_le_card sub
   rw [card_insert_of_notMem missing] at count
   change T.card+1 ≤ G.distEven x at count
-  change T.card ≤ 4
+  change T.card ≤ m+1
   omega
+
+theorem impossible (p : G.Walk a b) (hp : p.IsPath) {x : V} (outside : x ∉ p.support)
+    {i j lo hi : ℕ} (left : 0 < i) (spaced : i+2 ≤ j) (right : j+1 < p.support.length)
+    (marks : contactPositions p x = {i,j})
+    (bound : hi ≤ p.support.length) (size : lo+3=hi)
+    (unmarked : ∀ h ∈ Ico lo hi, h ≠ i ∧ h ≠ j)
+    (via : ∀ h ∈ Ico lo hi, ∃ w, G.Adj x w ∧ G.Adj (p.getVert h) w)
+    (cap : G.distEven x ≤ 5) : False :=
+  impossible_of_length p hp outside left spaced right marks bound size unmarked via cap
 
 end Graph189FourTerminalGap
 #print axioms Graph189FourTerminalGap.impossible_of_exact
 #print axioms Graph189FourTerminalGap.impossible
+
+#print axioms Graph189FourTerminalGap.impossible_of_length

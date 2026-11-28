@@ -65,6 +65,7 @@ theorem two_ports (p : G.Walk a b) (hp : p.IsPath)
   · exact ⟨I,J,f X,f Y,lt,diff,eI,eJ⟩
   · exact ⟨J,I,f Y,f X,gt,diff.symm,eJ,eI⟩
 
+omit [Fintype V] [DecidableEq V] [DecidableRel G.Adj] in
 private theorem mapped {W : Finset V} (p : G.Walk a b) (outside : ∀ z∈W, z∉p.support)
     {u v : W} (q : (G.induce (W : Set V)).Walk u v) (hq : q.IsPath) :
     ∃ r : G.Walk u.val v.val, r.IsPath ∧ List.Disjoint r.support p.support ∧ r.support.length=q.support.length := by

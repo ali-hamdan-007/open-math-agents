@@ -109,7 +109,8 @@ theorem graph189_order_of_linked {V : Type*} [Fintype V] [DecidableEq V]
   · intro z hz
     obtain ⟨b,hb,rfl⟩ := List.mem_map.mp hz
     exact Finset.mem_map.mpr ⟨b,within b hb,rfl⟩
-  · rw [← p.cons_tail_support, List.map_cons, List.head?_cons] <;> rfl
+  · rw [← p.cons_tail_support, List.map_cons, List.head?_cons]
+    all_goals rfl
   · rw [List.getLast?_map, List.getLast?_eq_getLast_of_ne_nil (Walk.support_ne_nil _),
         Walk.getLast_support]
     rfl

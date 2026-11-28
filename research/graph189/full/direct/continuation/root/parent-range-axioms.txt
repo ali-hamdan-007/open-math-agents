@@ -1,0 +1,29 @@
+Lean 4.33.1. SHA-256 is the digest of the named Lean source.
+
+Graph189FourOriginal f56da1d623ef41c1702e109f75af7464a065a3fe6a7a8e8437f4c4ed358a3c5c
+'Graph189FourOriginal.traceable_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189ParentConnectivity 9bbf81ea640340e401bc2435dc72dfebd088ee5bf550f05e97214b1eb73a3b90
+'Graph189ParentConnectivity.moderate' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189DegreeTwoDeletion 1bbb5d9214def1c4c51e74aabd166553c91e59e707e7dee2caba696996240b77
+'Graph189DegreeTwoDeletion.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189DegreeTwoOriginal 18fcff1b2e50bef908096e931216d8bd6254a1571c358df8e910442002995183
+'Graph189DegreeTwoOriginal.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189DegreeTwoOriginal.traceable_moderate' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189HighConnectivityQuarter 1a40625b63f41a3a91a1e50ec4e90ba30b789f2dba86b7cef68b1a07b3db8f25
+'Graph189HighConnectivityQuarter.traceable_moderate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189HighConnectivityQuarter.traceable_six' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189HighConnectivityQuarter.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189HighDegreeStructural 729f1a50621c6f7df3328eecc030b30bd64bee6a2da6b1066102eff9b6e804ae
+'Graph189HighDegreeStructural.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189MinimumDeletionTraceable ba616349c6c7b075d677f899a47c5ca86ebe2efaf544583d9287352fc8a51708
+'Graph189StructuralConclusion.traceable_of_traceable_minimum_deletion' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189SevenIndexTraceable 1b7e08b54b4065a4f6aeb71f93bd9a14464a51f3fca2bf8a158ef2960ed8992f
+'Graph189SevenIndexTraceable.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SevenIndexTraceable.traceable_from_sixteen' depends on axioms: [propext, Classical.choice, Quot.sound]

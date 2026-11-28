@@ -107,20 +107,14 @@ private theorem rotate {x y : V} (p : G.Walk x y) (hp : p.IsPath) {i L : ℕ}
     simp
   exact ⟨_,r.copy start rfl,(Walk.isPath_copy _ _ _).mpr path,by simpa using len,by simpa [supp] using sets⟩
 
-/-- A graph with a sufficiently large minimum degree either has a long cycle
-or contains a Hamilton-connected induced subgraph of at least that degree. -/
-theorem cycle_or_hamilton_connected (z : V) {d L : ℕ} (two : 2 ≤ L)
-    (density : 2*L+1 ≤ 3*d) (minimum : ∀ v, d ≤ G.degree v) :
-    (∃ x, ∃ q : G.Walk x x, q.IsCycle ∧ L+1 ≤ q.length) ∨
-      ∃ E : Finset V, d ≤ E.card ∧ ∀ x y : E, x≠y →
-        ∃ r : (G.induce (E : Set V)).Walk x y, r.IsHamiltonian := by
+/-- If all cycles are short, one initial segment of a longest path contains
+at least d distinct reachable endpoints and their entire neighborhoods. -/
+theorem degree_window (z : V) {d L : ℕ} (two : 2 ≤ L)
+    (minimum : ∀ v, d ≤ G.degree v)
+    (short : ∀ v (q : G.Walk v v), q.IsCycle → q.length ≤ L) :
+    ∃ B E : Finset V, d ≤ E.card ∧ E ⊆ B ∧ B.card ≤ L ∧
+      ∀ v ∈ E, G.neighborFinset v ⊆ B := by
   classical
-  by_cases long : ∃ x, ∃ q : G.Walk x x, q.IsCycle ∧ L+1 ≤ q.length
-  · exact Or.inl long
-  right
-  have short (x : V) (q : G.Walk x x) (cycle : q.IsCycle) : q.length ≤ L := by
-    by_contra! big
-    exact long ⟨x,q,cycle,big⟩
   obtain ⟨x,y,p,hp,mx⟩ := exists_longest (G:=G) z
   let B := (p.support.take L).toFinset
   let N := G.neighborFinset x
@@ -176,6 +170,23 @@ theorem cycle_or_hamilton_connected (z : V) {d L : ℕ} (two : 2 ≤ L)
     rw [same] at bound
     exact bound
   have lengthB : B.card ≤ L := (List.toFinset_card_le _).trans (List.length_take_le _ _)
+  exact ⟨B,E,enough,sub,lengthB,constrained⟩
+
+/-- A graph with a sufficiently large minimum degree either has a long cycle
+or contains a Hamilton-connected induced subgraph of at least that degree. -/
+theorem cycle_or_hamilton_connected (z : V) {d L : ℕ} (two : 2 ≤ L)
+    (density : 2*L+1 ≤ 3*d) (minimum : ∀ v, d ≤ G.degree v) :
+    (∃ x, ∃ q : G.Walk x x, q.IsCycle ∧ L+1 ≤ q.length) ∨
+      ∃ E : Finset V, d ≤ E.card ∧ ∀ x y : E, x≠y →
+        ∃ r : (G.induce (E : Set V)).Walk x y, r.IsHamiltonian := by
+  classical
+  by_cases long : ∃ x, ∃ q : G.Walk x x, q.IsCycle ∧ L+1 ≤ q.length
+  · exact Or.inl long
+  right
+  have short (x : V) (q : G.Walk x x) (cycle : q.IsCycle) : q.length ≤ L := by
+    by_contra! big
+    exact long ⟨x,q,cycle,big⟩
+  obtain ⟨B,E,enough,sub,lengthB,constrained⟩ := degree_window z two minimum short
   let H := G.induce (E : Set V)
   have degree (v : E) : d+E.card ≤ H.degree v+B.card := by
     let A := G.neighborFinset v.val
