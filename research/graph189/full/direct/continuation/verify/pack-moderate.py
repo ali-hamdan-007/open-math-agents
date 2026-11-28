@@ -127,7 +127,7 @@ def main():
         )
         source = (candidate if use_snapshot else files[n]).read_text()
         for dep in IMPORT.findall(uncomment(source)):
-            if dep.startswith("Graph189"): visit(dep)
+            if dep.startswith("Graph189") or (args.whole_modules and dep in files): visit(dep)
         modules[n] = parse(n,source)
     visit("Graph189Unconditional" if args.original else args.root.split(".")[0])
     by_name = defaultdict(list)
@@ -269,6 +269,9 @@ instance {V : Type u} {G : SimpleGraph V} {d : ℕ} (K : Core G d) : DecidableRe
             # The full official Mathlib import supplies notations such as
             # <m and ≤s, and also opens the metric dist_self.
             t = re.sub(r"(?<![<>=-])([<≤>≥])(?=[^\W\d])", r" \1 ", t)
+            if args.original and mod in ("Graph189ThreeCutSaturationFacts", "Graph189FourCutSaturationFacts"):
+                # The full registered import reserves "over" as syntax.
+                t = t.replace("⟨many,over⟩", "⟨many,aboveCutoff⟩")
             if args.original or mod == "Graph189LayerCover" or c.name.endswith(".original_dist_two"):
                 t = re.sub(r"(?<![\w.])dist_self\b", "SimpleGraph.dist_self", t)
             body.append(t)
