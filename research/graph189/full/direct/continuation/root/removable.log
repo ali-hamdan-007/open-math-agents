@@ -1,0 +1,2 @@
+'Graph189Removable.degree_in_side' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Removable.exists_outside_every_min_cut' depends on axioms: [propext, Classical.choice, Quot.sound]

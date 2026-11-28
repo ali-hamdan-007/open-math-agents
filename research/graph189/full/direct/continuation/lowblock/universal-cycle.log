@@ -1,0 +1,4 @@
+'Graph189UniversalCycle.close_deletion_path' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189UniversalCycle.hamiltonian_deletion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189UniversalCycle.longest_in_deletion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189UniversalCycle.completeAt_longest' depends on axioms: [propext, Classical.choice, Quot.sound]

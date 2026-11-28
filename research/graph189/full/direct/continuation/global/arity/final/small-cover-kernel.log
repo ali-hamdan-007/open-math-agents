@@ -1,0 +1,3 @@
+'Graph189SmallWindowCover.all_pairs' depends on axioms: [propext]
+'Graph189SmallWindowCover.lower_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SmallWindowCover.terminal_quotas' depends on axioms: [propext, Classical.choice, Quot.sound]

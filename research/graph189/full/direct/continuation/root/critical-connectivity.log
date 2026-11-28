@@ -1,0 +1,2 @@
+'Graph189CriticalConnectivity.free_vertex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CriticalConnectivity.exists_completion' depends on axioms: [propext, Classical.choice, Quot.sound]

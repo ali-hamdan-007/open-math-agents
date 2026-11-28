@@ -1,0 +1,4 @@
+'Graph189UniversalCycle.completeAt_connectivity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189UniversalCycle.completeAt_connectivity_add_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189UniversalCycle.minDegree_le_completeAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189UniversalCycle.secondDegree_le_completeAt_minDegree' depends on axioms: [propext, Classical.choice, Quot.sound]

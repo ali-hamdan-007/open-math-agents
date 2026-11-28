@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • complete scalar certificate and a critical-connectivity theorem
+
+For arbitrary integer parameters satisfying the listed graph inequalities with s≥5 and k≥26, Graph189ScalarConclusion.terminal_band proves s≤8 and produces a valid terminal band with lower endpoint ≤n. There are 113 terminal degree rows. Both the finite and infinite parts now run in the ordinary pinned kernel. See global/arity/final/certified-scalar-reduction.md, terminal-113.tsv and replay-certified.sh. The original graph still has to supply all order-lift hypotheses, and the terminal geometric argument must be joined to this result.
+
+root/Graph189CriticalConnectivity.lean independently formalizes the classical minimum-separator argument: if 3κ<2(δ+1) and κ<n−1, a vertex lies outside every minimum separating deletion; making it universal raises vertex connectivity. Graph189AtomCounts, Graph189CutCorner, Graph189Atom and Graph189Removable contain the proof on genuine finite graphs. The actual five- and nine-cut results under their stated order and degree bounds are in order/Graph189FiveCutActual.lean and Graph189NineCutActual.lean. The original graph also satisfies the private-support conclusion from a high noncontact in root/Graph189PrivatePorts.lean. All are local kernel results with the standard axiom audit. The exact parent awaits unconditional Lean assembly.
+
+
 ## Graph 189 • the arithmetic forces connectivity at most eight
 
 Given the explicit mathematical cut-order, width and degree-deficit bounds, the pinned kernel now proves connectivity at most eight (global/arity/final/Graph189EightCutoff.lean). An exhaustive compressed certificate with 286 intervals, including the lower-degree part of connectivity nine, is a kernel theorem with no axioms. The middle range at connectivity nine has a uniform direct contradiction in root/Graph189NineCutDebit.lean: k≥163 excludes any low vertex from a minimum cut using the mixed debit, and 163≤k≤192 is then impossible under the lifted order. See verify/nine-cut-debit-audit.md for independently checked assumptions. This removes the need to trust a whole-rectangle executable comparison for these infinite and finite strata. The complete scalar certificate for connectivities 5–8 remains in development.

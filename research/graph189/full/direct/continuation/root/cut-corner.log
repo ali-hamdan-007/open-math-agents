@@ -1,0 +1,3 @@
+'Graph189CutCorner.three_parts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CutCorner.boundary_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CutCorner.corner' depends on axioms: [propext, Classical.choice, Quot.sound]
