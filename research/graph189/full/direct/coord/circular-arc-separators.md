@@ -1,0 +1,21 @@
+# Component counts in circular-arc graphs
+
+Let G be 2-connected and represented by arcs on a circle. Assume each vertex has at most k vertices at distance two and at most one vertex has degree below k. Then every vertex set S satisfies
+
+$$c(G-S)\le |S|+1.$$
+
+Suppose S is inclusion-minimal among violations, and put c = c(G−S), s = |S|. Then c ≥ s+2 ≥ 4. Call the vertices of S anchors. Every component touches at least two anchors by 2-connectivity. Any nonempty subset Q of anchors touches at least |Q|+2 components. Indeed, deleting S−Q leaves the components untouched by Q and a further component containing an anchor of Q. Minimality bounds the number untouched by s−|Q|. In particular each anchor touches at least three components, and two anchors together touch at least four.
+
+If a high vertex x in C is adjacent to an anchor a complete to another component D, then |D|<|C|. For the set of r anchor neighbors of x, the preceding expansion gives distance-two witnesses in r+1 other components. Counting every vertex of D gives at least r+|D| witnesses, whereas k ≤ deg(x) ≤ r+|C|−1. Thus an anchor cannot be complete to two components if both contain a high vertex.
+
+The arc unions of the c components are connected, compact and pairwise disjoint, giving a cyclic order. Each anchor touches one consecutive segment in this order and is complete to every component strictly inside the segment. If it touches all components, any unions it meets only partially must contain endpoints of its arc. The complementary arc cannot contain a whole component union, so the partially met unions, when there are two, are consecutive around the circle. Start and end the list there. If there is at most one partially met union, choose the list with that union as an endpoint. This also handles an arc covering the full circle.
+
+Mark as 0 the component containing the possible low vertex. If every vertex is high, choose 0 arbitrarily. A segment has length three or four. A segment of length four must have 0 among its two strict interiors, since all other components contain only high vertices. In fact, length four is possible only if component 0 is a low singleton.
+
+Suppose c ≥ 5. A component i at cyclic distance at least two from 0 cannot be strictly inside any segment. Such a segment would have length three, with center i. Consider another anchor touching i. If i is its endpoint, its adjacent interior component j is a neighbor of i in the cyclic order, so j differs from 0. The first anchor is complete to i and touches j, and the second is complete to j and touches i. Both components consist entirely of high vertices. The size comparison in opposite directions gives a contradiction. If i is an interior, this second segment must therefore be the same triple centered at i. Since at least two anchors touch i, their union then touches only three components, contradicting expansion.
+
+Consequently interiors lie among 0 and its two neighbors. Only these three and their immediate neighbors can be touched, so c ≤ 5. If c = 5 the components at positions +2 and −2 cannot be touched by the same segment. An allowed triple is centered at 0 or an adjacent position; an allowed quadruple has 0 and one adjacent position as interiors. Each of the two components needs at least two anchors, giving s ≥ 4, contrary to c ≥ s+2.
+
+If c = 4, then s = 2 and both anchors touch all four components. Each anchor is complete to at least two components. Thus 0 is the low singleton z, and an anchor is complete to z and a high-containing component H. Both anchors touch z and every remaining component. Therefore z sees all of H and at least one vertex from each of the other two components at distance two. Now k ≥ |H|+2, whereas every vertex of H has degree at most |H|+1. This final contradiction proves the bound.
+
+This is a necessary separator condition for traceability. A proof of traceability for all circular-arc graphs requires another argument. For comparison, the net (a triangle with one private leaf per vertex) has a circular-arc representation, satisfies the separator condition and has no Hamilton path. It fails the present degree and distance hypotheses. The stronger traceability implication for cocomparability graphs is in ../interval/ordered-component-separators.md.

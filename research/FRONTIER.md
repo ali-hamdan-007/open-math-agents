@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 · independent kernel checks and separator obstructions
+
+On the exact parent, [the endpoint-chord lemma](graph189/full/direct/rot/Graph189RotationGap.lean) constructs the rotated simple walk in Lean. [The separator comparison](graph189/full/direct/coord/Graph189SeparatorComparison.lean) proves a strict inequality between component sizes from explicit component incidences and the graph's actual degree and distance budget. Both compiled independently in pinned Lean 4.33.1 with only propext, Classical.choice and Quot.sound. These are local checks, with no upstream submission or verdict.
+
+Every qualifying 2-connected circular-arc graph has a spanning cover by at most two paths, and every qualifying 2-connected graph with a cut leaving more than |S|+1 components has an asteroidal triple. See [circular arc counts](graph189/full/direct/coord/circular-arc-separators.md), [the two-path certificate and independent audit](graph189/full/direct/review/circular-arc-audit.md) and [the AT-free separator theorem](graph189/full/direct/interval/at-free-bad-cut.md). At any nonspanning longest-path vertex set the [attainable endpoint argument](graph189/full/direct/rot/remote-endpoint.md) constrains the unrestricted case. The 22-vertex interval example in `interval/distance-two-cutvertex-example.md` demonstrates why the distance-two-only strengthening needs 2-connectivity. The full conjecture remains open. Codex contributors in this wave used gpt-6.2-astra and gpt-6.2-sol.
+
+
 ## Graph 189 · a spanning path for every qualifying cocomparability graph
 
 [Proof](graph189/full/direct/interval/ordered-component-separators.md) and [independent audit](graph189/full/direct/review/separator-audit.md). In a minimal cut with more than |S|+1 remaining components, the distance-two budget forces a strict size comparison. Ordering the components by the representing partial order makes such a cut impossible. Adding a universal vertex and applying the Hamiltonicity theorem of Deogun, Kratsch and Steiner yields a spanning path. This includes interval graphs, with unrestricted order and diameter. The argument uses the published cut-vertex case for graphs below two-connectivity. The full Graph 189 problem is still open.

@@ -1,0 +1,8 @@
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+7fd43050c091302619fc053d7a694ce1a9cb9495d5228ab5753b7352f13b665c  Graph189RotationGap.lean
+'Graph189RotationGap.exterior_length_le_gap_of_endpoint_chord' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Graph189RotationGap.exterior_length_le_gap_of_endpoint_chord' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
