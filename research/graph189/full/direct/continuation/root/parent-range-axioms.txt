@@ -41,3 +41,19 @@ Graph189FiveTiedOriginal 92bb232fa9ec5d7b08a2c1baf72593cc1a31082983cb04df94a2e70
 
 Graph189ThirdLayerDegreeCeiling 7632ef5af74adf34091f705eb27768d6e914cc61902685233e9f014ec319e603
 'Graph189ThirdLayerDegreeCeiling.max_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189ModerateEight 66811daa78b90759b0d987094421e427fcfd7db26fe5a186e4f1a21dac67ea18
+'Graph189ModerateEight.traceable_below_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ModerateEight.traceable_moderate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ModerateEight.original_below_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ModerateEight.original_moderate' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189TwoExteriorLinks 2339195b00c6336efac985768ba844dff41523c55d8e30974f5532ec9faca22a
+'Graph189TwoExteriorLinks.order_of_routes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TwoExteriorLinks.order_of_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189PrivateRepresentativeBound b0b30d99fae3b96b1fc6d9c077ba983a91765773d7023a1adf08fe0914e01f14
+'Graph189PrivateRepresentativeBound.order' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189RepairedConeOrder 1fbbdb05d1a5e4d0e75eff5a02158b4ffdd81d9df4b287081717c04dfcbc922e
+'Graph189RepairedConeOrder.order_three' depends on axioms: [propext, Classical.choice, Quot.sound]
