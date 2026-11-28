@@ -1,0 +1,5 @@
+'Graph189RootedSplice.cone_order_of_hamiltonian_minimum_deletion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Graph189RootedSplice.order_of_rooted_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189RootedSplice.order_of_minimum_deletion_hamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound]

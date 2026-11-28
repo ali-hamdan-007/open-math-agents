@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## An accepted upstream linked-set theorem applies to the structural order bound
+
+Upstream [PR 7971](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/7971) by @koolkao includes an all-orders internal theorem for a linked set outside a longest cycle. The official acceptance is for the Bondy theorem. For Graph 189, the native linked-set transport, the one-low-vertex rooted path, the minimum-deletion order estimate, and the two-tight-gaps count have passed the pinned kernel independently. The [application note](graph189/full/direct/continuation/root/upstream-linked-set.md) records the exact stronger internal hypothesis, source, verdict and remaining application to the original graph.
+
+
 ## Every graph with second-smallest degree three is traceable
 
 The kernel checked `Graph189ThreeOriginal.traceable_three` under the registered connectedness and maximum-even-distance hypotheses, for arbitrary order and minimum degree. This closes both parent obligations through second-smallest degree three. The proof routes the possible degree-two vertex through a longest path and combines that result with the tied-minimum, cut-vertex and small-order theorems. The source, five-declaration axiom audit and replay directions are in [the degree-three proof](graph189/full/direct/continuation/verify/degree-three-short-proof.md). The missing low-cut module required by the structural conclusion has also been restored. The pinned kernel checked its two witnesses and the existing effective-deficit consumer. [Low-cut audit](graph189/full/direct/continuation/order/low-mixed-cut.log)
