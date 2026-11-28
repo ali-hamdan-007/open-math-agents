@@ -15,19 +15,14 @@ structure Saturated {a b : V} (p : G.Walk a b) (C : Finset V) (k : ℕ) : Prop w
     (∀v∈C,k≤G.degree v → ∀i : Fin p.support.length,G.Adj p.support[i.val] v ↔ i∈A) ∧
     ∀v∈C,∀i : Fin p.support.length,G.Adj p.support[i.val] v → i∈A
 
-theorem dense_clique {a b : V} {p : G.Walk a b} {C : Finset V} {k : ℕ} (h : Chosen p C k)
+theorem dense_clique_of_size {a b : V} {p : G.Walk a b} {C : Finset V} {k : ℕ} (h : Chosen p C k)
     (dense : ∀v∈C,k≤G.degree v → C.card+1≤2*(G.neighborFinset v∩C).card)
-    (lo : 7≤k) (upper : Fintype.card V≤5*k-5) (conn : 3≤G.vertexConnectivity)
+    (lo : 7≤k) (upper : Fintype.card V≤5*k-5) (small : C.card+2≤k)
     (quota : ∀v,(univ.filter (fun z => G.dist v z=2)).card≤k)
     (minimum : ∀v,3≤G.degree v) (uniqueLow : ∀u v,G.degree u<k → G.degree v<k → u=v)
     (gap : p.support.length+(k+1)/2+1<Fintype.card V) : Saturated p C k := by
   classical
-  obtain ⟨x,xc,xh⟩ := h.high
-  have half := xh.trans (internal_half h xc xh (quota _) minimum uniqueLow)
-  have deg := card_le_card (inter_subset_right (s₁:=G.neighborFinset x) (s₂:=C))
   obtain ⟨r⟩ := dense_component_routes h lo quota minimum uniqueLow dense
-  have small := dense_component_size h r (by omega) upper lo (fun cut lt =>
-    Graph189CutSides.connected_after_smaller_deletion cut (by omega))
   obtain ⟨many,_,low,_,upperM⟩ := dense_exterior_census h r small lo upper quota minimum uniqueLow gap
   let H := C.filter (fun v => k≤G.degree v)
   let E := p.support.toFinsetᶜ
@@ -75,6 +70,20 @@ theorem dense_clique {a b : V} {p : G.Walk a b} {C : Finset V} {k : ℕ} (h : Ch
   · exact universal u uc hu v vc ne
   have hv : k≤G.degree v := by by_contra! miss; exact ne (uniqueLow _ _ (by omega) miss)
   exact (universal v vc hv u uc ne.symm).symm
+
+theorem dense_clique {a b : V} {p : G.Walk a b} {C : Finset V} {k : ℕ} (h : Chosen p C k)
+    (dense : ∀v∈C,k≤G.degree v → C.card+1≤2*(G.neighborFinset v∩C).card)
+    (lo : 7≤k) (upper : Fintype.card V≤5*k-5) (conn : 3≤G.vertexConnectivity)
+    (quota : ∀v,(univ.filter (fun z => G.dist v z=2)).card≤k)
+    (minimum : ∀v,3≤G.degree v) (uniqueLow : ∀u v,G.degree u<k → G.degree v<k → u=v)
+    (gap : p.support.length+(k+1)/2+1<Fintype.card V) : Saturated p C k := by
+  obtain ⟨x,xc,xh⟩ := h.high
+  have half := xh.trans (internal_half h xc xh (quota _) minimum uniqueLow)
+  have deg := card_le_card (inter_subset_right (s₁:=G.neighborFinset x) (s₂:=C))
+  obtain ⟨r⟩ := dense_component_routes h lo quota minimum uniqueLow dense
+  have small := dense_component_size h r (by omega) upper lo (fun cut lt =>
+    Graph189CutSides.connected_after_smaller_deletion cut (by omega))
+  exact dense_clique_of_size h dense lo upper small quota minimum uniqueLow gap
 
 end Graph189ExteriorLeaf
 #print axioms Graph189ExteriorLeaf.dense_clique

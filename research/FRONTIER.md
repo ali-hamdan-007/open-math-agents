@@ -1,5 +1,11 @@
 # Left to Solve research frontier
 
+## Long-cycle assembly and the stronger path gap for separating pairs
+
+The [three-connected assembly](graph189/full/direct/continuation/root/bounded-order/Graph189LongCycleAssembly.lean) now constructs the exact component or endblock, locates the exceptional vertex, minimizes the high internal degree, and uses the small-order cycle, both endblock exclusions, the whole-component exclusion, and the terminal clique contradiction. Its only additional graph theorem is the strict one-exception circumference bound for an induced graph of order greater than 2q. The [parallel linkage proof](graph189/full/direct/continuation/root/bounded-order/Graph189FanLinkage.lean) constructs the two anchored disjoint links for that classical step.
+
+A [path missing at most k−2 vertices already proves the original conclusion](graph189/full/direct/continuation/root/bounded-order/Graph189NearDegreeWindow.lean) when k≥7, n≤5k−5 and minimum degree is at least three. This applies also to a graph with a separating pair. In this range all omitted high vertices belong to a single dense component, so the tight-gap proof applies without three-connectivity. The [independent kernel replay](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46154279337/job/141007364111) checked the preceding terminal contradiction and one-exception small cycles.
+
 ## The terminal clique is impossible throughout the remaining interval
 
 The [terminal contradiction](graph189/full/direct/continuation/root/bounded-order/Graph189DenseTerminal.lean) discharges the whole dense-component case from the original metric hypothesis. After exchanging a tight gap for the saturated clique, the new path omits at most k−1 vertices. All its high omissions [lie in one component](graph189/full/direct/continuation/root/bounded-order/Graph189SmallExteriorComponent.lean). Its [contact-transfer theorem](graph189/full/direct/continuation/root/bounded-order/Graph189SmallExteriorTransfer.lean) makes every high member of the old gap visible at distance two. The previously checked gap debit then requires 2s+m≤k+3, contradictory to m+s=k+1 and s≥3. This reuses the fork’s verified tight-gap exchange and eliminates the final endpoint-rotation obligation.

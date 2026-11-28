@@ -302,14 +302,20 @@ research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseExter
 research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseCommonContacts.lean sha256 eb6e8bf4bb46d85230c5ca545b6461f1a2fbf7c747551ec5e7ee3f531c52c293
 'Graph189ExteriorLeaf.common_contacts' depends on axioms: [propext, Classical.choice, Quot.sound]
 
-research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseClique.lean sha256 22aff46f4e702219f7bc59455c8d1cb77e2615bce5e25641f475b7d35f9856c9
+research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseClique.lean sha256 feed94736c9b210f1dbba17b87cfefb4d2d0b28bf6726e5b09e91f68b72bc759
 'Graph189ExteriorLeaf.dense_clique' depends on axioms: [propext, Classical.choice, Quot.sound]
 
 research/graph189/full/direct/continuation/root/bounded-order/Graph189SmallExteriorComponent.lean sha256 ba52239da456473256ff73d88c7f2f479681a83668c5d0115506db8a6176343d
 'Graph189ExteriorLeaf.chosen_of_small_exterior' depends on axioms: [propext, Classical.choice, Quot.sound]
 
-research/graph189/full/direct/continuation/root/bounded-order/Graph189SmallExteriorTransfer.lean sha256 ff921db0d3c9e7c8f959773dbb45ab105b5c542b41c9484727f1b95ea13d0eba
+research/graph189/full/direct/continuation/root/bounded-order/Graph189SmallExteriorTransfer.lean sha256 cbf8b9dacddf783d1074b9d6f3a2aba35354f5009ea46b1e8573a1d467deaea3
 'Graph189ExteriorLeaf.small_exterior_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
 
-research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseTerminal.lean sha256 74dc291466a3b3e3cf88613193ddad00838800ea6961889d3cd2a402c1b8a4db
+research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseTerminal.lean sha256 d5fc3a7930b5bf4d743a0ab41a91fa1b36bfd5c7ccbfd88edeadcb8099491cf2
 'Graph189ExteriorLeaf.no_dense_component' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189NearDegreeWindow.lean sha256 7483d4cb01f0d96f4244ca8347a52aeba1713334eb0e4203e04f1f49239e7377
+'Graph189ExteriorLeaf.traceable_of_near_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189LongCycleAssembly.lean sha256 f2f62914fd8010b43eb897dd9f5613c93d217f2ce9b0e80091a52f99cfaa496c
+'Graph189ExteriorLeaf.three_connected_of_long_cycles' depends on axioms: [propext, Classical.choice, Quot.sound]

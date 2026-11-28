@@ -11,7 +11,7 @@ theorem no_dense_component {a b : V} {p : G.Walk a b} {C : Finset V}
     (h : Chosen p C G.secondSmallestDegree)
     (dense : ∀v∈C,G.secondSmallestDegree≤G.degree v → C.card+1≤2*(G.neighborFinset v∩C).card)
     (lo : 7≤G.secondSmallestDegree) (upper : Fintype.card V≤5*G.secondSmallestDegree-5)
-    (conn : 3≤G.vertexConnectivity)
+    (conn : 3≤G.vertexConnectivity ∨ p.support.toFinsetᶜ.card+2≤G.secondSmallestDegree)
     (quota : ∀v,(univ.filter (fun z => G.dist v z=2)).card≤G.secondSmallestDegree)
     (minimum : ∀v,3≤G.degree v)
     (uniqueLow : ∀u v,G.degree u<G.secondSmallestDegree → G.degree v<G.secondSmallestDegree → u=v)
@@ -20,7 +20,13 @@ theorem no_dense_component {a b : V} {p : G.Walk a b} {C : Finset V}
   let k := G.secondSmallestDegree
   let m := C.card
   let s := k+1-m
-  have sat := dense_clique h dense lo upper conn quota minimum uniqueLow gap
+  have subE : C⊆p.support.toFinsetᶜ := fun z zc => mem_compl.mpr
+    (fun on => h.outside _ zc (List.mem_toFinset.mp on))
+  have sat : Saturated p C k := by
+    rcases conn with conn|order
+    · exact dense_clique h dense lo upper conn quota minimum uniqueLow gap
+    have sc := card_le_card subE
+    exact dense_clique_of_size h dense lo upper (by omega) quota minimum uniqueLow gap
   have small := sat.small
   change m+2≤k at small
   have sum : m+s=k+1 := by dsimp [s]; omega
@@ -85,11 +91,14 @@ theorem no_dense_component {a b : V} {p : G.Walk a b} {C : Finset V}
   have lengths : Q.length=p.length := by have := Q.length_support; have := p.length_support; omega
   have longestQ : ∀{i j},∀q : G.Walk i j,q.IsPath → q.length≤Q.length :=
     fun q hq => (h.longest q hq).trans_eq lengths.symm
+  have sameOmissions : Q.support.toFinsetᶜ.card=p.support.toFinsetᶜ.card := by
+    have first := card_add_card_compl p.support.toFinset
+    have next := card_add_card_compl Q.support.toFinset
+    rw [List.toFinset_card_of_nodup h.path.support_nodup] at first
+    rw [List.toFinset_card_of_nodup hQ.support_nodup,same] at next
+    omega
   have smallQ : Q.support.toFinsetᶜ.card+1≤k := by
-    have sizeP := card_add_card_compl p.support.toFinset
-    have sizeQ := card_add_card_compl Q.support.toFinset
-    rw [List.toFinset_card_of_nodup h.path.support_nodup] at sizeP
-    rw [List.toFinset_card_of_nodup hQ.support_nodup,same] at sizeQ
+    rw [sameOmissions]
     have spare := sat.spare
     change _≤m+1 at spare
     omega
@@ -107,7 +116,7 @@ theorem no_dense_component {a b : V} {p : G.Walk a b} {C : Finset V}
     have on : w∈p.support := by simp [g.split,hw]
     have diff : u.val≠w := fun e => h.outside _ u.property (e ▸ on)
     have e := small_exterior_transfer hQ longestQ smallQ (omits _ ig) (omits _ hw) high linked
-      (stays _ rb) edge lo upper conn quota minimum uniqueLow (same ▸ gap)
+      (stays _ rb) edge lo upper (sameOmissions.symm ▸ conn) quota minimum uniqueLow (same ▸ gap)
     exact two_step_metric diff (g.unmarked w hw) fromX e.symm
   have wide (i) (ii : i∈contactPositions p u.val) (j) (jj : j∈contactPositions p u.val) (lt : i<j) : i+3≤j := by
     obtain ⟨ir,ic⟩ := (mem_contactPositions p _ _).mp ii

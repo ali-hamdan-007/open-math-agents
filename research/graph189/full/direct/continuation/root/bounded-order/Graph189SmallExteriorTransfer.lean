@@ -19,7 +19,7 @@ theorem small_exterior_transfer {a b u v x : V} {p : G.Walk a b} (hp : p.IsPath)
     (mx : ∀{i j},∀q : G.Walk i j,q.IsPath → q.length≤p.length) {k : ℕ}
     (size : p.support.toFinsetᶜ.card+1≤k) (uo : u∉p.support) (vo : v∉p.support) (vh : k≤G.degree v)
     (joined : ∃y,y∉p.support ∧ G.Adj u y) (on : x∈p.support) (edge : G.Adj x u)
-    (lo : 7≤k) (upper : Fintype.card V≤5*k-5) (conn : 3≤G.vertexConnectivity)
+    (lo : 7≤k) (upper : Fintype.card V≤5*k-5) (conn : 3≤G.vertexConnectivity ∨ p.support.toFinsetᶜ.card+2≤k)
     (quota : ∀v,(univ.filter (fun z => G.dist v z=2)).card≤k)
     (minimum : ∀v,3≤G.degree v) (uniqueLow : ∀u v,G.degree u<k → G.degree v<k → u=v)
     (gap : p.support.length+(k+1)/2+1<Fintype.card V) : G.Adj x v := by
@@ -30,7 +30,10 @@ theorem small_exterior_transfer {a b u v x : V} {p : G.Walk a b} (hp : p.IsPath)
   have dense (z : V) (zc : z∈C) (high : k≤G.degree z) : C.card+1≤2*(G.neighborFinset z∩C).card := by
     have half := internal_half h zc high (quota _) minimum uniqueLow
     omega
-  have sat := dense_clique h dense lo upper conn quota minimum uniqueLow gap
+  have sat : Saturated p C k := by
+    rcases conn with conn|order
+    · exact dense_clique h dense lo upper conn quota minimum uniqueLow gap
+    exact dense_clique_of_size h dense lo upper (by omega) quota minimum uniqueLow gap
   apply sat.transfer (u:=u) ?_ vc vh on edge
   by_cases high : k≤G.degree u
   · exact all u uo high

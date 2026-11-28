@@ -1,5 +1,7 @@
 # Formalization of the full Graph 189 paper argument
 
+The [assembly for connectivity at least three](bounded-order/Graph189LongCycleAssembly.lean) now takes only the strict one-exception circumference theorem as its additional input. For separating pairs in the residual window, the [new path-gap theorem](bounded-order/Graph189NearDegreeWindow.lean) reduces the permitted loss to the explicit target of at most k−2 omitted vertices.
+
 Lean now [excludes the final common-contact clique](bounded-order/Graph189DenseTerminal.lean) by a tight-gap exchange, completing the dense branch. The parallel [one-exception circumference module](bounded-order/Graph189FanCycle.lean) handles orders up to 2q. The strict larger-order circumference and the residual separating pairs are the outstanding inputs.
 
 The [dense-component theorem](bounded-order/Graph189DenseClique.lean) now obtains the full clique, its common high contact rows, containment of the exceptional low row, and at most one other omitted vertex. The remaining terminal step for this component is to contradict its contact pattern.
