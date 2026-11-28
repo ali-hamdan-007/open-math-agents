@@ -1,0 +1,13 @@
+# Four-cut degree 19
+
+The same argument as in degree 20 works with the following changes. The checked minimum-deletion theorem applies at degree 19. The parameter-four completion gives $n\ge5k-11$, so the shorter low-on-cut proof excludes low vertices on all minimum four-cuts. The parameter-five completion then gives $n\ge6k-19=95$. Each side contains a high vertex, so its high population is at least $k-4$ by degree and high nonports all have a nearest label by the general nearest-label lemma.
+
+At $n\ge106$ use the same population lemma with $h=101$ and cap 26. The endpoint products $(27)(55)$ and $(55)(36)$ exceed $4k^2=1444$. Thus $x\le26$, $y\ge4k-1$, and the private quota is strict. If $y\le4k$, then $x>k$ and the contact/support-cover argument excludes the cut. The small side has order at most 27 with high subgraph of minimum degree at least 14. If $y>4k$, the original upper-order recut applies since $n>5k+5$. This leaves $95\le n\le105$.
+
+For $y\ge4k-1$, retain the same strict private-quota filter and one-common proof. The latter has the same inequalities for $|P_C|=0,1$ and for $|P_C|\ge2$. A low-only small-side contact at $y=4k-1$ either has $x\ge k-3$ and follows degree 20, or has $x=k-4$, in which case all high small-side vertices would have to be full by degree and the low-only label is impossible.
+
+At $y=4k-1$ with $x=k-4$, the same proof as the $y=4k,x=k-4$ case of degree 20 applies. Every high small-side vertex is full, and the small side has the unique low vertex $z$. If its support $L$ were empty then $y\le2k-4$. A high private port at a label of $L$ gives the recut. Otherwise at least $3k-1$ high large-side nonports exist, at most $k$ avoid $L$ in their nearest masks by the quota at $z$, and all of the others use at least two anchor places. This demands at least $5k-2>4k$ places.
+
+The same finite filter includes orders 104 and 105 but creates no new mask rows at those orders. It leaves 280 population rows and 155 distinct pairs. Use the weak edge-order mask encoding.
+
+The base replay in four-cut-degree19-masks.log contains all 775 profile keys and a SAT positive control. It gives 772 UNSAT and three SAT. The strengthened replay in four-cut-degree19-mask-witnesses.log turns two of the three into UNSAT and proves both terminal obstruction formulas UNSAT on the last profile, $(16,74)$ with zero saturated small-side contact counts. Therefore every actual cut of that profile gives at least two common high labels and a suitable private port for the existing recut. The strengthened replay has a separate SAT positive control. This completes the degree-19 graph argument with exact computation and audited paper integration.

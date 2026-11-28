@@ -1,0 +1,23 @@
+started ../connectivity-index/Graph189SevenConsumer.lean 2026-11-28T10:43:34Z
+@Graph189BondyEquality.seven : ∀ {V : Type u_1} [inst : Fintype V] [inst_1 : DecidableEq V] [Nontrivial V]
+  {G : SimpleGraph V} [inst_3 : DecidableRel G.Adj],
+  G.Connected →
+    (∀ (v : V), G.distEven v ≤ G.secondSmallestDegree + 1) →
+      G.secondSmallestDegree = 7 →
+        Fintype.card V = 23 → 2 ≤ G.vertexConnectivity → 3 ≤ G.minDegree → ∃ x y p, p.IsHamiltonian
+@Graph189BondyEquality.traceable_of_linked_equality : ∀ {V : Type u_1} [inst : Fintype V] [inst_1 : DecidableEq V]
+  [Nontrivial V] {G : SimpleGraph V} [inst_3 : DecidableRel G.Adj] (w : V) {k d : ℕ},
+  2 ≤ k →
+    k ≤ d →
+      (∀ (v : V), v ≠ w → d ≤ G.degree v) →
+        d ≤ (Graph189UniversalCycle.completeAt G w).minDegree →
+          k ≤ (Graph189UniversalCycle.completeAt G w).vertexConnectivity →
+            Fintype.card V = (k + 1) * (d - k + 2) - 1 →
+              ∀ {a : V} (C : (Graph189UniversalCycle.completeAt G w).Walk a a),
+                C.IsCycle →
+                  (∀ (b : V) (Q : (Graph189UniversalCycle.completeAt G w).Walk b b), Q.IsCycle → Q.length ≤ C.length) →
+                    Graph189LinkedExterior.Linked
+                        (SimpleGraph.induce (Arxiv.«2606.03696».offWalk C) (Graph189UniversalCycle.completeAt G w)) k →
+                      ∃ x y p, p.IsHamiltonian
+'Graph189BondyEquality.seven' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189BondyEquality.traceable_of_linked_equality' depends on axioms: [propext, Classical.choice, Quot.sound]
