@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189. A path through all but one vertex suffices
+
+Under the exact Graph 189 hypotheses, the existence of any path on n−1 vertices now implies a Hamiltonian path, at every order and connectivity. In a hypothetical counterexample the omitted vertex of such a path must be the unique low vertex z. Optimizing a second path required to contain z forces a clique whose members share every attachment. Exchanging this clique for an equally long path interval gives too many vertices at distance two. See the [complete argument](graph189/full/direct/continuation/lowblock/all-near-spanning.md) and its [rooted-path size prerequisite](graph189/full/direct/factor/near-spanning-order-bridge.md). An independent paper audit checked the double exchange, the group classification, and the strict final count. This is a fork research result. Every longest path in a counterexample must now omit a high-bearing component. A vertex-minimal counterexample also admits no edge contraction satisfying the original hypotheses, since a spanning path after contraction lifts to a path through at least n−1 original vertices.
+
+
 ## Graph 189. Half-degree connectivity including equality, exterior triangles and separating pairs
 
 The [standalone proof](graph189/full/direct/continuation/lowblock/high-connectivity-complete.md) and [equality proof](graph189/full/direct/continuation/lowblock/half-connectivity-boundary.md) give a spanning path when κ≥floor(k/2). A nontraceable example must therefore have κ<floor(k/2). Both proofs received independent paper review. The [shallow two-cut proof](graph189/full/direct/continuation/sep/shallow-high-two-cut.md), together with the previously settled deep and private cases, closes a separating pair with two components whose vertices all have degree at least k.
