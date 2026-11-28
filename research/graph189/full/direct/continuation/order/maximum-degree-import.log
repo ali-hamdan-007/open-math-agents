@@ -1,0 +1,4 @@
+'Graph189DegreeCeiling.degree_le_three_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189DegreeCeiling.maxDegree_le_three_mul_secondSmallestDegree' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

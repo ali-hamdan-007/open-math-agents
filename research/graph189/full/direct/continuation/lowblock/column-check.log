@@ -1,0 +1,4 @@
+'Graph189ColumnCancel.geodesic_cost' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ColumnCancel.full_column_cancellation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ColumnCancel.cancel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ColumnCancel.column' depends on axioms: [propext, Classical.choice, Quot.sound]

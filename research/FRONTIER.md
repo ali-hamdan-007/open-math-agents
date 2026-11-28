@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • machine-checked maximum degree, layer width, and finite comparisons
+
+The paper argument is in the next section. In the pinned Lean 4.33.1 environment two further statements now follow from the literal full-parent graph hypotheses: Δ ≤ 3k and w(n−Δ−k−2) ≤ kΔ, with w the rounded degree-retaining width defined in verify/Graph189RootWidth.lean (natural subtraction). All three graphs' invariants are taken directly from G. The assembled width proof includes the high third-layer cardinality, retained wedge and incidence cancellation. These compiled with warnings treated as errors and only propext, Classical.choice and Quot.sound. Replay scripts sit beside the modules. Two other lemmas bound common neighbors across a low center and provide a second predecessor. 
+
+An alternative independent separator route only needs the basic width. Under global/arity/final are its paper proof, full Python parameter sweep, 102 order intervals, and a Lean certificate. The kernel accepted the literal terminal inequalities for all 102 rows and their count without axioms. Its per-row population conclusion uses the three standard axioms. The conversion from an arbitrary graph to the complete finite domain and the separator classification concluding traceability still carry formal proof obligations. None of these results constitutes an official parent verdict.
+
+
 ## Graph 189 • full-target paper proof and reproducible 64-interval certificate
 
 The full paper argument for the exact original conjecture is now assembled at `root/full-argument.md`, relative to `research/graph189/full/direct/continuation/`. Assuming a counterexample, geometric and degree estimates give exactly 64 enclosing intervals of permissible orders and degrees in the final calculation. All 64 are excluded by an independently implemented longest-path exterior argument. The intervals are the 24 degrees 58–81 at connectivity five, 22 degrees 88–109 at six, and 18 degrees 124–141 at seven. The proof includes every degree and all placements of one exceptional low vertex. The calculation is a finite parameter exclusion, not enumeration of all graphs. A second reviewer traced the pinned statement, small-connectivity branches and the stronger order bound needed by this precise 64-row replay. The conclusions are on paper and in exact local arithmetic.

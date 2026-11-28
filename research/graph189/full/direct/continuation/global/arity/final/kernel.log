@@ -1,0 +1,4 @@
+'Graph189FiniteDomain.population_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189FiniteDomain.terminal_bands_checked' does not depend on any axioms
+'Graph189FiniteDomain.terminal_bands_count' does not depend on any axioms
+'Graph189FiniteDomain.terminal_population' depends on axioms: [propext, Classical.choice, Quot.sound]

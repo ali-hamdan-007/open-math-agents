@@ -1,0 +1,3 @@
+import Graph189HighPredecessor
+#print axioms Graph189HighPredecessor.common_lower
+#print axioms Graph189HighPredecessor.another_common
