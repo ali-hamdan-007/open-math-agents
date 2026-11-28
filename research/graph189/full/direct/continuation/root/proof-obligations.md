@@ -4,7 +4,7 @@
 
 The pinned Lean 4.33.1 kernel checked the [registered Lean theorem](bounded-order/Graph189OriginalSolution.lean) against Formal Conjectures at `9097e2f90e66d2f6244209cb1c07f7120d17ec53`. The graph arguments close every case. The axiom report for `OMA.solution` lists only `propext`, `Classical.choice`, and `Quot.sound`. [Linux kernel log](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46158940698/job/141021680430)
 
-Ali Hamdan submitted the single-file parent proof in [upstream draft PR 34187](https://github.com/lefttosolve2/open-math-agents/pull/34187). The submission requests a 3 MiB allowance. The dependency audit identified 8,834 transitive research declarations, including compiler-generated constants. The selected original source blocks alone occupy about 2.55 MiB.
+The exact single file in [upstream PR 34187](https://github.com/lefttosolve2/open-math-agents/pull/34187) passed the registered Lean statement guard and axiom audit in 12 minutes 18 seconds. The signed submission and the independently checked file have the same Git blob. The PR is ready for review. The upstream linter stopped at the default 512 KiB limit. The 2,707,845-byte proof passes that linter with the requested 3 MiB per-problem allowance in place. [Single-file kernel log](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46161071089/job/141028285846)
 
 ## All separating-pair cases checked; full original assembly in replay
 

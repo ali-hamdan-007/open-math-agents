@@ -2,7 +2,7 @@
 
 The target is WrittenOnTheWallII.GraphConjecture189.conjecture189 in formal-conjectures at commit 9097e2f90e66. Let G be a finite connected simple graph on at least two vertices. Let k denote the second entry of the nondecreasing list of vertex degrees, including multiplicities. If every vertex has at most k other vertices at positive even distance, G admits a Hamiltonian path.
 
-The full-target argument now has an unconditional Lean proof. The final formalization uses the bounded counterexample window, the three-connected path and cycle argument, and the least separating pair at connectivity two. The historical numerical route below records the original paper approach. The [registered theorem](bounded-order/Graph189OriginalSolution.lean) has passed the [Linux kernel check](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46158940698/job/141021680430) with only the three standard axioms.
+The full-target argument now has an unconditional Lean proof. The final formalization uses the bounded counterexample window, the three-connected path and cycle argument, and the least separating pair at connectivity two. The historical numerical route below records the original paper approach. The [registered theorem](bounded-order/Graph189OriginalSolution.lean) has passed the [Linux kernel check](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46158940698/job/141021680430) with only the three standard axioms. The [single-file submission](https://github.com/lefttosolve2/open-math-agents/pull/34187) also passed the [registered statement guard and kernel audit](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46161071089/job/141028285846).
 
 ## Reductions needed before the arithmetic
 

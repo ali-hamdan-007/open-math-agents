@@ -1,0 +1,15 @@
+{
+  "problem": "WrittenOnTheWallII.GraphConjecture189.conjecture189",
+  "entryPoint": "OMA.solution",
+  "run": "https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46161071089/job/141028285846",
+  "proofPullRequest": "https://github.com/lefttosolve2/open-math-agents/pull/34187",
+  "pullRequestHead": "be02fab7011704d4d4fcb24924d84da5d32617b2",
+  "checkHead": "f8c4933a426f20b5137355c227b1561d2bc5ddec",
+  "gitBlob": "7b27497272156743cbbb34b724c4d30ce5a1dcc6",
+  "sha256": "3d4dfc64d09083db21eb58c85431c80710eda202e7b574240404e73220b9c6b1",
+  "bytes": 2707845,
+  "startedAt": "2026-11-28T15:41:49Z",
+  "completedAt": "2026-11-28T15:54:07Z",
+  "seconds": 738,
+  "axiomReport": "'OMA.solution' depends on axioms: [propext, Classical.choice, Quot.sound]"
+}

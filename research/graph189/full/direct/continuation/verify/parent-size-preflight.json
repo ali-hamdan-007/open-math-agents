@@ -1,0 +1,33 @@
+{
+  "upstreamRevision": "3f5a0ba9512abd206c92d836791b99a730bb29a4",
+  "sourceSha256": "3d4dfc64d09083db21eb58c85431c80710eda202e7b574240404e73220b9c6b1",
+  "proposedAllowanceKiB": 3072,
+  "officialDefault": {
+    "file": "proofs/WrittenOnTheWallII.GraphConjecture189.conjecture189.lean",
+    "type": "proof",
+    "problem": "WrittenOnTheWallII.GraphConjecture189.conjecture189",
+    "ok": false,
+    "kind": "open",
+    "polarity": "proof",
+    "theorem": "OMA.solution",
+    "imports": "FormalConjectures.WrittenOnTheWallII.GraphConjecture189",
+    "errors": [
+      "file larger than 512 KiB"
+    ],
+    "target": "type_of% @WrittenOnTheWallII.GraphConjecture189.conjecture189",
+    "decl": "WrittenOnTheWallII.GraphConjecture189.conjecture189"
+  },
+  "withProposedAllowance": {
+    "file": "proofs/WrittenOnTheWallII.GraphConjecture189.conjecture189.lean",
+    "type": "proof",
+    "problem": "WrittenOnTheWallII.GraphConjecture189.conjecture189",
+    "ok": true,
+    "kind": "open",
+    "polarity": "proof",
+    "theorem": "OMA.solution",
+    "imports": "FormalConjectures.WrittenOnTheWallII.GraphConjecture189",
+    "errors": [],
+    "target": "type_of% @WrittenOnTheWallII.GraphConjecture189.conjecture189",
+    "decl": "WrittenOnTheWallII.GraphConjecture189.conjecture189"
+  }
+}
