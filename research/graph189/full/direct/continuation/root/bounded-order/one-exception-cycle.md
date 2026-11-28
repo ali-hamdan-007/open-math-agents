@@ -1,0 +1,23 @@
+# A circumference proof with one exceptional vertex
+
+Let B be a finite simple graph of order m≥3 that stays connected upon deletion of any vertex. Suppose every vertex other than w has B-degree at least q. Then B has a cycle of length at least min(m,2q). All lengths here count edges of a cycle. In the application B is either the exterior component or the selected endblock D∪{w}. For the latter, each vertex of D has the same degree inside B as inside C, by `Limb.exits`. The selection in `Graph189ExteriorLeaf.exists_leaf` supplies connectivity after deleting each D vertex. Deleting w leaves the connected interior D.
+
+Take a globally longest path. The exceptional vertex w has at least two neighbors. If it is the initial endpoint, write the path as `w a … u v … y`, where v is any neighbor of w different from a. Longestness forces v onto the path. Reverse the prefix from w through u, cross wv, and continue to y. The new endpoints u and y are both different from w. Reverse before this operation if w was the last endpoint. Thus the path P can be chosen with two endpoints x and y of degree at least q. Write P as v₀,…,vₜ, with x=v₀ and y=vₜ. Every neighbor of either endpoint is on P.
+
+Define X={i | x~vᵢ₊₁} and Y={i | vᵢ~y}, with both index sets between 0 and t−1. Their sizes are the two endpoint degrees.
+
+1. If i belongs to both sets, traverse indices 0,…,i and then t,…,i+1 before returning to 0. The resulting cycle contains every vertex of P. A graph edge leaving it would extend P after opening the cycle at the incident vertex, so the cycle spans B.
+2. Assume the sets are disjoint but some i∈Y occurs before some j∈X. Choose such i<j with j−i minimum. The open index interval (i,j) contains no mark. The route 0,…,i,t,…,j+1,0 misses at most the one mark j. The terminal index t is an unmarked cycle vertex, giving cycle length at least |X|+|Y|. Disjointness excludes adjacency of x and y: the initial path edge gives 0∈X, while x~y would give 0∈Y. Consequently this closed route has at least three vertices.
+3. Otherwise every X index precedes every Y index. Let r=max(X)+1 and s=min(Y), so r≤s. Let A=P[0,r] and B'=P[s,t]. Their vertices include respectively x and all its neighbors, y and all its neighbors.
+
+When r<s, Menger gives two vertex-disjoint A–B' paths. Trim each at the first encounter with B' and the last preceding encounter with A. The two paths have distinct terminals on both sides and no other vertices in A∪B'. A first-hit exchange on the middle path M=P[r,s] guarantees a connector starting at vᵣ. Walk along M until it first meets a connector. Replace that connector's initial part through the encounter by the prefix of M. If M misses both connectors, take M as one of them. Every inserted interior vertex stays off A∪B', and apart from the encounter the inserted prefix is disjoint from both connectors. Next perform the same exchange from vₛ backwards on M, retaining the initial parts of the connectors. The second search encounters a connector by the time it reaches vᵣ. The modifications give a connector starting at vᵣ and a connector ending at vₛ, possibly the same one.
+
+The two A terminals are now vᵢ and vᵣ with i<r. Let h be the smallest index greater than i for which x~vₕ. The route i,…,0,h,…,r visits x and all its neighbors, because no x-neighbor lies strictly between i and h. Symmetrically the two B' terminals are vₛ and vⱼ with s<j. The route s,…,h',t,…,j, using the greatest h'<j for which y~vₕ', visits y and all its neighbors. These two routes have disjoint vertex sets. Joining their endpoints with the two trimmed connectors gives a simple cycle of length at least d(x)+d(y)+2.
+
+When r=s, use the shared vertex vᵣ as one connector of length zero. Connectivity of B−vᵣ supplies another link from A−vᵣ to B'−vᵣ. Trim it as above. The same two terminal routes intersect only in vᵣ, so the simple cycle has at least d(x)+d(y)+1 vertices. Together these cases prove the claimed minimum.
+
+The endpoint-sum conclusion is also stated in Bondy and Murty, *Graph Theory*, Exercise 18.3.15(a)(ii), and established in the proof of Theorem 4.11 of J. A. Bondy's *Basic graph theory: paths and circuits* in the *Handbook of Combinatorics*. The two-link argument above uses only vertex Menger, already present in this fork as `OMA.BondyK.menger_trim`.
+
+- [Bondy and Murty, Exercise 18.3.15](https://www.facom.ufu.br/~nunes/teoria%20dos%20grafos/graph-theory.pdf)
+- [Bondy, Theorem 4.11](https://api.pageplace.de/preview/DT0400.9780080933849_A23543816/preview-9780080933849_A23543816.pdf)
+- [Fan, *New sufficient conditions for cycles in graphs*](https://doi.org/10.1016/0095-8956(84)90054-6)
