@@ -8,8 +8,8 @@ namespace Graph189SmallMixedPair
 variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph V} [DecidableRel G.Adj]
 variable {A B S : Finset V} {p q : V}
 
-theorem nonadjacent_from_nine (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 9≤G.secondSmallestDegree) (small : G.secondSmallestDegree≤10) (minimum : 3≤G.minDegree)
+theorem nonadjacent_from_seven (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (large : 7≤G.secondSmallestDegree) (small : G.secondSmallestDegree≤10) (minimum : 3≤G.minDegree)
     (big : 3*G.secondSmallestDegree+2<Fintype.card V) (floor : 4*G.secondSmallestDegree≤Fintype.card V+5)
     (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
     (pair : S={p,q}) (ne : p≠q) (nonadj : ¬G.Adj p q) (conA : (G.induce (A:Set V)).Connected)
@@ -22,7 +22,7 @@ theorem nonadjacent_from_nine (hc : G.Connected) (cap : (univ.image (distEven G)
     simpa only [Nat.add_comm] using (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap
   have sz : S.card=2 := by simp [pair,ne]
   by_cases cleanB : Graph189CleanSideCounts.Clean G B p q
-  · exact clean hc cap large minimum big floor sides pair ne sc nonadj cleanB conA conB common
+  · exact clean_from_seven hc cap large minimum big floor sides pair ne sc nonadj cleanB conA conB common
   have aSize := Graph189DirtySideOrder.order hc point sides.swap pair ne sc conB free cleanB
   by_cases hasDeep : ∃y,Deep G A S y
   · obtain ⟨y,deep⟩ := hasDeep
@@ -35,14 +35,43 @@ theorem nonadjacent_from_nine (hc : G.Connected) (cap : (univ.image (distEven G)
   by_cases wide : 2*G.secondSmallestDegree≤B.card
   swap
   · exact balanced hc cap (by omega) minimum big sides pair ne sc nonadj free conA conB aSize (by omega)
+  have missingCase {i j : V} (eq : S={i,j}) (diff : i≠j)
+      (absent : ∀x∈A,G.Adj x j → G.Adj x i) (fb : ∀x∈B,¬(G.Adj x i ∧ G.Adj x j)) :
+      ∃a b,∃r : G.Walk a b,r.IsHamiltonian := by
+    obtain ⟨aSize,bSize⟩ := Graph189MissingPrivateMixed.sizes_above_moderate hc cap large minimum big sides sc eq diff
+      conB shallow fb absent chosen
+    have mp := Graph189DirtyRoutes.contacts hc point sides.swap pair sc big free
+    have mq := Graph189DirtyRoutes.contacts hc point sides.swap (pair.trans (Finset.pair_comm _ _)) sc big (fun _ hx e => free _ hx e.symm)
+    have dis : Disjoint (B.filter (G.Adj p)) (B.filter (G.Adj q)) := disjoint_left.mpr (by
+      intro v vp vq
+      exact free v (mem_filter.mp vp).1 ⟨(mem_filter.mp vp).2.symm,(mem_filter.mp vq).2.symm⟩)
+    have inc : B.filter (G.Adj p)∪B.filter (G.Adj q)⊆ports G B S := by
+      intro v hv
+      rcases mem_union.mp hv with h|h
+      · exact mem_filter.mpr ⟨(mem_filter.mp h).1,p,by simp [pair],(mem_filter.mp h).2⟩
+      · exact mem_filter.mpr ⟨(mem_filter.mp h).1,q,by simp [pair],(mem_filter.mp h).2⟩
+    have four := card_le_card inc
+    rw [card_union_of_disjoint dis] at four
+    have n := total sides sz
+    exact mixed hc cap large minimum big (by omega) sides pair ne sc nonadj free conA conB (Or.inr ⟨by omega,by omega⟩) (by omega)
   by_cases qOnly : ∃x∈A,G.Adj x q ∧ ¬G.Adj x p
   swap
-  · exact Graph189MissingPrivateMixed.traceable hc cap large sides sc pair ne conB shallow free
-      (fun x xa xq => by by_contra xp; exact qOnly ⟨x,xa,xq,xp⟩) chosen
+  · exact missingCase pair ne (fun x xa xq => by by_contra xp; exact qOnly ⟨x,xa,xq,xp⟩) free
   by_cases pOnly : ∃x∈A,G.Adj x p ∧ ¬G.Adj x q
   · exact large_shallow hc cap (by omega) small minimum big sides pair ne sc nonadj free conA conB shallow wide common pOnly qOnly
-  exact Graph189MissingPrivateMixed.traceable hc cap large sides sc (pair.trans (Finset.pair_comm _ _)) ne.symm
-    conB shallow (fun x xb h => free x xb h.symm) (fun x xa xp => by by_contra xq; exact pOnly ⟨x,xa,xp,xq⟩) chosen
+  exact missingCase (pair.trans (Finset.pair_comm _ _)) ne.symm
+    (fun x xa xp => by by_contra xq; exact pOnly ⟨x,xa,xp,xq⟩) (fun x xb h => free x xb h.symm)
+
+theorem nonadjacent_from_nine (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (large : 9≤G.secondSmallestDegree) (small : G.secondSmallestDegree≤10) (minimum : 3≤G.minDegree)
+    (big : 3*G.secondSmallestDegree+2<Fintype.card V) (floor : 4*G.secondSmallestDegree≤Fintype.card V+5)
+    (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
+    (pair : S={p,q}) (ne : p≠q) (nonadj : ¬G.Adj p q) (conA : (G.induce (A:Set V)).Connected)
+    (conB : (G.induce (B:Set V)).Connected)
+    (common : ∃u∈A,∀i∈S,G.Adj u i) (free : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q))
+    (chosen : (∀ C D T, Graph189CutSides.CutSides G C D T → T.card=2 → A.card≤C.card) ∨ B.card≤A.card) :
+    ∃a b,∃r : G.Walk a b,r.IsHamiltonian :=
+  nonadjacent_from_seven hc cap (by omega) small minimum big floor sides sc pair ne nonadj conA conB common free chosen
 
 end Graph189SmallMixedPair
 namespace Graph189TwoConnectivity
@@ -92,3 +121,4 @@ theorem of_ten (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp
 end Graph189TwoConnectivity
 #print axioms Graph189SmallMixedPair.nonadjacent_from_nine
 #print axioms Graph189TwoConnectivity.of_ten
+#print axioms Graph189SmallMixedPair.nonadjacent_from_seven

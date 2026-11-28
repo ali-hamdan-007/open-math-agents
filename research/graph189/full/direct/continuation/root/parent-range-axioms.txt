@@ -384,3 +384,58 @@ research/graph189/full/direct/continuation/root/bounded-order/Graph189SmallMixed
 research/graph189/full/direct/continuation/root/bounded-order/Graph189TwoConnectivityTen.lean sha256 18df6f99cd274d388717d996aa1d54db3599c2e93634d059dc4ff71b0b54ef08
 'Graph189SmallMixedPair.nonadjacent_from_nine' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189TwoConnectivity.of_ten' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189MarkedHighEnds.lean sha256 557aef1ea194f9d23ac0fa93416d82580503ee285f53a5e6e0c6f00117923eba
+'Graph189MarkedHighEnds.marked' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189MarkedHighEnds.marked_using_unmarked' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189MarkedHighEnds.marked_with_bonus' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189MarkedLeaf.lean sha256 7c0801f8efe9d190822cf4029c0c27bc43f672d13f720ae35991f0fee1c01a05
+'Graph189MarkedHighEnds.including_leaf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189MarkedHighEnds.leaf_with_bonus' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189SmallRootedLeaf.lean sha256 033cb762284a02798e0375d90c0ce8521eadf1826e60fa2bb17768055b20e982
+'Graph189MarkedHighEnds.short_marked' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189SmallCommonRoutes.lean sha256 188df00518a04ecb61f2c41ad9f6b23cc6fb824b81f77ecd7f5da0cb1354163e
+'Graph189SmallPrivatePair.common_from_marks' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SmallPrivatePair.common_from_marks_sharp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SmallPrivatePair.short_common' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189SmallMixedPaths.lean sha256 0c390169fb3435aecc1206eae0cc38a0c5d4a9bcc1052483ae4ba43a37e2638d
+'Graph189SmallMixedPair.mixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SmallMixedPair.mixed_sharp' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189SmallMixedOrders.lean sha256 5831c9c0014bb720bece85e2e478d39c0ec8160f7ae019440c37b13436f6af64
+'Graph189SmallMixedPair.balanced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SmallMixedPair.large_shallow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SmallMixedPair.clean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SmallMixedPair.clean_from_seven' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/order/Graph189MissingPrivateMixed.lean sha256 f4ec34337b8f932c104a1c1391defab3f087d4b6208e1363caa60f6af042cca0
+'Graph189MissingPrivateMixed.sizes_above_moderate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189MissingPrivateMixed.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/order/Graph189AdjacentPrivateCut.lean sha256 2b1aa0ea4a8780ec65a58499c3ec0556bb6d1565329fb69005a6eb027c9003dc
+'Graph189AdjacentPrivateCut.above_moderate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189AdjacentPrivateCut.unrestricted' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189AdjacentPrivateCut.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189TwoConnectivityTen.lean sha256 d60842a93e16ac34b0d06be3f3515a9759c475f29a705771f817c76a6e4930af
+'Graph189SmallMixedPair.nonadjacent_from_nine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TwoConnectivity.of_ten' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SmallMixedPair.nonadjacent_from_seven' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/order/Graph189ShallowCommonOrder.lean sha256 91ea9bde4c9d4f6b90f9a78a56b84e6f446f87bec8018be23120387219bff06e
+'Graph189ShallowCommonOrder.profile' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ShallowCommonOrder.few_ports' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ShallowCommonOrder.radius' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ShallowCommonOrder.order' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189LeastSideContacts.lean sha256 1b4235e99b299816e07ff9c09e627209f85f34d7829acfe8df2f7bd1c837694d
+'Graph189SmallMixedPair.least_two_marks' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SmallMixedPair.two_side_ports' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189BothCommonSmall.lean sha256 4d02ad1b617e85e96f67259463811171137976777d228a3f981a01e34510228c
+'Graph189SmallMixedPair.both_shallow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SmallMixedPair.both' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -11,7 +11,7 @@ variable {A B S : Finset V} {p q : V}
 
 def ports (G : SimpleGraph V) [DecidableRel G.Adj] (W S : Finset V) := W.filter (fun x => ∃i∈S,G.Adj i x)
 
-theorem mixed (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+theorem mixed_sharp (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
     (large : 7≤G.secondSmallestDegree) (minimum : 3≤G.minDegree)
     (big : 3*G.secondSmallestDegree+2<Fintype.card V) (upper : Fintype.card V≤5*G.secondSmallestDegree-5)
     (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q}) (ne : p≠q) (sc : S.card≤G.vertexConnectivity)
@@ -19,11 +19,11 @@ theorem mixed (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)
     (conA : (G.induce (A:Set V)).Connected) (conB : (G.induce (B:Set V)).Connected)
     (choose : (B.card+1≤2*G.secondSmallestDegree ∧ A.card<2*(G.secondSmallestDegree-1)+(ports G A S).card) ∨
       (A.card+1≤2*G.secondSmallestDegree ∧ B.card<2*(G.secondSmallestDegree-1)+(ports G B S).card))
-    (loss : max 1 (A.card-(2*G.secondSmallestDegree-4))+(B.card-(2*G.secondSmallestDegree-2))+3≤G.secondSmallestDegree) :
+    (loss : min (max 1 (A.card-(2*G.secondSmallestDegree-4))) (max 2 (A.card-(2*G.secondSmallestDegree-3)))+(B.card-(2*G.secondSmallestDegree-2))+3≤G.secondSmallestDegree) :
     ∃u v, ∃r : G.Walk u v,r.IsHamiltonian := by
   classical
   let k := G.secondSmallestDegree
-  let a := max 1 (A.card-(2*k-4))
+  let a := min (max 1 (A.card-(2*k-4))) (max 2 (A.card-(2*k-3)))
   let b := B.card-(2*k-2)
   have point (v : V) : G.distEven v≤G.secondSmallestDegree+1 := by
     simpa only [Nat.add_comm] using (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap
@@ -46,7 +46,7 @@ theorem mixed (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)
     change a+b+3≤G.secondSmallestDegree at loss
     omega
   rcases choose with ⟨small,room⟩|⟨small,room⟩
-  · obtain ⟨x,xP,y,Q,hQ,ins,len⟩ := Graph189SmallPrivatePair.common_from_marks sides pair ne conA large minimum
+  · obtain ⟨x,xP,y,Q,hQ,ins,len⟩ := Graph189SmallPrivatePair.common_from_marks_sharp sides pair ne conA large minimum
       (ports G A S) (filter_subset _ _) (many sides) (fun v va e => mem_filter.mpr ⟨va,p,ps,e⟩) room
     obtain ⟨_,i,si,ix⟩ := mem_filter.mp xP
     have two := marks sides.swap i si
@@ -59,12 +59,25 @@ theorem mixed (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)
   have right : Route G B i b := ⟨x,y,Q,hQ,ix,ins,len⟩
   have fixed (j : V) (eq : S={i,j}) (diff : i≠j) : Route G A i a := by
     have two := marks sides i si
-    obtain ⟨u,up,v,r,hr,inA,size⟩ := Graph189SmallPrivatePair.common_from_marks sides eq diff conA large minimum
+    obtain ⟨u,up,v,r,hr,inA,size⟩ := Graph189SmallPrivatePair.common_from_marks_sharp sides eq diff conA large minimum
       (A.filter (G.Adj i)) (filter_subset _ _) two (fun _ va e => mem_filter.mpr ⟨va,e⟩) (by omega)
     exact ⟨u,v,r,hr,(mem_filter.mp up).2,inA,size⟩
   rcases (show i=p ∨ i=q by simpa [pair] using si) with rfl|rfl
   · exact finish si (fixed q pair ne) right
   · exact finish si (fixed p rev ne.symm) right
 
+theorem mixed (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (large : 7≤G.secondSmallestDegree) (minimum : 3≤G.minDegree)
+    (big : 3*G.secondSmallestDegree+2<Fintype.card V) (upper : Fintype.card V≤5*G.secondSmallestDegree-5)
+    (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q}) (ne : p≠q) (sc : S.card≤G.vertexConnectivity)
+    (nonadj : ¬G.Adj p q) (free : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q))
+    (conA : (G.induce (A:Set V)).Connected) (conB : (G.induce (B:Set V)).Connected)
+    (choose : (B.card+1≤2*G.secondSmallestDegree ∧ A.card<2*(G.secondSmallestDegree-1)+(ports G A S).card) ∨
+      (A.card+1≤2*G.secondSmallestDegree ∧ B.card<2*(G.secondSmallestDegree-1)+(ports G B S).card))
+    (loss : max 1 (A.card-(2*G.secondSmallestDegree-4))+(B.card-(2*G.secondSmallestDegree-2))+3≤G.secondSmallestDegree) :
+    ∃u v, ∃r : G.Walk u v,r.IsHamiltonian :=
+  mixed_sharp hc cap large minimum big upper sides pair ne sc nonadj free conA conB choose (by omega)
+
 end Graph189SmallMixedPair
 #print axioms Graph189SmallMixedPair.mixed
+#print axioms Graph189SmallMixedPair.mixed_sharp

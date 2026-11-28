@@ -74,8 +74,8 @@ theorem large_shallow (hc : G.Connected) (cap : (univ.image (distEven G)).max' (
 
 /-- A clean common-free side bounds all nonports across the two sides.
 An opposite common port pays in both anchor columns, so 2n≤7k. -/
-theorem clean (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 9≤G.secondSmallestDegree) (minimum : 3≤G.minDegree) (big : 3*G.secondSmallestDegree+2<Fintype.card V)
+theorem clean_from_seven (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (large : 7≤G.secondSmallestDegree) (minimum : 3≤G.minDegree) (big : 3*G.secondSmallestDegree+2<Fintype.card V)
     (floor : 4*G.secondSmallestDegree≤Fintype.card V+5)
     (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q}) (ne : p≠q) (sc : S.card≤G.vertexConnectivity)
     (nonadj : ¬G.Adj p q) (cleanB : Graph189CleanSideCounts.Clean G B p q)
@@ -86,7 +86,7 @@ theorem clean (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)
   let R (W : Finset V) := (W.filter (fun x => G.dist p x≠1 ∧ G.dist q x≠1)).card
   let T := A.filter (fun v => G.dist p v=1 ∧ G.dist q v=1)
   have n := total sides (by simp [pair,ne])
-  have lo : 9≤k := large
+  have lo : 7≤k := large
   change 4*k≤Fintype.card V+5 at floor
   have point (v : V) : G.distEven v≤G.secondSmallestDegree+1 := by
     simpa only [Nat.add_comm] using (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap
@@ -111,13 +111,25 @@ theorem clean (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)
     change G.degree v≤_+1 at drop
     omega
   have bmin := (degree_pair (G:=G) x y xy).elim (reg x (mem_filter.mp xp).1) (reg y (mem_filter.mp yp).1)
-  apply mixed hc cap (by omega) minimum big (by change Fintype.card V≤5*k-5; omega) sides pair ne sc nonadj cleanB.private_ports conA conB
+  by_cases bal : A.card+1≤2*k ∧ B.card+1≤2*k
+  · exact balanced hc cap large minimum big sides pair ne sc nonadj cleanB.private_ports conA conB bal.1 bal.2
+  apply mixed_sharp hc cap (by omega) minimum big (by change Fintype.card V≤5*k-5; omega) sides pair ne sc nonadj cleanB.private_ports conA conB
   · left; change B.card+1≤2*k ∧ A.card<2*(k-1)+(ports G A S).card
     constructor <;> omega
-  · change max 1 (A.card-(2*k-4))+(B.card-(2*k-2))+3≤k
+  · change min (max 1 (A.card-(2*k-4))) (max 2 (A.card-(2*k-3)))+(B.card-(2*k-2))+3≤k
     omega
+
+theorem clean (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (large : 9≤G.secondSmallestDegree) (minimum : 3≤G.minDegree) (big : 3*G.secondSmallestDegree+2<Fintype.card V)
+    (floor : 4*G.secondSmallestDegree≤Fintype.card V+5)
+    (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q}) (ne : p≠q) (sc : S.card≤G.vertexConnectivity)
+    (nonadj : ¬G.Adj p q) (cleanB : Graph189CleanSideCounts.Clean G B p q)
+    (conA : (G.induce (A:Set V)).Connected) (conB : (G.induce (B:Set V)).Connected)
+    (common : ∃x∈A,∀i∈S,G.Adj x i) : ∃u v, ∃r : G.Walk u v,r.IsHamiltonian :=
+  clean_from_seven hc cap (by omega) minimum big floor sides pair ne sc nonadj cleanB conA conB common
 
 end Graph189SmallMixedPair
 #print axioms Graph189SmallMixedPair.balanced
 #print axioms Graph189SmallMixedPair.large_shallow
 #print axioms Graph189SmallMixedPair.clean
+#print axioms Graph189SmallMixedPair.clean_from_seven

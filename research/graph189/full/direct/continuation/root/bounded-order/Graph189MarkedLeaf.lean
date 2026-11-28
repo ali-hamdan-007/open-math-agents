@@ -7,13 +7,13 @@ variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph
 
 /-- If the exception is a leaf, remove it and use its unique neighbor as
 the new exception. Only the leaf is charged in the short-side case. -/
-theorem including_leaf (hc : G.Connected) (z : V) {d u : ℕ} (three : 3≤d) (positive : 1≤G.degree z)
+theorem leaf_with_bonus (hc : G.Connected) (z : V) {d u : ℕ} (bonus : ℕ) (bon : bonus≤1) (inc : d+bonus≤u) (three : 3≤d) (positive : 1≤G.degree z)
     (high : ∀v,v≠z → d≤G.degree v) (P : Finset V) (marks : 2≤P.card)
     (strong : ∀v,v≠z → v∉P → u≤G.degree v) (room : Fintype.card V<2*u+P.card) :
-    ∃x∈P, ∃y, ∃r : G.Walk x y,r.IsPath ∧ Fintype.card V≤r.support.length+max 1 (Fintype.card V-2*d) := by
+    ∃x∈P, ∃y, ∃r : G.Walk x y,r.IsPath ∧ Fintype.card V≤r.support.length+min (max 1 (Fintype.card V-2*d)) (max 2 (Fintype.card V-(2*d+bonus))) := by
   classical
   by_cases low : 2≤G.degree z
-  · obtain ⟨x,xP,y,r,hr,sz⟩ := marked_using_unmarked hc z low high P (card_pos.mp (by omega))
+  · obtain ⟨x,xP,y,r,hr,sz⟩ := marked_with_bonus hc z low high P (card_pos.mp (by omega)) bonus bon (fun v vz no => inc.trans (strong v vz no))
       (fun a b ha hb am bm => by have := strong a ha am; have := strong b hb bm; omega)
     exact ⟨x,xP,y,r,hr,by omega⟩
   have one : G.degree z=1 := by omega
@@ -60,8 +60,9 @@ theorem including_leaf (hc : G.Connected) (z : V) {d u : ℕ} (three : 3≤d) (p
       omega
     · rw [mc,erase_eq_of_notMem here]; omega
   have notMarked (v : W) (no : v∉M) : v.val∉P := fun h => no (mem_subtype.mpr (mem_erase.mpr ⟨nz v,h⟩))
-  obtain ⟨a,am,b,Q,hQ,len⟩ := marked_using_unmarked (G:=H) con g' gtwo
-    (fun v ne => (high v.val (nz v)).trans_eq (same v ne)) M (card_pos.mp (by omega))
+  obtain ⟨a,am,b,Q,hQ,len⟩ := marked_with_bonus (G:=H) con g' gtwo
+    (fun v ne => (high v.val (nz v)).trans_eq (same v ne)) M (card_pos.mp (by omega)) bonus bon
+    (fun v ne no => (inc.trans (strong v.val (nz v) (notMarked v no))).trans_eq (same v ne))
     (fun a b ha hb am bm => by
       have left := (strong a.val (nz a) (notMarked a am)).trans_eq (same a ha)
       have right := (strong b.val (nz b) (notMarked b bm)).trans_eq (same b hb)
@@ -69,10 +70,19 @@ theorem including_leaf (hc : G.Connected) (z : V) {d u : ℕ} (three : 3≤d) (p
       rw [Fintype.card_coe]; omega)
   let f := (Embedding.induce (G:=G) (W:Set V)).toHom
   refine ⟨f a,show f a∈P from (mem_erase.mp (mem_subtype.mp am)).2,f b,Q.map f,hQ.map Subtype.val_injective,?_⟩
-  change Fintype.card W≤Q.support.length+(Fintype.card W-2*d) at len
+  change Fintype.card W≤Q.support.length+min (Fintype.card W-2*d) (max 1 (Fintype.card W-(2*d+bonus))) at len
   rw [Fintype.card_coe] at len
   rw [Walk.support_map,List.length_map]
   omega
 
+theorem including_leaf (hc : G.Connected) (z : V) {d u : ℕ} (three : 3≤d) (positive : 1≤G.degree z)
+    (high : ∀v,v≠z → d≤G.degree v) (P : Finset V) (marks : 2≤P.card)
+    (strong : ∀v,v≠z → v∉P → u≤G.degree v) (room : Fintype.card V<2*u+P.card) :
+    ∃x∈P, ∃y, ∃r : G.Walk x y,r.IsPath ∧ Fintype.card V≤r.support.length+max 1 (Fintype.card V-2*d) := by
+  obtain ⟨x,xP,y,r,hr,length⟩ := leaf_with_bonus hc z (d:=d) (u:=max u d) 0 (by decide) (by omega)
+    three positive high P marks (fun v ne no => max_le (strong v ne no) (high v ne)) (by omega)
+  exact ⟨x,xP,y,r,hr,by omega⟩
+
 end Graph189MarkedHighEnds
 #print axioms Graph189MarkedHighEnds.including_leaf
+#print axioms Graph189MarkedHighEnds.leaf_with_bonus

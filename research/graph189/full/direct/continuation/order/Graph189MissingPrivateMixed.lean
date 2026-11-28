@@ -14,15 +14,16 @@ variable {A B S : Finset V} {p q : V}
 /-- In the shallow mixed case one missing private type leaves exactly
 k−1 contacts of the other anchor, or an immediate short-order proof.
 The genuine recut applies to whichever side the global selector chose. -/
-theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 9≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S)
+theorem sizes_above_moderate (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (large : 7≤G.secondSmallestDegree) (minimum : 3≤G.minDegree)
+    (nBig : 3*G.secondSmallestDegree+2<Fintype.card V) (sides : Graph189CutSides.CutSides G A B S)
     (sc : S.card≤G.vertexConnectivity) (pair : S={p,q}) (ne : p≠q)
     (connectedB : (G.induce (B:Set V)).Connected)
     (shallow : ∀x∈A,G.secondSmallestDegree≤G.degree x → ∃i∈S,G.Adj i x)
     (freeB : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q))
     (missing : ∀x∈A,G.Adj x q → G.Adj x p)
     (chosen : (∀ C D T, Graph189CutSides.CutSides G C D T → T.card=2 → A.card≤C.card) ∨ B.card≤A.card) :
-    ∃x y, ∃r : G.Walk x y,r.IsHamiltonian := by
+    A.card≤G.secondSmallestDegree ∧ B.card≤2*G.secondSmallestDegree+1 := by
   classical
   let k := G.secondSmallestDegree
   have sz : S.card=2 := by simp [pair,ne]
@@ -46,7 +47,8 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
   by_cases highA : ∃x∈A,k≤G.degree x
   swap
   · obtain ⟨z,_,degree⟩ := Graph189ShallowCommonOrder.no_high sides sc sz highA
-    exact Graph189DegreeTwoOriginal.traceable hc cap two z degree (by omega)
+    have h := minimum.trans (G.minDegree_le_degree z)
+    omega
   have equivalent : A.filter (fun x => ∃i∈S,G.Adj i x)=P := by
     ext x
     constructor
@@ -58,7 +60,7 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
       exact mem_filter.mpr ⟨xa,p,ps,px⟩
   by_cases few : P.card+2≤k
   · have h := Graph189ShallowCommonOrder.few_ports hc sides sz point shallow highA (by rwa [equivalent])
-    exact Graph189OnePortCover.below_four hc cap two large (by omega)
+    omega
   have exactP : P.card+1=k := by omega
   have one : (A\P).card≤1 := card_le_one.mpr (by
     intro x hx y hy
@@ -72,26 +74,9 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
   have lowerA : k≤A.card+1 := by
     have inA := card_le_card (show P⊆A from filter_subset _ _)
     omega
-  apply Graph189OnePortCover.below_four hc cap two large
-  change Fintype.card V+5<4*k
-  change 9≤k at large
-  have pop : Fintype.card V≤A.card+B.card+2 := by
-    have sub : univ⊆(A∪B)∪S := by
-      intro v _
-      rcases sides.cover v with a|b|s
-      · exact mem_union_left _ (mem_union_left _ a)
-      · exact mem_union_left _ (mem_union_right _ b)
-      · exact mem_union_right _ s
-    have h := (card_le_card sub).trans (card_union_le _ _)
-    rw [card_univ,sz] at h
-    have sum := card_union_le A B
-    omega
   by_cases bBig : 2*k+1<B.card
   swap
-  · omega
-  by_cases nBig : 3*k+2<Fintype.card V
-  swap
-  · omega
+  · exact ⟨upperA,by omega⟩
   have minimal := chosen.resolve_right (show ¬B.card≤A.card by omega)
   have cut : Graph189CutSides.CutSides G A B {p,q} := pair ▸ sides
   have short := Graph189TwoCutShallow.order_bound hc (fun v => by simpa only [Nat.add_comm] using point v)
@@ -100,5 +85,39 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
   change Fintype.card V≤3*k+2 at short
   omega
 
+theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (large : 9≤G.secondSmallestDegree) (sides : Graph189CutSides.CutSides G A B S)
+    (sc : S.card≤G.vertexConnectivity) (pair : S={p,q}) (ne : p≠q)
+    (connectedB : (G.induce (B:Set V)).Connected)
+    (shallow : ∀x∈A,G.secondSmallestDegree≤G.degree x → ∃i∈S,G.Adj i x)
+    (freeB : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q))
+    (missing : ∀x∈A,G.Adj x q → G.Adj x p)
+    (chosen : (∀ C D T, Graph189CutSides.CutSides G C D T → T.card=2 → A.card≤C.card) ∨ B.card≤A.card) :
+    ∃x y, ∃r : G.Walk x y,r.IsHamiltonian := by
+  classical
+  have sz : S.card=2 := by simp [pair,ne]
+  have conn : 2≤G.vertexConnectivity := by omega
+  by_cases minimum : 3≤G.minDegree
+  swap
+  · obtain ⟨z,hz⟩ := G.exists_minimal_degree_vertex
+    have lower := Graph189CutSides.connectivity_le_degree (G:=G) z
+    exact Graph189DegreeTwoOriginal.traceable hc cap conn z (by omega) (by omega)
+  apply Graph189OnePortCover.below_four hc cap conn large
+  by_cases big : 3*G.secondSmallestDegree+2<Fintype.card V
+  swap
+  · omega
+  obtain ⟨a,b⟩ := sizes_above_moderate hc cap (by omega) minimum big sides sc pair ne connectedB shallow freeB missing chosen
+  have cover : univ ⊆ (A∪B)∪S := by
+    intro x _
+    rcases sides.cover x with h|h|h
+    · exact mem_union_left _ (mem_union_left _ h)
+    · exact mem_union_left _ (mem_union_right _ h)
+    · exact mem_union_right _ h
+  have n := (card_le_card cover).trans (card_union_le _ _)
+  rw [card_univ,sz] at n
+  have ab := card_union_le A B
+  omega
+
+#print axioms sizes_above_moderate
 #print axioms traceable
 end Graph189MissingPrivateMixed

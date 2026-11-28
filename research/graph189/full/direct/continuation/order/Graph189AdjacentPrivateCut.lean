@@ -74,10 +74,11 @@ private theorem tied_to_port (hc : G.Connected) (sides : Graph189CutSides.CutSid
 
 /-- A common-free side of any adjacent separating pair suffices, without
 restrictions on either side's high nonports. -/
-theorem unrestricted (hc : G.Connected)
+theorem above_moderate (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
     (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
-    (sep : S={p,q}) (edge : G.Adj p q) (large : 9≤G.secondSmallestDegree)
+    (sep : S={p,q}) (edge : G.Adj p q) (large : 7≤G.secondSmallestDegree)
+    (big : 3*G.secondSmallestDegree+2<Fintype.card V)
     (noCommon : ∀a∈A, ¬(G.Adj a p ∧ G.Adj a q)) :
     ∃a b, ∃r : G.Walk a b,r.IsHamiltonian := by
   classical
@@ -93,7 +94,7 @@ theorem unrestricted (hc : G.Connected)
   by_cases every : ∀x∈A, G.dist p x=G.dist q x → ¬Even (G.dist p x) → G.degree x<k
   · obtain ⟨u,ua,up⟩ := (sides.contacts_of_minimum smaller ps).1
     have upper := order hc sides sep edge point ua up (fun uq => noCommon u ua ⟨up,uq⟩) every
-    exact Graph189OnePortCover.below_four hc cap conn large (by omega)
+    exact False.elim (by omega)
   push Not at every
   obtain ⟨x,xa,depth,odd,high⟩ := every
   have uniform (i : V) (si : i∈S) : G.dist x i=G.dist p x := by
@@ -126,10 +127,22 @@ theorem unrestricted (hc : G.Connected)
     exact odd (by rw [←d]; decide)
   by_cases highB : ∃b∈B,k≤G.degree b
   · have upper := Graph189ShallowCommonOrder.few_ports hc sides.swap sz point shallow highB budget
-    exact Graph189OnePortCover.below_four hc cap conn large (by omega)
+    exact False.elim (by omega)
   obtain ⟨b,_,degree⟩ := Graph189ShallowCommonOrder.no_high sides.swap sc sz highB
   exact Graph189DegreeTwoOriginal.traceable hc cap conn b degree (by omega)
 
+theorem unrestricted (hc : G.Connected)
+    (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
+    (sep : S={p,q}) (edge : G.Adj p q) (large : 9≤G.secondSmallestDegree)
+    (noCommon : ∀a∈A, ¬(G.Adj a p ∧ G.Adj a q)) :
+    ∃a b, ∃r : G.Walk a b,r.IsHamiltonian := by
+  by_cases big : 3*G.secondSmallestDegree+2<Fintype.card V
+  · exact above_moderate hc cap sides sc sep edge (by omega) big noCommon
+  have sz : S.card=2 := by simp [sep,edge.ne]
+  exact Graph189OnePortCover.below_four hc cap (by omega) large (by omega)
+
+#print axioms above_moderate
 #print axioms unrestricted
 #print axioms traceable
 end Graph189AdjacentPrivateCut

@@ -10,7 +10,7 @@ variable {A B S : Finset V} {p q : V}
 private def ports (G : SimpleGraph V) [DecidableRel G.Adj] (X S : Finset V) :=
   X.filter (fun y => ∃i∈S,G.Adj i y)
 
-private theorem nonports (hc : G.Connected) (cap : ∀v,G.distEven v≤G.secondSmallestDegree+1)
+theorem nonports (hc : G.Connected) (cap : ∀v,G.distEven v≤G.secondSmallestDegree+1)
     (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
     {x : V} (deep : Deep G A S x) : (B\ports G B S).card+S.card≤G.secondSmallestDegree+1 := by
   classical

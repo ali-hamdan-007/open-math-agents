@@ -123,12 +123,15 @@ theorem few_ports (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
 /-- If both sides of a separating pair contain a common port and one side
 is shallow among high vertices, any high vertex on the shallow side gives
 the true order bound n ≤ 3k+4. -/
-theorem order (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
+theorem profile (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
     (sc : S.card≤G.vertexConnectivity) (sz : S.card=2) (point : ∀v,G.distEven v≤G.secondSmallestDegree+1)
     (shallow : ∀v∈A,G.secondSmallestDegree≤G.degree v → ∃i∈S,G.Adj i v)
     (highA : ∃x∈A,G.secondSmallestDegree≤G.degree x)
     (commonA : ∃u∈A,∀i∈S,G.Adj u i) (commonB : ∃v∈B,∀i∈S,G.Adj v i) :
-    Fintype.card V≤3*G.secondSmallestDegree+4 := by
+    Fintype.card V≤3*G.secondSmallestDegree+1 ∨
+      (A.card≤G.secondSmallestDegree+1 ∧
+        B.card≤G.secondSmallestDegree+1+(B.filter (fun v => ∃i∈S,G.Adj i v)).card ∧
+        (B.filter (fun v => ∃i∈S,G.Adj i v)).card≤G.secondSmallestDegree) := by
   classical
   let k := G.secondSmallestDegree
   let P (R : Finset V) := R.filter (fun v => ∃i∈S,G.Adj i v)
@@ -173,13 +176,35 @@ theorem order (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
         ⟨wi,mem_filter.mpr ⟨mem_univ _,by simp [nearPort w wb wt port i si]⟩⟩))
     have bsize := (card_le_card coverB).trans (card_union_le _ _)
     have bc := card_union_le (P B) E
-    change Fintype.card V≤3*k+4
-    omega
+    right
+    change A.card≤k+1 ∧ B.card≤k+1+(P B).card ∧ (P B).card≤k
+    exact ⟨by omega,by omega,pB⟩
   have bound := few_ports hc sides sz point shallow ⟨x,xa,xh⟩ (by
     change (P A).card+2≤k
     omega)
+  exact Or.inl bound
+
+theorem order (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
+    (sc : S.card≤G.vertexConnectivity) (sz : S.card=2) (point : ∀v,G.distEven v≤G.secondSmallestDegree+1)
+    (shallow : ∀v∈A,G.secondSmallestDegree≤G.degree v → ∃i∈S,G.Adj i v)
+    (highA : ∃x∈A,G.secondSmallestDegree≤G.degree x)
+    (commonA : ∃u∈A,∀i∈S,G.Adj u i) (commonB : ∃v∈B,∀i∈S,G.Adj v i) :
+    Fintype.card V≤3*G.secondSmallestDegree+4 := by
+  classical
+  rcases profile hc sides sc sz point shallow highA commonA commonB with h|⟨left,right,ports⟩
+  · omega
+  have cover : (univ:Finset V)⊆(A∪B)∪S := by
+    intro v _
+    rcases sides.cover v with h|h|h
+    · exact mem_union_left _ (mem_union_left _ h)
+    · exact mem_union_left _ (mem_union_right _ h)
+    · exact mem_union_right _ h
+  have count := (card_le_card cover).trans (card_union_le _ _)
+  rw [card_univ,sz] at count
+  have ab := card_union_le A B
   omega
 
+#print axioms profile
 #print axioms few_ports
 #print axioms radius
 #print axioms order
