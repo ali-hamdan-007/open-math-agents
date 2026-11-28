@@ -1,0 +1,5 @@
+'Graph189MidpointExchange.exchange' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ThreeSmallExterior.no_pair' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ThreeSmallExterior.not_one_omission' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ThreeLowMinimum.traceable_ten' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ThreeOriginal.traceable_three' depends on axioms: [propext, Classical.choice, Quot.sound]

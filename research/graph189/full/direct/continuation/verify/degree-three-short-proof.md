@@ -18,4 +18,30 @@ An attachment at position i of any vertex of C must therefore have at least thre
 
 **A single omitted vertex.** If P fails to span, all its omitted vertices are now isolated. Every isolated omitted vertex is low, so precisely one low vertex z is omitted. It has degree two and its contacts occur two positions apart. Replacing their midpoint on P by z produces another longest path, this time omitting only the midpoint. The midpoint is high and isolated off the new path, a contradiction.
 
-This proves the exact conjecture for k=3 on paper, including a possibly unique degree-two vertex. The corresponding Lean theorem for the tied-degree subcase is in `Graph189ThreeRegularMinimum.lean`; the proof for δ=2 additionally needs the two-position shift test and equal-length midpoint exchange. The argument also explains why a count of only the vertices in the four shifts suffices at this particular degree.
+The pinned Lean theorem `Graph189ThreeOriginal.traceable_three` proves the registered Hamiltonian-path conclusion assuming precisely the original connectedness and maximum-even bound, together with k=3. Its two-connected branches are `Graph189ThreeRegularMinimum.traceable_tied_three` at δ=3 and `Graph189ThreeLowMinimum.traceable_ten` at δ=2. The latter uses the independently checked midpoint exchange and the two-mark shift theorem. The original small-order and cut-vertex proofs discharge all other cases. The kernel reports only `propext`, `Classical.choice` and `Quot.sound` for the original-hypothesis theorem. The full conjecture at greater k is a separate obligation.
+
+## Replaying the graph modules
+
+Use Lean 4.33.1 and the formal-conjectures checkout at `9097e2f90e66` with its pinned Mathlib. From this document's directory the focused parent is regenerated from the registered binder as follows, with `OMA_FC` pointing to that checkout and `build` to a scratch directory.
+
+```sh
+python3 ../parent/make-focused.py ../parent/Graph189ParentAssembly.lean \
+  "$OMA_FC/FormalConjectures/WrittenOnTheWallII/GraphConjecture189.lean" \
+  "$build/Graph189ParentFocused.lean"
+```
+
+Copy the Lean sources below into the scratch directory using the module names as basenames. Compile in the listed order with the scratch directory prepended to the pinned project's `LEAN_PATH` and `lean -j1 -o "$module.olean" "$module.lean"`. The last source prints the axiom audit for the original-hypothesis theorem.
+
+| Source directory relative to this document | Modules in compilation order |
+| --- | --- |
+| `../../factor/` | `Graph189ThirdLayer` |
+| `./` | `Graph189R1Metric` |
+| `../../factor/` | `Graph189OrderBound` |
+| `../sep/cover/final82/lean/upstream/` | `Graph189TraceClosurePublic` |
+| `../sep/cover/final82/lean/` | `Graph189ExteriorGap`, `Graph189ContactIntervals`, `Graph189ExteriorSpacing`, `Graph189ContactColumns` |
+| `../lowblock/` | `Graph189SingleExteriorShift` |
+| `../sep/cover/final82/lean/` | `Graph189ExteriorDegree`, `Graph189MatchedOrder` |
+| `../order/` | `Graph189RootedPath` |
+| `./` | `Graph189ThreeRegularMinimum`, `Graph189UniqueOmissionExchange`, `Graph189TwoMarkShift`, `Graph189ThreeSmallExterior`, `Graph189ThreeLowMinimum` |
+| Scratch directory | `Graph189ParentFocused` |
+| `./` | `Graph189ThreeOriginal` |
