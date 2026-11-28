@@ -1,0 +1,3 @@
+'Graph189Structural.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ThirdConnectivity.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189LargeDegree.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
