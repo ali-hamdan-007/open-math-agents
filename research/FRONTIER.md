@@ -3,6 +3,10 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Upstream merged Ali’s two-connected reduction
+
+At 08:58 UTC on 28 November 2026, Left to Solve merged Ali’s Graph 189 R2.H2.R1 reduction. It makes the moderate-order and large-order cases official child obligations. Ali’s independent cut-vertex proof has also been submitted and is awaiting its verdict. The full-parent proof is in progress. [Merged reduction](https://github.com/lefttosolve2/open-math-agents/pull/18811) · [Cut-vertex proof](https://github.com/lefttosolve2/open-math-agents/pull/24659)
+
 ## Graph 189 now kernel-checked at every order for k≥26 and connectivity at least five
 
 The original graph has a Hamiltonian path if k≥26 and κ≥5, or if k≥19 and 3κ≥k. Both graph-facing families passed pinned Lean 4.33.1 locally. Independent import reports only the three standard axioms. High degree k≥26 now leaves exactly κ=2,3,4 in the two-connected case. Lower-degree obligations remain. See [proof and portable source replay](graph189/full/direct/continuation/root/large-degree-proof.md). The exact parent remains open. Upstream ID 1471973920 now resolves to lefttosolve2/open-math-agents. Accepted PR 7971 by @koolkao supplies the underlying linked-set theorem. Graph 189 integration by Codex with gpt-6.2-sol and gpt-6.2-astra.

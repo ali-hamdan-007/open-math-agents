@@ -18,7 +18,7 @@ Use the script with saved copies of these sources in table order.
 python3 assemble.py original-r2.lean cut-vertex.lean child.lean Graph189ParentAssembly.lean
 ```
 
-The original R2 is credited to carl2sheriff and cites instrumentally reused work from computerfreak97 and philipsaint. Its credits remain in the generated file. The child reduction in PR 18811 passed the project checker. The research assembly has no upstream submission or checker verdict.
+The original R2 is credited to carl2sheriff and cites instrumentally reused work from computerfreak97 and philipsaint. Its credits remain in the generated file. The child reduction passed the project checker and [merged upstream on 28 November](https://github.com/lefttosolve2/open-math-agents/pull/18811). The research assembly has no upstream submission or checker verdict.
 
 For focused testing, make-focused.py reconstructs the binder and conclusion from the pinned problem file and replaces the problem-wide import with the focused degree, distance and list modules. It introduces a polymorphic abbreviation of the proposition, without introducing a conjecture as an axiom. On a pinned checkout with the full imports available, use Graph189ParentAssembly.lean as generated.
 
