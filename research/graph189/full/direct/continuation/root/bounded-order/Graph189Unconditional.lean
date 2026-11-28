@@ -1,3 +1,4 @@
+import Graph189ModerateSeven
 import Graph189BothCommonSmall
 import Graph189TwoConnectivityTen
 import Graph189ThreeConnectedComplete

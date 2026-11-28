@@ -96,7 +96,12 @@ def main():
     p.add_argument("--checkout-sources",action="store_true",help="use the source checkout except for the generated parent module")
     p.add_argument("--root", default=ROOT, help="fully qualified statement implementing the exact child")
     p.add_argument("--dependencies", type=Path, help="TSV produced by extract-kernel-deps.py")
+    p.add_argument("--original", action="store_true", help="package the full registered theorem with its reduction dependencies")
     args = p.parse_args()
+    if args.original and args.leaf:
+        p.error("--original and --leaf are exclusive")
+    if args.original:
+        args.root = "Graph189FullProof.original"
     if args.kernel_only and not args.dependencies:
         p.error("--kernel-only requires --dependencies")
     base = R2 + "_H2_R1"
@@ -120,7 +125,7 @@ def main():
         for dep in IMPORT.findall(uncomment(source)):
             if dep.startswith("Graph189"): visit(dep)
         modules[n] = parse(n,source)
-    visit(args.root.split(".")[0])
+    visit("Graph189Unconditional" if args.original else args.root.split(".")[0])
     by_name = defaultdict(list)
     by_leaf = defaultdict(list)
     for commands in modules.values():
@@ -162,7 +167,7 @@ def main():
     while pending:
         c = pending.pop()
         c = canonical.get(c,c)
-        if c in chosen or in_official(c) or (args.leaf and c.module=="Graph189ModerateSplit"): continue
+        if c in chosen or (not args.original and in_official(c)) or (args.leaf and c.module=="Graph189ModerateSplit"): continue
         chosen.add(c)
         if args.kernel_only: continue
         # An open command needs its namespace even when the proof term only
@@ -192,7 +197,11 @@ def main():
         if counts[c.name]>1 and c.private:
             leaf=c.name.rsplit(".",1)[-1]
             rename[c.module][leaf]=f"{c.module.removeprefix('Graph189')}_{leaf}"
-    chunks = [f"import OMAReductions.{base[4:]}",credits(chosen)]
+    first_import = f"import OMAReductions.{base[4:]}"
+    if args.original:
+        first_import = "import FormalConjectures.WrittenOnTheWallII.GraphConjecture189"
+        target = "type_of% @WrittenOnTheWallII.GraphConjecture189.conjecture189"
+    chunks = [first_import,credits(chosen)]
     report = []
     for mod, commands in modules.items():
         if not any(c in chosen for c in commands): continue

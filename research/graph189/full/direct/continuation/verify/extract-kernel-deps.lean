@@ -7,6 +7,7 @@ open Lean Elab Command
 run_cmd do
   let env := (← getEnv).setExporting false
   let root := (← IO.getEnv "GRAPH189_ROOT").getD "Graph189ModerateComplete.moderate"
+  let original := (← IO.getEnv "GRAPH189_ORIGINAL") == some "1"
   let rootName := root.toName
   unless env.contains rootName do throwError "missing declaration {rootName}"
   let mut todo := [rootName]
@@ -21,7 +22,7 @@ run_cmd do
     unless mod.toString.startsWith "Graph189" do continue
     let userName := privateToUserName name
     if mod == `Graph189ModerateSplit then continue
-    if mod == `Graph189ParentFocused then
+    if !original && mod == `Graph189ParentFocused then
       if userName.toString.startsWith "OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2." ||
          userName.toString.startsWith "OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2_H2_R1." then continue
     let some info := env.find? name | throwError "missing imported definition {name}"
