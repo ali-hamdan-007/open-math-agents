@@ -174,3 +174,21 @@ Graph189FourConnectivityJoint cc23836ec99fa3c91e10f5188a36ae6bd87ae86fb1c2c92a8c
 
 Graph189AllHighOrders 1e02ee3dc9ed4421752b8895979de9475a70b00d9c578810cdaa35d576c1f173
 'Graph189AllHighOrders.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189SecondLayerBudget 9eb3f472667bb8c4feacb73b93b8d0d293904248c1891f01eccb50cc1d2b7126
+'Graph189SecondLayerBudget.bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189MatchedRootWidth 1ec8afc97147c91f84ffab5cf09a282b11bee8eb0dad4b2c94b169fd52cbacd5
+'Graph189MatchedRootWidth.root_matched_width_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189MatchedRootWidth.geodesic_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189MatchedRootWidth.root_matched_width_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189MatchedFloor c0168a6a534e360e54b414c294b7c05c8dcac62fea2c6d398dbc254808830e22
+'Graph189MatchedFloor.necessary' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189FourFiveFloor a3b3ca8abc956071bda6eccf9796fade3ec8605b790515be502e2941220a4e7e
+'Graph189FourFiveFloor.order' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189WidthSectors 848500d5ce2dec4b9118e3a904bb836c0d87d75c1666fa894532cccbd81c92e1
+'Graph189WidthSectors.four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189WidthSectors.five' depends on axioms: [propext, Classical.choice, Quot.sound]

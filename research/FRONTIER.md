@@ -2,6 +2,10 @@
 
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Four-cuts at degrees 20 through 28 and connectivity at least five from degree 15
+
+Each high target in the third layer of a maximum-degree root can pay at most k units of its width with first-layer vertices at distance two. Its remaining incidences go through at most k second-layer vertices, each meeting at most k targets. This gives (w−k)₊ L≤k², where L=n−Δ−k−2. Combining it with the previous width inequality, the matched rooted order bound, and the strict minimum-cut deficit proves the original Hamiltonian-path conclusion at four-connectivity for 20≤k≤28 and at connectivity at least five for every k≥15. The four-connectivity result closes the last case at degrees 24 through 28 across all orders. [Second-layer bound](graph189/full/direct/continuation/verify/Graph189SecondLayerBudget.lean) · [Order bound](graph189/full/direct/continuation/order/Graph189FourFiveFloor.lean) · [Graph conclusions](graph189/full/direct/continuation/root/Graph189WidthSectors.lean)
+
 ## All orders from second-smallest degree 31
 
 Lean proves the original Hamiltonian-path conclusion for every order and connectivity when k≥31. At connectivity four, the small-side and large-side contact counts in each separator column sum to at most the maximum degree. Counting the two distinct contacts required by a high nonport with a sole nearest separator vertex excludes the last feasible rows at degrees 31 and 32. [All-order proof](graph189/full/direct/continuation/root/Graph189AllHighOrders.lean) · [Graph incidence proof](graph189/full/direct/continuation/global/kappa4/Graph189FourDegreeColumns.lean) · [Finite table](graph189/full/direct/continuation/global/kappa4/Graph189FourDegreeTable.lean)
