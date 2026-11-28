@@ -1,0 +1,2 @@
+compiler started 2026-11-28T09:43:59Z
+'Graph189MinimumDegreeCut.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]

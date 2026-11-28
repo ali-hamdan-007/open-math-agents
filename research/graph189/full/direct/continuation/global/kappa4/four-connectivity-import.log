@@ -1,0 +1,7 @@
+started -o 2026-11-28T09:47:31Z
+@Graph189FourCut.traceable : ∀ {V : Type u_1} [inst : Fintype V] [inst_1 : DecidableEq V] [inst_2 : Nontrivial V]
+  {G : SimpleGraph V} [inst_3 : DecidableRel G.Adj],
+  G.Connected →
+    (Finset.image G.distEven Finset.univ).max' ⋯ ≤ 1 + G.secondSmallestDegree →
+      G.vertexConnectivity = 4 → 37 ≤ G.secondSmallestDegree → ∃ a b p, p.IsHamiltonian
+'Graph189FourCut.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]

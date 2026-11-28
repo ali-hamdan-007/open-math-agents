@@ -1,0 +1,3 @@
+started Graph189FourConnectivityJoint.lean 09:45:20
+'Graph189FourCut.exclude' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189FourCut.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+
+## Graph 189 connectivity four and the moderate band gain kernel closures
+
+Under the exact original hypotheses, every graph with vertex connectivity four and second-smallest degree k at least 37 is traceable at every order. The graph-facing theorem, its source audit and a fresh external consumer import all report only `propext`, `Classical.choice` and `Quot.sound`. Separately, every nontraceable two-connected candidate with k at least 7 and minimum degree at least three has order at least `4k-5`. Consequently the whole moderate band `n <= 3k+2` is traceable for k at least 8; the previously checked degree-two theorem supplies the complementary minimum-degree case.
+
+The general cross-boundary population product and the matched minimum-degree cut theorem are also locally kernel-checked. The accompanying kappa-four refinement down to k at least 32, the kappa-two route down to k at least 8, and the cone two-factor theorem are paper results only at this checkpoint. They are not official checker verdicts and their graph-facing integration remains in progress. The exact parent remains open.
+
 ## The full moderate-order parent case is checked for k≥8
 
 For every two-connected graph satisfying the original parity cap, the pinned kernel now proves traceability at k≥7 whenever n≤4k−6. In particular the moderate-order parent obligation is proved for every k≥8, including connectivity two and an exceptional vertex on a minimum cut. At k=7 this covers n≤22. The [registered-hypotheses wrapper](graph189/full/direct/continuation/root/Graph189ModerateEight.lean) and [axiom report](graph189/full/direct/continuation/root/parent-range-axioms.txt) are archived. In the large-order paper, the [private-representative inequality](graph189/full/direct/continuation/order/Graph189PrivateRepresentativeBound.lean) is now verified on actual graph distances.
