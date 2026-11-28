@@ -1,0 +1,65 @@
+name: Graph 189 single-file parent verification
+on:
+  push:
+    branches: [research/graph189-single-file-check]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      PIN: 9097e2f90e66d2f6244209cb1c07f7120d17ec53
+      OMA_FC: /mnt/oma/fc
+      ELAN_HOME: /mnt/oma/elan
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch the pinned formal-conjectures checkout
+        run: |
+          set -eu
+          sudo mkdir -p /mnt/oma
+          sudo chown "$(id -u):$(id -g)" /mnt/oma
+          git init -q "$OMA_FC"
+          git -C "$OMA_FC" fetch --quiet --depth 1 https://github.com/google-deepmind/formal-conjectures.git "$PIN"
+          git -C "$OMA_FC" checkout -q FETCH_HEAD
+      - uses: actions/cache/restore@v4
+        id: warm
+        with:
+          path: |
+            /mnt/oma/elan
+            /mnt/oma/fc/.lake
+          key: graph189-registered-parent-v2-${{ env.PIN }}
+      - name: Build the registered problem import
+        run: |
+          set -euxo pipefail
+          if [[ ! -x "$ELAN_HOME/bin/lake" ]]; then
+            curl -fsSL --retry 3 https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o "$RUNNER_TEMP/elan.sh"
+            sh "$RUNNER_TEMP/elan.sh" -y --default-toolchain none
+          fi
+          export PATH="$ELAN_HOME/bin:$PATH"
+          cd "$OMA_FC"
+          if [[ "${{ steps.warm.outputs.cache-hit }}" != true ]]; then lake exe cache get; fi
+          lake build FormalConjectures.WrittenOnTheWallII.GraphConjecture189
+      - uses: actions/cache/save@v4
+        if: steps.warm.outputs.cache-hit != 'true'
+        with:
+          path: |
+            /mnt/oma/elan
+            /mnt/oma/fc/.lake
+          key: graph189-registered-parent-v2-${{ env.PIN }}
+      - name: Check the single file with the upstream statement guard and axiom audit
+        run: |
+          set -euo pipefail
+          export PATH="$ELAN_HOME/bin:$PATH"
+          source_file="$GITHUB_WORKSPACE/proofs/WrittenOnTheWallII.GraphConjecture189.conjecture189.lean"
+          cd "$OMA_FC"
+          cat "$source_file" > ParentSubmission.lean
+          echo 'example : type_of% @_root_.WrittenOnTheWallII.GraphConjecture189.conjecture189 := _root_.OMA.solution' >> ParentSubmission.lean
+          echo '#print axioms OMA.solution' >> ParentSubmission.lean
+          timeout 1800 lake env lean ParentSubmission.lean 2>&1 | tee "$RUNNER_TEMP/parent-check.log"
+          grep -Fqx "'OMA.solution' depends on axioms: [propext, Classical.choice, Quot.sound]" "$RUNNER_TEMP/parent-check.log"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: parent-single-file-log
+          path: ${{ runner.temp }}/parent-check.log
