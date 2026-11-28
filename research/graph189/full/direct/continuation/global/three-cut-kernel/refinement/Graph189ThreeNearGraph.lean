@@ -36,35 +36,35 @@ private theorem order_three {α : Type*} [DecidableEq α] {S : Finset α}
 variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V]
 variable {G : SimpleGraph V} [DecidableRel G.Adj] {A B S X Y : Finset V}
 
-theorem excludes_population (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
+theorem excludes_boundary {g : ℕ} (sizes : g=20 ∨ g=22) (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
     (smaller : ∀ T : Finset V, T.card<S.card → (G.induce {v : V | v∉T}).Connected)
     (three : S.card=3) (cap : ∀ v,G.distEven v≤1+G.secondSmallestDegree)
     (xs : X⊆A) (ys : Y⊆B) (xh : ∀ a∈X,G.secondSmallestDegree≤G.degree a)
     (yh : ∀ b∈Y,G.secondSmallestDegree≤G.degree b)
-    (k24 : G.secondSmallestDegree=24) (x33 : X.card=33) (y72 : Y.card=72) : False := by
+    (degree : G.secondSmallestDegree=(g+2)) (xsize : X.card=(3*g/2)) (ysize : Y.card=(3*(g+2))) : False := by
   classical
   let A1 (i : V) := X.filter (G.Adj i)
   let B1 (i : V) := Y.filter (G.Adj i)
   let A2 (i : V) := X.filter (fun a => G.dist i a=2)
   let B2 (i : V) := Y.filter (fun b => G.dist i b=2)
-  have cp (v : V) : G.distEven v≤24+1 := by simpa only [k24] using cap v
-  have aBound (i : V) (hi : i∈S) : (A1 i).card≤22 := by
+  have cp (v : V) : G.distEven v≤(g+2)+1 := by have h := cap v; omega
+  have aBound (i : V) (hi : i∈S) : (A1 i).card≤g := by
     have t := Graph189ThreeCutSaturationFacts.first_column hc cut smaller three cap xs ys xh yh hi
-    rw [k24,x33,y72] at t
-    exact t.trans (by decide)
-  have bBound (i : V) (hi : i∈S) : (B1 i).card≤23 := by
+    rw [degree,xsize,ysize] at t
+    exact t.trans (by rcases sizes with rfl|rfl <;> decide)
+  have bBound (i : V) (hi : i∈S) : (B1 i).card≤(g+1) := by
     have t := Graph189ThreeCutSaturationFacts.first_column hc cut.swap smaller three cap ys xs yh xh hi
-    rw [k24,x33,y72] at t
-    exact t.trans (by decide)
+    rw [degree,xsize,ysize] at t
+    exact t.trans (by rcases sizes with rfl|rfl <;> decide)
   have budget (i : V) := Graph189PrivateQuota.two_layer_budget G (cp i) (A2 i) (B2 i)
     (cut.apart.mono ((filter_subset _ _).trans xs) ((filter_subset _ _).trans ys))
     (fun a ha => (mem_filter.mp ha).2) (fun b hb => (mem_filter.mp hb).2)
-  have near (i j l : V) (names : S={i,j,l}) (bc : (B1 i).card=23) :
+  have near (i j l : V) (names : S={i,j,l}) (bc : (B1 i).card=(g+1)) :
       (A1 i).Nonempty ∧ A1 i⊆A1 j∪A1 l := by
     have ins : i∈S := by rw [names]; simp
     have high := Graph189AlmostFullColumn.opposite_population hc cut.swap smaller cp ys xs ins
-      (t:=1) (by change 24≤(B1 i).card+1; omega) (by omega)
-    change X.card≤24+(A1 i).card+1 at high
+      (t:=1) (by change (g+2)≤(B1 i).card+1; omega) (by omega)
+    change X.card≤(g+2)+(A1 i).card+1 at high
     refine ⟨card_pos.mp (by omega),?_⟩
     intro a ha
     obtain ⟨ax,ia⟩ := mem_filter.mp ha
@@ -88,7 +88,7 @@ theorem excludes_population (hc : G.Connected) (cut : Graph189CutSides.CutSides 
     have bound := card_le_card onlyi
     simp only [card_singleton] at bound
     omega
-  have pair (i j : V) (share : (A1 i∩A1 j).Nonempty) : (B1 i∪B1 j).card≤24 := by
+  have pair (i j : V) (share : (A1 i∩A1 j).Nonempty) : (B1 i∪B1 j).card≤(g+2) := by
     obtain ⟨a,ha⟩ := share
     obtain ⟨ai,aj⟩ := mem_inter.mp ha
     have ax := (mem_filter.mp ai).1
@@ -105,9 +105,9 @@ theorem excludes_population (hc : G.Connected) (cut : Graph189CutSides.CutSides 
   have members : i∈S ∧ j∈S ∧ l∈S := by simp [names]
   have jname : S={j,i,l} := by rw [names]; ext v; simp only [mem_insert,mem_singleton]; tauto
   have lname : S={l,i,j} := by rw [names]; ext v; simp only [mem_insert,mem_singleton]; tauto
-  have cases := Graph189ThreeNearSupports.graph_cases (X:=X) (A:=A1 i) (D:=A1 j)
+  have cases := Graph189ThreeNearSupports.graph_cases (g:=g) (X:=X) (A:=A1 i) (D:=A1 j)
     (E:=A1 l) (B:=B1 i) (C:=B1 j) (F:=B1 l)
-    (filter_subset _ _) (filter_subset _ _) (filter_subset _ _) x33
+    (filter_subset _ _) (filter_subset _ _) (filter_subset _ _) xsize
     (bBound i members.1) (bBound j members.2.1) (bBound l members.2.2)
     (near i j l names) (near j i l jname) (near l i j lname)
     (pair i j) (pair i l) (pair j l) rank
@@ -142,18 +142,18 @@ theorem excludes_population (hc : G.Connected) (cut : Graph189CutSides.CutSides 
     simp only [A2,mem_filter,dist_comm (u:=a) (v:=w)]
   have target (w : V) : Y.filter (fun b => G.dist w b=1)=B1 w := by
     simp only [B1,dist_eq_one_iff_adj]
-  simp only [one,two,target,three,k24,x33,y72,sums] at raw
-  have charge : 1683≤(A1 i).card+(A1 j).card+(A1 l).card+
+  simp only [one,two,target,three,degree,xsize,ysize,sums] at raw
+  have charge : ((3*g/2)*(2*(g+2)+3))≤(A1 i).card+(A1 j).card+(A1 l).card+
       ((A1 i).card*(B2 i).card+(B1 i).card*(A2 i).card)+
       ((A1 j).card*(B2 j).card+(B1 j).card*(A2 j).card)+
       ((A1 l).card*(B2 l).card+(B1 l).card*(A2 l).card) := by
     dsimp only [B2]
     rw [Nat.mul_comm (B1 i).card,Nat.mul_comm (B1 j).card,Nat.mul_comm (B1 l).card]
-    omega
-  change ((B1 i).card=23 → P.card≤47) ∧ ((B1 l).card=23 → P.card≤25) ∧
-    ((B1 j).card=23 → (B1 l).card<23 → (A1 l).card=22 →
-      P.card≤25 ∨ (A1 i).card+(A1 j).card+(A1 l).card≤44) at cases
-  apply Graph189ThreeNearArithmetic.impossible (aBound i members.1) (aBound j members.2.1)
+    rcases sizes with rfl|rfl <;> omega
+  change ((B1 i).card=(g+1) → P.card≤(2*g+3)) ∧ ((B1 l).card=(g+1) → P.card≤(g+3)) ∧
+    ((B1 j).card=(g+1) → (B1 l).card<(g+1) → (A1 l).card=g →
+      P.card≤(g+3) ∨ (A1 i).card+(A1 j).card+(A1 l).card≤(2*g)) at cases
+  apply Graph189ThreeNearArithmetic.impossible sizes (aBound i members.1) (aBound j members.2.1)
     (aBound l members.2.2) (bBound i members.1) rank (budget i) (budget j) (budget l) charge
   · intro nearI
     have h := cases.1 nearI
@@ -167,5 +167,14 @@ theorem excludes_population (hc : G.Connected) (cut : Graph189CutSides.CutSides 
       omega
     · exact Or.inr h
 
+theorem excludes_population (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
+    (smaller : ∀ T : Finset V, T.card<S.card → (G.induce {v : V | v∉T}).Connected)
+    (three : S.card=3) (cap : ∀ v,G.distEven v≤1+G.secondSmallestDegree)
+    (xs : X⊆A) (ys : Y⊆B) (xh : ∀ a∈X,G.secondSmallestDegree≤G.degree a)
+    (yh : ∀ b∈Y,G.secondSmallestDegree≤G.degree b)
+    (k24 : G.secondSmallestDegree=24) (x33 : X.card=33) (y72 : Y.card=72) : False :=
+  excludes_boundary (g:=22) (Or.inr rfl) hc cut smaller three cap xs ys xh yh k24 x33 y72
+
+#print axioms excludes_boundary
 #print axioms excludes_population
 end Graph189ThreeNearGraph

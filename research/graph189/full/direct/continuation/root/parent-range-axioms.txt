@@ -206,3 +206,29 @@ Graph189WidthSectors ab70ba0048c33fcb90e78f98c037ba503690b6ec2fcf89d80d1ce52766b
 
 Graph189AllHighOrders 94187e47523357728950c249f0e015b6997978acbc18fc2b2137eb72b3233cc6
 'Graph189AllHighOrders.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189LinkedEqualityTrace e226d0e930b11a5fc761f5ce5569e8b387bf57f879dbbd19f93eeab8165d8b23
+'Graph189BondyEquality.traceable_of_linked_equality' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189ThreeStrictFloor 2667590a085f6ebc0cf1a23860b50ba36bb02c40e39e54b8a1eca7a223d77db2
+'Graph189ThreeStrictFloor.strict' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189ThreeNearGraph a6e4c61ea3bfb714c24ff54acf49d7f5fc372ee1f87f3cd9cb9197b5e2894bc0
+'Graph189ThreeNearGraph.excludes_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ThreeNearGraph.excludes_population' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189ThreeOrderWindows 3e3310a93e17ac486ca6d796839860c25acedd11e54e9ee5dc4a9b413ff87f13
+'Graph189ThreeOrderWindows.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189ThreeDegree23 03d6b58587a676cdb933c1f5a6478565b7a70a7725ac0ab1148d19112febce2b
+'Graph189ThreeConnectivity.traceable_ge22' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ThreeConnectivity.traceable_ge23' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189WidthSectors f81bca868ff52f9aa3d3f7677de9683d85842e190bd979bd6cee012b2bddbd44
+'Graph189WidthSectors.below_five' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189WidthSectors.five_ge14' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189WidthSectors.four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189WidthSectors.five' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189AllHighOrders a9080cea5af86f41d7f39d12af00199e14eac02ef020aa7802cdc2a2767b4ed4
+'Graph189AllHighOrders.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,7 +1,7 @@
 import Graph189WidthSectors
 import Graph189ParentFocused
 import Graph189TwoConnectivity
-import Graph189ThreeSaturationOriginal
+import Graph189ThreeDegree23
 import Graph189FourConnectivityJoint
 import Graph189LargeDegreeTrace
 import Graph189ParentConnectivity
@@ -11,10 +11,10 @@ namespace Graph189AllHighOrders
 variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph V} [DecidableRel G.Adj]
 
 /-- At most four connectivity values have to be distinguished. Every graph and
-every order satisfying the original assumptions is included once k is at least 24. -/
+every order satisfying the original assumptions is included once k is at least 22. -/
 theorem traceable (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 24≤G.secondSmallestDegree) :
+    (large : 22≤G.secondSmallestDegree) :
     ∃a b,∃r : G.Walk a b,r.IsHamiltonian := by
   classical
   have point (v : V) : G.distEven v≤1+G.secondSmallestDegree :=
@@ -33,7 +33,7 @@ theorem traceable (hc : G.Connected)
     · exact Graph189FourCut.traceable_of_31 hc cap four high
     exact Graph189WidthSectors.four hc cap four (by omega) (by omega)
   by_cases three : G.vertexConnectivity=3
-  · exact Graph189ThreeConnectivity.traceable_ge24 hc cap (by omega) three
+  · exact Graph189ThreeConnectivity.traceable_ge22 hc cap (by omega) three
   exact Graph189TwoConnectivity.traceable hc cap (by omega) (by omega)
 
 end Graph189AllHighOrders

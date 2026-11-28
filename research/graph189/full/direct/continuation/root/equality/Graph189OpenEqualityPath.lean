@@ -1,3 +1,4 @@
+import Graph189CompletionConnectivity
 import Graph189BondyEqualityCensus
 
 open SimpleGraph Finset Graph189UniversalCycle OMA.BondyK

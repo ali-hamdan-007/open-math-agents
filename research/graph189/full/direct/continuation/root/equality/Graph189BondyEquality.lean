@@ -1,10 +1,9 @@
-import Graph189BondyDirect
-import Graph189TwoStructuralRanges
+import Graph189BondyOrder
 
 /-! Equality in the linked-set order bound. The disjoint-path extraction below
 uses @koolkao's accepted OMA.BondyK.linked_contra and graph189_order_of_linked
 scaffolding. We retain the tight separators, degrees and exterior component. -/
-open SimpleGraph Finset Arxiv.«2606.03696» OMA.BondyK
+open SimpleGraph Finset OMA.BondyK
 namespace Graph189BondyEquality
 variable {V : Type*} [Fintype V] [DecidableEq V] {G : SimpleGraph V} [DecidableRel G.Adj]
 variable {c d k : ℕ} {f : ℕ→V} {H D : Finset V}

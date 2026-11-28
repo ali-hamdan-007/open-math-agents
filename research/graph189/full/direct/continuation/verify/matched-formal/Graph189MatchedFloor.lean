@@ -5,7 +5,7 @@ import Graph189MaximumDegree
 open SimpleGraph Finset
 namespace Graph189MatchedFloor
 
-private theorem mono {b n k d : ℕ} (hn : b≤n) :
+theorem mono {b n k d : ℕ} (hn : b≤n) :
     Graph189MatchedRootWidth.width b k d ≤ Graph189MatchedRootWidth.width n k d := by
   apply Graph189MatchedRootWidth.width_le_admissible
   obtain ⟨linear,h⟩ := Graph189MatchedRootWidth.width_admissible n k d
@@ -62,6 +62,20 @@ theorem necessary (hc : G.Connected)
     obtain ⟨x,_,y,p,hp⟩ := Graph189MatchedRooted.of_matched_order hc cap small
       (by change 3*(k:ℤ)+1+Graph189MatchedPack.score k e<(n:ℤ); dsimp only [n]; omega)
     exact bad ⟨x,y,p,hp⟩
+
+/-- The second-layer columns lose one place to the root, as well as the
+maximum degree excess. This bound also descends to any smaller order floor. -/
+theorem column (hc : G.Connected)
+    (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    {b : ℕ} (floor : b≤Fintype.card V) :
+    let k := G.secondSmallestDegree
+    let d := G.maxDegree
+    (Graph189RootWidth.width b k d-k)*(b-d-k-2)≤k*(2*k-(d-k)-1) := by
+  have bound := (Graph189MatchedRootWidth.root_matched_width_all hc cap).2.2
+  let k := G.secondSmallestDegree
+  let d := G.maxDegree
+  have w := (Graph189MatchedRootWidth.width_admissible b k d).1.trans (mono floor)
+  exact (Nat.mul_le_mul (Nat.sub_le_sub_right w k) (show b-d-k-2≤Fintype.card V-d-k-2 by omega)).trans bound
 
 end Graph189MatchedFloor
 #print axioms Graph189MatchedFloor.necessary

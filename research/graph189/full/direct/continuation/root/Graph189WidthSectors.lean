@@ -12,7 +12,7 @@ private def test (b k e : ℕ) : Bool :=
   let L := b-(k+e)-k-2
   let t := (b-2*k+k)/(k+1)
   let m := min e (w+1-t)
-  decide (w*L≤k*(k+e) ∧ (w-k)*L≤k*k ∧ b≤3*k+1+(k-2)*e ∧
+  decide (w*L≤k*(k+e) ∧ (w-k)*L≤k*k ∧ b≤3*k+1+(k-2)*e ∧ (w-k)*L≤k*(2*k-e-1) ∧
     (m+t≤w+1 → 2*k+(k+1)*(t-1)<b → (k*w+m*t)*L≤k*(k*(k+e))))
 
 private def clearAt (b k : ℕ) : Bool :=
@@ -23,7 +23,7 @@ private def base5 (k : ℕ) := 7*k-31
 private def base6 (k : ℕ) := 7*k-29
 
 private theorem checked :
-    ([19,20,21,22,23,24,25,26,27,28,29,30].all fun k => clearAt (base4 k) k)=true ∧
+    ([15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30].all fun k => clearAt (base4 k) k)=true ∧
     ([15,16,17].all fun k => clearAt (base5 k) k)=true ∧
     ([14,15,16,17].all fun k => clearAt (base6 k) k)=true := by decide
 
@@ -61,7 +61,9 @@ private theorem exclude (hc : G.Connected)
       fit (min_le_left e _) floor
     rw [ke]
     exact result
-  have testYes : test b k e=true := decide_eq_true ⟨v,v',oreN,paid⟩
+  have limit := Graph189MatchedFloor.column hc cap ord
+  change (Graph189RootWidth.width b k G.maxDegree-k)*(b-G.maxDegree-k-2)≤k*(2*k-e-1) at limit
+  have testYes : test b k e=true := decide_eq_true ⟨v,v',oreN,by rwa [ke],paid⟩
   have lim := Graph189DegreeCeiling.maxDegree_le_three_mul_secondSmallestDegree hc
     (fun v => (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap)
   have idx : e<2*k+1-(if 5*k+2<b then 3 else 0) := by
@@ -79,7 +81,7 @@ private theorem exclude (hc : G.Connected)
 /-- The original statement at every order for minimum four-cuts in the indicated interval. -/
 theorem four (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (conn : G.vertexConnectivity=4) (lo : 19≤G.secondSmallestDegree) (hi : G.secondSmallestDegree≤30) :
+    (conn : G.vertexConnectivity=4) (lo : 15≤G.secondSmallestDegree) (hi : G.secondSmallestDegree≤30) :
     ∃a b,∃p : G.Walk a b,p.IsHamiltonian := by
   by_contra bad
   let k := G.secondSmallestDegree
@@ -88,7 +90,7 @@ theorem four (hc : G.Connected)
   have lower : base4 k≤Fintype.card V := by unfold base4; split_ifs with h <;> grind
   apply exclude hc cap bad lower (by omega)
   apply List.all_eq_true.mp checked.1 k
-  change 19≤k at lo
+  change 15≤k at lo
   change k≤30 at hi
   simp; omega
 
@@ -116,6 +118,37 @@ theorem five (hc : G.Connected)
   apply List.all_eq_true.mp checked.2.2 k
   simp; omega
 
+/-- From degrees seven through twenty-two every remaining order lies within
+the paper's 5k−3 path theorem. -/
+theorem below_five (hc : G.Connected)
+    (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (bad : ¬∃a b,∃p : G.Walk a b,p.IsHamiltonian)
+    (lo : 7≤G.secondSmallestDegree) (hi : G.secondSmallestDegree≤22) :
+    Fintype.card V≤5*G.secondSmallestDegree-3 := by
+  by_contra! larger
+  let k := G.secondSmallestDegree
+  have table : (List.range 16).all (fun j => clearAt (5*(7+j)-2) (7+j))=true := by decide
+  have use := List.all_eq_true.mp table (k-7) (List.mem_range.mpr (by change _<16; dsimp [k]; omega))
+  rw [show 7+(k-7)=k by dsimp [k]; omega] at use
+  exact exclude hc cap bad (b:=5*k-2) (by dsimp [k]; omega) (by omega) use
+
+theorem five_ge14 (hc : G.Connected)
+    (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (conn : 5≤G.vertexConnectivity) (lo : 14≤G.secondSmallestDegree) :
+    ∃a b,∃p : G.Walk a b,p.IsHamiltonian := by
+  by_cases big : 15≤G.secondSmallestDegree
+  · exact five hc cap conn big
+  by_contra bad
+  have eq : G.secondSmallestDegree=14 := by omega
+  have point (v : V) : G.distEven v≤G.secondSmallestDegree+1 := by
+    simpa only [Nat.add_comm] using (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap
+  have ord := Graph189RotationLinked.base_order bad point (l:=5) (by decide) conn (by omega)
+  rw [eq] at ord
+  apply exclude hc cap bad (b:=65) (by omega) (by omega)
+  rw [eq]; decide
+
+#print axioms below_five
+#print axioms five_ge14
 end Graph189WidthSectors
 #print axioms Graph189WidthSectors.four
 #print axioms Graph189WidthSectors.five

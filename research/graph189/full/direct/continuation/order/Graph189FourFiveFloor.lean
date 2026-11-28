@@ -11,7 +11,7 @@ in its strict separator wedge. If no minimum cut contains it, complete there. -/
 theorem order (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
     (bad : ¬∃ a b,∃p : G.Walk a b,p.IsHamiltonian)
-    (sector : (G.vertexConnectivity=4 ∧ 18≤G.secondSmallestDegree) ∨
+    (sector : (G.vertexConnectivity=4 ∧ 13≤G.secondSmallestDegree) ∨
       (G.vertexConnectivity=5 ∧ 15≤G.secondSmallestDegree)) :
     let n := Fintype.card V
     let k := G.secondSmallestDegree
@@ -21,7 +21,7 @@ theorem order (hc : G.Connected)
   let k := G.secondSmallestDegree
   let n := Fintype.card V
   let s := G.vertexConnectivity
-  change (s=4 ∧ 18≤k) ∨ (s=5 ∧ 15≤k) at sector
+  change (s=4 ∧ 13≤k) ∨ (s=5 ∧ 15≤k) at sector
   change (s=4 → 6*k≤n+20 ∧ (24≤k → 6*k≤n+19)) ∧ (s=5 → 7*k≤n+31)
   have upper (v : V) : G.distEven v≤1+G.secondSmallestDegree :=
     (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap
