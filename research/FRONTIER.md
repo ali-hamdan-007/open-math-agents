@@ -3,9 +3,10 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
-## Left to Solve records four kernel-checked contributions
+## A shorter paper proof for every k≥19 with connectivity at least k/3
 
-The exact parent desk lists entries 107046, 107108, 107544 and 107734 under ali-hamdan-007. They cover degree three, the order lower bound from a Hamiltonian minimum deletion, the conditional terminal-band theorem and the complete cut-vertex proof. The full parent remains open. [Desk receipts, source links and upstream status](graph189/full/direct/continuation/root/left-to-solve-record.md)
+For λ=ceil(k/3), both possibilities for the deletion of a minimum-degree vertex imply the same lower bound on graph order. The maximum-degree width inequality contradicts it for all k≥26 by one polynomial inequality, and seven explicit integer comparisons cover k=19 to 25. An independent review checked both graph applications and the seven comparisons, including that the Hamiltonian-deletion order lemma is independent of the structural conclusion. The [paper proof](graph189/full/direct/continuation/root/one-third-connectivity.md) gives the inequalities and specifies the Lean integration status. The universal-root and native cycle linked-set constructors have separately passed pinned Lean with only the three standard axioms.
+
 
 ## Explicit routes cover the degree-four catalogue at every remaining order
 
@@ -26,6 +27,10 @@ The [portable source archive](graph189/full/direct/continuation/sep/cover/final8
 
 Upstream [PR 7971](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/7971) by @koolkao includes an all-orders internal theorem for a linked set outside a longest cycle. The official acceptance is for the Bondy theorem. For Graph 189, the native linked-set transport, the one-low-vertex rooted path, the minimum-deletion order estimate, and the two-tight-gaps count have passed the pinned kernel independently. The [application note](graph189/full/direct/continuation/root/upstream-linked-set.md) records the exact stronger internal hypothesis, source, verdict and remaining application to the original graph.
 
+
+## Left to Solve records four kernel-checked contributions
+
+The exact parent desk lists entries 107046, 107108, 107544 and 107734 under ali-hamdan-007. They cover degree three, the order lower bound from a Hamiltonian minimum deletion, the conditional terminal-band theorem and the complete cut-vertex proof. The full parent remains open. [Desk receipts, source links and upstream status](graph189/full/direct/continuation/root/left-to-solve-record.md)
 
 ## Every graph with second-smallest degree three is traceable
 
