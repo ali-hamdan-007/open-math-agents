@@ -1,0 +1,2 @@
+'Graph189RootedSplice.rooted_short_detour' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189RootedSplice.rooted_contact_internal' depends on axioms: [propext, Classical.choice, Quot.sound]

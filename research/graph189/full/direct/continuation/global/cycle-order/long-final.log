@@ -1,0 +1,4 @@
+started Graph189LongCycleContacts.lean 07:30:56
+'Graph189ConeComponentOrder.component_cycle_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ConeComponentOrder.half_cycle_arc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ConeComponentOrder.cycle_matching_order' depends on axioms: [propext, Classical.choice, Quot.sound]
