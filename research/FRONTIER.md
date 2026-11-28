@@ -1,5 +1,11 @@
 # Left to Solve research frontier
 
+## Leaf blocks of the optimized exterior component
+
+The [short endblock branch](graph189/full/direct/continuation/root/bounded-order/Graph189ShortLeafOrder.lean) is kernel-closed for the full remaining interval. The [leaf selection](graph189/full/direct/continuation/root/bounded-order/Graph189ExteriorLeaf.lean) minimizes a side with one exit, avoids a specified exceptional low vertex, and proves every interior vertex is a noncut of the whole component. A [rooted route into the remainder](graph189/full/direct/continuation/root/bounded-order/Graph189LeafRemainder.lean) contains at least ceil(k/2) vertices, including in the one-low case. The [tail construction](graph189/full/direct/continuation/root/bounded-order/Graph189ShortLeafRoutes.lean) joins it to a spanning path of the leaf interior through the gate. Two buffered contacts or the internal-degree contact count force an order larger than 5k−5.
+
+The [local Hamilton-connected core and matching](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46150930643/job/140997194694) passed an independent Linux kernel replay. The [graph-facing noncut order inequality](graph189/full/direct/continuation/root/bounded-order/Graph189OptimalCoreOrder.lean) counts every vertex of the exterior component.
+
 ## Counterexample window and local exterior structure
 
 A single [necessary condition](graph189/full/direct/continuation/root/Graph189SmallOrderWindow.lean) now gives 7≤k≤21, 4k−5≤n≤5k−5, minimum degree at least three, and vertex connectivity at least two. It uses the original graph hypotheses. The [independent Linux run](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46149806707/job/140993776538) checked its full dependency graph. The two new terminal orders and the midpoint theorem are on the Left to Solve parent desk in note 142679.

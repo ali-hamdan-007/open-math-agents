@@ -264,3 +264,18 @@ research/graph189/full/direct/continuation/root/bounded-order/Graph189OptimalPor
 research/graph189/full/direct/continuation/root/Graph189SmallOrderWindow.lean sha256 ce35bcb6b78a58585ac84b439574a71ea953c9e4177ffa6a79ebda3ae873603c
 'Graph189SmallOrderWindow.necessary' depends on axioms: [propext, Classical.choice, Quot.sound]
 Linux job https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46149806707/job/140993776538
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189ExteriorLeaf.lean sha256 8062f93da0d52129a50aa8b990d48bcd51721173e0d6a6d6e089c73714549ee9
+'Graph189ExteriorLeaf.exists_leaf' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189OptimalCoreOrder.lean sha256 1b5143ed8aa610edacf0810cdbceca3a61cf34868ff0746d509d15c0ffd0954b
+'Graph189OptimalExterior.noncut_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189LeafRemainder.lean sha256 90e6ff703a0523e68a51f31a86a548ad5e326ccd76d2f36429dba004e9b1b510
+'Graph189ExteriorLeaf.remainder_route' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189ShortLeafRoutes.lean sha256 3c7a666121218955015ed45b7eea0f1dce6c987b321f165a62208781b7753a9a
+'Graph189ExteriorLeaf.extended_tails' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189ShortLeafOrder.lean sha256 370a440b28067c2ef8dbc29a2c027eacb4b0a6d46d235223484f52bdf6e724a9
+'Graph189ExteriorLeaf.no_short_leaf' depends on axioms: [propext, Classical.choice, Quot.sound]
