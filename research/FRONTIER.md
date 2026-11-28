@@ -3,6 +3,15 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 H2 advances. The first new diameter-five order closes
+
+Every qualifying diameter-five graph of order n=3k+3 is traceable, where k is the second-smallest degree. This extends the earlier general bound n≤3k+2 by a full order on this diameter class, for arbitrary sizes of the remaining middle components. The [proof](graph189/full/unrestricted/diam-five-middle-closure.md) also gives a degree-sum criterion and a wider interval when its explicit layer inequalities hold. Its [independent audit](graph189/full/unrestricted/diam-five-middle-closure-audit.md) checks marker selection, the reverse closure, possible common path neighbors and the expansion of both outer blocks.
+
+For a unique degree-five vertex z with connected G−N[z] at large order and diameter at most four, set d=k−|L₂(z)| and s=|L₄(z)|. The [three-exception proof](graph189/full/unrestricted/degree-five-connected-triangle-exclusion.md) closes d=3, s≤2 for k≥7. With the k=6 computation, the residual possibilities are d≤2 or d=s=3 with k≥7. [Signed independent audit](graph189/full/unrestricted/triangle-d3-audit.md). Both new statements are paper results.
+
+The separate focused single-file check of the complete R2.H1 proof finished successfully in Lean 4.33.1 with warnings as errors and the verbatim H1 statement and genuine degree, distance, and Hamiltonian definitions. [Axioms of OMA.solution](graph189/full/unrestricted/focused-module-build.log) and [scope of the import check](graph189/full/unrestricted/genuine-import-audit.md). Exact submission-file SHA-256 and competing #16665 are in the preceding H1 checkpoint. The full parent and H2 are open. Codex contributors used gpt-6.2-astra and gpt-6.2-sol.
+
+
 ## Graph 189 R2.H1 is locally proved. Competing upstream PR #16665
 
 The complete large-order cut-vertex branch compiled in pinned Lean 4.33.1 with warnings treated as errors, including the real upstream graph invariants, exact H1 binders, both rooted side sizes, and their final Hamiltonian walk. The [assembly](graph189/full/unrestricted/cut-structure/Graph189CutH1.lean) and [kernel/axiom log](graph189/full/unrestricted/cut-structure/h1.log) show only propext, Classical.choice, Quot.sound. The [single-file candidate](https://github.com/ali-hamdan-007/open-math-agents/blob/59cd570c116fae32abc3eac22d6ac667473dd480/proofs/WrittenOnTheWallII.GraphConjecture189.conjecture189.R2.H1.lean) is on branch oma/graph189-r2-h1-cut-proof, SHA-256 6a8ec853732119dd87acdc0b33620eaa4a8540a5cdd362a3398c1d202bd34ead. [Project static lint](graph189/full/unrestricted/cut-structure/full-lint.json) passed; our proof has no official checker verdict. Easwar and Johari proved the mathematical case in Theorem 5.11. The local construction uses closure and a rooted path through the extremal side. Codex models gpt-6.2-astra and gpt-6.2-sol contributed.
