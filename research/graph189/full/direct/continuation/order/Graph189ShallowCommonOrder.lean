@@ -1,37 +1,10 @@
-import Graph189DeepPairData
-import Graph189DistanceLayers
+import Graph189CommonPortQuota
 
 open SimpleGraph Finset Graph189DeepCommonPair
 open OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R1
 namespace Graph189ShallowCommonOrder
 variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph V} [DecidableRel G.Adj]
 variable {A B S : Finset V}
-
-/-- A common port with at most one distance-two vertex on its own side
-has its entire side within distance two. -/
-theorem radius (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
-    (two : 2≤G.vertexConnectivity) {x : V} (xa : x∈A) (common : ∀i∈S,G.Adj x i)
-    (few : (A.filter (fun v => G.dist x v=2)).card≤1) (v : V) (va : v∈A) :
-    G.dist x v≤2 := by
-  classical
-  by_contra! far
-  let T := A.filter (fun w => G.dist x w=2)
-  let H := G.induce {w : V | w∉T}
-  have small : T.card<G.vertexConnectivity := by omega
-  have con : H.Connected := Graph189CutSides.connected_after_smaller_deletion T small
-  have vx : v∉T := fun h => (Nat.ne_of_gt far) (mem_filter.mp h).2
-  have xx : x∉T := by simp [T]
-  obtain ⟨p⟩ := con ⟨v,vx⟩ ⟨x,xx⟩
-  obtain ⟨a,b,⟨aa,fa⟩,nb,e,_⟩ := Graph189CutSides.walk_exits
-    (fun w : {w : V | w∉T} => w.val∈A ∧ 2<G.dist x w.val) p ⟨va,far⟩ (by simp)
-  have near := hc.dist_triangle (u:=x) (v:=b.val) (w:=a.val)
-  rw [dist_eq_one_iff_adj.mpr (show G.Adj b.val a.val from e.symm)] at near
-  rcases sides.cover b.val with ba|bb|bs
-  · have dist : G.dist x b.val≤2 := by by_contra! h; exact nb ⟨ba,h⟩
-    exact b.property (mem_filter.mpr ⟨ba,by omega⟩)
-  · exact sides.no_cross a.val aa b.val bb e
-  · rw [dist_eq_one_iff_adj.mpr (common b.val bs)] at near
-    omega
 
 /-- In the borderline shallow side, every opposite vertex has opposite
 distance parity to the low nonport z and the common high port c. -/
@@ -99,25 +72,7 @@ theorem order (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
   rw [card_insert_of_notMem (by simp),G.card_neighborFinset_eq_degree,nAS] at xdeg
   change k≤G.degree x at xh
   by_cases many : k≤(P A).card+1
-  · let T := B.filter (fun y => G.dist v y=2)
-    have Tsmall : T.card≤1 := by
-      have dis : Disjoint T (P A) := sides.apart.symm.mono (filter_subset _ _) (filter_subset _ _)
-      have vout : v∉T∪P A := by
-        intro hv
-        rcases mem_union.mp hv with vt|vp
-        · have := (mem_filter.mp vt).2
-          simp at this
-        · exact Finset.disjoint_left.mp sides.apart (mem_filter.mp vp).1 vb
-      have quota := Graph189TwofoldCover.outside_quota point (T∪P A) vout
-      rw [filter_eq_self.mpr (by
-        intro a ha
-        rcases mem_union.mp ha with atT|atP
-        · simp [(mem_filter.mp atT).2]
-        · obtain ⟨aa,i,si,ia⟩ := mem_filter.mp atP
-          rw [Graph189PortDifference.cross_two hc sides.swap vb aa (cv i si) ia]
-          decide),card_union_of_disjoint dis] at quota
-      change T.card+(P A).card≤k at quota
-      omega
+  · obtain ⟨T,Tsmall,nearPort⟩ := nonport_quota hc sides.swap (by omega) point vb cv many
     obtain ⟨i,si⟩ := card_pos.mp (show 0<S.card by omega)
     let E := (univ.filter (fun w => Even (G.dist i w))).erase i
     have ie : i∈univ.filter (fun w => Even (G.dist i w)) := by simp
@@ -129,17 +84,11 @@ theorem order (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
       intro w wb
       by_cases port : ∃j∈S,G.Adj j w
       · exact mem_union_left _ (mem_union_left _ (mem_filter.mpr ⟨wb,port⟩))
-      by_cases e : G.Adj v w
-      · have iw : ¬G.Adj i w := fun h => port ⟨i,si,h⟩
-        have ne : i≠w := fun eq => Finset.disjoint_left.mp sides.right_cut wb (eq ▸ si)
-        have two := Graph189LowDegreeTwo.two_edges (cv i si).symm e ne iw
-        exact mem_union_left _ (mem_union_right _ (mem_erase.mpr ⟨ne.symm,mem_filter.mpr ⟨mem_univ _,by simp [two]⟩⟩))
-      have neq : v≠w := by
-        intro same
-        exact port ⟨i,si,same ▸ (cv i si).symm⟩
-      have lo := (hc v w).one_lt_dist_of_ne_of_not_adj neq e
-      have up := radius hc sides.swap (by omega) vb cv Tsmall w wb
-      exact mem_union_right _ (mem_filter.mpr ⟨wb,by omega⟩)
+      by_cases wt : w∈T
+      · exact mem_union_right _ wt
+      have wi : w≠i := fun eq => Finset.disjoint_left.mp sides.right_cut wb (eq.symm ▸ si)
+      exact mem_union_left _ (mem_union_right _ (mem_erase.mpr
+        ⟨wi,mem_filter.mpr ⟨mem_univ _,by simp [nearPort w wb wt port i si]⟩⟩))
     have bsize := (card_le_card coverB).trans (card_union_le _ _)
     have bc := card_union_le (P B) E
     change Fintype.card V≤3*k+4

@@ -40,11 +40,11 @@ theorem shallow (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by sim
   exact Graph189DegreeTwoOriginal.traceable hc cap two x (by omega) (by omega)
 
 /-- Every original separating pair with a common port on both sides
-forces a Hamiltonian path for k≥15. The separator may be nonadjacent,
+forces a Hamiltonian path for k≥12. The separator may be nonadjacent,
 the sides may be shallow or deep, and the low vertex can lie anywhere. -/
 theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
     {A B S : Finset V} (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
-    {p q : V} (sep : S={p,q}) (ne : p≠q) (large : 15≤G.secondSmallestDegree)
+    {p q : V} (sep : S={p,q}) (ne : p≠q) (large : 12≤G.secondSmallestDegree)
     (cA : ∃u∈A,∀i∈S,G.Adj u i) (cB : ∃v∈B,∀i∈S,G.Adj v i) :
     ∃a b,∃r : G.Walk a b,r.IsHamiltonian := by
   classical

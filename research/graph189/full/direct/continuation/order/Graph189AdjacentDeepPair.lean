@@ -5,13 +5,13 @@ open SimpleGraph Finset Graph189DeepCommonPair
 namespace Graph189AdjacentDeepPair
 variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph V} [DecidableRel G.Adj]
 
-/-- At every original qualifying graph of second degree at least 15, an
+/-- At every original qualifying graph of second degree at least 12, an
 adjacent separating pair with a high nonport on each side forces a
 Hamiltonian path. The side orders, low vertex and all port patterns are
 unrestricted. -/
 theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
     {A B S : Finset V} (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
-    {p q : V} (sep : S={p,q}) (edge : G.Adj p q) (large : 15≤G.secondSmallestDegree)
+    {p q : V} (sep : S={p,q}) (edge : G.Adj p q) (large : 12≤G.secondSmallestDegree)
     (deepA : ∃x,Deep G A S x) (deepB : ∃x,Deep G B S x) :
     ∃x y,∃r : G.Walk x y,r.IsHamiltonian := by
   classical

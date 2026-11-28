@@ -62,20 +62,20 @@ theorem no_high {x y : V} (p : G.Walk x y) (hp : p.IsPath)
       (map_subset_map.mpr (filter_subset _ _))
       (fun v hv => by obtain ⟨v,_,rfl⟩ := mem_map.mp hv; exact off v)
       (by
-        intro u hu v hv ne
-        obtain ⟨u,hu,rfl⟩ := mem_map.mp hu
-        obtain ⟨v,hv,rfl⟩ := mem_map.mp hv
+        intro first ha second hb ne
+        obtain ⟨u,hu,rfl⟩ := mem_map.mp ha
+        obtain ⟨v,hv,rfl⟩ := mem_map.mp hb
         exact edge hu hv (fun e => ne (congrArg f e)))
       (by
-        intro u hu v e no
-        obtain ⟨u,hu,rfl⟩ := mem_map.mp hu
+        intro first ha v e no
+        obtain ⟨u,hu,rfl⟩ := mem_map.mp ha
         by_contra miss
         let j : E := ⟨v,mem_compl.mpr fun h => miss (List.mem_toFinset.mp h)⟩
         have step : J.Adj u j := e
         exact no (mem_map.mpr ⟨j,(mem_filter.mp hu).2.2 ((J.mem_neighborFinset _ _).mpr step),rfl⟩))
       (by
-        intro u hu
-        obtain ⟨u,hu,rfl⟩ := mem_map.mp hu
+        intro first ha
+        obtain ⟨u,hu,rfl⟩ := mem_map.mp ha
         rw [card_map,size]
         exact (mem_filter.mp hu).2.1)
     rw [card_map,size] at ord
@@ -87,7 +87,7 @@ theorem no_high {x y : V} (p : G.Walk x y) (hp : p.IsPath)
     omega
   have wc : ∃ c∈B, c∉R := by
     by_contra! inc
-    have same : B=R := Subset.antisymm (fun _ h => inc _ h) sub
+    have same : B=R := Subset.antisymm inc sub
     have bad : (B\D).card≤1 := by simpa only [same] using few
     have h := card_sdiff_add_card_eq_card (show D⊆B from filter_subset _ _)
     omega
@@ -100,7 +100,7 @@ theorem no_high {x y : V} (p : G.Walk x y) (hp : p.IsPath)
   have others {u : E} (ub : u∈B) (diff : u≠c) : u∈R := by
     rw [←rest]
     exact mem_erase.mpr ⟨diff,ub⟩
-  have cz : c≠z := fun h => cr (h.symm ▸ zr)
+  have cz : c≠z := fun h => cr (h ▸ zr)
   have hi_c : H c := by
     by_contra lo
     exact cz (unique (Nat.lt_of_not_ge lo) (Nat.lt_of_not_ge low))
@@ -112,12 +112,12 @@ theorem no_high {x y : V} (p : G.Walk x y) (hp : p.IsPath)
     omega
   obtain ⟨w,neighbor,wb⟩ : ∃ w∈J.neighborFinset c,w∉B := by
     by_contra! confined
-    exact cd (mem_filter.mpr ⟨cb,hi_c,fun _ h => confined _ h⟩)
+    exact cd (mem_filter.mpr ⟨cb,hi_c,confined⟩)
   have cw := (J.mem_neighborFinset _ _).mp neighbor
   have hi_w : H w := by
     by_contra lo
     have wz := unique (Nat.lt_of_not_ge lo) (Nat.lt_of_not_ge low)
-    exact wb (wz.symm ▸ sub zr)
+    exact wb (wz ▸ sub zr)
   have outside : insert w ((J.neighborFinset w).erase c)⊆Bᶜ := by
     intro v hv
     apply mem_compl.mpr
@@ -175,9 +175,11 @@ theorem no_high {x y : V} (p : G.Walk x y) (hp : p.IsPath)
   let ta := Walk.cons eaz (Walk.cons ebz.symm (Walk.cons ebc (Walk.cons cw .nil)))
   let tb := Walk.cons ebz (Walk.cons eaz.symm (Walk.cons eac (Walk.cons cw .nil)))
   let middle := Walk.cons eaz (Walk.cons ebz.symm .nil)
-  have pa : ta.IsPath := Walk.IsPath.mk' (by simp [ta]; grind)
-  have pb : tb.IsPath := Walk.IsPath.mk' (by simp [tb]; grind)
-  have pm : middle.IsPath := Walk.IsPath.mk' (by simp [middle]; grind)
+  have pa : ta.IsPath := Walk.IsPath.mk' (by
+    simp [ta,az.1,ab,az.2.1,az.2.2,bz.1.symm,cz.symm,zw,bz.2.1,bz.2.2,cw.ne])
+  have pb : tb.IsPath := Walk.IsPath.mk' (by
+    simp [tb,bz.1,ab.symm,bz.2.1,bz.2.2,az.1.symm,cz.symm,zw,az.2.1,az.2.2,cw.ne])
+  have pm : middle.IsPath := Walk.IsPath.mk' (by simp [middle,az.1,ab,bz.1.symm])
   have out (v : V) (hv : v∈E) : v∉p.support := off ⟨v,hv⟩
   have diff : I≠K := fun e => ji (congrArg Fin.val e).symm
   rcases lt_or_gt_of_ne diff with forward|backward

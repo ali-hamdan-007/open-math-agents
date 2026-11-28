@@ -1,6 +1,6 @@
 # A longest-path proof at second-smallest degree six
 
-This is a paper argument for the moderate parent at $k=6$, $n\le 20$. The kernel replay is outstanding. The general two-link and rotation arguments are also used in the [degree-seven formalization](Graph189ModerateSeven.lean).
+This argument covers the moderate parent at $k=6$, $n\le20$. For minimum degree at least three, the pinned Lean kernel checked that every vertex omitted by an ordinary longest path has degree below six. The proof uses the same two-link order bound and endpoint rotation as the degree-seven theorem. The axiom report contains only `propext`, `Classical.choice` and `Quot.sound`. [Degree-six omission theorem](../lowblock/Graph189SixRotation.lean), [shared rotation argument](../lowblock/Graph189OrdinaryRotationWindow.lean) and [degree-seven theorem](Graph189ModerateSeven.lean)
 
 Take a two-connected graph satisfying the original cap, a minimum-degree vertex $z$, and an ordinary longest path $P$. Write $J$ for the induced graph on the omitted vertices. Every vertex has at most six vertices at distance two. Except possibly $z$, every vertex is high, of degree at least six.
 

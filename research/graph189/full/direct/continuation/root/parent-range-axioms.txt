@@ -63,3 +63,30 @@ Graph189SevenRotation 431408e24cbf80fb0fd8b750c6047b90ee70cad2928f8bbf43c17d0088
 
 Graph189ModerateSeven 46424a32f396ebeb74f0d5163ee5e6fb808685ff8d47bb58db04a53d7974286a
 'Graph189ModerateSeven.original' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189OrdinaryRotationWindow 7ebbde0c1eea37aa7b195e0d5267260b9aa0154487a5caaa55ab6388e2a6c710
+'Graph189OrdinaryRotationWindow.full_ports' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189OrdinaryRotationWindow.of_high' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189SevenRotation 4819c74943796c7d063daaec2f3d6c5a387ea2d1eea1cf71979c159fa84f8272
+'Graph189SevenRotation.no_high' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189SixRotation d2e77ef7bb19b45bf88b6e139079a4d5862d197f73f6e24d2bb7ce770a6c536d
+'Graph189SixRotation.no_high' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SixRotation.omitted_low' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189PrivateContactProfile d9e5bc78d44371a96796adcf9bb34734d289a6ab1ca7da9e4631f2e362c6fcf3
+'Graph189PrivateContactProfile.ports' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189PrivateContactProfile.population' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189SixExterior 44fffbb6d32f0bf71502dc5833215c46dfa98c793082576366c772a57bd01cd1
+'Graph189SixExterior.data' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189SoleNearestData 7e42f7af9872398f48ef4cbd1b4d87284afae908c662c7199b7d2a347a00093d
+'Graph189SoleNearestSides.debit' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189FiveOneLowRoutes 8a4acfdfabee243859c3860468e66f9e6348f5610024fc8ae6058a474b4c045a
+'Graph189FiveOneLowRoutes.three_between' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189FiveLowComponent 0a19287b2a68acf059502d263cef8b9cdb28e008f778bd30b16e5f4b14fb63f4
+'Graph189FiveLowComponent.classify' depends on axioms: [propext, Classical.choice, Quot.sound]

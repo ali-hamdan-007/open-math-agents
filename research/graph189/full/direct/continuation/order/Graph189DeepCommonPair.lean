@@ -1,4 +1,4 @@
-import Graph189DeepPairData
+import Graph189CommonPortQuota
 import Graph189SeparatedSideComponents
 import Graph189OnePortThreeCut
 
@@ -13,7 +13,7 @@ side, for either adjacency pattern of the anchors and any exceptional
 vertex. -/
 theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
     (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
-    {p q : V} (sep : S={p,q}) (ne : p≠q) (large : 15≤G.secondSmallestDegree)
+    {p q : V} (sep : S={p,q}) (ne : p≠q) (large : 12≤G.secondSmallestDegree)
     (deepA : ∃x,Deep G A S x) (deepB : ∃x,Deep G B S x)
     (commonA : ∃u∈A,∀i∈S,G.Adj u i) (commonB : ∃v∈B,∀i∈S,G.Adj v i) :
     ∃x y, ∃r : G.Walk x y,r.IsHamiltonian := by
@@ -92,7 +92,7 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
     have overlap := card_le_card intersect
     have pe : (E p).card≤k+1 := point p
     have qe : (E q).card≤k+1 := point q
-    have upper1 : Fintype.card V+(D A).card≤4*k+3 := by omega
+    have upper1 : Fintype.card V+(D A).card≤2*k+3+(P A).card+(P B).card := by omega
     have charge := Graph189BoundaryDebit.even_quota hc sides (fun T h =>
       Graph189CutSides.connected_after_smaller_deletion T (h.trans_le sc)) point (Y:=D B) (filter_subset _ _) ha.1
     have all : (D B).filter (fun x => Even (G.dist a x))=D B := filter_eq_self.mpr (by
@@ -114,9 +114,16 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
     have hA := (card_le_card (high_cover A)).trans (card_union_le _ _)
     have hB := (card_le_card (high_cover B)).trans (card_union_le _ _)
     have total := order_of_high_sides sides
-    have upper2 : Fintype.card V≤3*k+(D A).card+1 := by omega
-    exact Graph189OnePortCover.below_four hc cap (by omega) (by omega)
-      (by change _<4*k; change 15≤k at large; omega)
+    have upper2 : Fintype.card V≤k+1+(D A).card+(P A).card+(P B).card := by omega
+    change 12≤k at large
+    apply Graph189OnePortCover.below_four hc cap (by omega) large
+    change _<4*k
+    by_cases rich : 2*k≤(P A).card+(P B).card+1
+    · have order := Graph189ShallowCommonOrder.rich_order hc sides (by omega) sz point ua cu vb cv
+        (by change k≤(P A).card+1; omega) (by change k≤(P B).card+1; omega)
+      change Fintype.card V≤3*k+4 at order
+      omega
+    · omega
   by_cases Asole : F A
   · by_cases Bsole : F B
     · obtain ⟨x,i,left⟩ := Asole
