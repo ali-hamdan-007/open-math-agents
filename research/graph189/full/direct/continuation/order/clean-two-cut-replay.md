@@ -8,7 +8,7 @@ Every port in B contributes once to the even-distance budgets of u,v, and every 
 
 Lean 4.33.1 checked this implication directly on the graph, with only propext, Classical.choice and Quot.sound. It does not assume a degree lower bound at the representatives or at vertices of B. [Checked source](Graph189PrivateRepresentativeBound.lean) · [Original paper paragraph](../sep/unrestricted-two-cuts.md#local-counts-and-routing)
 
-## Remaining clean-side assembly
+## Clean-side assembly
 
 A common-free side A is clean when every high private port is at distance two from the other anchor and every high nonport is at distance two from both. Let H be the set of high A vertices and let r(A),r(B) count the nonports in the two sides. The two second layers of p and q count all H once, each high A nonport once more, and each B nonport outside F once, counting W twice. The distance-two budget at each anchor is k.
 
@@ -20,4 +20,4 @@ In the common-free case on both sides, the verified counterexample order lower b
 
 On a wholly high side, internal minimum degree k−1 gives a route from the selected anchor with at most 2r+1 losses by the checked longest-path and rotation lemmas. On a side containing the low vertex z, deleting z still leaves internal minimum degree at least k−2. When that graph is connected, the same argument loses at most 2r+3 including z. If deletion of z disconnects the side, the two separated parts each have minimum degree at least k−2, and their orders are small enough for Hamilton-connected closure. Three surviving marked vertices ensure two marks on one part, so that a mark distinct from a neighbor used at z can start a spanning route. This is the two-endblock construction used in the paper. The two anchored routes together miss at most 2(r(A)+r(B))+5≤19 vertices, within the checked terminal omission bound for k≥26.
 
-The counts, marked routes and final graph-facing assembly in this section are under kernel replay. The first displayed inequality is already kernel-verified. Together the two sections implement the clean branch of the original common-free separating-pair proof. The cases with neither side clean use the separate defect and routing paragraphs.
+Both displayed inequalities passed pinned kernel replay. The second inequality also passed an independent Linux run, which checked the anchors and private representatives against the actual graph. The marked routes and their final graph-facing assembly are under replay. [Combined nonport count](Graph189CleanPairOrder.lean) · [Linux job](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46134769244/job/140947485432) Together the two sections implement the clean branch of the original common-free separating-pair proof. The cases with neither side clean use the separate defect and routing paragraphs.

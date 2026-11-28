@@ -115,9 +115,10 @@ theorem low_route (A : Finset V) (i : V) {k r : ℕ} (large : 26≤k) (few : r�
     refine ⟨⟨⟨v.val,vr.2⟩,fun eq => vr.1 (congrArg Subtype.val (mem_singleton.mp eq))⟩,rfl⟩
   have minJ (v : A) (diff : v≠z') : k-2+1≤J.degree v := by
     have h := min v (fun eq => diff (Subtype.ext eq))
+    change k-1≤J.degree v at h
     omega
   obtain ⟨a,aP,b,q,hq⟩ := Graph189MarkedLowCut.of_cut (G:=J) con z' P (d:=k-2) (by omega)
-    minJ (by rw [Fintype.card_coe]; omega) marks disc
+    minJ (by change Fintype.card A≤3*(k-2); rw [Fintype.card_coe]; omega) marks disc
   let f := (Embedding.induce (G:=G) (A:Set V)).toHom
   let result := q.map f
   have aports : a.val∈A.filter (G.Adj i) := mem_subtype.mp aP
@@ -127,7 +128,9 @@ theorem low_route (A : Finset V) (i : V) {k r : ℕ} (large : 26≤k) (few : r�
     obtain ⟨v',_,rfl⟩ := List.mem_map.mp hv
     exact v'.property
   · have eq : result.support.length=q.support.length := by simp [result]
-    rw [eq,hq.length_support,Fintype.card_coe]
+    rw [eq,hq.length_support]
+    change A.card≤Fintype.card A+(2*r+3)
+    rw [Fintype.card_coe]
     omega
 
 #print axioms low_route

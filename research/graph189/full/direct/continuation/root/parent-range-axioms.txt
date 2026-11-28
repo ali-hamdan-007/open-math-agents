@@ -90,3 +90,25 @@ Graph189FiveOneLowRoutes 8a4acfdfabee243859c3860468e66f9e6348f5610024fc8ae6058a4
 
 Graph189FiveLowComponent 0a19287b2a68acf059502d263cef8b9cdb28e008f778bd30b16e5f4b14fb63f4
 'Graph189FiveLowComponent.classify' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189SixMinimumThree c08636c9455e0af49d31e4e7732b321f04650a00c2b8df580adc27cc96049469
+'Graph189SixMinimumThree.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189SixProtected f1eb621ffd9f3f279ff15b32fe9ef86f72d6fbb32aa76f52095db61a1a2a8551
+'Graph189SixProtected.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189SaturatedExterior d6e4ad803fb414f29e3778011a0113248c3b10aa64febe2d633b9e02e763d374
+'Graph189SaturatedExterior.exclude' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189CleanSideCounts 82e60e51b370346b99c1d2422c5922d6dd9c5e89683c0d91cfad2f03b7bcbc2c
+'Graph189CleanSideCounts.anchors' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CleanSideCounts.representatives' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189CleanPairOrder e460dfc727d1c3f056576d57ed30ea9a000c318f7fb115f6b7cbc8d9317dfc5a
+'Graph189CleanPairOrder.nonport_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189LowAnchorOriginal 5d6fc53768f954047a13184632a2d86f152209757acdcc3d7101c4485fa274ff
+'Graph189LowAnchorOriginal.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189MarkedLowCut 482f48cbff6d6365ce2857112d2b100e358db02a5b95f9f80a399a6dce0c365c
+'Graph189MarkedLowCut.of_cut' depends on axioms: [propext, Classical.choice, Quot.sound]

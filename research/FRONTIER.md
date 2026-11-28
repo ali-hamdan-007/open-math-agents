@@ -7,6 +7,12 @@ Updated 28 November 2026. This research branch contains local Lean results. The 
 
 
 
+## Graph 189 closes the moderate degree-six case with minimum degree at least three
+
+The kernel checked the original traceability conclusion for every qualifying two-connected graph with k=6, minimum degree at least three and n≤20. The remaining moderate cases have k=5, or k=6 with a degree-two vertex. The latter satisfies n≤19. [Degree-six theorem](graph189/full/direct/continuation/root/Graph189SixMinimumThree.lean) · [Axiom reports](graph189/full/direct/continuation/root/parent-range-axioms.txt)
+
+For a common-free clean side of a separating pair, the combined inequality on graph order, total nonports and opposite common contacts passed local and independent Linux kernel checks. The low-anchor traceability theorem also passed locally. [Separator counts](graph189/full/direct/continuation/order/clean-two-cut-replay.md) · [Low-anchor theorem](graph189/full/direct/continuation/order/Graph189LowAnchorOriginal.lean)
+
 ## Graph 189 verifies the large shallow two-cut branch and minimum-cut selector
 
 The graph-facing large-side shallow two-cut theorem now passes pinned Lean and a fresh import audit. It derives the actual gate-arm layout, second cut and final `n <= 3k+2` contradiction from genuine cut/contact hypotheses rather than assuming a prepared layout. A separate checked selector produces internally connected, minimum-size sides of a genuine two-cut for k at least 7, and the checked census/parity arithmetic covers the principal complementary counts. The exact kappa-two parent wrapper still needs the balanced, common-free and both-private routing branches; the missing-private k at least 9 wrapper is source-only and not yet verified.

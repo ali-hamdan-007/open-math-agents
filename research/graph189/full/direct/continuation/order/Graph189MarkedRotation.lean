@@ -6,6 +6,7 @@ variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph
 
 /- The two path rearrangements below are from the port-rotation proof and the
 R2 list rotation of @carl2sheriff, adapted there from R1 by @computerfreak97. -/
+omit [Fintype V] [DecidableEq V] [Nontrivial V] [DecidableRel G.Adj] in
 private lemma rot {c : List V} (hc : c.IsChain G.Adj ∧ ∀ a ∈ c.getLast?, ∀ b ∈ c.head?, G.Adj a b) {q : V} (hq : q ∈ c) :
     ∃ c' : List V, c'.Perm c ∧ c'.IsChain G.Adj ∧ c'.head? = some q := by
   obtain ⟨A, B, rfl⟩ := List.append_of_mem hq
@@ -56,7 +57,7 @@ private theorem enough {a b : V} (p : G.Walk a b) (hp : p.IsPath)
   let N := G.neighborFinset a
   let idx (v : V) := p.support.idxOf v
   let pred (v : V) := p.getVert (idx v-1)
-  have loc (v : V) (hv : v∈N) : 0<idx v ∧ idx v≤p.length ∧ p.getVert (idx v)=v := by
+  have loc (v : V) (hv : v∈N) : 0 < idx v ∧ idx v≤p.length ∧ p.getVert (idx v)=v := by
     have e := (G.mem_neighborFinset _ _).mp hv
     have valid : idx v<p.support.length := List.idxOf_lt_length_iff.mpr (by
       by_contra outside
@@ -93,14 +94,18 @@ private theorem open_mark {a b : V} (p : G.Walk a b) (hp : p.IsPath) (close : G.
   obtain ⟨x,xP,seen⟩ := meet
   obtain ⟨l,perm,chain,head⟩ := rot (G:=G) ⟨p.isChain_adj_support,by
     intro u hu v hv
-    have ub : u=b := by simpa using hu
-    have va : v=a := by simpa using hv
+    change p.support.getLast?=some u at hu
+    change p.support.head?=some v at hv
+    rw [List.getLast?_eq_some_getLast p.support_ne_nil,p.getLast_support] at hu
+    rw [List.head?_eq_some_head p.support_ne_nil,p.head_support] at hv
+    have ub := (Option.some.inj hu).symm
+    have va := (Option.some.inj hv).symm
     simpa only [ub,va] using close⟩ seen
   have ne : l≠[] := by rintro rfl; simp at head
   let q := Walk.ofSupport l ne chain
   have supp : q.support=l := Walk.support_ofSupport ne chain
   have hx : l.head ne=x := by simpa [List.head?_eq_some_head ne] using head
-  refine ⟨_,hx.symm ▸ xP,_,q,Walk.IsPath.mk' (supp ▸ perm.nodup_iff.mpr hp.support_nodup),?_⟩
+  refine ⟨_,hx.symm ▸ xP,_,q,Walk.IsPath.mk' (by rw [supp]; exact perm.nodup_iff.mpr hp.support_nodup),?_⟩
   rw [supp,perm.length_eq]
 
 /-- Rotate either end of a longest path. A pivot available from both ends
@@ -150,7 +155,7 @@ theorem from_longest {a b : V} (p : G.Walk a b) (hp : p.IsPath)
     (by change j≤p.length; omega) (iv.trans jv.symm)
   have step : 0<j := by omega
   rw [show p.length-(i+1)=j-1 by omega] at last
-  obtain ⟨q,hq,cost⟩ := jump p hp.isPath (show j-1≤j by omega) (by omega) first
+  obtain ⟨q,hq,cost⟩ := jump p hp (show j-1≤j by omega) (by omega) first
   have long : Fintype.card V≤q.support.length+(loss+1) := by omega
   have contact : ∃x∈P,x∈q.support := by
     by_contra! absent
