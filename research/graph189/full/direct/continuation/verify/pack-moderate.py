@@ -96,6 +96,7 @@ def main():
     p.add_argument("--checkout-sources",action="store_true",help="use the source checkout except for the generated parent module")
     p.add_argument("--root", default=ROOT, help="fully qualified statement implementing the exact child")
     p.add_argument("--dependencies", type=Path, help="TSV produced by extract-kernel-deps.py")
+    p.add_argument("--whole-modules", action="store_true", help="retain the complete source of each imported research module")
     p.add_argument("--original", action="store_true", help="package the full registered theorem with its reduction dependencies")
     args = p.parse_args()
     if args.original and args.leaf:
@@ -111,7 +112,7 @@ def main():
     target = base + (f".H{args.leaf}" if args.leaf else ".H1")
     graph = Path(__file__).resolve().parents[4]
     files = {}
-    for f in sorted(graph.rglob("*.lean"),key=lambda f: ("continuation" not in f.parts,"verify" not in f.parts,len(f.parts),str(f))):
+    for f in sorted(graph.rglob("*.lean"),key=lambda f: ("continuation" not in f.parts,"verify" not in f.parts,"refinement" not in f.parts,len(f.parts),str(f))):
         files.setdefault(f.stem,f)
     for f in graph.parent.glob("*.lean"): files.setdefault(f.stem,f)
     modules = {}
@@ -191,6 +192,8 @@ def main():
                 pending.extend(local)
             elif not args.dependencies:
                 pending.extend(v for v in by_leaf.get(tok,[]) if v.module==c.module)
+    if args.whole_modules:
+        chosen.update(c for records in modules.values() for c in records if c.name and (args.original or not in_official(c)))
     counts = Counter(c.name for c in chosen)
     rename = defaultdict(dict)
     for c in chosen:
@@ -204,7 +207,7 @@ def main():
     chunks = [first_import,credits(chosen)]
     report = []
     for mod, commands in modules.items():
-        if not any(c in chosen for c in commands): continue
+        if not args.whole_modules and not any(c in chosen for c in commands): continue
         body = []
         stack = 0
         enclosing = {}
@@ -222,8 +225,15 @@ def main():
         for i,c in enumerate(commands):
             t = c.text
             outer = enclosing[i]
-            if outer is not None and not any(outer <= j <= closes[outer] for j in chosen_lines):
+            if not args.whole_modules and outer is not None and not any(outer <= j <= closes[outer] for j in chosen_lines):
                 continue
+            if t.startswith("@[expose] public section"):
+                t = "section"
+            if t == "public section":
+                t = "section"
+            t = t.removeprefix("@[expose] ")
+            if t.startswith("public ") and CMD.match(t):
+                t = t.removeprefix("public ")
             if c.name:
                 if c not in chosen: continue
             elif t.startswith(("#","module","import ","public import ","public section")):
@@ -231,7 +241,7 @@ def main():
             elif ((re.match(r"^(?:open|include|omit|set_option)\b",t) and t.endswith(" in"))
                   or (t.startswith("@[") and t.endswith("]"))):
                 after = next((n for n in commands[i+1:] if n.name),None)
-                if after not in chosen: continue
+                if not args.whole_modules and after not in chosen: continue
             elif t == "attribute [instance] Core.finite Core.decAdj":
                 if not any(k.name=="Graph189ExteriorCore.Core" and k in chosen for k in commands): continue
                 t = """instance {V : Type u} {G : SimpleGraph V} {d : ℕ} (K : Core G d) : Fintype K.X := K.finite
@@ -248,7 +258,7 @@ instance {V : Type u} {G : SimpleGraph V} {d : ℕ} (K : Core G d) : DecidableRe
             body.append(t)
         rendered="\n".join(body)+"\n"+"end\n"*max(0,stack)
         rendered="\n".join(line.rstrip() for line in rendered.splitlines() if line.strip())
-        chunks.extend(["section",rendered,"end"])
+        chunks.extend([f"-- Source module {mod}", "section",rendered,"end"])
         report.append(f"{mod}\t{sum(c in chosen for c in commands)}\t{len(rendered.encode())}")
     chunks.append(f"theorem OMA.solution : {target} := {args.root}")
     text="\n".join(chunks)+"\n"

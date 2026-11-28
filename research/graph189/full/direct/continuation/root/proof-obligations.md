@@ -1,5 +1,11 @@
 # Formalization of the full Graph 189 paper argument
 
+## Exact original conjecture verified in Lean
+
+The pinned Lean 4.33.1 kernel checked the [registered Lean theorem](bounded-order/Graph189OriginalSolution.lean) against Formal Conjectures at `9097e2f90e66d2f6244209cb1c07f7120d17ec53`. The graph arguments close every case. The axiom report for `OMA.solution` lists only `propext`, `Classical.choice`, and `Quot.sound`. [Linux kernel log](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46158940698/job/141021680430)
+
+The Left to Solve submission is being assembled as a single source file. The dependency audit identified 8,834 transitive research declarations, including compiler-generated constants. The selected original source blocks alone occupy about 2.55 MiB.
+
 ## All separating-pair cases checked; full original assembly in replay
 
 The [both-common theorem](bounded-order/Graph189BothCommonSmall.lean) covers the last configuration. If one side is shallow its small order gives a spanning path starting at any separator contact. The opposite side opens a long marked path. If both sides are deep, the shortest side has at least two contacts with each anchor and the rich-port order bound prevents both sides from approaching order 2k. The [one-common-side assembly](bounded-order/Graph189TwoConnectivityTen.lean) covers every residual degree from seven, including a missing private type. The [unconditional parent assembly](bounded-order/Graph189Unconditional.lean) and the [registered-type wrapper](bounded-order/Graph189OriginalSolution.lean) are staged for combined replay. The [three-connected assembly and common-free proof](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46156913499/job/141015482123) have independent verification.
