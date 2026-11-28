@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • both asymptotic order bounds have one kernel-certified construction
+
+root/Graph189SyntheticBand.lean now certifies the construction in synthetic-high-order.md on the entire unbounded range. For s≥5 and k>6(s−1), violation of either proposed upper order gives a valid Band with endpoints n and cap k+floor(k/(s−1)). The proof uses integer algebra and division, with no finite scan. Graph189SyntheticBand.high_order passed pinned Lean with only propext, Classical.choice and Quot.sound. The new result makes one geometric valid-band contradiction sufficient for both upper orders and all finite terminal rows. The lower order and lifted lower order remain separate graph obligations.
+
+
 ## Graph 189 • two uniform separator counts and the actual residual degree inequality
 
 The second separator contradiction now applies at every valid numerical band, since the band directly implies n≥6k+s+1. See order/Graph189PrivatePortBand.lean. The actual graph's scalar width inequalities and the nonisolated exterior half-degree estimate have also passed the pinned kernel (global/arity/final/Graph189ActualScalarWidth.lean and sep/cover/final82/lean/Graph189HighExteriorDegree.lean).
