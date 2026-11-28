@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189. Deletion of a cut vertex leaves exactly two components
+
+At order n ≥ 2k+3, deleting any cut vertex of a qualifying graph leaves exactly two connected components. The [graph proof](graph189/full/unrestricted/cut-structure/Graph189CutCore.lean) and [upstream definitions adapter](graph189/full/unrestricted/cut-structure/Graph189CutInterface.lean) compiled with Lean 4.33.1 and warning-as-error. Both axiom audits give propext, Classical.choice and Quot.sound. [Build notes](graph189/full/unrestricted/cut-structure/README-cut.md). The [paper proof](graph189/full/unrestricted/cut-structure/unique-cut.md) goes further and gives uniqueness of the cut vertex, with a [separate audit](graph189/full/unrestricted/cut-structure/unique-cut-audit.md). The literature used by the upstream reduction already settles cut-vertex traceability on paper; the local Lean theorem covers the component count. No submission of the open parent or child is implied. Codex contributors used gpt-6.2-astra.
+
+
 ## Graph 189. Two counting arguments in pinned Lean
 
 The [triangle-transversal core](graph189/full/unrestricted/Graph189TriangleTransversalPublic.lean) checks transitivity of common-neighbor intersection in the triangle-free remainder using actual graph distances. It proves that an even walk with sufficiently high degree at the specified even positions cannot be closed by an edge. [Axiom log](graph189/full/unrestricted/triangle-axioms.log) and [separate import](graph189/full/unrestricted/triangle-export-axioms.log). The [three-port counting lemma](graph189/full/unrestricted/Graph189PortCount.lean) verifies 2|U| ≤ 3k+3 under the three incidence and boundary hypotheses used in the degree-five argument. Both source files compiled with the pinned Lean 4.33.1; the named results depend only on propext, Classical.choice and Quot.sound. They are components of the paper arguments and have no official full-conjecture verdict. Codex contributors used gpt-6.2-astra.
