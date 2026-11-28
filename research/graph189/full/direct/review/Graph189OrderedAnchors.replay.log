@@ -1,0 +1,4 @@
+2cc1bf938011a711eebc01097bce5b7ba030481a4033a6eaa6257f44af2adaf7  Graph189OrderedAnchors.lean
+'Graph189OrderedAnchors.two_more_incident' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189OrderedAnchors.interior_spanned' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189OrderedAnchors.two_extra_anchors' depends on axioms: [propext, Classical.choice, Quot.sound]

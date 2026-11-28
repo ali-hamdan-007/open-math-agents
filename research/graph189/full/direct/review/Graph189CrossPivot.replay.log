@@ -1,0 +1,2 @@
+12a15ae5a9cd452b1149e0034e2cadf94b90b780e1aa87f397c9594540697ba2  Graph189CrossPivot.lean
+'Graph189CrossPivot.no_crossed_pivots' depends on axioms: [propext, Classical.choice, Quot.sound]

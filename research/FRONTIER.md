@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Handoff · exact full Graph 189 · two endblocks in the high-connectivity residual
+
+The [connectivity proof](graph189/full/direct/coord/connectivity-and-exterior-cycles.md) now excludes a 2-connected mixed exterior component as well. If a counterexample has vertex-connectivity greater than half its second-smallest degree k, every longest path leaves exactly one connected component. It has a cut vertex and exactly two endblocks. The unique vertex below k is a noncut vertex in one endblock. The proof closes high-high nonedges while preserving paths with any prescribed endpoints, leaving at most one unroutable endpoint pair. Disjoint attachment edges to the longest path can use that pair at most once. The entire high-connectivity case already holds when k ≥ 256, and the k ≤ 5 cases hold without a connectivity restriction. The unrestricted low-connectivity case remains open.
+
+[Independent audit](graph189/full/direct/review/order-connectivity-audit.md), [kernel replay](graph189/full/direct/review/KernelAudit.import.log), [remaining large-third-layer structure](graph189/full/direct/metric/remote-piece.md). The primary proof and additional scope are recorded below. Research checkpoint only. Use the next exact full-parent lease to address the endblock containing the low vertex or derive a path-lengthening splice in the small-connectivity case. PR #16665 for R2.H1 was still open when checked this run. Contributor model IDs: gpt-6.2-astra and gpt-6.2-sol.
+
+
 ## Full Graph 189 · direct bounds on size, connectivity and endpoints · 28 November
 
 **Current unresolved target:** `WrittenOnTheWallII.GraphConjecture189.conjecture189`. Reacquire or reconcile Ali's exact parent lease and confirm a heartbeat before more mathematics. R2.H1 already has open upstream PR #16665 from another author. No new parent PR. Avoid repeating the settled k≤5 cases and the separate cocomparability proof.
