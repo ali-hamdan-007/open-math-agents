@@ -5,28 +5,16 @@ namespace OMA.BondyK
 
 open SimpleGraph Finset Arxiv.«2606.03696»
 
-/-- An order bound supplied by a linked set outside an actual longest cycle.
-The connectivity input is the small-deletion property. No global order threshold
-or conjectured form of Bondy's theorem is used. -/
-theorem graph189_order_of_linked {V : Type*} [Fintype V] [DecidableEq V]
+/-- The actual disjoint attachment and exterior sets used in the linked degree inequality. -/
+theorem graph189_linked_witness {V : Type*} [Fintype V] [DecidableEq V]
     {G : SimpleGraph V} [DecidableRel G.Adj] {k : ℕ}
-    (hk : 1≤k) (min : k≤G.minDegree)
     (deletion : ∀ S : Finset V, S.card<k → (G.induce ((S : Set V)ᶜ)).Connected)
     {a : V} (C : G.Walk a a) (hC : C.IsCycle)
     (longest : ∀ b, ∀ Q : G.Walk b b, Q.IsCycle → Q.length≤C.length)
     (linked : Graph189LinkedExterior.Linked (G.induce (offWalk C)) k) :
-    (k+1)*(G.minDegree-k+2)-1 ≤ Fintype.card V := by
+    ∃ H D : Finset V, Cy G C.length (cyc C) ∧ Comp G (cyc C) H ∧ KSep G k ∧
+      D⊆H ∧ k+1≤D.card ∧ ∀ x∈D,∀ y∈D,x≠y → ∃ L, HP G D x y L ∧ k≤L.length := by
   classical
-  by_contra! fail
-  have order : Fintype.card V+2≤(k+1)*(G.minDegree-k+2) := by omega
-  have hkn : Fintype.card V+k*(k-1)≤(k+1)*G.minDegree := by
-    obtain ⟨d,hd⟩ := Nat.exists_eq_add_of_le min
-    rw [hd,Nat.add_sub_cancel_left] at order
-    rw [hd]
-    obtain ⟨h,hl⟩ := Nat.exists_eq_add_of_le hk
-    rw [hl,Nat.add_sub_cancel_left]
-    rw [hl] at order
-    nlinarith
   let L : Set ℕ := {m | ∃ b, ∃ q : G.Walk b b, q.IsCycle ∧ q.length=m}
   have mem : C.length∈L := ⟨a,C,hC,rfl⟩
   have upper : ∀ m∈L, m≤C.length := by
@@ -98,7 +86,7 @@ theorem graph189_order_of_linked {V : Type*} [Fintype V] [DecidableEq V]
     · obtain ⟨p,_,_,_⟩ := paths u hu y hy eq
       exact ⟨p⟩
   have msize : k+1≤M.card := by simpa [M] using size
-  apply linked_contra hD hComp (fun x => G.minDegree_le_degree x) hk hkn hKs sub msize
+  refine ⟨H,M,hD,hComp,hKs,sub,msize,?_⟩
   intro x hx y hy ne
   obtain ⟨v,hv,rfl⟩ := Finset.mem_map.mp hx
   obtain ⟨w,hw,rfl⟩ := Finset.mem_map.mp hy
@@ -114,6 +102,31 @@ theorem graph189_order_of_linked {V : Type*} [Fintype V] [DecidableEq V]
   · rw [List.getLast?_map, List.getLast?_eq_getLast_of_ne_nil (Walk.support_ne_nil _),
         Walk.getLast_support]
     rfl
+
+/-- An order bound supplied by a linked set outside an actual longest cycle.
+The connectivity input is the small-deletion property. No global order threshold
+or conjectured form of Bondy's theorem is used. -/
+theorem graph189_order_of_linked {V : Type*} [Fintype V] [DecidableEq V]
+    {G : SimpleGraph V} [DecidableRel G.Adj] {k : ℕ}
+    (hk : 1≤k) (min : k≤G.minDegree)
+    (deletion : ∀ S : Finset V, S.card<k → (G.induce ((S : Set V)ᶜ)).Connected)
+    {a : V} (C : G.Walk a a) (hC : C.IsCycle)
+    (longest : ∀ b, ∀ Q : G.Walk b b, Q.IsCycle → Q.length≤C.length)
+    (linked : Graph189LinkedExterior.Linked (G.induce (offWalk C)) k) :
+    (k+1)*(G.minDegree-k+2)-1 ≤ Fintype.card V := by
+  classical
+  by_contra! fail
+  have order : Fintype.card V+2≤(k+1)*(G.minDegree-k+2) := by omega
+  have hkn : Fintype.card V+k*(k-1)≤(k+1)*G.minDegree := by
+    obtain ⟨d,hd⟩ := Nat.exists_eq_add_of_le min
+    rw [hd,Nat.add_sub_cancel_left] at order
+    rw [hd]
+    obtain ⟨h,hl⟩ := Nat.exists_eq_add_of_le hk
+    rw [hl,Nat.add_sub_cancel_left]
+    rw [hl] at order
+    nlinarith
+  obtain ⟨H,D,cy,comp,sep,sub,size,paths⟩ := graph189_linked_witness deletion C hC longest linked
+  exact linked_contra cy comp (fun x => G.minDegree_le_degree x) hk hkn sep sub size paths
 
 #print axioms graph189_order_of_linked
 end OMA.BondyK

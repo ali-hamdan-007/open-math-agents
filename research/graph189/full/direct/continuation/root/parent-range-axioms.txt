@@ -141,3 +141,5 @@ Connectivity two from degree 13, at every order
 'Graph189CleanPrivatePair.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189TwoConnectivity.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189FiveConnectivity.traceable_ge25' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189LinkedDegreeSum.linked_contra_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189WeightedCriticalOrder.order' depends on axioms: [propext, Classical.choice, Quot.sound]
