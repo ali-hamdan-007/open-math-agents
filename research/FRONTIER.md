@@ -3,6 +3,15 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • proof that only finitely many graphs could be counterexamples
+
+The parent is reduced to a finite exceptional range: every sufficiently large qualifying graph is traceable. The remaining finite cases are open. The mathematical proof and checks are in `root/maximum-degree-width.md`, `verify/common-anchor-intersections.md`, `lowblock/mixed-anchor-blocks.md` and `global/arity/three-common-labels.md`, relative to `research/graph189/full/direct/continuation/`. This is a fork research result and has no official parent verdict.
+
+Two quantitative order estimates conflict on any infinite counterexample family. For such a family the minimum separators force s²/k→1 and n/k^(3/2)→1. Applying the geodesic-width inequality at a maximum-degree vertex and the rooted local Ore criterion gives limsup n/k^(3/2)≤sqrt(2/3). Both deductions have independent mathematical review. Every fixed s already has a finite degree range. The root layer-cover theorem has independently replayed pinned Lean verification. The combined finiteness proof is on paper.
+
+The newest finite cutoffs also cover every k≤25, all 5s≥k, and all k≥4s²+8s−2 (s≥5). See `sep/cover/fifth-connectivity.md` with its arithmetic replay, and `global/arity/three-common-labels.md`. The coordinator is working on effective absolute bounds and ways to remove the residual cases.
+
+
 ## Graph 189 • all degrees through 25 and the large-degree theorem at every fixed connectivity
 
 Every qualifying graph with k≤25 is traceable, at any order. The seven new degrees 19–25 use a uniform proof and exactly 116 residual integer tuples. Independent arithmetic reproduced all counts and margins. See `sep/cover/five-through-25.md`, `five_blocks.py`, and `five_final.log`, relative to `research/graph189/full/direct/continuation/`.
