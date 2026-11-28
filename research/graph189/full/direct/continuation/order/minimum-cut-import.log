@@ -1,0 +1,3 @@
+'Graph189CutSides.order_at_minimum_cut' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CutSides.order_at_vertexConnectivity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CutSides.CutSides.low_cut_deficit' depends on axioms: [propext, Classical.choice, Quot.sound]

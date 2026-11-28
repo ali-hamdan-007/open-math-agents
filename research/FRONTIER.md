@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • the arithmetic forces connectivity at most eight
+
+Given the explicit mathematical cut-order, width and degree-deficit bounds, the pinned kernel now proves connectivity at most eight (global/arity/final/Graph189EightCutoff.lean). An exhaustive compressed certificate with 286 intervals, including the lower-degree part of connectivity nine, is a kernel theorem with no axioms. The middle range at connectivity nine has a uniform direct contradiction in root/Graph189NineCutDebit.lean: k≥163 excludes any low vertex from a minimum cut using the mixed debit, and 163≤k≤192 is then impossible under the lifted order. See verify/nine-cut-debit-audit.md for independently checked assumptions. This removes the need to trust a whole-rectangle executable comparison for these infinite and finite strata. The complete scalar certificate for connectivities 5–8 remains in development.
+
+Three more parts now apply to real graph data. order/Graph189MinimumCutOrder.lean chooses an actual minimum vertex cut from vertexConnectivity, with the correct high-population product and lower bounds on common contacts. order/Graph189MixedDebit.lean proves the mixed incidence inequality. root/Graph189CutClassification.lean directly classifies the anchor neighborhoods of high small-side vertices at a minimum separator with more than sk opposite high vertices; the cutoff for existence of high contacts at every label is in root/Graph189HighLabel.lean. Graph189WidthMonotone and Graph189SmallerSide prove that two actual operations in the numeric replay preserve every possible counterexample. The global graph implication and original parent solution remain open in Lean.
+
+
 ## Graph 189 • exact parent glue checked and the graph-to-width test certified
 
 The 3,679-line focused assembly of the exact parent proposition completed in pinned Lean 4.33.1. Its theorem parent_of_two_connected_cases derives the entire registered conclusion using the cut-vertex proof and two explicit remaining two-connected hypotheses. The kernel lists only propext, Classical.choice and Quot.sound; 18 linter warnings were inherited from upstream. The original-import source, reproducible focused transformation, axiom output and respective hashes are under parent/. This is a checked conditional theorem. OMA.solution for the parent still requires proving the two displayed hypotheses.

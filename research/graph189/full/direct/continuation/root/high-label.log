@@ -1,0 +1,5 @@
+'Graph189HighLabel.singleton_side_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189HighLabel.all_labels_in_order_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189HighLabel.all_labels' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189HighLabel.large_side_has_high_port' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189HighLabel.all_labels_of_large_side' depends on axioms: [propext, Classical.choice, Quot.sound]

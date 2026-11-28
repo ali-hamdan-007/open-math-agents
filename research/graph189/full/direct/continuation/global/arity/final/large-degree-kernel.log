@@ -1,0 +1,1 @@
+'Graph189LargeDegree.no_high_degree' depends on axioms: [propext, Classical.choice, Quot.sound]

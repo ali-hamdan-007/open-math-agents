@@ -1,0 +1,9 @@
+# Independent check of the nine-cut debit
+
+Assume a counterexample with connectivity nine, second-smallest degree k≥163 and a minimum cut containing a vertex of degree k−d<k. Deleting the cut leaves wholly high sides. With nonempty groups, pick neighbors a,b of the low cut vertex in opposite groups. Their common neighbors belong to the cut, so the integer r satisfies 1≤r≤9. The two formulas in lowblock/finite-cross-cut-low-degree.md specialize exactly to the low and mixed assumptions of root/Graph189NineCutDebit.lean. The product bound for X≤Y counts the same side populations. The universal count gives order n≥10k−71.
+
+If r≤8, the deficit bound implies n≤9k+8, already below 10k−71. With r=9 and e=Δ−k, the width inequality gives w≥e since e≤2k and 2(n−2k)≥e. The capacity factor n−2k−e−2 is at least 4k, giving 4ke≤k(k+e) and 3e≤k. The product bound gives 9X(X−k)≤81k², while 3X>11k would force 9X(X−k)>88k². Substituting 9e≤3k and 3X≤11k in the mixed debit gives n≤26k/3+145, whence k≤162.
+
+If every minimum cut avoids the unique low vertex, the lifted order is n≥11k−89. In the tied case the same lower bound uses the critical-deletion hypotheses. These hold throughout the range under consideration: k≥163 gives n≤2k+1+9k²/(k−9)≤12k+1<k(k−1)/4, 2(k−1)>27, and floor((k−2)/2)+1≥10. Thus every putative remaining graph at k=163 through 192 satisfies the stated lifted-order premise.
+
+Rooted Ore gives n≤3k+1+ke and consequently the integer e≥8. With 3e≤k and k≥163, the capacity factor is at least 81k/10, and 2(n−2k)≥169k/10. Since k≤192 and k≥100, after division by k² the two width inequalities give 13689/100+(81/10)e≤193+(101/100)e. The excess of the left at e=8 is 61/100 and grows with e. All hypotheses in the two rational implications match the graph lemmas under these substitutions. This audit verifies their mathematical use; the coordinator owns the kernel replay.

@@ -1,0 +1,2 @@
+'Graph189NineCutDebit.no_low_at_nine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189NineCutDebit.no_lifted_nine_middle' depends on axioms: [propext, Classical.choice, Quot.sound]
