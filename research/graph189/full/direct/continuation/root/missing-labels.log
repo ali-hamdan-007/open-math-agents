@@ -1,0 +1,4 @@
+compiler started 2026-11-28T07:09:47Z
+'Graph189MissingLabels.two_residual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189MissingLabels.at_most_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+compiler completed 2026-11-28T07:09:54Z
