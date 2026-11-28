@@ -1,0 +1,2 @@
+'Graph189WedgeParity.missed_of_remote' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189WedgeParity.wedge_count' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,13 @@
+# Triangle inequalities and the even-distance cap allow three distant points
+
+The degree and parity counts for individual points, together with triangle inequalities and diameter at most four, do not by themselves contradict a triple of points pairwise at distance three. The following exact integer metric illustrates the missing shortest-path condition.
+
+Place three points in each of nine fibers indexed by the vertices of a cycle of length nine. Designate one point per fiber. Distinct points in the same fiber have distance one. In different fibers their distance is the cyclic distance between the fibers, except that a cyclic distance of four is reduced to three whenever at least one of the two points is not designated.
+
+This is a metric. Before the reductions, the cyclic distances with distinct same-fiber points at distance one form a metric. When checking a triangle after shortening, a shortened leg now has length three, so that leg and any other positive leg have sum at least four. Four is the largest possible distance on the other side of the triangle. If neither leg is shortened, their sum already bounds the original, and hence the final, distance of the other side.
+
+Each point has eight points at distance one, namely the other two points in its own fiber and the six points in the adjacent fibers. Each point has six points at distance two, three in each fiber at cyclic distance two. A designated point has two further points at distance four, the designated points in the two fibers at cyclic distance four. An undesignated point has no point at distance four. Thus every point has at most eight positive even distances and the second-smallest unit-distance degree is eight. The designated points in fibers $0$, $3$ and $6$ are pairwise at distance three. The 27-point order also exceeds $3\cdot8+2$.
+
+The graph with an edge for each unit-distance pair has a clique of size three in each fiber and every possible edge between adjacent fibers. It is 2-connected, since every fiber stays nonempty after any single vertex deletion, and it has diameter four. Its actual graph distance between two vertices in different fibers equals the cyclic distance between their fibers. Every graph edge changes the fiber by at most one cycle edge, and a shortest cycle route realizes the lower bound. In particular the assigned distance three between an undesignated point and a point four fibers away has no witnessing path of length three in the unit-distance graph.
+
+This isolates a limitation of arguments using only pointwise distance profiles and the triangle inequality. The construction does not realize the assigned metric by graph paths and does not supply a violating separator.

@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Full Graph 189 · many endpoints at distance exactly three
+
+Let k be the second-smallest degree. For any nonspanning longest path in a qualifying 2-connected graph, rotations at either endpoint on the same vertex set expose at least **k+1+ceil(k/2) distinct endpoints**. Each omitted vertex of degree at least k is at distance exactly three from at least ceil(k/2) high attainable endpoints. The paper proof counts disjoint neighborhoods of two compatible far endpoints across the fixed path segments between attainable vertices. [Main proof](graph189/full/direct/rot/endpoint-linear-growth.md). The [graph separator used at saturation](graph189/full/direct/rot/Graph189EndpointCut.lean) was independently compiled in Lean 4.33.1. The complete endpoint theorem has independent mathematical review. A three-edge route still needs to be converted into a longer simple path to close the parent.
+
+[Ordered separator incidence](graph189/full/direct/coord/Graph189OrderedAnchors.lean), [wedge parity](graph189/full/direct/metric/Graph189WedgeParity.lean), and [the local Ore inequality](graph189/full/direct/metric/Graph189WedgeOre.lean) also passed local pinned Lean, with the three standard axioms. Related minimum path-cover and separator obstructions are under `graph189/full/direct/factor` and `obstruction`. No official full-parent submission or checker verdict. Codex contributors: gpt-6.2-astra and gpt-6.2-sol.
+
+
 ## Graph 189 · independent kernel checks and separator obstructions
 
 On the exact parent, [the endpoint-chord lemma](graph189/full/direct/rot/Graph189RotationGap.lean) constructs the rotated simple walk in Lean. [The separator comparison](graph189/full/direct/coord/Graph189SeparatorComparison.lean) proves a strict inequality between component sizes from explicit component incidences and the graph's actual degree and distance budget. Both compiled independently in pinned Lean 4.33.1 with only propext, Classical.choice and Quot.sound. These are local checks, with no upstream submission or verdict.

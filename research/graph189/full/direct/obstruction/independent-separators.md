@@ -3,10 +3,10 @@
 Let $G$ be a finite simple 2-connected graph, and let $k$ be its second-smallest degree. Suppose every vertex has at most $k$ other vertices at even distance. If $S$ is inclusion-minimal with $c(G-S)\ge |S|+2$, then
 
 $$
-\Delta(G[S])\ge \left\lceil \frac{k}{4}\right\rceil .
+k<4\Delta(G[S]).
 $$
 
-Consequently $c(G-S)\le |S|+1$ whenever $\Delta(G[S])<k/4$. This includes every independent separator. Passing to an inclusion-minimal violating subset can only decrease $\Delta$.
+Consequently $c(G-S)\le |S|+1$ whenever $\Delta(G[S])\le k/4$. This includes every independent separator. Passing to an inclusion-minimal violating subset can only decrease $\Delta$.
 
 ## Incidence bounds for a minimal separator
 
@@ -84,3 +84,27 @@ k\le \ell+\frac{t}{t-2}d\le 4d.
 $$
 
 In particular the chosen separator vertex has internal degree at least $\lceil k/4\rceil$, with the sharper bound $k\le3d$ whenever it meets at least four components.
+
+## Excluding equality with the maximum internal degree
+
+Suppose $k=4D$, where $D=\Delta(G[S])\ge1$. Let $U$ consist of the separator vertices of degree at least $k$ having a neighbor of degree at least $k$ in every component they meet. The preceding argument gives $U\ne\varnothing$ and applies to every vertex in $U$. Fix $u\in U$. Equality in $k\le\ell+td/(t-2)\le4d\le4D$ forces $d=\ell=D$ and $t=3$. Also $A+X\ge3(k-d-\ell)=6D$ and each of $A,X$ is at most $k-\ell=3D$, so $A=X=3D$.
+
+The three bounds $a_i+X_i\ge k+1-q_i$ now force $q_i=2D+1$ for every chosen neighbor, since each $q_i\le1+d+\ell=2D+1$. The neighbors $x_i$ were arbitrary among those of degree at least $k$, so all such outside neighbors of $u$ have the same separator neighborhood $Q$, consisting of $u$, its $D$ separator neighbors and the $D$ separator vertices at distance two from it. For any one of these outside neighbors in $C_i$, the earlier representative bound gives
+
+$$
+4D\ge (2D+1)+1+\sum_{j\ne i}(a_j-1)=5D-a_i.
+$$
+
+Hence $a_i\ge D$, and $A=3D$ forces $a_i=D$ in each of the three touched components. At least $|Q|+2=2D+3$ components meet $Q$, by minimality. Every vertex of $Q\cap U$ meets all three components met by $u$, because it shares the chosen neighbors there. The equality case of the same internal degree bound gives that it meets exactly three components. Thus the at least $2D$ additional components meeting $Q$ can meet only vertices of $Q\setminus U$.
+
+If there is no vertex of degree below $k$, then $U=S$, a contradiction. If the sole vertex $z$ of degree below $k$ lies in $S$, then $Q\setminus U$ contains only $z$. If $z\in Q$, it shares all $3D$ outside neighbors of $u$, each of which has degree at least $k$ in this case. Thus it has at most $k-1-3D=D-1$ neighbors available in other components, fewer than $2D$.
+
+If $z$ lies outside $S$, any $v\in Q\setminus U$ meets the component $C_z$ of $z$ only through $z$. That component lies outside the three components already met by $u$, since $v$ has a chosen neighbor of degree at least $k$ in each of those three. All $3D$ outside neighbors of $u$ then have degree at least $k$, and $v$ is adjacent to each. In particular its outside degree $A_v$ is at least $3D+1$, and it meets $t_v\ge4$ components.
+
+Choose a neighbor of $v$ of degree at least $k$ in every touched component besides $C_z$. The component $C_z$ contributes just one neighbor to $A_v$, so the representative and first-two-layer counts, summed over these $t_v-1$ components, give at least
+
+$$
+(t_v-1)+(t_v-3)(A_v-t_v)\ge A_v-1
+$$
+
+vertices at distance two from $v$ there. Every separator nonneighbor of $v$ in $Q$ is also at distance two via a shared neighbor of $u$ and $v$. There are at least $|Q|-1-D=D$ such vertices. Hence $4D=k\ge A_v-1+D$, forcing $A_v=3D+1$. All those neighbors have already been accounted for, so $v$ can meet only the three common components and $C_z$. Thus there can be at most one additional component meeting $Q$, fewer than $2D$.

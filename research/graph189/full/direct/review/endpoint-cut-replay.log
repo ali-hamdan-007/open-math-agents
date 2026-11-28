@@ -1,0 +1,9 @@
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+b221a6cfc40b0a32ccbe0d1b619dc02a232d5f784b53bc73e52ceda915c5e988  Graph189EndpointCut.lean
+'Graph189EndpointCut.transfer_along_edge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189EndpointCut.disconnected_delete_of_saturated_endpoints' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+namespace Graph189EndpointCut
+#print axioms transfer_along_edge
+#print axioms disconnected_delete_of_saturated_endpoints
