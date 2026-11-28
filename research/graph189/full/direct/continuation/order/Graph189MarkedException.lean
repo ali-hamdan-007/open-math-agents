@@ -40,11 +40,14 @@ theorem route (hc : G.Connected) (z : V) (P : Finset V) {d : ℕ} (large : 3≤d
     omega
   obtain ⟨a,b,p,hp,longest,len⟩ := Graph189SidePathDegree.longest_order con (by omega : 1≤d) minH
   have nW : Fintype.card W=W.card := Fintype.card_coe W
+  change p.support.length=Fintype.card W ∨ 2*d+1≤p.support.length at len
   have enough : Fintype.card W≤p.support.length+1 := by rcases len with l|l <;> omega
   obtain ⟨x,xT,y,r,hr,near⟩ := Graph189MarkedRotation.from_longest p hp longest T enough (by omega) (by
+    change Fintype.card W<H.degree a+H.degree b+T.card
     have A := minH a
     have B := minH b
     omega)
+  change Fintype.card W≤r.support.length+(1+1) at near
   let f := (Embedding.induce (G:=G) (W:Set V)).toHom
   let q := r.map f
   have xP : x.val∈P := (mem_erase.mp (mem_subtype.mp xT)).2

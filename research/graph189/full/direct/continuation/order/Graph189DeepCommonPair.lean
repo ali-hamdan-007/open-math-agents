@@ -1,6 +1,7 @@
 import Graph189CommonPortQuota
 import Graph189SeparatedSideComponents
 import Graph189OnePortThreeCut
+import Graph189DistanceLayers
 
 open SimpleGraph Finset Graph189SoleNearestSides
 open OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R1
@@ -13,7 +14,7 @@ side, for either adjacency pattern of the anchors and any exceptional
 vertex. -/
 theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
     (sides : Graph189CutSides.CutSides G A B S) (sc : S.card≤G.vertexConnectivity)
-    {p q : V} (sep : S={p,q}) (ne : p≠q) (large : 12≤G.secondSmallestDegree)
+    {p q : V} (sep : S={p,q}) (ne : p≠q) (large : 10≤G.secondSmallestDegree)
     (deepA : ∃x,Deep G A S x) (deepB : ∃x,Deep G B S x)
     (commonA : ∃u∈A,∀i∈S,G.Adj u i) (commonB : ∃v∈B,∀i∈S,G.Adj v i) :
     ∃x y, ∃r : G.Walk x y,r.IsHamiltonian := by
@@ -92,7 +93,57 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
     have overlap := card_le_card intersect
     have pe : (E p).card≤k+1 := point p
     have qe : (E q).card≤k+1 := point q
-    have upper1 : Fintype.card V+(D A).card≤2*k+3+(P A).card+(P B).card := by omega
+    let extra := (∃x, x∈E p∩E q ∧ x∉D A) ∨ (∃x, x∈P B ∧ x∈E p∪E q)
+    have more : extra := by
+      by_cases adjacent : G.Adj p q
+      swap
+      · have dist := Graph189LowDegreeTwo.two_edges (cu p ps).symm (cu q qs) ne adjacent
+        left
+        exact ⟨q,mem_inter.mpr ⟨mem_filter.mpr ⟨mem_univ _,by simp [dist]⟩,
+          mem_filter.mpr ⟨mem_univ _,by simp⟩⟩,
+          fun h => disjoint_left.mp sides.left_cut (mem_filter.mp h).1 qs⟩
+      have pick (i j : V) (ij : G.Adj i j) (si : i∈S) (sj : j∈S)
+          (labels : ∀t∈S,t=i ∨ t=j) (dist : G.dist i b=2) : extra := by
+        obtain ⟨w,iw,wb⟩ := Graph189LowDegreeTwo.split_two hc dist
+        have wB : w∈B := by
+          rcases sides.cover w with wa|outside|ws
+          · exact (sides.no_cross w wa b hb.1 wb).elim
+          · exact outside
+          · exact (hb.2.2 w ws wb).elim
+        by_cases jw : G.Adj j w
+        · have db := Graph189LowDegreeTwo.two_edges jw wb
+            (fun h => disjoint_left.mp sides.right_cut hb.1 (h ▸ sj)) (hb.2.2 j sj)
+          have hit (t : V) (ts : t∈S) : b∈E t := by
+            apply mem_filter.mpr
+            refine ⟨mem_univ _,?_⟩
+            rcases labels t ts with rfl|rfl
+            · simp [dist]
+            · simp [db]
+          left
+          exact ⟨b,mem_inter.mpr ⟨hit p ps,hit q qs⟩,
+            fun h => disjoint_left.mp sides.apart (mem_filter.mp h).1 hb.1⟩
+        · have dw := Graph189LowDegreeTwo.two_edges ij.symm iw
+            (fun h => disjoint_left.mp sides.right_cut wB (h ▸ sj)) jw
+          have wj : w∈E j := mem_filter.mpr ⟨mem_univ _,by simp [dw]⟩
+          right
+          refine ⟨w,mem_filter.mpr ⟨wB,i,si,iw⟩,?_⟩
+          rcases eq j sj with rfl|rfl
+          · exact mem_union_left _ wj
+          · exact mem_union_right _ wj
+      obtain ⟨i,si,dist,_⟩ := nearest hc sides.swap point hb ha
+      rcases eq i si with rfl|rfl
+      · exact pick p q adjacent ps qs eq dist
+      · exact pick q p adjacent.symm qs ps (fun t ht => (eq t ht).symm) dist
+    have upper1 : Fintype.card V+(D A).card+1≤2*k+3+(P A).card+(P B).card := by
+      rcases more with ⟨x,both,out⟩|⟨x,port,atAnchor⟩
+      · have ext : insert x (D A)⊆E p∩E q := insert_subset both intersect
+        have bound := card_le_card ext
+        rw [card_insert_of_notMem out] at bound
+        omega
+      · have common : x∈((E p∪E q)∪P A)∩P B := mem_inter.mpr ⟨mem_union_left _ atAnchor,port⟩
+        have pos := card_pos.mpr ⟨x,common⟩
+        have sum := card_union_add_card_inter ((E p∪E q)∪P A) (P B)
+        omega
     have charge := Graph189BoundaryDebit.even_quota hc sides (fun T h =>
       Graph189CutSides.connected_after_smaller_deletion T (h.trans_le sc)) point (Y:=D B) (filter_subset _ _) ha.1
     have all : (D B).filter (fun x => Even (G.dist a x))=D B := filter_eq_self.mpr (by
@@ -115,8 +166,8 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
     have hB := (card_le_card (high_cover B)).trans (card_union_le _ _)
     have total := order_of_high_sides sides
     have upper2 : Fintype.card V≤k+1+(D A).card+(P A).card+(P B).card := by omega
-    change 12≤k at large
-    apply Graph189OnePortCover.below_four hc cap (by omega) large
+    change 10≤k at large
+    apply Graph189OnePortCover.below_four hc cap (by omega) (by omega)
     change _<4*k
     by_cases rich : 2*k≤(P A).card+(P B).card+1
     · have order := Graph189ShallowCommonOrder.rich_order hc sides (by omega) sz point ua cu vb cv
@@ -128,7 +179,7 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
   · by_cases Bsole : F B
     · obtain ⟨x,i,left⟩ := Asole
       obtain ⟨y,j,right⟩ := Bsole
-      exact Graph189SeparatedSideComponents.traceable hc cap sides sc sz large left right
+      exact Graph189SeparatedSideComponents.traceable hc cap sides sc sz (by omega) left right
     · exact done sides.swap deepB deepA commonB commonA Bsole
   · exact done sides deepA deepB commonA commonB Asole
 

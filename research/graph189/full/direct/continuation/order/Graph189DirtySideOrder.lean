@@ -9,12 +9,12 @@ namespace Graph189DirtySideOrder
 variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph V} [DecidableRel G.Adj]
 variable {A B S : Finset V} {p q : V}
 
-/-- If both sides have only private contacts, failure of the clean-side
+/-- When one side has only private contacts, failure of its clean-side
 conditions forces the opposite side to have at most 2k−1 vertices. -/
 theorem order (hc : G.Connected) (cap : ∀v,G.distEven v≤G.secondSmallestDegree+1)
     (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q}) (ne : p≠q)
     (sc : S.card≤G.vertexConnectivity) (con : (G.induce (A:Set V)).Connected)
-    (privateA : ∀x∈A,¬(G.Adj x p ∧ G.Adj x q)) (privateB : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q))
+    (privateA : ∀x∈A,¬(G.Adj x p ∧ G.Adj x q))
     (dirty : ¬Graph189CleanSideCounts.Clean G A p q) : B.card+1≤2*G.secondSmallestDegree := by
   classical
   by_contra tooMany
@@ -44,7 +44,7 @@ theorem order (hc : G.Connected) (cap : ∀v,G.distEven v≤G.secondSmallestDegr
     have dq := pos q qs
     have meet : G.dist p x=2 ∨ G.dist q x=2 := by
       by_contra! miss
-      have low := Graph189PrivateSideSize.far_low hc cap sides.swap pair ne sc privateB xa (by omega) (by omega)
+      have low := Graph189PrivateSideSize.far_low_of_size hc cap sides.swap pair ne sc (by omega) xa (by omega) (by omega)
       omega
     have sole {i : V} (w : Graph189SoleNearestSides.Witness G A S x i) : False := by
       obtain ⟨ports,remote⟩ := Graph189SoleNearestSides.debit hc sides sc cap w

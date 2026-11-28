@@ -26,8 +26,8 @@ theorem traceable (hc : G.Connected)
     simpa only [Nat.add_comm] using (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap
   have size : S.card=2 := by simp [pair,ne]
   have conn : 2≤G.vertexConnectivity := size ▸ sc
-  have ordB := Graph189DirtySideOrder.order hc point sides pair ne sc conA freeA freeB dirtyA
-  have ordA := Graph189DirtySideOrder.order hc point sides.swap pair ne sc conB freeB freeA dirtyB
+  have ordB := Graph189DirtySideOrder.order hc point sides pair ne sc conA freeA dirtyA
+  have ordA := Graph189DirtySideOrder.order hc point sides.swap pair ne sc conB freeB dirtyB
   change A.card+1≤2*k at ordA
   change B.card+1≤2*k at ordB
   have cover : (univ : Finset V)⊆(A∪B)∪S := by

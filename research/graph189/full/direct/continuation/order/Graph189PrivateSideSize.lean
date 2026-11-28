@@ -47,10 +47,10 @@ theorem order (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q})
   exact (degree_pair (G:=G) u v diff).elim (sideSize u ua) (sideSize v va)
 
 /-- Every vertex far from both anchors on the opposite side has degree
-strictly below k. Only the private-contact condition on this side is used. -/
-theorem far_low (hc : G.Connected) (cap : ∀v,G.distEven v≤G.secondSmallestDegree+1)
+strictly below k. It suffices that the near side contains at least k vertices. -/
+theorem far_low_of_size (hc : G.Connected) (cap : ∀v,G.distEven v≤G.secondSmallestDegree+1)
     (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q}) (ne : p≠q)
-    (sc : S.card≤G.vertexConnectivity) (free : ∀x∈A,¬(G.Adj x p ∧ G.Adj x q))
+    (sc : S.card≤G.vertexConnectivity) (bigA : G.secondSmallestDegree≤A.card)
     {y : V} (yb : y∈B) (yp : 3≤G.dist p y) (yq : 3≤G.dist q y) :
     G.degree y<G.secondSmallestDegree := by
   classical
@@ -63,7 +63,6 @@ theorem far_low (hc : G.Connected) (cap : ∀v,G.distEven v≤G.secondSmallestDe
     rcases degree_pair (G:=G) x y diff with h|h
     · exact (not_lt_of_ge h) (mem_filter.mp hx).2
     · exact (not_lt_of_ge h) (mem_filter.mp hy).2
-  have bigA := order sides pair sc free
   have size : S.card=2 := by simp [pair,ne]
   have ps : p∈S := by simp [pair]
   have qs : q∈S := by simp [pair]
@@ -99,6 +98,14 @@ theorem far_low (hc : G.Connected) (cap : ∀v,G.distEven v≤G.secondSmallestDe
   have tot := card_sdiff_add_card_eq_card (show H⊆A from filter_subset _ _)
   omega
 
+theorem far_low (hc : G.Connected) (cap : ∀v,G.distEven v≤G.secondSmallestDegree+1)
+    (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q}) (ne : p≠q)
+    (sc : S.card≤G.vertexConnectivity) (free : ∀x∈A,¬(G.Adj x p ∧ G.Adj x q))
+    {y : V} (yb : y∈B) (yp : 3≤G.dist p y) (yq : 3≤G.dist q y) :
+    G.degree y<G.secondSmallestDegree :=
+  far_low_of_size hc cap sides pair ne sc (order sides pair sc free) yb yp yq
+
+#print axioms far_low_of_size
 #print axioms order
 #print axioms far_low
 end Graph189PrivateSideSize

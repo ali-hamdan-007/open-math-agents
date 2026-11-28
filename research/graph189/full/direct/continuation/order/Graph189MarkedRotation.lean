@@ -110,10 +110,13 @@ private theorem open_mark {a b : V} (p : G.Walk a b) (hp : p.IsPath) (close : G.
 
 /-- Rotate either end of a longest path. A pivot available from both ends
 closes a cycle that omits precisely that pivot from the original path. -/
-theorem from_longest {a b : V} (p : G.Walk a b) (hp : p.IsPath)
+theorem from_longest_with {a b : V} (p : G.Walk a b) (hp : p.IsPath)
     (longest : ∀ {x y}, ∀ q : G.Walk x y, q.IsPath → q.length≤p.length)
     (P : Finset V) {loss : ℕ} (near : Fintype.card V≤p.support.length+loss)
-    (marks : loss+2≤P.card) (room : Fintype.card V<G.degree a+G.degree b+P.card) :
+    (room : Fintype.card V<G.degree a+G.degree b+P.card)
+    (openCycle : ∀ {u v}, ∀ q : G.Walk u v, q.IsPath → G.Adj v u →
+      Fintype.card V≤q.support.length+(loss+1) →
+      ∃x∈P, ∃y, ∃r : G.Walk x y,r.IsPath ∧ Fintype.card V≤r.support.length+(loss+1)) :
     ∃x∈P, ∃y, ∃q : G.Walk x y,q.IsPath ∧ Fintype.card V≤q.support.length+(loss+1) := by
   classical
   by_contra no
@@ -157,6 +160,17 @@ theorem from_longest {a b : V} (p : G.Walk a b) (hp : p.IsPath)
   rw [show p.length-(i+1)=j-1 by omega] at last
   obtain ⟨q,hq,cost⟩ := jump p hp (show j-1≤j by omega) (by omega) first
   have long : Fintype.card V≤q.support.length+(loss+1) := by omega
+  exact no (openCycle q hq last long)
+
+/-- With enough marks, the cycle obtained by rotating either end contains one. -/
+theorem from_longest {a b : V} (p : G.Walk a b) (hp : p.IsPath)
+    (longest : ∀ {x y}, ∀ q : G.Walk x y, q.IsPath → q.length≤p.length)
+    (P : Finset V) {loss : ℕ} (near : Fintype.card V≤p.support.length+loss)
+    (marks : loss+2≤P.card) (room : Fintype.card V<G.degree a+G.degree b+P.card) :
+    ∃x∈P, ∃y, ∃q : G.Walk x y,q.IsPath ∧ Fintype.card V≤q.support.length+(loss+1) := by
+  classical
+  apply from_longest_with p hp longest P near room
+  intro u v q hq last long
   have contact : ∃x∈P,x∈q.support := by
     by_contra! absent
     have dis : Disjoint P q.support.toFinset := Finset.disjoint_left.mpr
@@ -165,7 +179,7 @@ theorem from_longest {a b : V} (p : G.Walk a b) (hp : p.IsPath)
     rw [card_union_of_disjoint dis,List.toFinset_card_of_nodup hq.support_nodup] at count
     omega
   obtain ⟨x,xP,y,r,hr,sz⟩ := open_mark q hq last P contact
-  exact no ⟨x,xP,y,r,hr,by omega⟩
+  exact ⟨x,xP,y,r,hr,by omega⟩
 
 /-- Through order 2d+1 two ports suffice for a path missing at most one
 vertex, including when the side has a cut vertex. -/
@@ -185,6 +199,7 @@ theorem from_two_marks (P : Finset V) (marks : 2≤P.card) {d : ℕ}
     have y := q.length_support
     omega
 
+#print axioms from_longest_with
 #print axioms from_longest
 #print axioms from_two_marks
 end Graph189MarkedRotation

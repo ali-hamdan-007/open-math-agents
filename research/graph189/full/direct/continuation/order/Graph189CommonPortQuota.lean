@@ -17,7 +17,9 @@ theorem radius (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
   by_contra! far
   let T := A.filter (fun w => G.dist x w=2)
   let H := G.induce {w : V | w∉T}
-  have small : T.card<G.vertexConnectivity := by omega
+  have small : T.card<G.vertexConnectivity := by
+    change T.card≤1 at few
+    omega
   have con : H.Connected := Graph189CutSides.connected_after_smaller_deletion T small
   have vx : v∉T := fun h => (Nat.ne_of_gt far) (mem_filter.mp h).2
   have xx : x∉T := by simp [T]
