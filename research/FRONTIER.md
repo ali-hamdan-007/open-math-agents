@@ -2,6 +2,10 @@
 
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## The five-cut endpoint at degree 18
+
+A minimum cut through a low vertex gives a strict order-deficit inequality. In its two-edge wedge there is a higher-degree second common neighbor. Either a common neighbor misses the low center, or the center and an endpoint count a common even-distance vertex. Retaining that one unit in the wedge count excludes the equality case at k=18. Together with the published degree-sum argument this proves every order at connectivity at least five for k≥18. [Strict wedge](graph189/full/direct/continuation/order/Graph189StrictLowWedge.lean) · [Separator theorem](graph189/full/direct/continuation/order/Graph189StrictCutDeficit.lean) · [All-order conclusion](graph189/full/direct/continuation/root/Graph189FiveConnectivity19.lean)
+
 ## All-order proofs at connectivity two from degree 12 and connectivity at least five from degree 19
 
 For a minimum five-cut containing the low vertex, the weighted removable-vertex bound charges its degree deficit once, while the cut inequality charges it k times. A deficit of two would already contradict the two bounds for k≥19. If the low vertex belongs to no minimum cut, completing it raises the connectivity. In both alternatives the integer width bound excludes every residual degree through 24. [Five-connectivity theorem](graph189/full/direct/continuation/root/Graph189FiveConnectivity19.lean) · [Independent kernel](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46145167457/job/140979521577)

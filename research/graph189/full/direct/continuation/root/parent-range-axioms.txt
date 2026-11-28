@@ -149,3 +149,6 @@ Degree-independent ordinary gap, connectivity two from 12, and connectivity at l
 'Graph189TwelvePathOrder.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189TwoConnectivity.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189FiveConnectivity.traceable_ge19' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189WedgeOrder.strict_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CutSides.CutSides.strict_low_cut' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189FiveConnectivity.traceable_ge18' depends on axioms: [propext, Classical.choice, Quot.sound]

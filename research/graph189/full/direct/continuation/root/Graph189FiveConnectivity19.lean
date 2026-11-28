@@ -1,3 +1,5 @@
+import Graph189StrictCutDeficit
+import Graph189SevenIndexTraceable
 import Graph189WeightedCriticalOrder
 import Graph189FiveConnectivity25
 import Graph189UnrestrictedMinimumDeletion
@@ -6,7 +8,7 @@ open Finset SimpleGraph Graph189UniversalCycle
 namespace Graph189FiveConnectivity
 variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph V} [DecidableRel G.Adj]
 
-private theorem no_width {k n e w : ℤ} (left : 19≤k) (right : k≤24)
+private theorem no_width {k n e w : ℤ} (left : 18≤k) (right : k≤24)
     (ord : 7*k-30≤n) (ep : 0≤e) (em : e+3≤2*k)
     (ore : n≤3*k+1+k*e) (width : 2*(n-2*k)+k*e≤(k+1)*w)
     (budget : w*(n-2*k-e-2)≤k*(k+e)) : False := by
@@ -26,13 +28,13 @@ private theorem no_width {k n e w : ℤ} (left : 19≤k) (right : k≤24)
 
 private theorem lower_five (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (five : G.vertexConnectivity=5) (range : 19≤G.secondSmallestDegree)
+    (five : G.vertexConnectivity=5) (range : 18≤G.secondSmallestDegree)
     (bad : ¬∃ x y, ∃p : G.Walk x y,p.IsHamiltonian) :
     7*G.secondSmallestDegree≤Fintype.card V+30 := by
   classical
   let k := G.secondSmallestDegree
   let n := Fintype.card V
-  change 19≤k at range
+  change 18≤k at range
   change 7*k≤n+30
   have upper (v : V) : G.distEven v≤1+G.secondSmallestDegree :=
     (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap
@@ -72,12 +74,11 @@ private theorem lower_five (hc : G.Connected)
   obtain ⟨A,B,sides⟩ := Graph189CutSides.exists_cutSides_of_disconnected S remain cut
   have smaller (T : Finset V) (h : T.card<S.card) :=
     Graph189CutSides.connected_after_smaller_deletion (G:=G) T (h.trans_eq size)
-  obtain ⟨_,_,_,_,_,_,r,_,_,rs,deficit,debit⟩ :=
-    sides.low_cut_deficit hc smaller upper inside (by change G.degree z<k; omega)
+  obtain ⟨r,rs,deficit,debit⟩ :=
+    sides.strict_low_cut hc smaller upper inside (by change G.degree z<k; omega)
   change k-G.degree z+1≤r at deficit
-  change n+k*(k-G.degree z)≤2*k+(k+1)*r at debit
+  change n+k*(k-G.degree z)<2*k+(k+1)*r at debit
   have low := weighted (by omega)
-  have cost := Nat.mul_le_mul_left k (show 2≤k-G.degree z by omega)
   have maximum := Nat.mul_le_mul_left (k+1) (by omega : r≤5)
   have gap := Nat.mul_le_mul_left (k-1) (show 2≤k-G.degree z by omega)
   have identity : k*(k-G.degree z)=(k-1)*(k-G.degree z)+(k-G.degree z) := by
@@ -87,21 +88,23 @@ private theorem lower_five (hc : G.Connected)
   omega
 
 /-- A five-cut suffices for the original, all-orders traceability conclusion
-throughout the previously open degree interval 19 through 24. -/
-theorem traceable_ge19 (hc : G.Connected)
+throughout the previously open degree interval 18 through 24. -/
+theorem traceable_ge18 (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (range : 19≤G.secondSmallestDegree) (conn : 5≤G.vertexConnectivity) :
+    (range : 18≤G.secondSmallestDegree) (conn : 5≤G.vertexConnectivity) :
     ∃a b, ∃p : G.Walk a b,p.IsHamiltonian := by
   by_cases big : 25≤G.secondSmallestDegree
   · exact traceable_ge25 hc cap big conn
   by_cases six : 6≤G.vertexConnectivity
-  · exact Graph189HighConnectivityQuarter.traceable_six hc cap range (by omega) six
+  · by_cases start : 19≤G.secondSmallestDegree
+    · exact Graph189HighConnectivityQuarter.traceable_six hc cap start (by omega) six
+    exact Graph189SevenIndexTraceable.traceable_sector hc cap (Or.inr ⟨rfl,by omega,by omega⟩) six
   by_contra bad
   let k := G.secondSmallestDegree
   let n := Fintype.card V
   have ord := lower_five hc cap (by omega) range bad
   change 7*k≤n+30 at ord
-  change 19≤k at range
+  change 18≤k at range
   change ¬25≤k at big
   have ceiling := Graph189ThirdLayerDegreeCeiling.max_degree hc cap (by change 5*k+2<n; omega)
   change G.maxDegree+3≤3*k at ceiling
@@ -109,5 +112,11 @@ theorem traceable_ge19 (hc : G.Connected)
   exact no_width (k:=(k:ℤ)) (n:=(n:ℤ)) (by exact_mod_cast range) (by omega)
     (by omega) ep (by change ((G.maxDegree-k : ℕ):ℤ)+3≤2*(k:ℤ); omega) ore width budget
 
-#print axioms traceable_ge19
+theorem traceable_ge19 (hc : G.Connected)
+    (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (range : 19≤G.secondSmallestDegree) (conn : 5≤G.vertexConnectivity) :
+    ∃a b, ∃p : G.Walk a b,p.IsHamiltonian :=
+  traceable_ge18 hc cap (by omega) conn
+
+#print axioms traceable_ge18
 end Graph189FiveConnectivity

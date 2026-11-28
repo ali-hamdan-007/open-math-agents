@@ -22,12 +22,15 @@ private theorem predecessor {x z : V} {j : ℕ} (hz : G.dist x z = j+1) :
     have := he.diff_dist_adj (u := x)
     exact ⟨a,by omega,he.symm⟩
 
-/-- The order bound at an induced two-edge path with center x. -/
-theorem wedge_order (hc : G.Connected) {x y z : V} (hxy : G.Adj x y) (hxz : G.Adj x z)
+/-- Exact common-neighbor and even-layer overlaps in the wedge order count. -/
+theorem wedge_order_with_overlap (hc : G.Connected) {x y z : V} (hxy : G.Adj x y) (hxz : G.Adj x z)
     (_hyz : ¬G.Adj y z) {k : ℕ} (cap : ∀ v, G.distEven v ≤ k+1) :
-    Fintype.card V + (k+1) * ((G.neighborFinset x ∪
-        (G.neighborFinset y ∪ G.neighborFinset z)).card) ≤
-        3*k+2 + k*(G.degree x + G.distEven x) + G.degree y + G.degree z := by
+    let N := G.neighborFinset x
+    let C := G.neighborFinset y ∩ G.neighborFinset z
+    let E (v : V) := univ.filter (fun w => Even (G.dist v w))
+    Fintype.card V + (k+1)*((N ∪ (G.neighborFinset y ∪ G.neighborFinset z)).card) +
+      (C.card-((C∩N).card+1)) + ((E y∪E z)∩E x).card ≤
+        3*k+2+k*(G.degree x+G.distEven x)+G.degree y+G.degree z := by
   classical
   let E (v : V) := Finset.univ.filter (fun w => Even (G.dist v w))
   let X := G.neighborFinset x
@@ -162,18 +165,28 @@ theorem wedge_order (hc : G.Connected) {x y z : V} (hxy : G.Adj x y) (hxz : G.Ad
   have count := card_le_card all
   rw [card_univ] at count
   have h1 := Finset.card_union_add_card_inter (E y) (E z)
-  have h2 := Finset.card_union_le (E y ∪ E z) (E x)
+  have h2 := Finset.card_union_add_card_inter (E y ∪ E z) (E x)
   have h3 := Finset.card_union_le ((E y ∪ E z) ∪ E x) I
   have h4 := Finset.card_union_le (((E y ∪ E z) ∪ E x) ∪ I) T
   have h5 := card_le_card qs
   have ecx := ecap x
   have ecy := ecap y
   have ecz := ecap z
-  have hh : Fintype.card V + Q.card ≤ 3*k+2+C.card + k*A.card := by omega
+  have hh : Fintype.card V + Q.card + (C.card-(I.card+1)) + ((E y∪E z)∩E x).card ≤ 3*k+2+C.card + k*A.card := by omega
   have hm := Nat.mul_le_mul_left k ac
   rw [Nat.mul_add, Nat.add_comm (G.distEven x) (G.degree x)] at hm
-  change Fintype.card V + (k+1)*U.card ≤ _
+  change Fintype.card V + (k+1)*U.card + (C.card-(I.card+1)) + ((E y∪E z)∩E x).card ≤ _
   rw [Nat.add_mul, Nat.one_mul]
+  omega
+
+/-- The order bound at an induced two-edge path with center x. -/
+theorem wedge_order (hc : G.Connected) {x y z : V} (hxy : G.Adj x y) (hxz : G.Adj x z)
+    (_hyz : ¬G.Adj y z) {k : ℕ} (cap : ∀ v, G.distEven v ≤ k+1) :
+    Fintype.card V + (k+1) * ((G.neighborFinset x ∪
+        (G.neighborFinset y ∪ G.neighborFinset z)).card) ≤
+        3*k+2 + k*(G.degree x + G.distEven x) + G.degree y + G.degree z := by
+  have bound := wedge_order_with_overlap hc hxy hxz _hyz cap
+  dsimp only at bound
   omega
 
 #print axioms wedge_order
