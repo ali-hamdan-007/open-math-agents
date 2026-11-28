@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • small three-cut components, with unbounded opposite side
+
+Ali's separator-contact note has led to an all-order theorem for k≥24 at vertex connectivity three. If deleting a minimum three-cut yields two components and one has at most 2k−5 vertices, the graph has a Hamiltonian path, independent of the size of the opposite component and the location or degree of the single low vertex. The direct argument covers a small side containing a nonport in `research/graph189/full/direct/continuation/sep/no-small-mixed-three-cut.md`. If every vertex of that side touches the cut, its port supports either include a universal port (`global/cut3/shallow-universal-port.md`), a double port (`order/shallow-double-ports-all-orders.md`), or only private ports (`sep/shallow-private-small-three-cut.md`). Individual proofs have been reviewed during the run; check review records and any later refinements. This includes Ali's whole original three-cut range |A|≤2k−7 at every opposite-side order. No official checker verdict for these paper arguments.
+
+For a remaining two-component minimum three-cut at k≥24, both components must have at least 2k−4 vertices (and n≥5k−2). At still larger orders the clean two-window proof excludes certain nearest-anchor patterns. For the general problem the new induced-k-core inheritance and iterative peeling obstructions do not assume a special separator or degree distribution. Reproducible per-graph bounds and the computable side-degree criterion are in `continuation/verify/torso-certificate.py` and `continuation/root/large-side-degree-sum.md`. An ordinary B-path through all B vertices can be trimmed to a genuine separator contact with loss at most half the number of nonports, independently of |B|. The full conjecture remains open.
+
+
 ## Graph 189 • all separating pairs and the degree-free 5k−3 bound
 
 The general paper proof now handles every graph of vertex connectivity two, including small k and any single low vertex (see `continuation/sep/{unrestricted-two-cuts,small-two-cuts}.md` under `research/graph189/full/direct/`). For every k≥16, every qualifying graph of order n≤5k−3 is traceable, independent of maximum degree and connectivity. Every qualifying graph with Δ≤k+2 is also covered at every order and every k. The full written proofs and supporting constructions are in `continuation/global/{five-times-order-unrestricted,max-degree-plus-two-exception}.md`; independent review passed. These are paper results. The full conjecture remains open.

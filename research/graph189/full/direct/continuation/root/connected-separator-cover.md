@@ -1,0 +1,9 @@
+# A connected minimum separator covers both deep sides by even-distance sets
+
+Let S be a connected cardinality-minimum separator in a qualifying graph, with s=|S|≥3. Assume G−S has two components A,B with a high nonport in each, where high means degree at least k and a nonport has no neighbor in S. All distances are ambient in G. Then
+
+    n ≤ (s+1)k+s+1.
+
+Every high nonport is at distance two from S, since its distance to an opposite high nonport is at least and at most four. A port missing all closed even-distance sets centered on S must have one common odd distance to all of S, since distances from the port to adjacent anchors differ by at most one. Because it is a port, this distance is one. Thus only universal ports (adjacent to all anchors) and possibly the low vertex can be missed by these s sets. If all universal ports lie in one side, any opposite port sees all of them at positive distance two, proving there are at most k. The s closed sets have at most s(k+1) members in total and the bound follows. If universal ports occur in both sides, each side has at most k ports by the opposite universal port. Each also contains at most k−s high nonports (their distance from an opposite high nonport is four and its second layer has size ≥s). Hence in this case n≤4k−s+1. For s≥3 this implies the displayed bound.
+
+In particular at s=4 this gives n≤5k+5. For k≥16, 5k+5≤6k−11, and the independent connectivity-four moderate-order theorem (verify/connectivity-three-halves-all.md at r=3) gives a Hamiltonian path. This solves every qualifying graph with a connected minimum four-cut and a high nonport on each side, independent of either side's size and all degrees. If one side has a universal port the same estimates are valid in the one-sided or two-sided alternatives above. This deduction does not treat disconnected four-cuts or shallow sides.

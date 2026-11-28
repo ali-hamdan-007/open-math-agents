@@ -1,0 +1,23 @@
+# No growing opposite side at a minimum three-cut with a small wholly high side
+
+Assume k≥24, κ(G)=3 and a minimum three-cut S has two wholly high components A,B, each with a nonport. If a=|A|≤2k−5 then G is traceable, without any upper bound on |B| or on vertex degrees. Equivalently every minimum three-cut of this type in a nontraceable instance has both sides of size at least 2k−4. The proof uses the current independent five-times-order theorem (../global/five-times-order-unrestricted.md), which covers n≤5k−3. All estimates below concern true positive-even-distance vertex counts in G.
+
+Suppose n≥5k−2. Then m=|B|=n−3−a≥3k. Every high nonport y of A is at distance two from S via the opposite high nonport. Write A(y) for its nonempty set of nearest anchors. If any two (not necessarily distinct) A ports together touched all of A(y), the B vertices touching A(y) would be covered by the even sets of those ports at distance two. Every other B vertex is at distance four from y, since a three-edge path would require its last edge from A(y). The second layer of y has size at least three by connectivity and the existence of the opposite nonport at distance four. Therefore m≤3k−3, impossible. This shows that every nonport in A has all three anchors nearest. It also shows that every A port has singleton support, for otherwise that port together with one on the remaining anchor would cover all three. Every anchor touches A and B by minimality.
+
+Number the anchors 1,2,3 and write p_i for the number of A ports at anchor i, q_i for its B contacts, and d,e for the numbers of nonports in A,B. Thus Σp_i=a−d and Σq_i≥m−e. For each i choose an A port u_i on i. Every pair of distinct vertices in A is adjacent or at distance two: the internal minimum degree is at least k−3 and |A|≤2k−5. Thus the number of A nonneighbors of u_i apart from itself, denoted f_i, is bounded by k−q_i, since its q_i opposite i-ports already have distance two from u_i. If u_i is at distance two from t_i *other* anchors, then f_i≤k−q_i−t_i.
+
+At anchor i, all but at most f_i members of A outside its own p_i contacts are at distance two via u_i. Also each B nonport has at least one nearest anchor at distance two, so the three anchor budgets imply
+
+    3k ≥ Σ_i (a−p_i−f_i) + e
+       ≥ 2a+d −3k + Σ_i q_i + Σ_i t_i + e
+       ≥ 2a+d+m−3k + Σ_i t_i.
+
+In particular n≤6k+3−a−d−Σt_i. An A nonport has ≥k neighbors in A, so a=k+ρ with ρ≥1, and d≥1. The assumption n≥5k−2 implies ρ+d≤5.
+
+The largest A port class has size at least (k+ρ−d)/3>2ρ: for 1≤ρ≤4 and d≤5−ρ this follows from k≥24. All A ports touch exactly one anchor and have ambient degree at least k, so each misses at most ρ vertices of A apart from itself. Choose one representative from each of the other two classes and then their common neighbor in the largest class, which exists as these two representatives together miss at most 2ρ vertices there. The large-class representative has distance two from each of the two other anchors, and both other representatives are at distance two from the large class's anchor. Thus Σt_i≥4. Substitution yields n≤5k+3−ρ−d−4≤5k−3, a contradiction. This completes the all-order result.
+
+## Extension through side order 2k−1
+
+The order hypothesis on the small wholly high side can be weakened to |A|≤2k−1. First strengthen the two-port cover used above. For every A port u meeting r anchors, its closed neighborhood inside A has ambient boundary at least three since that boundary separates it from B. Every member of this boundary is either one of the r incident anchors or at exact distance two from u, and lies in A∪S. Thus u spends at least 3−r positive-even slots outside B. If A has a universal port, |B|≤2k−3 by the earlier one-port cover. Otherwise suppose a high nonport's nearest anchors are covered by two different ports. If their support sizes are r₁,r₂≤2, the three covering even sets spend at least 3+(3−r₁)+(3−r₂) slots outside B. When both supports have size two they intersect, and a B port on their common anchor is counted twice. Consequently |B|≤3k−6 in all cases. The one-port case already gives the stronger bound |B|≤2k−3.
+
+Now n≥5k−2 and |A|≤2k−1 imply |B|≥3k−4. The same argument therefore forces all A ports to have singleton supports, and all A nonports to have all three anchors nearest. Because the entire A is high, its internal minimum degree is now k−1. The order |A|≤2k−1 guarantees diameter at most two in A: two nonadjacent vertices have both their internal neighborhoods in at most 2k−3 other vertices. All subsequent counts in the preceding proof apply, again giving n≤5k−3. This proves traceability through the improved small-side range.
