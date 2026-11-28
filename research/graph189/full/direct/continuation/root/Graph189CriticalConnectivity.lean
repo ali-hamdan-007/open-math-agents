@@ -8,7 +8,7 @@ variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph
 variable [DecidableRel G.Adj]
 
 omit [Fintype V] [DecidableEq V] [Nontrivial V] [DecidableRel G.Adj] in
-private theorem disconnected {A B S : Finset V} (sides : Graph189CutSides.CutSides G A B S) :
+theorem disconnected {A B S : Finset V} (sides : Graph189CutSides.CutSides G A B S) :
     ¬(G.induce {v : V | v ∉ S}).Connected := by
   classical
   intro conn

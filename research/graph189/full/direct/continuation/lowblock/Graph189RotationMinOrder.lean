@@ -3,6 +3,9 @@ import Graph189MinimumExteriorCore
 import Graph189LongestCycleMaximum
 import Graph189BondyOrder
 import Graph189MinimumCutOrder
+import Graph189TraceableDeletionOrder
+import Graph189NearMinimumDegree
+import Graph189ConnectivityDegree
 
 open SimpleGraph Finset Graph189UniversalCycle
 namespace Graph189RotationLinked
@@ -43,6 +46,26 @@ theorem minimum_order (w : V) (minw : G.degree w=G.minDegree)
   have cmp := Nat.mul_le_mul_left (l+1) (show G.secondSmallestDegree-l+2≤K.minDegree-l+2 by omega)
   omega
 
+/-- In a nontraceable qualifying graph the original order satisfies the base
+inequality at every available index through half the second degree, whether
+or not deleting a minimum-degree vertex leaves a Hamiltonian path. -/
+theorem base_order (notTrace : ¬∃ a b, ∃ p : G.Walk a b, p.IsHamiltonian)
+    (cap : ∀ v, G.distEven v≤G.secondSmallestDegree+1)
+    {l : ℕ} (three : 3≤l) (conn : l≤G.vertexConnectivity)
+    (enough : 2*l+1≤G.secondSmallestDegree) :
+    (l+1)*(G.secondSmallestDegree-l+2)≤Fintype.card V+1 := by
+  classical
+  obtain ⟨z,hz⟩ := G.exists_minimal_degree_vertex
+  by_cases deletion : ∃ u v, ∃ p : (G.induce {v : V | v≠z}).Walk u v, p.IsHamiltonian
+  · obtain ⟨u,v,p,hp⟩ := deletion
+    have low := Graph189ExteriorDegreeCycle.low_of_traceable_minimum_deletion (by omega) cap notTrace z hz.symm p hp
+    exact Graph189ExteriorGap.order_of_traceable_low_deletion z low cap notTrace p hp three
+      (by omega) (conn.trans (Graph189CutSides.connectivity_le_degree z))
+  have order := minimum_order z hz.symm notTrace deletion cap three (conn.trans (completeAt_connectivity z)) enough
+  omega
+
 end Graph189RotationLinked
 #print axioms Graph189RotationLinked.order_of_core
 #print axioms Graph189RotationLinked.minimum_order
+
+#print axioms Graph189RotationLinked.base_order

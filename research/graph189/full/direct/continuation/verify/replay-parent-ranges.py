@@ -35,7 +35,7 @@ def main():
         str(fc / "FormalConjectures/WrittenOnTheWallII/GraphConjecture189.lean"), str(focused)
     ], check=True)
     files[focused.stem] = focused
-    imports = re.compile(r"^(?:public\s+)?import\s+(\w+(?:\.\w+)*)", re.M)
+    imports = re.compile(r"^(?:public\s+)?import\s+(?:all\s+)?(\w+(?:\.\w+)*)", re.M)
     signatures = {}
 
     def compile_module(name):

@@ -24,6 +24,20 @@ Graph189HighDegreeStructural 729f1a50621c6f7df3328eecc030b30bd64bee6a2da6b106610
 Graph189MinimumDeletionTraceable ba616349c6c7b075d677f899a47c5ca86ebe2efaf544583d9287352fc8a51708
 'Graph189StructuralConclusion.traceable_of_traceable_minimum_deletion' depends on axioms: [propext, Classical.choice, Quot.sound]
 
-Graph189SevenIndexTraceable 1b7e08b54b4065a4f6aeb71f93bd9a14464a51f3fca2bf8a158ef2960ed8992f
-'Graph189SevenIndexTraceable.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Graph189SevenIndexTraceable.traceable_from_sixteen' depends on axioms: [propext, Classical.choice, Quot.sound]
+Graph189SevenIndexTraceable dd3e81999ddcee16f749e09530176f0335604bc5dc016ad196d9de356114ac48
+'Graph189SevenIndexTraceable.traceable_sector' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189RotationMinOrder 4679061e0362310b9729e43141144fb7d3bfa0486181fac38e14a5f20a059ea7
+'Graph189RotationLinked.order_of_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189RotationLinked.minimum_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189RotationLinked.base_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189OrdinaryOmission 6fa1aec4c26f7306d3820081fa083076732558a9a8a1d8772294c94ca2029818
+'Graph189OrdinaryOmission.small_exterior_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189OrdinaryOmission.traceable_of_near' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189FiveTiedOriginal 92bb232fa9ec5d7b08a2c1baf72593cc1a31082983cb04df94a2e70ed44b764b
+'Graph189FiveTiedOriginal.traceable_tied_five' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189ThirdLayerDegreeCeiling 7632ef5af74adf34091f705eb27768d6e914cc61902685233e9f014ec319e603
+'Graph189ThirdLayerDegreeCeiling.max_degree' depends on axioms: [propext, Classical.choice, Quot.sound]

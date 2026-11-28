@@ -5,6 +5,9 @@ The pinned Lean kernel checked each of the following graph-facing conclusions. H
 | Additional hypotheses | Conclusion and Lean source |
 |---|---|
 | k=4 | A Hamiltonian path at every order. [FourOriginal.traceable_four](../verify/Graph189FourOriginal.lean) |
+| k=5, δ=5 | A Hamiltonian path at every order. [FiveTiedOriginal.traceable_tied_five](../verify/Graph189FiveTiedOriginal.lean) |
+| k=15 or 16, κ≥7, or k=17 or 18, κ≥6 | A Hamiltonian path at every order. [SevenIndexTraceable.traceable_sector](../lowblock/Graph189SevenIndexTraceable.lean) |
+| κ≥2, k≥26, some path omits at most k+1−floor((k+2)/4) vertices | A Hamiltonian path. This is the terminal path-length criterion for the two-side arguments below connectivity five. [OrdinaryOmission.traceable_of_near](Graph189OrdinaryOmission.lean) |
 | κ≥2, δ=2, k≥7 | A Hamiltonian path at every order. [DegreeTwoOriginal.traceable](Graph189DegreeTwoOriginal.lean) |
 | κ≥2, k≥12, n≤3k+2 | A Hamiltonian path. The parent form takes connectedness of every single-vertex deletion directly. [ParentConnectivity.moderate](Graph189ParentConnectivity.lean) |
 | κ≥3, k≥8, n≤3k+2 | A Hamiltonian path. [HighConnectivityQuarter.traceable_moderate](Graph189HighConnectivityQuarter.lean) |
