@@ -71,14 +71,14 @@ private theorem representatives (hc : G.Connected) (sides : Graph189CutSides.Cut
     (fun e => disjoint_left.mp sides.left_cut xa (e.symm ▸ qs)) xq⟩
 
 /-- In a nonadjacent mixed pair with two private types in the shallow
-common side, the actual anchor and representative rows give 2n ≤ 7k+1. -/
+common side, the actual anchor and representative rows give 2n ≤ 7k. -/
 theorem census (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
     (pair : S={p,q}) (ne : p≠q) (nonadj : ¬G.Adj p q) (sc : S.card≤G.vertexConnectivity)
     (con : (G.induce (A:Set V)).Connected) (point : ∀v,G.distEven v≤G.secondSmallestDegree+1)
     (largeB : 2*G.secondSmallestDegree≤B.card) (shallow : ∀x∈A,G.secondSmallestDegree≤G.degree x → ∃i∈S,G.Adj i x)
     (free : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q)) (common : ∃x∈A,∀i∈S,G.Adj x i)
     (privateP : ∃x∈A,G.Adj x p ∧ ¬G.Adj x q) (privateQ : ∃x∈A,G.Adj x q ∧ ¬G.Adj x p) :
-    2*Fintype.card V≤7*G.secondSmallestDegree+1 := by
+    2*Fintype.card V≤7*G.secondSmallestDegree := by
   classical
   let k := G.secondSmallestDegree
   let AP := A.filter (G.Adj p)
@@ -89,6 +89,7 @@ theorem census (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
   let W := B.filter (fun y => G.dist p y=2 ∧ G.dist q y=2)
   let T := B.filter (fun y => 3≤G.dist p y ∧ 3≤G.dist q y)
   let L := univ.filter (fun x => G.degree x<k)
+  let LA := A∩L
   have reversePair := pair.trans (Finset.pair_comm _ _)
   have ps : p∈S := by simp [pair]
   have qs : q∈S := by simp [pair]
@@ -110,7 +111,7 @@ theorem census (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
     rcases degree_pair (G:=G) x y d with h|h
     · exact (not_lt_of_ge h) (mem_filter.mp hx).2
     · exact (not_lt_of_ge h) (mem_filter.mp hy).2)
-  have leftSub : A⊆(AP∪AQ)∪L := by
+  have leftSub : A⊆(AP∪AQ)∪LA := by
     intro x xa
     by_cases high : k≤G.degree x
     · obtain ⟨i,si,ix⟩ := shallow x xa high
@@ -118,11 +119,11 @@ theorem census (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
       rcases (show i=p ∨ i=q by simpa [pair] using si) with rfl|rfl
       · exact mem_union_left _ (mem_filter.mpr ⟨xa,ix⟩)
       · exact mem_union_right _ (mem_filter.mpr ⟨xa,ix⟩)
-    · exact mem_union_right _ (mem_filter.mpr ⟨mem_univ _,lt_of_not_ge high⟩)
+    · exact mem_union_right _ (mem_inter.mpr ⟨xa,mem_filter.mpr ⟨mem_univ _,lt_of_not_ge high⟩⟩)
   have sumA := (card_le_card leftSub).trans (card_union_le _ _)
   have interA := card_union_add_card_inter AP AQ
   change (AP∪AQ).card+C.card=AP.card+AQ.card at interA
-  have aBound : A.card+C.card+1≤2*k := by omega
+  have aBound : A.card+C.card+2≤2*k+LA.card := by omega
   obtain ⟨u,ua,iu,notU⟩ := privateP
   obtain ⟨v,va,iv,notV⟩ := privateQ
   have uv : u≠v := fun h => notU (h.symm ▸ iv)
@@ -134,7 +135,10 @@ theorem census (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
     intro y yh
     obtain ⟨yb,yp,yq⟩ := mem_filter.mp yh
     exact mem_filter.mpr ⟨mem_univ _,Graph189PrivateSideSize.far_low_of_size hc point sides pair ne sc bigA yb yp yq⟩
-  have tiny := (card_le_card smallT).trans low
+  have apart : Disjoint LA T := sides.apart.mono inter_subset_left (filter_subset _ _)
+  have lowUnion : LA ∪ T ⊆ L := union_subset inter_subset_right smallT
+  have singleLow := (card_le_card lowUnion).trans low
+  rw [card_union_of_disjoint apart] at singleLow
   obtain ⟨⟨e,ea,ep,eq⟩,pNear⟩ := representatives hc sides pair ne sc con point largeB shallow
     ⟨u,ua,iu,notU⟩ ⟨v,va,iv,notV⟩
   obtain ⟨⟨f,fa,fq,fp⟩,qNear⟩ := representatives hc sides reversePair ne.symm sc con point largeB shallow
@@ -150,7 +154,7 @@ theorem census (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
   have real := (card_le_card unionAll).trans (card_union_le _ _)
   rw [card_univ,sz] at real
   have ab := card_union_le A B
-  have first : Fintype.card V+C.card≤4*k+W.card := by omega
+  have first : Fintype.card V+C.card+1≤4*k+W.card := by omega
   obtain ⟨g,ga,cg⟩ := common
   have dist := Graph189LowDegreeTwo.two_edges (cg p ps).symm (cg q qs) ne nonadj
   have rev := (G.dist_comm (u:=q) (v:=p)).trans dist
@@ -215,8 +219,26 @@ theorem census (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
   have add := card_union_add_card_inter (E p) (E q)
   have ep' : (E p).card≤k+1 := point p
   have eq' : (E q).card≤k+1 := point q
-  change 2*Fintype.card V≤7*k+1
+  change 2*Fintype.card V≤7*k
+  omega
+
+/-- For every second degree at least eleven, this mixed two-cut configuration satisfies
+exactly the order hypothesis of `Graph189OnePortCover.below_four`. At degree eleven
+this gives at most thirty-eight vertices. -/
+theorem below_four_of_large_free_side (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
+    (pair : S={p,q}) (ne : p≠q) (nonadj : ¬G.Adj p q) (sc : S.card≤G.vertexConnectivity)
+    (con : (G.induce (A:Set V)).Connected) (cap : (univ.image (distEven G)).max' (by simp) ≤ 1+G.secondSmallestDegree)
+    (largeB : 2*G.secondSmallestDegree≤B.card) (shallow : ∀x∈A,G.secondSmallestDegree≤G.degree x → ∃i∈S,G.Adj i x)
+    (free : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q)) (common : ∃x∈A,∀i∈S,G.Adj x i)
+    (privateP : ∃x∈A,G.Adj x p ∧ ¬G.Adj x q) (privateQ : ∃x∈A,G.Adj x q ∧ ¬G.Adj x p)
+    (large : 11 ≤ G.secondSmallestDegree) :
+    Fintype.card V + 5 < 4 * G.secondSmallestDegree := by
+  classical
+  have point (v : V) : G.distEven v≤G.secondSmallestDegree+1 := by
+    simpa only [Nat.add_comm] using (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap
+  have h := census hc sides pair ne nonadj sc con point largeB shallow free common privateP privateQ
   omega
 
 #print axioms census
+#print axioms below_four_of_large_free_side
 end Graph189ShallowMixedPair
