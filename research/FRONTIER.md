@@ -7,13 +7,19 @@ Updated 28 November 2026. This research branch contains local Lean results. The 
 
 For every two-connected graph satisfying the original parity cap, the pinned kernel now proves traceability at k≥7 whenever n≤4k−6. In particular the moderate-order parent obligation is proved for every k≥8, including connectivity two and an exceptional vertex on a minimum cut. At k=7 this covers n≤22. The [registered-hypotheses wrapper](graph189/full/direct/continuation/root/Graph189ModerateEight.lean) and [axiom report](graph189/full/direct/continuation/root/parent-range-axioms.txt) are archived. In the large-order paper, the [private-representative inequality](graph189/full/direct/continuation/order/Graph189PrivateRepresentativeBound.lean) is now verified on actual graph distances.
 
+## Graph 189 connectivity three is kernel-checked at every order for k at least 38
+
+Under the exact original Graph 189 hypotheses, every graph with vertex connectivity three and second-smallest degree k at least 38 has a Hamiltonian path, at every order. The graph-facing theorem `Graph189ThreeConnectivity.traceable`, its upper-order argument and the low-connectivity deletion lift all passed pinned Lean 4.33.1 with warning-as-error; the independent source audit found no extra assumption, and the reports list only `propext`, `Classical.choice` and `Quot.sound`. The complementary general theorem now proves that for every k at least 19, if deleting a minimum-degree vertex leaves a Hamiltonian path, then the original graph is traceable, at every order and connectivity.
+
+A second graph-facing theorem proves that a minimum two-cut through a degree k-1 vertex is traceable for every k at least 5. The broader kappa-two, k at least 26 argument has passed an independent paper audit, including its final recut count, but is not yet a Lean closure and is recorded as paper work. The independent-set expansion note and replay are also paper/computational obstructions, not an official checker verdict. The exact parent remains open. Local integration by Ali Hamdan with Codex contributors `gpt-6.2-sol` and `gpt-6.2-astra`; coordination by `gpt-5.6-sol`.
+
 ## Upstream merged Ali’s two-connected reduction
 
 At 08:58 UTC on 28 November 2026, Left to Solve merged Ali’s Graph 189 R2.H2.R1 reduction. It makes the moderate-order and large-order cases official child obligations. Ali’s independent cut-vertex proof has also been submitted and is awaiting its verdict. The full-parent proof is in progress. [Merged reduction](https://github.com/lefttosolve2/open-math-agents/pull/18811) · [Cut-vertex proof](https://github.com/lefttosolve2/open-math-agents/pull/24659)
 
 ## Graph 189 now kernel-checked at every order for k≥26 and connectivity at least five
 
-The original graph has a Hamiltonian path if k≥26 and κ≥5, or if k≥19 and 3κ≥k. Both graph-facing families passed pinned Lean 4.33.1 locally. Independent import reports only the three standard axioms. High degree k≥26 now leaves exactly κ=2,3,4 in the two-connected case. Lower-degree obligations remain. See [proof and portable source replay](graph189/full/direct/continuation/root/large-degree-proof.md). The exact parent remains open. Upstream ID 1471973920 now resolves to lefttosolve2/open-math-agents. Accepted PR 7971 by @koolkao supplies the underlying linked-set theorem. Graph 189 integration by Codex with gpt-6.2-sol and gpt-6.2-astra.
+The original graph has a Hamiltonian path if k≥26 and κ≥5, or if k≥19 and 3κ≥k. Both graph-facing families passed pinned Lean 4.33.1 locally. Independent import reports only the three standard axioms. For k≥26, connectivity two and four remain open in general, as does connectivity three for 26≤k≤37. Lower-degree obligations remain. See [proof and portable source replay](graph189/full/direct/continuation/root/large-degree-proof.md). The exact parent remains open. Upstream ID 1471973920 now resolves to lefttosolve2/open-math-agents. Accepted PR 7971 by @koolkao supplies the underlying linked-set theorem. Graph 189 integration by Codex with gpt-6.2-sol and gpt-6.2-astra.
 
 
 ## Further unconditional ranges for the original Graph 189 hypotheses

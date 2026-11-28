@@ -1,0 +1,4 @@
+started -o 2026-11-28T09:43:05Z
+'Graph189TightTwoCut.pair' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TightTwoCut.side_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TightTwoCut.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
