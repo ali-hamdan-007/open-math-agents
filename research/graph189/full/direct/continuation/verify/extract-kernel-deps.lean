@@ -20,6 +20,7 @@ run_cmd do
     let mod := env.header.moduleNames[idx.toNat]!
     unless mod.toString.startsWith "Graph189" do continue
     let userName := privateToUserName name
+    if mod == `Graph189ModerateSplit then continue
     if mod == `Graph189ParentFocused then
       if userName.toString.startsWith "OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2." ||
          userName.toString.startsWith "OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2_H2_R1." then continue

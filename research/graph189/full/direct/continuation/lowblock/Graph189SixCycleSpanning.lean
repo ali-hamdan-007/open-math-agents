@@ -1,5 +1,6 @@
 import Graph189CycleEdgeMarks
 import Graph189ContactColumns
+import Graph189OrdinaryRotationWindow
 
 open SimpleGraph Finset Graph189ExteriorGap
 namespace Graph189SixCycleSpanning
@@ -106,5 +107,48 @@ theorem path_lower [Fintype V] [Nontrivial V] [DecidableRel G.Adj]
     exact uniform _ ((part _).mpr ext) _ (A i).contact.symm
   exact (show (0 : Fin 2)≠1 by decide) (inj ((endMark 0).trans (endMark 1).symm))
 
+/-- A six-cycle cannot span six omissions at the original second degree
+six and order at most twenty-five. -/
+theorem excluded [Fintype V] [Nontrivial V] [DecidableRel G.Adj]
+    {x y r : V} (p : G.Walk x y) (hp : p.IsPath)
+    (mx : ∀ {u v}, ∀ q : G.Walk u v, q.IsPath → q.length≤p.length)
+    (conn : 2≤G.vertexConnectivity) (C : G.Walk r r) (hc : C.IsCycle) (six : C.length=6)
+    (off : ∀ v∈C.support,v∉p.support) (small : p.support.toFinsetᶜ.card≤6)
+    (degree : G.secondSmallestDegree=6) (order : Fintype.card V≤25) : False := by
+  classical
+  let E := p.support.toFinsetᶜ
+  let W := C.support.toFinset
+  have inside : W⊆E := fun v hv => mem_compl.mpr (fun h => off v (List.mem_toFinset.mp hv) (List.mem_toFinset.mp h))
+  have lower := (Graph189TwoExteriorLinks.cycle_routes C hc).1
+  change C.length≤W.card at lower
+  change E.card≤6 at small
+  have eq : W=E := eq_of_subset_of_card_le inside (by omega)
+  have sz : W.card=6 := by
+    have n := card_le_card inside
+    omega
+  obtain ⟨z,zW,higher⟩ : ∃ z∈W, ∀ v∈W, v≠z → 6≤G.degree v := by
+    by_cases all : ∀ v∈W, 6≤G.degree v
+    · exact ⟨r,List.mem_toFinset.mpr C.start_mem_support,fun v hv _ => all v hv⟩
+    push Not at all
+    obtain ⟨z,hz,lo⟩ := all
+    refine ⟨z,hz,?_⟩
+    intro v _ ne
+    have h := OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R1.degree_pair (G:=G) v z ne
+    omega
+  let R := C.rotate z (List.mem_toFinset.mp zW)
+  have rc : R.IsCycle := hc.rotate _
+  have rotate (v : V) : v∈R.support ↔ v∈W := by
+    simpa only [W,List.mem_toFinset] using (C.mem_support_rotate_iff z (List.mem_toFinset.mp zW) (w:=v))
+  have support : R.support.toFinset=W := by ext v; exact List.mem_toFinset.trans (rotate v)
+  have rl : R.length=6 := (C.length_rotate z _).trans six
+  have part (v : V) : v∈R.support ↔ v∉p.support := by
+    rw [rotate,eq]
+    simp [E]
+  have forced := path_lower p hp mx conn R rc part (by rw [support,rl,sz])
+    (fun v hv ne => by rw [rl]; exact higher v ((rotate v).mp hv) ne)
+  have n := card_outside_add_path p hp W (fun v hv => off v (List.mem_toFinset.mp hv))
+  omega
+
 #print axioms path_lower
+#print axioms excluded
 end Graph189SixCycleSpanning

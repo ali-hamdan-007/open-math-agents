@@ -116,3 +116,7 @@ Graph189MarkedLowCut 482f48cbff6d6365ce2857112d2b100e358db02a5b95f9f80a399a6dce0
 Independent Linux replay of the exact registered child, 2026-11-28 10:50 UTC.
 https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46135948159/job/140951158759
 'Graph189ModerateComplete.moderate' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Pinned Lean 4.33.1, isolated degree-six import, 2026-11-28.
+'Graph189SixThreeConnected.traceable_of_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SixThreeConnected.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]

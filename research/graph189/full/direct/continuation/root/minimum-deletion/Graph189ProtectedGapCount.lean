@@ -1,4 +1,6 @@
 import Graph189ContactGroupCensus
+import Mathlib.Algebra.Ring.Defs
+import Mathlib.Tactic.Linarith
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
 open Finset

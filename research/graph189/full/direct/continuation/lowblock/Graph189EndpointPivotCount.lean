@@ -34,7 +34,9 @@ theorem gap [Fintype V] [DecidableEq V] [Nontrivial V] [DecidableRel G.Adj] (p :
   rw [sf,sc,List.length_append,List.length_append,Walk.support_reverse,List.length_reverse] at n
   have ll : l.support.length=i+1 := by
     simp [l,Walk.length_support,Walk.take_length,Nat.min_eq_left (show i≤p.length by omega)]
-  have rr : t.support.length=p.length-j+1 := by simp [t,Walk.length_support,Walk.drop_length]
+  have rr : t.support.length=p.length-j+1 := by
+    simp [t,Walk.length_support,Nat.min_eq_left valid]
+    omega
   omega
 
 /-- An endpoint can use none of three disjoint five-position intervals
@@ -69,7 +71,7 @@ theorem degree [Fintype V] [DecidableEq V] [Nontrivial V] [DecidableRel G.Adj] (
     apply Finset.disjoint_left.mpr
     intro z dz nz
     rcases mem_insert.mp dz with rfl|d
-    · exact G.irrefl (by simpa using (mem_filter.mp nz).2)
+    · simpa using (mem_filter.mp nz).2
     rcases mem_union.mp d with ab|c
     · rcases mem_union.mp ab with a|b
       · exact avoid i (by simp) z a nz

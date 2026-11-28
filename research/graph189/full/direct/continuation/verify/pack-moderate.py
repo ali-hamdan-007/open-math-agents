@@ -9,10 +9,10 @@ STEP = "WrittenOnTheWallII.GraphConjecture189.conjecture189.R2.H2.R1"
 R2 = "OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2"
 TARGET = R2 + "_H2_R1.H1"
 ROOT = "Graph189ModerateComplete.moderate"
-CMD = re.compile(r"^(?:@\[[^\]]+\]\s*)?(?:private\s+|protected\s+|public\s+|noncomputable\s+)*(theorem|lemma|def|abbrev|structure|class|inductive|instance)\s+([\w'.]+)")
+CMD = re.compile(r"^(?:@\[[^\]]+\]\s*)?(?:private\s+|protected\s+|public\s+|noncomputable\s+)*(theorem|lemma|def|abbrev|structure|class|inductive|instance)\s+([\w'][\w'?!]*(?:\.[\w'][\w'?!]*)*)")
 CONTEXT = re.compile(r"^(?:module|(?:public\s+)?import|(?:public\s+|noncomputable\s+)?section|end|namespace|open|variable|universe|omit|include|set_option|attribute|#\w+|@\[)")
 IMPORT = re.compile(r"^(?:public\s+)?import\s+(?:all\s+)?([\w.]+)", re.M)
-IDENT = re.compile(r"[\w'][\w'.]*")
+IDENT = re.compile(r"[\w'][\w'?!]*(?:\.[\w'][\w'?!]*)*")
 CREDITS = """-- Graph 189, moderate two-connected case, by @ali-hamdan-007 and contributors.
 -- R2 and the short-order proof are by @carl2sheriff (PR 22587), with R1
 -- path and metric arguments by @computerfreak97 (PR 2971) and philipsaint.
@@ -80,9 +80,17 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("build", type=Path, help="focused/pinned module source snapshot")
     p.add_argument("output", type=Path)
+    p.add_argument("--kernel-only",action="store_true",help="measure only declarations occurring in the elaborated proof and its transitive types")
+    p.add_argument("--leaf", type=int, choices=(1,2,3,4), help="package a hypothesis of the moderate four-case reduction")
+    p.add_argument("--checkout-sources",action="store_true",help="use the source checkout except for the generated parent module")
     p.add_argument("--root", default=ROOT, help="fully qualified statement implementing the exact child")
     p.add_argument("--dependencies", type=Path, help="TSV produced by extract-kernel-deps.py")
     args = p.parse_args()
+    base = R2 + "_H2_R1"
+    if args.leaf:
+        args.root = "Graph189ModerateSplitProofs." + ("short","five","six","seven")[args.leaf-1]
+        base += "_H1_R1"
+    target = base + (f".H{args.leaf}" if args.leaf else ".H1")
     graph = Path(__file__).resolve().parents[4]
     files = {}
     for f in sorted(graph.rglob("*.lean"),key=lambda f: ("continuation" not in f.parts,"verify" not in f.parts,len(f.parts),str(f))):
@@ -92,7 +100,7 @@ def main():
     def visit(n):
         if n in modules: return
         candidate = args.build / (n+".lean")
-        source = (candidate if candidate.exists() else files[n]).read_text()
+        source = (candidate if candidate.exists() and (not args.checkout_sources or n=="Graph189ParentFocused" or n not in files) else files[n]).read_text()
         for dep in IMPORT.findall(uncomment(source)):
             if dep.startswith("Graph189"): visit(dep)
         modules[n] = parse(n,source)
@@ -106,6 +114,15 @@ def main():
                 by_name[c.name].append(c)
                 by_leaf[c.name.rsplit(".",1)[-1]].append(c)
                 all_decls.append(c)
+    # The historical focused parent inlined a few of the same cut-vertex
+    # and trace-closure sources that the modular replay imports separately.
+    canonical = {}
+    for items in by_name.values():
+        for item in items:
+            if item.module != "Graph189ParentFocused": continue
+            copy = next((other for other in items if other.module!=item.module and other.text==item.text),None)
+            if copy is not None:
+                canonical[item]=copy
     opens = {}
     for module, records in modules.items():
         opened = []
@@ -128,8 +145,10 @@ def main():
             pending.extend(matches)
     while pending:
         c = pending.pop()
-        if c in chosen or in_official(c): continue
+        c = canonical.get(c,c)
+        if c in chosen or in_official(c) or (args.leaf and c.module=="Graph189ModerateSplit"): continue
         chosen.add(c)
+        if args.kernel_only: continue
         for tok in set(IDENT.findall(c.text)):
             if tok in by_name:
                 pending.extend(by_name[tok])
@@ -146,14 +165,14 @@ def main():
             if local:
                 pending.extend(local)
             elif not args.dependencies:
-                pending.extend(v for v in by_leaf.get(tok,[]) if v.module==c.module or len(by_leaf[tok])==1)
+                pending.extend(v for v in by_leaf.get(tok,[]) if v.module==c.module)
     counts = Counter(c.name for c in chosen)
     rename = defaultdict(dict)
     for c in chosen:
         if counts[c.name]>1 and c.private:
             leaf=c.name.rsplit(".",1)[-1]
             rename[c.module][leaf]=f"{c.module.removeprefix('Graph189')}_{leaf}"
-    chunks = [f"import OMAReductions.{R2[4:]}_H2_R1",CREDITS]
+    chunks = [f"import OMAReductions.{base[4:]}",CREDITS]
     report = []
     for mod, commands in modules.items():
         if not any(c in chosen for c in commands): continue
@@ -197,7 +216,7 @@ instance {V : Type u} {G : SimpleGraph V} {d : ℕ} (K : Core G d) : DecidableRe
         rendered="\n".join(line.rstrip() for line in rendered.splitlines() if line.strip())
         chunks.extend(["section",rendered,"end"])
         report.append(f"{mod}\t{sum(c in chosen for c in commands)}\t{len(rendered.encode())}")
-    chunks.append(f"theorem OMA.solution : {TARGET} := {args.root}")
+    chunks.append(f"theorem OMA.solution : {target} := {args.root}")
     text="\n".join(chunks)+"\n"
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(text)

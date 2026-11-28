@@ -1,4 +1,4 @@
-import Graph189ContactIntervals
+import Graph189GroupedContactIntervals
 
 open Finset
 namespace Graph189ContactGroupCensus

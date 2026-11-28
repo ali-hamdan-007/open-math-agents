@@ -2,7 +2,7 @@ import Graph189ContactColumns
 
 open SimpleGraph Finset Graph189ExteriorGap
 namespace Graph189EndpointShell
-variable {V : Type*} [Fintype V] [DecidableEq V] {G : SimpleGraph V} [DecidableRel G.Adj] {a b : V}
+variable {V : Type*} [Fintype V] [DecidableEq V] {G : SimpleGraph V} {a b : V}
 
 /-- When two adjacent exterior rows exhaust the metric cap and all their
 contacts lie at least two positions inside the path, the initial endpoint

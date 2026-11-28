@@ -44,7 +44,7 @@ theorem positions {x y r a b : V} (p : G.Walk x y) (hp : p.IsPath)
     (C : G.Walk r r) (hc : C.IsCycle) (off : ∀ v∈C.support,v∉p.support)
     (edge : s(a,b)∈C.edges) {i j : Fin p.support.length} (before : i<j)
     (left : G.Adj p.support[i.val] a) (right : G.Adj p.support[j.val] b) :
-    C.length≤i.val ∧ i.val+1+C.length≤j.val ∧ j.val+1+C.length≤p.support.length := by
+    C.length≤ i.val ∧ i.val+1+C.length≤j.val ∧ j.val+1+C.length≤p.support.length := by
   obtain ⟨q,hq,len,sub⟩ := complementary C hc edge
   have dis : List.Disjoint q.support p.support := List.disjoint_left.mpr
     (fun v hv => off v (sub v hv))

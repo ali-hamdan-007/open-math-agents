@@ -60,7 +60,7 @@ theorem initial {a b : V} (p : G.Walk a b) (hp : p.IsPath)
     rw [card_image_of_injective _ Fin.val_injective] at n
     exact (rows u hu).trans n
   have margins {u : V} (uw : u∈W) {i : ℕ} (iu : i∈contactPositions p u) :
-      4≤i ∧ i+5≤p.support.length := by
+      4≤ i ∧ i+5≤p.support.length := by
     obtain ⟨ir,edge⟩ := (mem_contactPositions p u i).mp iu
     obtain ⟨v,q,hq,out,len⟩ := tail uw
     have e : G.Adj p.support[i] u := by simpa only [get_at] using edge
@@ -68,7 +68,7 @@ theorem initial {a b : V} (p : G.Walk a b) (hp : p.IsPath)
       (by simpa [Walk.support_reverse] using out) e.symm
     have r := suffix_of_detour p hp mx ⟨i,ir⟩ q hq out e
     rw [Walk.support_reverse,List.length_reverse] at l
-    change q.support.length≤i at l
+    change q.support.length≤ i at l
     change i+1+q.support.length≤p.support.length at r
     omega
   have miss {u : V} (ud : u∈D) {i : ℕ} (iu : i∈contactPositions p u) : ¬G.Adj a (p.getVert i) := by
