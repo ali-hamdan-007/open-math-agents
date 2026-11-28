@@ -10,10 +10,10 @@ namespace Graph189AllHighOrders
 variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph V} [DecidableRel G.Adj]
 
 /-- At most four connectivity values have to be distinguished. Every graph and
-every order satisfying the original assumptions is included once k is at least 36. -/
+every order satisfying the original assumptions is included once k is at least 33. -/
 theorem traceable (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (large : 36≤G.secondSmallestDegree) :
+    (large : 33≤G.secondSmallestDegree) :
     ∃a b,∃r : G.Walk a b,r.IsHamiltonian := by
   classical
   have point (v : V) : G.distEven v≤1+G.secondSmallestDegree :=
@@ -28,7 +28,7 @@ theorem traceable (hc : G.Connected)
   by_cases five : 5≤G.vertexConnectivity
   · exact Graph189LargeDegree.traceable hc cap (by omega) five
   by_cases four : G.vertexConnectivity=4
-  · exact Graph189FourCut.traceable_of_36 hc cap four large
+  · exact Graph189FourCut.traceable_of_33 hc cap four large
   by_cases three : G.vertexConnectivity=3
   · exact Graph189ThreeConnectivity.traceable_ge33 hc cap (by omega) three
   exact Graph189TwoConnectivity.traceable hc cap (by omega) (by omega)

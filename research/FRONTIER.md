@@ -2,6 +2,12 @@
 
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## All orders from degree 33, and the ordinary longest-path gap
+
+At vertex connectivity four the exact graph incidence bounds now certify degrees 33, 34 and 35 as well. Applied to every reselected minimum separator in the proof, these bounds give traceability at every order. As a result the original conjecture is proved for **every k≥33**, regardless of order or connectivity. For k=6 the independent Linux replay has now completed successfully. Large-order instances with 7≤k≤32 remain. [High-degree theorem](graph189/full/direct/continuation/root/Graph189AllHighOrders.lean) · [Four-cut graph bounds](graph189/full/direct/continuation/global/kappa4/Graph189FourCutSaturationFacts.lean) · [Degree-six kernel replay](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46140963283/job/140966572594)
+
+The kernel also verified the ordinary longest-path gap needed in the separator arguments. If k≥6 and the minimum degree is at least three, a path omitting at most ceil(k/2)+1 vertices guarantees a Hamiltonian path under the original even-distance cap. No auxiliary gap or contact condition is required. [Proof and source](graph189/full/direct/continuation/root/ordinary-gap/ordinary-tight-gap.md) · [Axiom reports](graph189/full/direct/continuation/root/parent-range-axioms.txt)
+
 ## All orders are proved for second-smallest degree at least 36
 
 The pinned Lean kernel proves the original conclusion for every connected graph under the original even-distance cap when k≥36, with no restriction on order or vertex connectivity. The same checkpoint proves every order at connectivity two for k≥15, connectivity three for k≥25 and connectivity four for k≥36. The all-connectivity theorem uses the short-order theorem, the cut-vertex theorem and the checked high-connectivity result. All four connectivity cases now meet at 36. The full original conjecture still has unresolved large-order instances below that threshold. [Original-graph theorem](graph189/full/direct/continuation/root/Graph189AllHighOrders.lean) · [Axiom reports](graph189/full/direct/continuation/root/parent-range-axioms.txt)

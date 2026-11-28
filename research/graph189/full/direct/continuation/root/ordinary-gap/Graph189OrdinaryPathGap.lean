@@ -26,7 +26,7 @@ def CliqueExterior {x y : V} (p : G.Walk x y) : Prop :=
   E.card = (G.secondSmallestDegree + 1) / 2 + 1 ∧
     ∀ a ∈ E, ∀ b ∈ E, a ≠ b → G.Adj a b
 
-private theorem second_layer_budget (cap : ∀ v, G.distEven v ≤ 1 + G.secondSmallestDegree)
+theorem second_layer_budget (cap : ∀ v, G.distEven v ≤ 1 + G.secondSmallestDegree)
     (a : V) : (univ.filter (fun b => G.dist a b = 2)).card ≤ G.secondSmallestDegree := by
   classical
   let T := univ.filter (fun b => G.dist a b = 2)
@@ -166,12 +166,59 @@ theorem high_omitted_of_nontraceable [Nontrivial V] (hc : G.Connected)
   have least : G.degree z = G.minDegree := by
     obtain ⟨w,hw⟩ := G.exists_minimal_degree_vertex
     by_cases eq : w = z
-    · exact (congrArg G.degree eq).symm.trans hw.symm
+    · subst w
+      exact hw.symm
     have high := (degree_pair (G:=G) w z eq).resolve_right (not_le_of_gt low)
     have minimal := G.minDegree_le_degree z
     omega
   exact notTraceable (traceable_of_hamiltonian_minimum_deletion_unrestricted hc z least
     (minPoint z) k5 cap' P hP)
+
+theorem ordinary_path_room [Nontrivial V] (hc : G.Connected)
+    (cap : ∀ v, G.distEven v ≤ 1 + G.secondSmallestDegree)
+    {x y : V} (p : G.Walk x y) (hp : p.IsPath) (clique : CliqueExterior p) :
+    p.support.length ≤ (G.secondSmallestDegree/2+1)*(univ \ p.support.toFinset).card +
+      2*(G.secondSmallestDegree/2) := by
+  classical
+  let E := univ \ p.support.toFinset
+  let k := G.secondSmallestDegree
+  let u := k/2
+  change E.card = (k+1)/2+1 ∧ _ at clique
+  have size := clique.1
+  have allCount := card_sdiff_add_card_inter (univ : Finset V) p.support.toFinset
+  rw [univ_inter,List.toFinset_card_of_nodup hp.support_nodup,card_univ] at allCount
+  change E.card+p.support.length=Fintype.card V at allCount
+  have maximum : (univ.image (distEven G)).max' (by simp) ≤ 1 + k := by
+    apply max'_le
+    rintro _ hi
+    obtain ⟨z,_,rfl⟩ := mem_image.mp hi
+    exact cap z
+  have upper := Graph189OrderBound.order_le hc maximum
+  change Fintype.card V ≤ 1 + G.minDegree + k + (k+1)^2/4 at upper
+  obtain ⟨vertex,degree⟩ := Graph189QuadraticOrder.second_attained (G:=G)
+  have minBound : G.minDegree ≤ k := (G.minDegree_le_degree vertex).trans_eq degree
+  have pathRoom : p.support.length ≤ (u+1)*E.card+2*u := by
+    have split := Nat.div_add_mod k 2
+    have remain := Nat.mod_lt k (by decide : 0 < 2)
+    have factor : k = 2*u + k%2 := by dsimp [u]; omega
+    by_cases parity : k%2 = 0
+    · have eq : k = 2*u := by omega
+      have e : E.card = u+1 := by rw [eq] at size; omega
+      have square : (k+1)^2/4 = u*(u+1) := by
+        rw [eq,show (2*u+1)^2 = 4*(u*(u+1))+1 by ring]
+        omega
+      rw [square,eq] at upper
+      rw [e] at allCount ⊢
+      nlinarith
+    · have eq : k = 2*u+1 := by omega
+      have e : E.card = u+2 := by rw [eq] at size; omega
+      have square : (k+1)^2/4 = (u+1)^2 := by
+        rw [eq,show (2*u+1+1)^2 = 4*(u+1)^2 by ring]
+        omega
+      rw [square,eq] at upper
+      rw [e] at allCount ⊢
+      nlinarith
+  exact pathRoom
 
 /-- The omitted clique has Hamiltonian walks between prescribed distinct
 endpoints. Its high vertices need at least floor(k/2) path contacts. -/
@@ -237,39 +284,7 @@ theorem ordinary_census [Nontrivial V] (hc : G.Connected)
     rw [G.card_neighborFinset_eq_degree,←contact_card_neighbors p hp a.val] at split
     dsimp [u]
     omega
-  have allCount := card_sdiff_add_card_inter (univ : Finset V) p.support.toFinset
-  rw [univ_inter,List.toFinset_card_of_nodup hp.support_nodup,card_univ] at allCount
-  change E.card+p.support.length=Fintype.card V at allCount
-  have maximum : (univ.image (distEven G)).max' (by simp) ≤ 1 + k := by
-    apply max'_le
-    rintro _ hi
-    obtain ⟨z,_,rfl⟩ := mem_image.mp hi
-    exact cap z
-  have upper := Graph189OrderBound.order_le hc maximum
-  change Fintype.card V ≤ 1 + G.minDegree + k + (k+1)^2/4 at upper
-  obtain ⟨vertex,degree⟩ := Graph189QuadraticOrder.second_attained (G:=G)
-  have minBound : G.minDegree ≤ k := (G.minDegree_le_degree vertex).trans_eq degree
-  have pathRoom : p.support.length ≤ (u+1)*E.card+2*u := by
-    have split := Nat.div_add_mod k 2
-    have remain := Nat.mod_lt k (by decide : 0 < 2)
-    have factor : k = 2*u + k%2 := by dsimp [u]; omega
-    by_cases parity : k%2 = 0
-    · have eq : k = 2*u := by omega
-      have e : E.card = u+1 := by rw [eq] at size; omega
-      have square : (k+1)^2/4 = u*(u+1) := by
-        rw [eq,show (2*u+1)^2 = 4*(u*(u+1))+1 by ring]
-        omega
-      rw [square,eq] at upper
-      rw [e] at allCount ⊢
-      nlinarith
-    · have eq : k = 2*u+1 := by omega
-      have e : E.card = u+2 := by rw [eq] at size; omega
-      have square : (k+1)^2/4 = (u+1)^2 := by
-        rw [eq,show (2*u+1+1)^2 = 4*(u+1)^2 by ring]
-        omega
-      rw [square,eq] at upper
-      rw [e] at allCount ⊢
-      nlinarith
+  have pathRoom := ordinary_path_room hc cap p hp clique
   obtain ⟨A,count,cover,uniform⟩ := Graph189ContactGroupCensus.uniform_of_ordinary_census
     p hp longest E outside routes H u leastTwo many enoughSpace privateOverflow rows pathRoom
   refine ⟨A,count,cover,?_⟩

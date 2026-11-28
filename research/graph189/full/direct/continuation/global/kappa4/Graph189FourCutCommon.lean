@@ -1,3 +1,4 @@
+import Graph189FourCutSaturationFacts
 import Graph189CutFamilies
 import Graph189CrossBoundaryProduct
 import Graph189MinimumCutOrder
@@ -10,7 +11,7 @@ namespace Graph189FourCut
 /-- The two high-order ranges for the four-cut population argument. -/
 def Range (k n : ℕ) : Prop :=
   ((26 : ℤ) ≤ k ∧ 6 * (k : ℤ) ≤ (n : ℤ) + 10) ∨
-  ((36 : ℤ) ≤ k ∧ 6 * (k : ℤ) ≤ (n : ℤ) + 19)
+  ((33 : ℤ) ≤ k ∧ 6 * (k : ℤ) ≤ (n : ℤ) + 19)
 
 private theorem large_population {k x y d : ℤ} (hk : 0 < k) (hd : 0 ≤ d)
     (margin : 3*d < 2*k) (total : 6*k-d ≤ x+y) (orient : x ≤ y)
@@ -89,8 +90,19 @@ theorem two_common (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
   rw [four] at prod total debited
   have prodZ : (X.card:ℤ)*Y.card ≤ X.card*k+4*((k:ℤ)*k) := by exact_mod_cast prod
   have debitZ : (X.card:ℤ)*Y.card+X.card*4 ≤ X.card*k+4*((k:ℤ)*k)+4*k := by exact_mod_cast debited
-  have bounds := population_bounds (k:=(k:ℤ)) (n:=(Fintype.card V:ℤ)) (x:=(X.card:ℤ))
-    (y:=(Y.card:ℤ)) region (by positivity) (by omega) (by exact_mod_cast orient) (by nlinarith) (by nlinarith)
+  have bounds : 4*(k:ℤ)<Y.card ∧ 16*(k:ℤ)-44+X.card<4*Y.card ∧
+      ((X.card:ℤ)≤k → 12*(k:ℤ)-12+X.card<3*Y.card) := by
+    by_cases old : ((26:ℤ)≤k ∧ 6*(k:ℤ)≤(Fintype.card V:ℤ)+10) ∨
+        ((36:ℤ)≤k ∧ 6*(k:ℤ)≤(Fintype.card V:ℤ)+19)
+    · exact population_bounds old (by positivity) (by omega) (by exact_mod_cast orient)
+        (by nlinarith) (by nlinarith)
+    · change ((26:ℤ)≤k ∧ 6*(k:ℤ)≤(Fintype.card V:ℤ)+10) ∨
+          ((33:ℤ)≤k ∧ 6*(k:ℤ)≤(Fintype.card V:ℤ)+19) at region
+      have special := Graph189FourCutSaturationFacts.quotas hc cut minimum four cap
+        (by change 33≤k; omega) (by change k≤35; omega)
+        (by change 6*k≤Fintype.card V+19; omega) orient
+      change 4*k<Y.card ∧ 16*k+X.card<4*Y.card+44 ∧ (X.card≤k → 12*k+X.card<3*Y.card+12) at special
+      omega
   obtain ⟨large,noPrivate,noResidual⟩ := bounds
   have big : S.card*k < Y.card := by rw [four]; exact_mod_cast large
   have room : (S.card+1)*k+S.card+1 < Fintype.card V := by

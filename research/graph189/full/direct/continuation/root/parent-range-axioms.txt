@@ -126,3 +126,11 @@ Pinned Lean 4.33.1, isolated degree-six import, 2026-11-28.
 'Graph189ThreeConnectivity.traceable_ge25' depends on axioms: [propext, Classical.choice, Quot.sound]
 
 'Graph189AllHighOrders.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+All orders at degree six and at every degree at least 33; ordinary longest-path exchange
+'Graph189SixOriginal.traceable_six' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189FourCut.traceable_of_33' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189AllHighOrders.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189OrdinaryPathGap.tight_gap_debit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189OrdinaryPathGap.transfer_to_high' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189OrdinaryPathGap.traceable_of_near_unrestricted' depends on axioms: [propext, Classical.choice, Quot.sound]
