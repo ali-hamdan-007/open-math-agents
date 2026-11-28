@@ -46,7 +46,7 @@ jobs:
           families={
               'saturation':['Graph189ThreeSaturationOriginal'],
               'exchange':['Graph189UnrestrictedMinimumDeletion'],
-              'high':['Graph189OriginalSolution'],
+              'high':['Graph189Unconditional'],
               'ordinary':['Graph189OrdinaryNearOriginal'],
               'four':['Graph189FourConnectivityJoint'],
               'three':['Graph189PositiveEvenCut','Graph189TwoRootRecut','Graph189ThreePrivateDensity','Graph189ThreeConnectivity'],
