@@ -3,6 +3,15 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • every graph of connectivity at most four; every graph with k≤15
+
+The combined mathematical proof now covers every qualifying graph of vertex connectivity at most four, at any degree and order. Separate arguments finish the previously missing degrees 13, 14 and 15. Furthermore every graph with connectivity at least floor(k/2)−2 is traceable. Together these statements prove every instance with second-smallest degree k≤15. The first remaining pair is k=16 and connectivity five. A counterexample must simultaneously satisfy k≥16 and 5≤κ≤floor(k/2)−3.
+
+The new fixed-degree proofs are `verify/k13/traceability.md` and `sep/cover/k14-k15.md`, and the connectivity theorem is `sep/cover/two-below-final.md` (paths relative to `research/graph189/full/direct/continuation/`). These are independently audited mathematical arguments; the low-degree three-cut step in the combined result also uses the previously replayed local exact arithmetic decisions. The global cut-product lemma has separate Lean kernel verification. There is no parent Lean proof or official resolution.
+
+A general longest-cycle argument in `root/deleting-the-minimum-degree-vertex.md` improves the necessary order to n≥s(k−s+2) for k≥25 and connectivity s. Consequently s≤(1+o(1))√k, and when s grows, all but one component of every minimum cut contain only (1+o(1))k high vertices in total. The new contact-cover and matching estimates narrow the possibilities for an omitted component of a longest path (`sep/cover/local-cover-contacts.md`, `verify/near-hc-exterior-size.md`, `root/matching-and-second-layer.md`). The lead researcher is using them to investigate inheritance of traceability on the large side. Current five-cut alternatives and supporting counterexample work are under `global/arity/` and `search/counterexample/`.
+
+
 ## Graph 189 • every four-cut at k≥16, and unrestricted degree twelve
 
 Every qualifying graph of vertex connectivity four and second-smallest degree k≥16 has a spanning path. This supersedes the k≥94 checkpoint. Both the unbounded large side and the unique low vertex are allowed. A separate argument handles three or more components after deleting the cut, including degrees 16–18 where the earlier two-component theorem did not apply. The papers are `order/four-cut-shallow-common-anchor.md`, `order/four-cut-shallow-sole-nearest.md`, `global/cut4/no-singleton-large-side.md`, and `order/four-cut-multiple-components.md`, alongside the prior two-sided calculations. The papers have independent mathematical signoff and no end-to-end Lean verdict.

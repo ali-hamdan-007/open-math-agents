@@ -1,0 +1,13 @@
+# Joining an asymptotically two-degree side to any traceable deep side
+
+Let S be a minimum s-cut, s≥3, with exactly two components A and B. Let k be second-smallest degree and assume k−s≥3. Suppose A has a high nonport, and B has a spanning path; B may contain the exceptional low. If
+    |A|≤2k+ceil(k/2)−3s+3,   s−1≤ceil(k/2)+1,
+then G is traceable.
+
+If B has a high nonport, it sees all high nonports from A at distance four. More relevantly, a high A nonport sees all high B nonports at distance four and its second layer then contributes at least s distinct witnesses. Thus B has ≤k−s+1 nonports including a possible low. If B has no high nonport then it has at most one nonport anyway. Given a spanning B path fix either end. Its other end can be made a port without losing the fixed end. If it is high and a nonport, all its ≥k neighbors belong to B, and rotations at them give k distinct endpoints (including the trivial successor pivot), at least one a port. If it is the low nonport, its full degree is ≥s and all its neighbors belong to B; rotate to a distinct, hence high, endpoint first. Starting at an attained port and holding it fixed during this same procedure yields a spanning B path with both endpoints ports.
+
+By the contact-path theorem ../root/contact-path-note.md every anchor except at most one starts a path entering A with at least min(|A|,2(k−s)+1) interior vertices. It allows the low in either location. If some spanning B endpoint touches such a good anchor, join there. Otherwise all attainable B ports touch only the one exceptional anchor i. The spanning path with two port ends closes through i to form a spanning cycle on B+i. Open this cycle at a B contact of any other anchor j, which exists by minimality of S, and join through this good j. The total omitted is at most
+    s−1 + max(0, |A|−2(k−s)−1) ≤ ceil(k/2)+1.
+The universal gap theorem now proves traceability.
+
+In particular the global population bound from ../root/minimum-cut-populations.md gives the required side order at s≥24 whenever (1/2−8/s)k≥3s−2, allowing one possible low beyond the bounded high population. The simpler k≥18s suffices in that range. If B is wholly high, all two-edge transfers hold (for instance k≥6s−5 with a high A contact at every anchor), and all B points have at least k−δ(B) outside even witnesses, then B qualifies by geodesic-width-and-order.md. In a minimum counterexample this supplies its required spanning path. The outstanding alternatives for this deduction concern missing allowances, a shallow A, and exceptional low or absent high contacts rather than incompatible labels.
