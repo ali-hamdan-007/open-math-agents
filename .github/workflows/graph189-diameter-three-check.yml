@@ -1,0 +1,48 @@
+name: Graph 189 diameter-three verification
+on:
+  push:
+    branches: [codex/graph189-diameter-three-check]
+permissions:
+  contents: read
+jobs:
+  kernel:
+    strategy:
+      fail-fast: false
+      matrix:
+        step: [WrittenOnTheWallII.GraphConjecture189.conjecture189.R1.H1.R1.H1.R1.H2, WrittenOnTheWallII.GraphConjecture189.conjecture189.R1.H1.R1.H1]
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            data
+            proofs/${{ matrix.step }}.lean
+            reductions/WrittenOnTheWallII.GraphConjecture189.conjecture189.R1.lean
+            reductions/WrittenOnTheWallII.GraphConjecture189.conjecture189.R1.H1.R1.lean
+            reductions/WrittenOnTheWallII.GraphConjecture189.conjecture189.R1.H1.R1.H1.R1.lean
+          sparse-checkout-cone-mode: false
+      - name: Prepare pinned Lean environment
+        run: |
+          set -euo pipefail
+          fc="$RUNNER_TEMP/fc"
+          git init -q "$fc"
+          git -C "$fc" fetch -q --depth=1 https://github.com/google-deepmind/formal-conjectures.git 9097e2f90e66d2f6244209cb1c07f7120d17ec53
+          git -C "$fc" checkout -q FETCH_HEAD
+          curl -fsSL --retry 4 https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o "$RUNNER_TEMP/elan-init.sh"
+          sh "$RUNNER_TEMP/elan-init.sh" -y --default-toolchain none
+          export PATH="$HOME/.elan/bin:$PATH"
+          cd "$fc"
+          lake exe cache get
+      - name: Check exact statement and axioms
+        run: |
+          set -euo pipefail
+          export OMA_FC="$RUNNER_TEMP/fc"
+          export PATH="$HOME/.elan/bin:$PATH"
+          tools/check.sh "proofs/${{ matrix.step }}.lean" "$RUNNER_TEMP/verdict.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verdict-${{ matrix.step }}
+          path: ${{ runner.temp }}/verdict.json
