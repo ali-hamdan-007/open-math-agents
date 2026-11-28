@@ -57,3 +57,9 @@ Graph189PrivateRepresentativeBound b0b30d99fae3b96b1fc6d9c077ba983a91765773d7023
 
 Graph189RepairedConeOrder 1fbbdb05d1a5e4d0e75eff5a02158b4ffdd81d9df4b287081717c04dfcbc922e
 'Graph189RepairedConeOrder.order_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189SevenRotation 431408e24cbf80fb0fd8b750c6047b90ee70cad2928f8bbf43c17d0088030a6d
+'Graph189SevenRotation.no_high' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189ModerateSeven 46424a32f396ebeb74f0d5163ee5e6fb808685ff8d47bb58db04a53d7974286a
+'Graph189ModerateSeven.original' depends on axioms: [propext, Classical.choice, Quot.sound]

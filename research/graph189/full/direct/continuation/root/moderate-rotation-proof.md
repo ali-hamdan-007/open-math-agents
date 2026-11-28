@@ -1,6 +1,6 @@
 # The moderate parent at second-smallest degree seven or greater
 
-The two-link cycle count below implements the large-block inequality in [the full moderate paper](moderate-degree-nine.md). The protected degree-seven deletion has passed the pinned kernel. The original theorem files below are still undergoing replay.
+The two-link cycle count below implements the large-block inequality in [the full moderate paper](moderate-degree-nine.md). The original conjecture holds at every moderate order and every second-smallest degree at least seven. The pinned Lean kernel checked [Graph189ModerateSeven.original](Graph189ModerateSeven.lean) against the full graph hypotheses. Its axiom report contains only propext, Classical.choice and Quot.sound.
 
 Let \(G\) be a qualifying connected graph, \(n=|V(G)|\), \(k\) its second-smallest degree, \(\delta\) its minimum degree and \(\kappa\) its vertex connectivity. The registered short-order and cut-vertex theorems reduce the argument to \(\kappa\ge2\).
 

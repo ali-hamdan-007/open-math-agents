@@ -3,9 +3,9 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
-## The full moderate-order parent case is checked for k≥8
+## The full moderate-order parent case is checked for k≥7
 
-For every two-connected graph satisfying the original parity cap, the pinned kernel now proves traceability at k≥7 whenever n≤4k−6. In particular the moderate-order parent obligation is proved for every k≥8, including connectivity two and an exceptional vertex on a minimum cut. At k=7 this covers n≤22. The [registered-hypotheses wrapper](graph189/full/direct/continuation/root/Graph189ModerateEight.lean) and [axiom report](graph189/full/direct/continuation/root/parent-range-axioms.txt) are archived. In the large-order paper, the [private-representative inequality](graph189/full/direct/continuation/order/Graph189PrivateRepresentativeBound.lean) is now verified on actual graph distances.
+For every two-connected graph satisfying the original parity cap, the pinned kernel now proves traceability at k≥7 whenever n≤4k−6. In particular the moderate-order parent obligation is proved for every k≥8, including connectivity two and an exceptional vertex on a minimum cut. The remaining order n=23 at k=7 is now also proved by the [two-link and rotation argument](graph189/full/direct/continuation/root/Graph189ModerateSeven.lean), with a strict pinned-kernel report. The unsettled moderate degrees are five and six. The [registered-hypotheses wrapper](graph189/full/direct/continuation/root/Graph189ModerateEight.lean) and [axiom report](graph189/full/direct/continuation/root/parent-range-axioms.txt) are archived. In the large-order paper, the [private-representative inequality](graph189/full/direct/continuation/order/Graph189PrivateRepresentativeBound.lean) is now verified on actual graph distances.
 
 ## Graph 189 connectivity three is kernel-checked at every order for k at least 38
 

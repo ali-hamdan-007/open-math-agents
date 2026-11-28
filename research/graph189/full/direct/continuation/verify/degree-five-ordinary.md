@@ -26,6 +26,10 @@ If a tetrahedron is omitted, its high vertices each have at least two contacts. 
 
 ## A vertex of degree two
 
+The full degree-five assembly uses @carl2sheriff's short-order theorem for this branch. At a degree-two vertex the checked layer estimate gives n≤1+2+5+2(6−2)=16. The registered small-order result covers n≤12 and the cut-vertex theorem handles a separating vertex. In the remaining two-connected case, the bounds 13≤n≤16 are exactly the interval from 2k+3 to 2k+6 at k=5. [Upstream proof and credits](https://github.com/lefttosolve2/open-math-agents/pull/22587) · [Degree-five application](Graph189FiveShortOrder.lean)
+
+The following independent ordinary-path argument gives the same conclusion on paper.
+
 The sharper rooted layer bound gives n≤16. The ordinary leaf and midpoint argument below has an independent mathematical audit. Its full Lean replay is pending.
 
 An isolated omitted high vertex is impossible by the single-row shift. A high omitted x with a high omitted neighbor retains at least three omitted neighbors by the half-degree theorem. The only remaining exceptional possibility is that x has the sole omitted neighbor z. Then x needs at least four marks. Any four marks must be consecutive at spacing two: out of their eight predecessor and successor indices at most three overlaps are possible and exactly three are required. If an omitted path from x uses four vertices, all x-marks have four vertices on each side; their width six is impossible because n≤16 and there are already four omissions. Consequently an omitted component with xz is either the edge xz or the three-vertex path x,z,w, since z has degree two. In the latter case w is a high leaf with four marks of its own. Both rows need width six and start and end at least three vertices from the path ends. At n≤16 their window has width at most six, so the two rows are the same. Distinct-row marks two apart are incompatible with the three-vertex route x,z,w.
