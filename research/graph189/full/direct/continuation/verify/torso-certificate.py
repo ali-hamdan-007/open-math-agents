@@ -85,6 +85,41 @@ def clique_partition(adj: list[int], order: Iterable[int]) -> list[int]:
     return classes
 
 
+def short_link_connectivity(adj: list[int], target: int) -> bool:
+    """Certify connectivity by disjoint paths of lengths two and three."""
+    degrees = [row.bit_count() for row in adj]
+    if min(degrees) < target:
+        return False
+    for u,v in itertools.combinations(range(len(adj)),2):
+        if adj[u] & (1 << v):
+            continue
+        shared = adj[u] & adj[v]
+        need = target-shared.bit_count()
+        if need <= 0:
+            continue
+        left = adj[u] & ~shared
+        right = adj[v] & ~shared
+        partners = {}
+
+        def augment(x: int, visited: set[int]) -> bool:
+            for y in vertices(adj[x] & right):
+                if y in visited:
+                    continue
+                visited.add(y)
+                if y not in partners or augment(partners[y],visited):
+                    partners[y] = x
+                    return True
+            return False
+
+        for x in vertices(left):
+            augment(x,set())
+            if len(partners)>=need:
+                break
+        if len(partners)<need:
+            return False
+    return True
+
+
 def circumference(adj: list[int]) -> dict:
     n = len(adj)
     whole = (1 << n)-1
@@ -104,6 +139,9 @@ def circumference(adj: list[int]) -> dict:
     orders = [range(n), sorted(range(n), key=degrees.__getitem__),
               sorted(range(n), key=degrees.__getitem__, reverse=True)]
     groups = min((clique_partition(adj, order) for order in orders), key=len)
+    if short_link_connectivity(adj,len(groups)):
+        return {"bound":n,"test":"Chvatal-Erdos via short disjoint paths",
+                "connectivity_lower_bound":len(groups),"clique_cover":[list(vertices(g)) for g in groups]}
     sigma = None
     for u, v in itertools.combinations(range(n), 2):
         if adj[u] & (1 << v):
@@ -120,6 +158,40 @@ def circumference(adj: list[int]) -> dict:
             best = {"bound": lower, "test": "Bauer et al. circumference",
                     "sigma_three": sigma, "clique_cover": [list(vertices(g)) for g in groups]}
     return best
+
+
+def rooted_ore_path(adj: list[int], root: int) -> list[int]:
+    """Extend a concrete rooted path by the four moves in the local Ore proof."""
+    path = [root]
+    whole = (1 << len(adj))-1
+    while len(path) < len(adj):
+        used = sum(1 << v for v in path)
+        retained = len(path)
+        for u in vertices(whole ^ used):
+            if adj[u] & (1 << path[-1]):
+                path.append(u)
+                break
+            marks = [i for i,v in enumerate(path) if adj[u] & (1 << v)]
+            for i in marks:
+                successor = path[i+1]
+                if adj[u] & (1 << successor):
+                    path[i+1:i+1] = [u]
+                    break
+                outside = adj[u] & adj[successor] & ~used
+                if outside:
+                    path[i+1:i+1] = [u,next(vertices(outside))]
+                    break
+            if len(path)>retained:
+                break
+            for i,j in itertools.combinations(marks,2):
+                if adj[path[i+1]] & (1 << path[j+1]):
+                    path = path[:i+1]+[u]+list(reversed(path[i+1:j+1]))+path[j+1:]
+                    break
+            if len(path)>retained:
+                break
+        if len(path)==retained:
+            break
+    return path
 
 
 def block_chain(adj: list[int], allowed: int, genuine: int) -> dict:
@@ -223,8 +295,13 @@ def side_bound(adj: list[int], neighbors: int, allowed: int) -> dict:
              for v in labels]
     marker = len(labels)
     port_mask = sum(1 << j for j, v in enumerate(labels) if genuine & (1 << v))
-    # A genuine port alone is always a valid path, including a singleton side.
-    best = {"length": 1, "test": "one port", "path": [next(vertices(genuine))]}
+    # The auxiliary root uses genuine edges only in this explicit route.
+    rooted = [row | ((1 << marker) if port_mask & (1 << i) else 0)
+              for i, row in enumerate(local)] + [port_mask]
+    path = [labels[i] for i in rooted_ore_path(rooted,marker)[1:]]
+    best = {"length": len(path), "test": "rooted Ore extensions", "path": path}
+    if best["length"] == marker:
+        return best
     for extra in [None, *[i for i in range(marker) if not port_mask & (1 << i)]]:
         marked = port_mask if extra is None else port_mask | (1 << extra)
         augmented = [row | ((1 << marker) if marked & (1 << i) else 0)

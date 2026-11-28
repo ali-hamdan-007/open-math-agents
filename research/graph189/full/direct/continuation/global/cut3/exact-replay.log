@@ -1,0 +1,2 @@
+Canonical coverage, stored UNSAT statuses, concrete graph and SAT control passed.
+All 351 exact real-linear decision problems returned UNSAT on replay.

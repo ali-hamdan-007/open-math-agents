@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • exact local elimination of connectivity three at k≥16
+
+For k≥16, every qualifying graph of connectivity three has a spanning path, irrespective of order, degree distribution, and component sizes. The two mathematical reductions and reproducible exact rational Z3 programs are in `research/graph189/full/direct/continuation/global/cut3/{shallow-three-cut,all-three-cuts}.md`. The calculations comprise 351 shallow-side and 1,053 remaining configurations. Each query uses a real variable for k and populations, so UNSAT rules out all integer instances in the specified regime. The encoding and geometry received independent review. A Hamiltonian-path proof based on a local exact computation is different from an end-to-end Lean certificate or an official project verdict. The three-cut fixtures supply concrete qualifying SAT controls.
+
+The unrestricted bound n≤5k−3 now also extends below k=16 by an independently audited and rerun 192-case exact calculation (`global/cut3/five-times-order-small.md`). Current low-k all-order three-cut tests are separate. The effective global remaining geometry for k≥16 has connectivity at least four. The four-cut small-side and large-side inheritance arguments provide productive next targets, including optimal contact-path omissions for growing sides. The full conjecture and its parent proof file remain unresolved.
+
+
 ## Graph 189 • small three-cut components, with unbounded opposite side
 
 Ali's separator-contact note has led to an all-order theorem for k≥24 at vertex connectivity three. If deleting a minimum three-cut yields two components and one has at most 2k−5 vertices, the graph has a Hamiltonian path, independent of the size of the opposite component and the location or degree of the single low vertex. The direct argument covers a small side containing a nonport in `research/graph189/full/direct/continuation/sep/no-small-mixed-three-cut.md`. If every vertex of that side touches the cut, its port supports either include a universal port (`global/cut3/shallow-universal-port.md`), a double port (`order/shallow-double-ports-all-orders.md`), or only private ports (`sep/shallow-private-small-three-cut.md`). Individual proofs have been reviewed during the run; check review records and any later refinements. This includes Ali's whole original three-cut range |A|≤2k−7 at every opposite-side order. No official checker verdict for these paper arguments.

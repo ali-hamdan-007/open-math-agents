@@ -5,3 +5,6 @@
 5 22568
 end-to-end 19 12
 nonqualifying nontraceable case rejected
+branched side exact [4, 3, 2, 1, 5, 6, 7]
+80 end-to-end instances compared to exact Hamilton-path DP
+short-link connectivity and independent three-clique certificate validated

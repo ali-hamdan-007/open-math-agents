@@ -1,0 +1,11 @@
+# Every wholly high two-deep minimum three-cut is traceable
+
+Let G be a finite connected qualifying Graph 189 graph, k≥24, κ(G)=3. Suppose a minimum three-cut S separates G into two wholly high components A,B, each with at least one nonport (a vertex without an S-neighbor). Then G has a Hamilton path, without restrictions on order, maximum degree, or edges inside S. This includes a unique arbitrarily low vertex situated in S. We use the previously established unrestricted order bound for traceability n≤5k−3.
+
+If a side has order at most 2k−1, use no-small-clean-three-cut.md. If both side orders lie in [2k,3k−6], use three-cut-balanced-side-routing.md. Only a side B of size at least 3k−5 remains.
+
+By the strengthened two-port cover in no-small-clean-three-cut.md, every A nonport has all three anchors at distance two, and every A port touches exactly one anchor. Indeed, if one or two A ports together touched every nearest anchor of an A nonport, the cover and its within-side costs would give |B|≤3k−6. Any A double port together with a contact at its missing anchor would cover all three, and one triple port would already suffice. Take one private A representative u_i per anchor i.
+
+There is a nonport in B with all three anchors nearest. Otherwise every B nonport y has an anchor i at distance greater than two. Its distance from u_i is exactly four: opposite high-pair distances are at most four, and a three-edge path from a nonport to a private opposite port must pass through its only anchor i in the penultimate step. Every B port is similarly covered at distance two by a representative on one of its incident anchors. Hence the three positive-even budgets at u_i cover B. Each representative spends at least two slots outside B: its closed neighborhood in A has at least three exterior neighbors by κ=3, and all boundary vertices other than its one incident anchor lie in A∪S at exact distance two. Therefore |B|≤3k−6, contrary to its size.
+
+We now have one nonport at distance two from every anchor on each side, all A ports are private, and B ports may have any support. The generalized two-window theorem in all-three-nearest-both-sides.md gives n≤5k−3. This concludes the last case.
