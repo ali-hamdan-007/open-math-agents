@@ -172,18 +172,21 @@ theorem longest_high_ends [DecidableRel G.Adj] (low : V) (atLeastTwo : 2 ≤ G.d
   exact ⟨l,perm.nodup_iff.mpr nd,chain,three.trans_eq perm.length_eq.symm,h0,h1,
     fun t tn tc => (maximal t tn tc).trans_eq perm.length_eq.symm⟩
 
-/-- If all but one vertex have at least half the order as degree and the exceptional
-vertex has two neighbors, a connected graph contains a Hamiltonian cycle. -/
-theorem small_cycle [DecidableRel G.Adj] (low : V) (atLeastTwo : 2 ≤ G.degree low)
-    (conn : G.Preconnected) (high : ∀ v, v ≠ low → Fintype.card V ≤ 2 * G.degree v) :
-    ∃ a, ∃ Q : G.Walk a a, Q.IsHamiltonianCycle := by
+def leftMarks [DecidableRel G.Adj] (l : List V) (x : V) : Finset ℕ :=
+  (Finset.range (l.length-1)).filter (fun j => G.Adj x (l.getD (j+1) x))
+
+def rightMarks [DecidableRel G.Adj] (l : List V) (x y : V) : Finset ℕ :=
+  (Finset.range (l.length-1)).filter (fun j => G.Adj (l.getD j x) y)
+
+/-- Every neighbour of an endpoint of a longest path supplies a distinct mark. -/
+theorem endpoint_marks [DecidableRel G.Adj] {l : List V} (hl_ne : l ≠ [])
+    (hlnd : l.Nodup) (hlch : l.IsChain G.Adj)
+    (hmax : ∀ Q : List V, Q.Nodup → Q.IsChain G.Adj → Q.length ≤ l.length) :
+    G.degree (l.head hl_ne) ≤ (leftMarks (G:=G) l (l.head hl_ne)).card ∧
+    G.degree (l.getLast hl_ne) ≤ (rightMarks (G:=G) l (l.head hl_ne) (l.getLast hl_ne)).card := by
   classical
-  obtain ⟨l,hlnd,hlch,h3,head,last,hmax⟩ := longest_high_ends low atLeastTwo
-  let n := Fintype.card V
-  have hl_ne : l ≠ [] := by rintro rfl; simp at h3
   set q0 := l.head hl_ne
   set z := l.getLast hl_ne
-  have hmn : l.length ≤ n := hlnd.length_le_card
   have ext_head : ∀ y, G.Adj q0 y → y ∈ l := by
     intro y hy
     by_contra hyl
@@ -251,21 +254,23 @@ theorem small_cycle [DecidableRel G.Adj] (low : V) (atLeastTwo : 2 ≤ G.degree 
     refine ⟨by omega, ?_⟩
     rw [List.getD_eq_getElem _ _ hk]
     exact (hy).symm
-  have hdq := high q0 (fun eq => head ((List.head?_eq_some_head hl_ne).trans (congrArg some eq)))
-  have hdz := high z (fun eq => last ((List.getLast?_eq_some_getLast hl_ne).trans (congrArg some eq)))
-  obtain ⟨j, hjS, hjT⟩ : ∃ j, j ∈ S ∧ j ∈ T := by
-    by_contra hcon
-    push Not at hcon
-    have hdisj : Disjoint S T := Finset.disjoint_left.mpr hcon
-    have hsub : S ∪ T ⊆ Finset.range (m - 1) := by
-      intro x hx
-      rcases Finset.mem_union.mp hx with hx | hx
-      · exact (Finset.mem_filter.mp hx).1
-      · exact (Finset.mem_filter.mp hx).1
-    have := Finset.card_le_card hsub
-    rw [Finset.card_union_of_disjoint hdisj, Finset.card_range] at this
-    change m ≤ Fintype.card V at hmn
-    omega
+  exact ⟨hS,hT⟩
+
+/-- A shared predecessor/terminal mark closes a globally longest path and spans
+its connected graph. -/
+theorem spanning_of_common_mark [DecidableRel G.Adj] {l : List V} (hl_ne : l ≠ [])
+    (hlnd : l.Nodup) (hlch : l.IsChain G.Adj) (h3 : 3 ≤ l.length)
+    (hmax : ∀ Q : List V, Q.Nodup → Q.IsChain G.Adj → Q.length ≤ l.length)
+    (conn : G.Preconnected) {j : ℕ} (hjS : j ∈ leftMarks (G:=G) l (l.head hl_ne))
+    (hjT : j ∈ rightMarks (G:=G) l (l.head hl_ne) (l.getLast hl_ne)) :
+    ∃ a, ∃ Q : G.Walk a a, Q.IsHamiltonianCycle := by
+  classical
+  let n := Fintype.card V
+  let q0 := l.head hl_ne
+  let z := l.getLast hl_ne
+  let m := l.length
+  change j ∈ (Finset.range (m-1)).filter (fun j => G.Adj q0 (l.getD (j+1) q0)) at hjS
+  change j ∈ (Finset.range (m-1)).filter (fun j => G.Adj (l.getD j q0) z) at hjT
   rw [Finset.mem_filter, Finset.mem_range] at hjS hjT
   obtain ⟨hjm, hA⟩ := hjS
   obtain ⟨-, hB⟩ := hjT
@@ -334,12 +339,48 @@ theorem small_cycle [DecidableRel G.Adj] (low : V) (atLeastTwo : 2 ≤ G.degree 
       simp [hall w]
     have h2 := List.toFinset_card_of_nodup hlnd
     rw [h1, Finset.card_univ] at h2
+    dsimp [m,n]
     omega
   obtain ⟨a,Q,hQ,size⟩ := cycle_of_list c hcnd hcyc (by rw [hperm.length_eq]; exact h3)
   exact ⟨a,Q,Walk.isHamiltonianCycle_iff_isCycle_and_length_eq.mpr ⟨hQ,size.trans (hperm.length_eq.trans hmn')⟩⟩
 
+/-- If all but one vertex have at least half the order as degree and the exceptional
+vertex has two neighbors, a connected graph contains a Hamiltonian cycle. -/
+theorem small_cycle [DecidableRel G.Adj] (low : V) (atLeastTwo : 2 ≤ G.degree low)
+    (conn : G.Preconnected) (high : ∀ v, v ≠ low → Fintype.card V ≤ 2 * G.degree v) :
+    ∃ a, ∃ Q : G.Walk a a, Q.IsHamiltonianCycle := by
+  classical
+  obtain ⟨l,hlnd,hlch,h3,head,last,hmax⟩ := longest_high_ends low atLeastTwo
+  let n := Fintype.card V
+  have hl_ne : l ≠ [] := by rintro rfl; simp at h3
+  let q0 := l.head hl_ne
+  let z := l.getLast hl_ne
+  let m := l.length
+  let S := leftMarks (G:=G) l q0
+  let T := rightMarks (G:=G) l q0 z
+  obtain ⟨hS,hT⟩ := endpoint_marks hl_ne hlnd hlch hmax
+  change G.degree q0 ≤ S.card at hS
+  change G.degree z ≤ T.card at hT
+  have hmn : m ≤ Fintype.card V := hlnd.length_le_card
+  have hdq := high q0 (fun eq => head ((List.head?_eq_some_head hl_ne).trans (congrArg some eq)))
+  have hdz := high z (fun eq => last ((List.getLast?_eq_some_getLast hl_ne).trans (congrArg some eq)))
+  obtain ⟨j, hjS, hjT⟩ : ∃ j, j ∈ S ∧ j ∈ T := by
+    by_contra hcon
+    push Not at hcon
+    have hdisj : Disjoint S T := Finset.disjoint_left.mpr hcon
+    have hsub : S ∪ T ⊆ Finset.range (m - 1) := by
+      intro x hx
+      rcases Finset.mem_union.mp hx with hx | hx
+      · exact (Finset.mem_filter.mp hx).1
+      · exact (Finset.mem_filter.mp hx).1
+    have := Finset.card_le_card hsub
+    rw [Finset.card_union_of_disjoint hdisj, Finset.card_range] at this
+    change m ≤ Fintype.card V at hmn
+    omega
+  exact spanning_of_common_mark hl_ne hlnd hlch h3 hmax conn hjS hjT
+
 /-- The degree inside a finite induced subgraph, computed in the ambient type. -/
-private theorem internal_degree [DecidableRel G.Adj] (S : Finset V) (v : S) :
+theorem internal_degree [DecidableRel G.Adj] (S : Finset V) (v : S) :
     (G.induce (S : Set V)).degree v = (G.neighborFinset v.val ∩ S).card := by
   classical
   let H := G.induce (S : Set V)
@@ -407,3 +448,6 @@ end Graph189FanCycle
 #print axioms Graph189FanCycle.longest_high_ends
 #print axioms Graph189FanCycle.small_cycle
 #print axioms Graph189FanCycle.induced_small_cycle
+
+#print axioms Graph189FanCycle.endpoint_marks
+#print axioms Graph189FanCycle.spanning_of_common_mark
