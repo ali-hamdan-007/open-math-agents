@@ -1,0 +1,3 @@
+'Graph189ModerateBorder.long_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ModerateBorder.fixed_marks' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ModerateBorder.boundary_side' depends on axioms: [propext, Classical.choice, Quot.sound]

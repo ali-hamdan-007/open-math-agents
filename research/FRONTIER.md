@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 moderate degrees seven and eight
+
+The contact-and-cycle proof now treats k=7,8, and hence every k≥7 in the moderate case, on paper. At the last equality, k=7, an exterior five-cycle is a clique with common marks 5 and 11 on a path of order 17. The deleted vertex completes it to a six-clique, giving a path that misses only five vertices. Independent review covered both orders, the cut vertex placements, and the short leaf blocks. Three exact order/position checks passed the pinned Lean kernel in `root/Graph189ModerateBorder.lean` (`root/moderate-border.log`); the paper argument is `root/moderate-seven-eight.md`. The four remaining degrees in this shorter moderate approach are 3 through 6 before comparison with the older small-degree proof. The two parent Lean obligations remain open. Paths are relative to `research/graph189/full/direct/continuation/`.
+
+
 ## Graph 189 moderate obligation at every degree k≥9
 
 A shorter independent paper proof now covers every two-connected graph in the moderate parent range with second-smallest degree k≥9. After deleting the one possible low vertex, two disjoint links from a long exterior cycle suffice; four matched contacts or three in the boundary case settle the short leaf block. Equality at k=9,10 is removed by adjacent cycle vertices with distinct direct contacts. `root/moderate-degree-nine.md` gives the graph proof, including where the original almost-spanning lemma is used. Its two numerical assertions passed the pinned Lean kernel (`root/Graph189ModerateExteriorCounts.lean`, `root/moderate-exterior-counts.log`). The path-routing bridge remains paper-level. `verify/matched-formal/Graph189PrivateQuota.lean` also now checks the private-support quota for the genuine graph on the independent large-order track. All paths are relative to `research/graph189/full/direct/continuation/`. No parent submission or official parent verdict.
