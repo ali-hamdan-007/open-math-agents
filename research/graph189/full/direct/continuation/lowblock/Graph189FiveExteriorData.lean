@@ -8,17 +8,16 @@ variable {a b : V}
 
 /-- For five omissions a matching cap of two identifies their clique,
 the two contacts of every high row, and the ambient bound 23. -/
-theorem data (p : G.Walk a b) (hc : G.Connected) (six : G.secondSmallestDegree=6)
-    (cap : ∀ v, G.distEven v≤7) (five : p.support.toFinsetᶜ.card=5)
-    (limit : ∀ M : Finset (Fin p.support.length), M.card=3 → ∀ f : M↪(p.support.toFinsetᶜ : Finset V),
+theorem window (p : G.Walk a b) (E : Finset V)
+    (boundary : ∀ u∈E, ∀ v, G.Adj u v → v∉E → v∈p.support) (hc : G.Connected) (six : G.secondSmallestDegree=6)
+    (cap : ∀ v, G.distEven v≤7) (five : E.card=5)
+    (limit : ∀ M : Finset (Fin p.support.length), M.card=3 → ∀ f : M↪E,
       (∀ i : M, G.Adj p.support[i.val.val] (f i).val) → False) :
-    let E := p.support.toFinsetᶜ
     ∃ M : Finset (Fin p.support.length), M.card=2 ∧
       (∀ v∈E, 6≤G.degree v → ∀ i : Fin p.support.length, G.Adj p.support[i.val] v ↔ i∈M) ∧
       (∀ v∈E, ∀ i : Fin p.support.length, G.Adj p.support[i.val] v → i∈M) ∧
       G.IsClique (E : Set V) ∧ Fintype.card V≤23 := by
   classical
-  let E := p.support.toFinsetᶜ
   let D := E.filter (fun v => 6≤G.degree v)
   have sub : D⊆E := filter_subset _ _
   change E.card=5 at five
@@ -39,7 +38,7 @@ theorem data (p : G.Walk a b) (hc : G.Connected) (six : G.secondSmallestDegree=6
     · exact mem_union_left _ (sub vd)
     by_cases ue : u∈E
     · exact mem_union_left _ ue
-    have on : u∈p.support := by simpa [E] using ue
+    have on : u∈p.support := boundary v (sub vd) u ((G.mem_neighborFinset _ _).mp eu) ue
     obtain ⟨i,hi,value⟩ := List.mem_iff_getElem.mp on
     exact mem_union_right _ (mem_image.mpr ⟨⟨i,hi⟩,mem_filter.mpr ⟨mem_univ _,by
       change G.Adj p.support[i] v
@@ -63,7 +62,7 @@ theorem data (p : G.Walk a b) (hc : G.Connected) (six : G.secondSmallestDegree=6
       have e := (G.mem_neighborFinset _ _).mp hv
       by_cases ve : v∈E
       · exact mem_union_left _ (mem_erase.mpr ⟨e.ne.symm,ve⟩)
-      exact mem_union_right _ (marked (sub ud) e (by simpa [E] using ve))
+      exact mem_union_right _ (marked (sub ud) e (boundary u (sub ud) v e ve))
     apply eq_of_subset_of_card_le inc
     have h := card_union_le (E.erase u) P
     rw [card_erase_of_mem (sub ud),five] at h
@@ -95,7 +94,7 @@ theorem data (p : G.Walk a b) (hc : G.Connected) (six : G.secondSmallestDegree=6
     rw [exactN xd] at pos
     rcases mem_union.mp pos with ue|up
     · have ve : v∉E := fun h => missing (sees xd h different)
-      have vp : v∈p.support := by simpa [E] using ve
+      have vp : v∈p.support := boundary u (mem_erase.mp ue).2 v vu.symm ve
       obtain ⟨i,hi,value⟩ := List.mem_iff_getElem.mp vp
       have im := all u (mem_erase.mp ue).2 ⟨i,hi⟩ (by change G.Adj p.support[i] u; rw [value]; exact vu)
       exact False.elim (missing (arms v (mem_image.mpr ⟨⟨i,hi⟩,im,value⟩)))
@@ -111,5 +110,17 @@ theorem data (p : G.Walk a b) (hc : G.Connected) (six : G.secondSmallestDegree=6
     rcases cases with rfl|rfl|rfl <;> omega
   exact ⟨M,two,fun v ve high => full v (mem_filter.mpr ⟨ve,high⟩),all,clique,result⟩
 
+theorem data (p : G.Walk a b) (hc : G.Connected) (six : G.secondSmallestDegree=6)
+    (cap : ∀ v, G.distEven v≤7) (five : p.support.toFinsetᶜ.card=5)
+    (limit : ∀ M : Finset (Fin p.support.length), M.card=3 → ∀ f : M↪(p.support.toFinsetᶜ : Finset V),
+      (∀ i : M, G.Adj p.support[i.val.val] (f i).val) → False) :
+    let E := p.support.toFinsetᶜ
+    ∃ M : Finset (Fin p.support.length), M.card=2 ∧
+      (∀ v∈E, 6≤G.degree v → ∀ i : Fin p.support.length, G.Adj p.support[i.val] v ↔ i∈M) ∧
+      (∀ v∈E, ∀ i : Fin p.support.length, G.Adj p.support[i.val] v → i∈M) ∧
+      G.IsClique (E : Set V) ∧ Fintype.card V≤23 := by
+  exact window p p.support.toFinsetᶜ (fun _ _ _ _ outside => by simpa using outside) hc six cap five limit
+
+#print axioms window
 #print axioms data
 end Graph189FiveExteriorData

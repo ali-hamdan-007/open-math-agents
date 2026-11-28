@@ -1,7 +1,7 @@
 import Graph189FiveExteriorData
 import Graph189FiveCycleExchange
 
-open Finset SimpleGraph Graph189ExteriorGap
+open Finset SimpleGraph Graph189ExteriorGap Graph189ExteriorDegreeCycle
 namespace Graph189FiveCycleSpanning
 variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph V} [DecidableRel G.Adj]
 
@@ -64,8 +64,9 @@ theorem excluded (hcG : G.Connected) (degree : G.secondSmallestDegree=6)
   have qp : q.IsPath := hs.isPath.map Subtype.val_injective
   have qlen : q.support.length=5 := by
     change (s.map inc).support.length=5
-    rw [Walk.support_map,List.length_map,hs.length_support,Fintype.card_coe]
-    exact size
+    rw [Walk.support_map,List.length_map,hs.length_support]
+    change Fintype.card E=5
+    rw [Fintype.card_coe]; exact size
   have onQ {v : V} (ve : v∈E) : v∈q.support := by
     change v∈(s.map inc).support
     rw [Walk.support_map]

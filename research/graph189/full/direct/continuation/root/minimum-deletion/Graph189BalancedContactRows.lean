@@ -1,4 +1,4 @@
-import Graph189ContactIntervals
+import Graph189GroupedContactIntervals
 import Graph189ProtectedIntervals
 import Graph189NearFinal
 

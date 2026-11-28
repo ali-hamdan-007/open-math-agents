@@ -72,4 +72,6 @@ theorem path_group_census {E : Type*} [Fintype E] [DecidableEq E]
   change (∑ i∈range (q+1),h i)+(q+1)=L+1 at sum
   omega
 
+#print axioms width_sum
+#print axioms path_group_census
 end Graph189ContactGroupCensus
