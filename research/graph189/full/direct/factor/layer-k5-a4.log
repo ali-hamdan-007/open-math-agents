@@ -1,0 +1,5 @@
+k=5 a=4 b=1 max-third=5 candidates=0 classes=0 nodes=0 completions=0
+k=5 a=4 b=2 max-third=8 candidates=7 classes=2 nodes=182 completions=0
+k=5 a=4 b=3 max-third=9 candidates=50 classes=9 nodes=17 completions=0
+k=5 a=4 b=4 max-third=9 candidates=186 classes=43 nodes=55 completions=0
+k=5 a=4 b=5 max-third=9 candidates=530 classes=124 nodes=158 completions=0

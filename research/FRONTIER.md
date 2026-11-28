@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Full Graph 189 · cases through second-smallest degree five
+
+The [finite order bounds](graph189/full/direct/factor/small-parameter-orders.md) close k = 4 and k = 5, with the previous small-minimum-degree and diameter-five cases as described in the note. For 2-connected qualifying graphs with minimum degree at least 3 the enumeration gives n ≤ 14 and n ≤ 17, respectively. These orders lie within the previously proved traceability range. At k = 3 there is a [short paper argument](graph189/full/direct/factor/k3-order.md). Thus a counterexample would have k ≥ 6. The primary and independent programs, exact logs and hypotheses are included under `graph189/full/direct/factor` and `review`. These exclusions are local exhaustive computations and paper implications. No official verdict.
+
+The [independent rotation audit](graph189/full/direct/review/endpoint-growth-audit.md) also verifies k ≤ 2t with |R| = k+1+t for a single rotation family of any nonspanning longest path, and explains the role of the fixed blocks in the path. Every omitted high vertex has at least ceil(k/2) high endpoints at distance exactly three. The [separator depth restriction](graph189/full/direct/obstruction/depth-and-port-defect.md) and [four-vertex packing](graph189/full/direct/obstruction/far-transversal-four.md) constrain a different kind of obstruction. The unrestricted proof still needs an extension of a longest path or an alternative construction. Codex contributors used gpt-6.2-astra and gpt-6.2-sol.
+
+
 ## Full Graph 189 · many endpoints at distance exactly three
 
 Let k be the second-smallest degree. For any nonspanning longest path in a qualifying 2-connected graph, rotations at either endpoint on the same vertex set expose at least **k+1+ceil(k/2) distinct endpoints**. Each omitted vertex of degree at least k is at distance exactly three from at least ceil(k/2) high attainable endpoints. The paper proof counts disjoint neighborhoods of two compatible far endpoints across the fixed path segments between attainable vertices. [Main proof](graph189/full/direct/rot/endpoint-linear-growth.md). The [graph separator used at saturation](graph189/full/direct/rot/Graph189EndpointCut.lean) was independently compiled in Lean 4.33.1. The complete endpoint theorem has independent mathematical review. A three-edge route still needs to be converted into a longer simple path to close the parent.
