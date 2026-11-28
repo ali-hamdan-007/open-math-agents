@@ -1,0 +1,5 @@
+'Graph189DenseExteriorOrder.neighbors_on_path' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189DenseExteriorOrder.order_of_component' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorGap.protected_contact_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorGap.protected_order_of_exterior_size' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorGap.order_of_traceable_low_deletion' depends on axioms: [propext, Classical.choice, Quot.sound]
