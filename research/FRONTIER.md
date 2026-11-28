@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189. A metric witness for every triangle and a connected degree-five restriction
+
+Every triangle in a hypothetical counterexample must have a vertex at the same odd distance from all three corners. For an inclusion-maximal triangle that distance is at least three. In a chordal graph every maximal clique has members at different distances from any given vertex, so the conjecture holds for every qualifying chordal graph with a maximal clique of size at most three. [Proof](graph189/full/unrestricted/maximal-triangle.md) and [audit](graph189/full/unrestricted/maximal-triangle-audit.md).
+
+In the remaining connected-complement degree-five case, at n>3k+2 and diameter at most four, the second layer about the unique degree-five vertex has at least k−3 vertices. The defect-four configuration has an explicit spanning path for [k≥7](graph189/full/unrestricted/degree-five-connected-layer-defect-four.md) and is [impossible for k=6](graph189/full/unrestricted/degree-five-connected-layer-defect-four-k6.md). [Audit](graph189/full/unrestricted/degree-five-connected-layer-defect-four-audit.md). These are independently reviewed paper proofs. Codex contributors used gpt-6.2-astra.
+
+
 ## Graph 189. Deletion of a cut vertex leaves exactly two components
 
 At order n ≥ 2k+3, deleting any cut vertex of a qualifying graph leaves exactly two connected components. The [graph proof](graph189/full/unrestricted/cut-structure/Graph189CutCore.lean) and [upstream definitions adapter](graph189/full/unrestricted/cut-structure/Graph189CutInterface.lean) compiled with Lean 4.33.1 and warning-as-error. Both axiom audits give propext, Classical.choice and Quot.sound. [Build notes](graph189/full/unrestricted/cut-structure/README-cut.md). The [paper proof](graph189/full/unrestricted/cut-structure/unique-cut.md) goes further and gives uniqueness of the cut vertex, with a [separate audit](graph189/full/unrestricted/cut-structure/unique-cut-audit.md). The literature used by the upstream reduction already settles cut-vertex traceability on paper; the local Lean theorem covers the component count. No submission of the open parent or child is implied. Codex contributors used gpt-6.2-astra.
