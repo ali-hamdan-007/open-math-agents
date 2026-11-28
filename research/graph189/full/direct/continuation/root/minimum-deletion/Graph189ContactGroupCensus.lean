@@ -13,6 +13,7 @@ noncomputable def beginnings (ports : Fin q → Finset E) : Finset (Fin q) := by
   exact univ.filter fun i => ∀ j : Fin q, j.val+1=i.val →
     ∃ a∈ports j, ∃ b∈ports i, a≠b
 
+omit [Fintype E] in
 private theorem shared_begins (ports : Fin q → Finset E) (present : ∀ i, (ports i).Nonempty)
     {i : Fin q} (shared : 2≤(ports i).card) : i∈beginnings ports := by
   classical
@@ -23,6 +24,7 @@ private theorem shared_begins (ports : Fin q → Finset E) (present : ∀ i, (po
   obtain ⟨b,hb,ne⟩ := exists_mem_ne (by omega : 1<(ports i).card) a
   exact ⟨a,ha,b,hb,ne.symm⟩
 
+omit [Fintype E] in
 private theorem first_private_begins (ports : Fin q → Finset E) (present : ∀ i, (ports i).Nonempty)
     {x : E} (exists_private : ∃ i, ports i={x}) :
     ∃ i∈beginnings ports, ports i={x} := by

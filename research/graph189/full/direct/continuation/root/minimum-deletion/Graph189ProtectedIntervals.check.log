@@ -1,0 +1,4 @@
+started -o 2026-11-28T11:06:38Z
+'Graph189ExteriorGap.protected_interval_of_detour' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorGap.protected_prefix_of_detour' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorGap.protected_suffix_of_detour' depends on axioms: [propext, Classical.choice, Quot.sound]

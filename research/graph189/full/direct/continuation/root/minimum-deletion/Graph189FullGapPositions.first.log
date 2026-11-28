@@ -1,0 +1,6 @@
+started -o 2026-11-28T11:16:03Z
+Graph189FullGapPositions.lean:125:35: error(lean.unknownIdentifier): Unknown identifier `segment_split`
+'Graph189RootedSplice.two_full_gaps_on_protected_path' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]

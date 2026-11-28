@@ -1,6 +1,4 @@
 import Graph189ContactGroupCensus
-import Mathlib.Algebra.Ring.Defs
-import Mathlib.Tactic.Linarith
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
 open Finset
@@ -21,13 +19,13 @@ theorem protected_gap_sum {I : Type*} [DecidableEq I] (Gaps : Finset I) (len : I
       intro j hj
       obtain ⟨ne,hj⟩ := mem_erase.mp hj
       exact le_of_not_gt fun little => ne (short_unique j hj i inside little small))
-    rw [sum_const,nsmul_eq_mul,card_erase_of_mem inside,count] at rest
+    rw [sum_const,Nat.nsmul_eq_mul,card_erase_of_mem inside,count,show g+1-1=g by omega] at rest
     have add := sum_erase_add (s:=Gaps) len inside
     omega
   · have lower := sum_le_sum (s:=Gaps) (f:=fun _ => m) (g:=len) (by
       intro i hi
       exact le_of_not_gt fun little => short ⟨i,hi,little⟩)
-    rw [sum_const,nsmul_eq_mul,count,Nat.add_mul,one_mul] at lower
+    rw [sum_const,Nat.nsmul_eq_mul,count,Nat.add_mul,one_mul] at lower
     omega
 
 /-- With fewer than u−1 surplus vertices in u legal gaps, two legal gaps
@@ -51,12 +49,18 @@ theorem two_full_gaps {I : Type*} [DecidableEq I] (Gaps : Finset I) (len : I→�
     obtain ⟨inside,miss⟩ := mem_sdiff.mp hi
     have ne : len i≠m := fun eq => miss (mem_filter.mpr ⟨inside,eq⟩)
     exact lt_of_le_of_ne (bound i inside) ne.symm)
-  rw [sum_const,nsmul_eq_mul] at left right
+  rw [sum_const,Nat.nsmul_eq_mul] at left right
   have times := Nat.mul_le_mul_right m many
-  have card : 1<T.card := by nlinarith [congrArg (fun a : ℕ => a*m) cards]
+  have products := congrArg (fun a : ℕ => a*m) cards
+  change (R.card+T.card)*m=Gaps.card*m at products
+  rw [Nat.add_mul] at products
+  rw [Nat.mul_add,Nat.mul_one] at right
+  have card : 1<T.card := by omega
   obtain ⟨a,ha⟩ := card_pos.mp (by omega : 0<T.card)
   obtain ⟨b,hb,ne⟩ := exists_mem_ne card a
   exact ⟨a,(mem_filter.mp ha).1,b,(mem_filter.mp hb).1,ne.symm,
     (mem_filter.mp ha).2,(mem_filter.mp hb).2⟩
 
+#print axioms protected_gap_sum
+#print axioms two_full_gaps
 end Graph189ContactGroupCensus

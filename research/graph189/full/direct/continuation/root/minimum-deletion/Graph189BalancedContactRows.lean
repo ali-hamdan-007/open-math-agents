@@ -1,4 +1,4 @@
-import Graph189GroupedContactIntervals
+import Graph189ContactIntervals
 import Graph189ProtectedIntervals
 import Graph189NearFinal
 
@@ -7,6 +7,7 @@ namespace Graph189ContactGroupCensus
 variable {V : Type*} [Fintype V] [DecidableEq V]
 variable {G : SimpleGraph V} {x y : V}
 
+omit [Fintype V] in
 /-- The private/shared grouping from lowblock/all-near-spanning.md gives the same marks in a longest protected path with little order
 slack. This allows the critical case u=|E|. -/
 theorem uniform_of_protected_census (p : G.Walk x y) (hp : p.IsPath)
@@ -35,7 +36,7 @@ theorem uniform_of_protected_census (p : G.Walk x y) (hp : p.IsPath)
     exact ⟨v,mem_filter.mpr ⟨mem_univ _,hit⟩⟩
   have touch {i} {a : E} (h : a∈ports i) : G.Adj p.support[(F i).val] a.val := by
     have e := ((mem_contactPositions p a.val _).mp (mem_filter.mp h).2).2
-    change G.Adj p.support[mark i] a.val
+    change G.Adj (p.support[mark i]'(real i)) a.val
     rwa [get_at p (real i)]
   have rowImage (v : E) : (univ.filter fun i => v∈ports i).image mark = contactPositions p v.val := by
     ext a
@@ -136,4 +137,5 @@ theorem uniform_of_protected_census (p : G.Walk x y) (hp : p.IsPath)
   rw [size]
   exact rows v
 
+#print axioms uniform_of_protected_census
 end Graph189ContactGroupCensus

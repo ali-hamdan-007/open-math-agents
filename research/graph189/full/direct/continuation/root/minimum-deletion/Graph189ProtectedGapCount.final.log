@@ -1,0 +1,3 @@
+started -o 2026-11-28T11:04:31Z
+'Graph189ContactGroupCensus.protected_gap_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ContactGroupCensus.two_full_gaps' depends on axioms: [propext, Classical.choice, Quot.sound]

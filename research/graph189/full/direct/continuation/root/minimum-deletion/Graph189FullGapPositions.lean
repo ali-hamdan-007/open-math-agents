@@ -157,4 +157,6 @@ theorem two_full_gaps_on_protected_path (p : G.Walk x y) (hp : p.IsPath)
   rw [successor] at beforeJ
   omega
 
+#print axioms two_full_gaps_on_protected_path
+
 end Graph189RootedSplice

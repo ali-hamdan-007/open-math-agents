@@ -1,4 +1,4 @@
-import Graph189GroupedContactIntervals
+import Graph189ContactIntervals
 
 open Finset
 namespace Graph189ContactGroupCensus
@@ -19,14 +19,16 @@ theorem two_swappable_intervals {u m L : ℕ} (f : ℕ→ℕ) (t : ℕ)
   have total := width_sum f u zero strict
   rw [ending] at total
   change (∑ i∈A,len i)+(u+1)=L+1 at total
-  have capacity : (∑ i∈A,len i)+1≤u*m+u := by nlinarith
+  have capacity : (∑ i∈A,len i)+1≤u*m+u := by
+    simp only [Nat.add_mul,Nat.mul_add,Nat.one_mul,Nat.mul_one] at room
+    omega
   have count : A.card=u+1 := card_range _
   obtain ⟨v,hv,root⟩ : ∃ v∈A, ¬safe v := by
     by_contra! all
     have high := sum_le_sum (s:=A) (f:=fun _ => m) (g:=len)
       (fun i hi => lower i (Nat.le_of_lt_succ (mem_range.mp hi)) (all i hi))
-    rw [sum_const,nsmul_eq_mul,count] at high
-    nlinarith
+    rw [sum_const,Nat.nsmul_eq_mul,count,Nat.add_mul,Nat.one_mul] at high
+    omega
   let B := A.erase v
   have size : B.card=u := by simp [B,card_erase_of_mem hv,count]
   have insideV : f v≤t ∧ t+1<f (v+1) := by change ¬(_∨_) at root; omega
@@ -54,4 +56,5 @@ theorem two_swappable_intervals {u m L : ℕ} (f : ℕ→ℕ) (t : ℕ)
   · exact ⟨i,j,lt,jb,legal i hi,legal j hj,li,lj⟩
   · exact ⟨j,i,lt,ib,legal j hj,legal i hi,lj,li⟩
 
+#print axioms two_swappable_intervals
 end Graph189ContactGroupCensus

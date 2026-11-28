@@ -1,0 +1,3 @@
+started -o 2026-11-28T11:05:11Z
+'Graph189ContactGroupCensus.width_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ContactGroupCensus.path_group_census' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -5,6 +5,7 @@ namespace Graph189RootedSplice
 variable {V : Type*} [Fintype V] [DecidableEq V]
 variable {G : SimpleGraph V} {x y : V}
 
+omit [Fintype V] in
 theorem full_exterior_splice (p : G.Walk x y) (hp : p.IsPath)
     (root : V) (rootOn : root∈p.support) (E : Finset V) (m : ℕ) (size : E.card=m)
     (outside : ∀ v∈E, v∉p.support) (a b : E) (ne : a≠b)
@@ -22,7 +23,8 @@ theorem full_exterior_splice (p : G.Walk x y) (hp : p.IsPath)
   have isPath : hG.IsPath := hHam.isPath.map emb.injective
   have len : hG.support.length=m := by
     change (h.map emb.toHom).support.length=m
-    rw [Walk.support_map,List.length_map,hHam.length_support,Fintype.card_coe,size]
+    rw [Walk.support_map,List.length_map,hHam.length_support]
+    simpa using size
   have dis : List.Disjoint hG.support p.support := by
     apply List.disjoint_left.mpr
     intro v hit on
@@ -67,6 +69,7 @@ theorem full_exterior_splice (p : G.Walk x y) (hp : p.IsPath)
   simp only [List.mem_append] at hi ⊢
   tauto
 
+omit [Fintype V] in
 /-- Transfer contact incidence on the current path and on all equal-order
 paths retaining the protected vertex after a full exterior substitution. -/
 theorem full_gap_dist_two (p : G.Walk x y) (hp : p.IsPath)
@@ -125,4 +128,7 @@ theorem even_budget_of_full_gaps (p : G.Walk x y) (hp : p.IsPath) (a : V) (m k :
   change 2*m+1≤G.distEven a at c
   omega
 
+#print axioms full_exterior_splice
+#print axioms full_gap_dist_two
+#print axioms even_budget_of_full_gaps
 end Graph189RootedSplice
