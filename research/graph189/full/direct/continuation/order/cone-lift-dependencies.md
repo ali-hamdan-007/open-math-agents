@@ -1,0 +1,13 @@
+# Frozen degree-repair bridge for k≥15s
+
+Let s≥5 be the connectivity. For k≥15s every counterexample has n≥(s+2)(k−s+1)−1. If some minimum-degree vertex lies on a minimum cut, the stronger conclusion n≥(s+2)(k−s+2)−2 holds.
+
+Use only the section “A new marker and the sharper finite range” in complete-small-side-and-cone.md, together with the following dependencies and the matching/path interval details from the opening proof.
+
+1. The unconditional lower order n≥(s+1)(k−s+2)−1 and the improvement directly to the asserted uniform lower when a minimum-degree vertex avoids all minimum cuts are in root/universal-minimum-order.md. The other alternative permits choosing a minimum cut S whose sides are wholly high.
+2. The two-components statement at k>6(s−1) is global/minimum-cut-two-sides.md. The earlier cross-pair count gives ab≤ka+sk² for a≤b wholly high component sizes. It follows by convexity that a≤2k−5s−1 and b/k≤2s. Each has order ≥k−s+1. Connectivity supplies an S-to-A matching saturating S: a Hall defect would separate A from B by fewer than s vertices, and |A|≥s.
+3. Complete A∪S to a clique F (minimum degree ≥k), then add a new universal vertex g, obtaining (s+1)-connectivity and minimum degree ≥k+1. Nikoghosyan’s Corollary A at λ=s+1 excludes an exterior cycle of order ≥s+1 along a longest cycle if n+3≤(s+2)(k−s+2). Deleting mandatory g gives a longest path of F.
+4. The exterior shift count from complete-small-side-and-cone.md loses at most 2s witnesses to artificial edges. Its lower bound on the internal degree of any nontrivial exterior B component is (k−4s)/2≥s; such a component contains a forbidden cycle. Thus omitted B vertices are independent. Each omitted B port with r labels spends k−r even slots on real path successors, and r on distinct matched A contacts. Each missed nonport spends all k on real successors. Consequently at most s+b/k≤3s B vertices are omitted.
+5. Recover the path in G using each genuine singleton anchor, exposing distinct anchors at the other run endpoints. Match the needed anchors into A, join all but one two-ended run by an edge or a fresh common neighbor, and save one run to traverse the residue of A. A free-end run needs a single A port. At most 3s vertices are reserved; the residual remains Hamilton-connected since 2δ(A)−a≥3s+1. The path misses at most 4s vertices, contradicting the previously proved near-spanning gap of ceil(k/2)+2. Detailed terminal and endpoint handling is in complete-small-side-and-cone.md.
+
+This version needs one new marker and no critical-connectivity theorem. It does not use the k≥8s density refinement, the low degree estimate, the all-order maximum-degree-width asymptotic, the sharper high-order common-label bounds, or a second removed vertex.

@@ -5,7 +5,7 @@ project=${OMA_FC:?Set OMA_FC to the pinned formal-conjectures checkout with depe
 project=$(cd "$project" && pwd)
 build=$(mktemp -d)
 trap 'rm -rf "$build"' EXIT
-cp "$src"/{Graph189SeparatorCover,SeparatorCoverAudit,Graph189CrossPort,CrossPortAudit,Graph189CrossOrder,CrossOrderAudit,Graph189LayerCover,LayerCoverAudit}.lean "$build/"
+cp "$src"/{Graph189SeparatorCover,SeparatorCoverAudit,Graph189CrossPort,CrossPortAudit,Graph189CrossOrder,CrossOrderAudit,Graph189LayerCover,LayerCoverAudit,Graph189LayerCutoff,LayerCutoffAudit}.lean "$build/"
 cd "$project"
 lake env bash -c '
   set -euo pipefail
@@ -19,4 +19,6 @@ lake env bash -c '
   lean -j1 -DwarningAsError=true CrossOrderAudit.lean
   lean -j1 -DwarningAsError=true -o Graph189LayerCover.olean Graph189LayerCover.lean
   lean -j1 -DwarningAsError=true LayerCoverAudit.lean
+  lean -j1 -DwarningAsError=true -o Graph189LayerCutoff.olean Graph189LayerCutoff.lean
+  lean -j1 -DwarningAsError=true LayerCutoffAudit.lean
 ' _ "$build"

@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • candidate full proof, finite range and formalization
+
+The maximum-degree width bound now cancels the entire second-layer contribution. In a hypothetical counterexample, if x has degree Δ and C consists of the high vertices at distance three from x, then w|C|≤kΔ with w=ceil((2(n−2k)+k(Δ−k))/(k+1)). See `lowblock/active-column-width.md`. The elementary finite cutoff is s≤63, k<4s²+8s−2 (`root/effective-cutoff.md`). Those statements have independent mathematical review. A finite scalar reduction produces an explicit list of degree/connectivity/order ranges; a separate reimplementation of the exterior-component argument has excluded all the listed ranges. We are consolidating the exact dependency set. Treat the result as a candidate full paper proof, pending a recorded end-to-end audit. The exact parent lacks a certified Lean file; #18811 is a separate child submission.
+
+New pinned Lean results include the degree-sensitive two-wedge inequality (`verify/Graph189RetainedWidth.lean`), a related scalar consequence, and both small-cover order corollaries (`root/Graph189LayerCutoff.lean`). Degree repair on the small side and the finite-cutoff arguments are papers. No official approval of the parent is claimed.
+
+
 ## Graph 189 • proof that only finitely many graphs could be counterexamples
 
 The parent is reduced to a finite exceptional range: every sufficiently large qualifying graph is traceable. The remaining finite cases are open. The mathematical proof and checks are in `root/maximum-degree-width.md`, `verify/common-anchor-intersections.md`, `lowblock/mixed-anchor-blocks.md` and `global/arity/three-common-labels.md`, relative to `research/graph189/full/direct/continuation/`. This is a fork research result and has no official parent verdict.

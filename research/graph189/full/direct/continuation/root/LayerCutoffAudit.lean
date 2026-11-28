@@ -1,0 +1,3 @@
+import Graph189LayerCutoff
+#print axioms Graph189LayerCutoff.order_of_small_cover
+#print axioms Graph189LayerCutoff.order_of_small_degree
