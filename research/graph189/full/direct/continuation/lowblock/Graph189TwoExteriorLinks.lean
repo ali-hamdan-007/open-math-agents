@@ -8,7 +8,7 @@ variable {V : Type*} [DecidableEq V] {G : SimpleGraph V} {x y : V}
 
 /-- A trimmed link from an exterior set to a path, with the last edge
 onto the path recorded separately. -/
-private structure Arm (p : G.Walk x y) (W : Finset V) where
+structure Arm (p : G.Walk x y) (W : Finset V) where
   mark : Fin p.support.length
   root : V
   inside : root∈W
@@ -19,7 +19,7 @@ private structure Arm (p : G.Walk x y) (W : Finset V) where
   off : ∀ v∈route.support, v∉p.support
   away : ∀ v∈route.support.tail, v∉W
 
-private theorem arm_of_list (p : G.Walk x y) {W : Finset V}
+theorem arm_of_list (p : G.Walk x y) {W : Finset V}
     (apart : ∀ v∈W, v∉p.support) {l : List V}
     (h : OMA.BondyK.ABP G W p.support.toFinset l ∧
       (∀ v∈l.tail, v∉W) ∧ (∀ v∈l.dropLast,v∉p.support.toFinset)) :
@@ -98,14 +98,14 @@ private theorem Arm.start {p : G.Walk x y} {W : Finset V} (a : Arm p W)
     · exact outside v (uses v hb)
 
 omit [DecidableEq V] in
-private theorem ordered {p : G.Walk x y} (hp : p.IsPath)
+theorem ordered_positions {p : G.Walk x y} (hp : p.IsPath)
     (longest : ∀ {u v}, ∀ q : G.Walk u v, q.IsPath → q.length≤p.length)
     {W : Finset V} (outside : ∀ v∈W, v∉p.support)
     (a b : Arm p W) (before : a.mark<b.mark)
     (distinct : ∀ v∈a.route.support, v∉b.route.support) {m t : ℕ}
     (start : ∀ r∈W, ∃ u, ∃ q : G.Walk r u, q.IsPath ∧ m≤q.support.length ∧ ∀ v∈q.support,v∈W)
     (join : ∀ r∈W, ∀ s∈W, r≠s → ∃ q : G.Walk r s, q.IsPath ∧ t≤q.support.length ∧ ∀ v∈q.support,v∈W) :
-    2*m+t+2≤p.support.length := by
+    m≤a.mark.val ∧ a.mark.val+1+t≤b.mark.val ∧ b.mark.val+1+m≤p.support.length := by
   obtain ⟨_,q1,h1,len1,W1⟩ := start a.root a.inside
   obtain ⟨h1',off1⟩ := a.start outside q1 h1 W1
   obtain ⟨_,q2,h2,len2,W2⟩ := start b.root b.inside
@@ -144,28 +144,23 @@ private theorem ordered {p : G.Walk x y} (hp : p.IsPath)
   have inner := interval_of_detour p hp longest a.mark b.mark before T pathT disT a.contact.symm b.contact
   have plen := p.length_support
   simp only [T,Walk.length_support,Walk.length_append,Walk.length_reverse] at l r inner len1 len2 len
-  omega
+  exact ⟨by omega,by omega,by omega⟩
 
-/-- In a two-connected graph, any exterior vertex set of a longest path
-supports two disjoint links to that path. Spanning tails and prescribed
-interior routes then give the indicated ambient-order bound. -/
-theorem order_of_routes [Fintype V] [Nontrivial V] [DecidableRel G.Adj]
-    (p : G.Walk x y) (hp : p.IsPath)
-    (longest : ∀ {u v}, ∀ q : G.Walk u v, q.IsPath → q.length≤p.length)
-    (conn : 2≤G.vertexConnectivity) (W : Finset V) (outside : ∀ v∈W,v∉p.support)
-    (wide : 2≤W.card) (longP : 2≤p.support.length) {m t : ℕ}
-    (start : ∀ r∈W, ∃ u, ∃ q : G.Walk r u, q.IsPath ∧ m≤q.support.length ∧ ∀ v∈q.support,v∈W)
-    (join : ∀ r∈W, ∀ s∈W, r≠s → ∃ q : G.Walk r s, q.IsPath ∧ t≤q.support.length ∧ ∀ v∈q.support,v∈W) :
-    W.card+2*m+t+2≤Fintype.card V := by
+/-- Extract any requested number of vertex-disjoint trimmed arms. -/
+theorem arms [Fintype V] [Nontrivial V] [DecidableRel G.Adj]
+    (p : G.Walk x y) (hp : p.IsPath) (W : Finset V) (outside : ∀ v∈W,v∉p.support)
+    (count : ℕ) (conn : count≤G.vertexConnectivity) (wide : count≤W.card) (longP : count≤p.support.length) :
+    ∃ A : Fin count→Arm p W, Function.Injective (fun i => (A i).mark) ∧
+      ∀ i j, i≠j → ∀ v∈(A i).route.support,v∉(A j).route.support := by
   classical
   let P := p.support.toFinset
-  have szP : 2≤P.card := by
+  have szP : count≤P.card := by
     rw [show P=p.support.toFinset from rfl,List.toFinset_card_of_nodup hp.support_nodup]
     exact longP
-  obtain ⟨L,hL,separate⟩ := OMA.BondyK.menger_trim (G:=G) W P 2 (by
+  obtain ⟨L,hL,separate⟩ := OMA.BondyK.menger_trim (G:=G) W P count (by
     intro S separates
     by_contra! small
-    have leftover (T : Finset V) (big : 2≤T.card) : ∃ v∈T,v∉S := by
+    have leftover (T : Finset V) (big : count≤T.card) : ∃ v∈T,v∉S := by
       by_contra! inc
       have := card_le_card (show T⊆S from inc)
       omega
@@ -179,29 +174,57 @@ theorem order_of_routes [Fintype V] [Nontrivial V] [DecidableRel G.Adj]
       ⟨b,hb,by rw [List.getLast?_map,List.getLast?_eq_getLast_of_ne_nil q.support_ne_nil,q.getLast_support]; rfl⟩⟩
     obtain ⟨v,_,rfl⟩ := List.mem_map.mp hv
     exact v.property vs)
-  obtain ⟨a,subA,markA⟩ := arm_of_list p outside (hL 0)
-  obtain ⟨b,subB,markB⟩ := arm_of_list p outside (hL 1)
-  have dis (v : V) (ha : v∈a.route.support) (hb : v∈b.route.support) : False :=
-    separate 0 1 (by decide) v (subA v ha) (subB v hb)
-  have diff : a.mark≠b.mark := by
-    intro eq
-    apply separate 0 1 (by decide) _ markA
-    simpa only [eq] using markB
-  have n := card_outside_add_path p hp W outside
-  rcases lt_or_gt_of_ne diff with ab|ba
-  · have h := ordered hp longest outside a b ab dis start join
-    omega
-  · have h := ordered hp longest outside b a ba (fun v hb ha => dis v ha hb) start join
-    omega
+  choose A included ends using fun i => arm_of_list p outside (hL i)
+  refine ⟨A,?_,fun i j ne v hi hj => separate i j ne v (included i v hi) (included j v hj)⟩
+  intro i j eq
+  by_contra ne
+  apply separate i j ne _ (ends i)
+  change (A i).mark=(A j).mark at eq
+  simpa only [eq] using ends j
 
-/-- The longer cycle arc gives a rounded half-length detour between the
-two links, while either link can start a path traversing the whole cycle. -/
-theorem order_of_cycle [Fintype V] [Nontrivial V] [DecidableRel G.Adj]
+/-- Two disjoint links force two exterior tails and a joining interval on the original longest path. -/
+theorem path_of_routes [Fintype V] [Nontrivial V] [DecidableRel G.Adj]
     (p : G.Walk x y) (hp : p.IsPath)
     (longest : ∀ {u v}, ∀ q : G.Walk u v, q.IsPath → q.length≤p.length)
-    (conn : 2≤G.vertexConnectivity) {r : V} (C : G.Walk r r) (hc : C.IsCycle)
-    (outside : ∀ v∈C.support,v∉p.support) :
-    3*C.length+(C.length+1)/2+3≤Fintype.card V := by
+    (conn : 2≤G.vertexConnectivity) (W : Finset V) (outside : ∀ v∈W,v∉p.support)
+    (wide : 2≤W.card) (longP : 2≤p.support.length) {m t : ℕ}
+    (start : ∀ r∈W, ∃ u, ∃ q : G.Walk r u, q.IsPath ∧ m≤q.support.length ∧ ∀ v∈q.support,v∈W)
+    (join : ∀ r∈W, ∀ s∈W, r≠s → ∃ q : G.Walk r s, q.IsPath ∧ t≤q.support.length ∧ ∀ v∈q.support,v∈W) :
+    2*m+t+2≤p.support.length := by
+  classical
+  obtain ⟨A,inj,separate⟩ := arms p hp W outside 2 conn wide longP
+  let a := A 0
+  let b := A 1
+  have dis := separate 0 1 (by decide)
+  have diff : a.mark≠b.mark := fun eq => (show (0:Fin 2)≠1 by decide) (inj eq)
+  rcases lt_or_gt_of_ne diff with ab|ba
+  · obtain ⟨l,mid,r⟩ := ordered_positions hp longest outside a b ab dis start join
+    omega
+  · obtain ⟨l,mid,r⟩ := ordered_positions hp longest outside b a ba (fun v hb ha => dis v ha hb) start join
+    omega
+
+/-- In a two-connected graph, any exterior vertex set of a longest path
+supports two disjoint links to that path. Spanning tails and prescribed
+interior routes then give the indicated ambient-order bound. -/
+theorem order_of_routes [Fintype V] [Nontrivial V] [DecidableRel G.Adj]
+    (p : G.Walk x y) (hp : p.IsPath)
+    (longest : ∀ {u v}, ∀ q : G.Walk u v, q.IsPath → q.length≤p.length)
+    (conn : 2≤G.vertexConnectivity) (W : Finset V) (outside : ∀ v∈W,v∉p.support)
+    (wide : 2≤W.card) (longP : 2≤p.support.length) {m t : ℕ}
+    (start : ∀ r∈W, ∃ u, ∃ q : G.Walk r u, q.IsPath ∧ m≤q.support.length ∧ ∀ v∈q.support,v∈W)
+    (join : ∀ r∈W, ∀ s∈W, r≠s → ∃ q : G.Walk r s, q.IsPath ∧ t≤q.support.length ∧ ∀ v∈q.support,v∈W) :
+    W.card+2*m+t+2≤Fintype.card V := by
+  have n := card_outside_add_path p hp W outside
+  have l := path_of_routes p hp longest conn W outside wide longP start join
+  omega
+
+/-- An exterior cycle gives a spanning tail at every root and a rounded
+half-cycle route between every pair of distinct terminals. -/
+theorem cycle_routes {r : V} (C : G.Walk r r) (hc : C.IsCycle) :
+    let W := C.support.toFinset
+    C.length≤W.card ∧
+    (∀ a∈W, ∃ u, ∃ q : G.Walk a u, q.IsPath ∧ C.length≤q.support.length ∧ ∀ v∈q.support,v∈W) ∧
+    (∀ a∈W, ∀ b∈W, a≠b → ∃ q : G.Walk a b, q.IsPath ∧ (C.length+1)/2+1≤q.support.length ∧ ∀ v∈q.support,v∈W) := by
   classical
   let W := C.support.toFinset
   have width : C.length≤W.card := by
@@ -243,13 +266,40 @@ theorem order_of_cycle [Fintype V] [Nontrivial V] [DecidableRel G.Adj]
         contains a ha v (R.support_takeUntil_subset_support on hv)⟩
     · exact ⟨T.reverse,tp.reverse,by rw [Walk.length_support,Walk.length_reverse]; omega,fun v hv =>
         contains a ha v (R.support_dropUntil_subset_support on (by simpa using hv))⟩
+  exact ⟨width,start,pair⟩
+
+/-- The positions forced by two links to a cycle stay on the given path. -/
+theorem path_of_cycle [Fintype V] [Nontrivial V] [DecidableRel G.Adj]
+    (p : G.Walk x y) (hp : p.IsPath)
+    (longest : ∀ {u v}, ∀ q : G.Walk u v, q.IsPath → q.length≤p.length)
+    (conn : 2≤G.vertexConnectivity) {r : V} (C : G.Walk r r) (hc : C.IsCycle)
+    (outside : ∀ v∈C.support,v∉p.support) :
+    2*C.length+(C.length+1)/2+3≤p.support.length := by
+  classical
+  let W := C.support.toFinset
+  obtain ⟨width,start,pair⟩ := cycle_routes C hc
+  change C.length≤W.card at width
   obtain ⟨_,q,hq,ql,_⟩ := start r (List.mem_toFinset.mpr C.start_mem_support)
   have mx := longest q hq
   have hq' := q.length_support
   have hp' := p.length_support
   have three := hc.three_le_length
-  have ord := order_of_routes p hp longest conn W (fun v hv => outside v (List.mem_toFinset.mp hv))
+  have ord := path_of_routes p hp longest conn W (fun v hv => outside v (List.mem_toFinset.mp hv))
     (by omega) (by omega) start pair
+  omega
+
+/-- The longer cycle arc gives a rounded half-length detour between the
+two links, while either link can start a path traversing the whole cycle. -/
+theorem order_of_cycle [Fintype V] [Nontrivial V] [DecidableRel G.Adj]
+    (p : G.Walk x y) (hp : p.IsPath)
+    (longest : ∀ {u v}, ∀ q : G.Walk u v, q.IsPath → q.length≤p.length)
+    (conn : 2≤G.vertexConnectivity) {r : V} (C : G.Walk r r) (hc : C.IsCycle)
+    (outside : ∀ v∈C.support,v∉p.support) :
+    3*C.length+(C.length+1)/2+3≤Fintype.card V := by
+  classical
+  have n := card_outside_add_path p hp C.support.toFinset (fun v hv => outside v (List.mem_toFinset.mp hv))
+  have width := (cycle_routes C hc).1
+  have l := path_of_cycle p hp longest conn C hc outside
   omega
 
 end Graph189TwoExteriorLinks

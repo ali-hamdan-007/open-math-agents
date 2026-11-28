@@ -57,13 +57,15 @@ private theorem region (W : Finset V) (i : V) {d b : ℕ} (pos : 1≤d) (nontriv
   let f := (Embedding.induce (G:=G) (W:Set V)).toHom
   let r := w.map f
   have actual : x.val∈W.filter (G.Adj i) := mem_subtype.mp xM
-  refine ⟨x.val,y.val,r,hw.map Subtype.val_injective,(mem_filter.mp actual).2,?_,?_⟩
+  refine ⟨_,_,r,hw.map Subtype.val_injective,(mem_filter.mp actual).2,?_,?_⟩
   · intro v hv
     rw [show r.support=w.support.map f from Walk.support_map _ _] at hv
     obtain ⟨v',_,rfl⟩ := List.mem_map.mp hv
     exact v'.property
   · change Fintype.card W≤w.support.length+(b+1) at len
-    simpa [r] using len
+    have eq : r.support.length=w.support.length := by simp [r]
+    rw [Fintype.card_coe] at len
+    omega
 
 theorem high_route (A : Finset V) (i : V) {k r : ℕ} (large : 15≤k) (few : r≤7)
     (con : (G.induce (A:Set V)).Connected)

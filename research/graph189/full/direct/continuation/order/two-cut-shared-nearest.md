@@ -58,4 +58,10 @@ Assume $b\ge2k$. Every high private in $A$ must be at distance two from its miss
 
 The two inclusive anchor rows, the $c$ common $A$ ports, all $B$ ports and the possible low vertex cover the graph. Every high $A$ private is in an anchor row, and each high $B$ nonport is in at least one. The $B$ ports number at most $k$ by the common $A$ contact. The rows overlap at the $w$ double-near vertices and at both anchors: their mutual distance is two via the common port. Consequently $n+w\le3k+c+1$, giving $2n\le7k+1$. This contradicts $n\ge4k-5$ for $k\ge12$. [Shallow mixed-pair implication](Graph189ShallowMixedPair.lean)
 
-The sole-nearest budget, dense-side route, port rotation, marked articulation and linear-order path gap have passed the pinned Lean checker. The graph-to-order and final integration sources linked above are undergoing kernel replay.
+## A shallow side missing a private type
+
+Suppose $B$ has no common port and $A$ has no $q$-private port. Every port in $A$ touches $p$. The $p$-contact in $B$ is private, so it bounds the number of $A$-contacts of $p$ by $k-1$. If there are at most $k-2$, the shallow parity argument gives $n\le3k+1$. With exactly $k-1$, all high vertices in $A$ touch $p$ and $k-1\le a\le k$. If $b\le2k+1$, this gives $n\le3k+3$, enough for $k\ge9$.
+
+In the remaining case $b>2k+1$, so $a<b$. The selector takes a globally smallest side among all separating pairs. If the selected pair was presented in the opposite orientation, its minimality would require $b\le a$. Thus this $A$ has the global minimum required by the gate argument. Connected $B$, the triangle on each edge at $n>3k+2$, and the exact $k-1$ contacts give $n\le3k+2$ by the checked graph-facing recut theorem. [Original missing-private implication](Graph189MissingPrivateMixed.lean), [globally minimum side selector](../sep/twocut/Graph189TwoCutSelectJoint.lean) and [gate theorem](../sep/twocut/Graph189TwoCutShallow.lean)
+
+The sole-nearest budget, dense-side route, port rotation, marked articulation, linear-order path gap, adjacent odd-tie order and connected marked-route construction have passed the pinned Lean checker. The graph-to-order and final integration sources linked above are undergoing kernel replay.

@@ -75,11 +75,11 @@ theorem full_ports {x y : V} (p : G.Walk x y) (hp : p.IsPath)
 
 /-- In an ordinary longest-path exterior, a high omission gives a rotation
 window after the two-link order bound excludes longer cycles. -/
-theorem of_high {x y : V} (p : G.Walk x y) (hp : p.IsPath)
+theorem of_cycle_cap {x y : V} (p : G.Walk x y) (hp : p.IsPath)
     (mx : ∀ {u v}, ∀ q : G.Walk u v, q.IsPath → q.length≤p.length)
-    (conn : 2≤G.vertexConnectivity) {k d L : ℕ} (original : G.secondSmallestDegree=k)
+    {k d L : ℕ} (original : G.secondSmallestDegree=k)
     (positive : 0<d) (rounding : 2*d≤k+1) (two : 2≤L)
-    (oversized : ∀ q, L<q → Fintype.card V<3*q+(q+1)/2+3)
+    (bounded : ∀ {r}, ∀ C : G.Walk r r, C.IsCycle → (∀ v∈C.support,v∉p.support) → C.length≤L)
     (minimum : ∀ v, 3≤G.degree v) (quota : ∀ v, (univ.filter (fun w => G.dist v w=2)).card≤k)
     {highVertex : V} (omitted : highVertex∉p.support) (large : k≤G.degree highVertex) :
     let E := p.support.toFinsetᶜ
@@ -104,14 +104,11 @@ theorem of_high {x y : V} (p : G.Walk x y) (hp : p.IsPath)
       simp [E]
     omega
   have short (a : E) (c : J.Walk a a) (hc : c.IsCycle) : c.length≤L := by
-    have ord := Graph189TwoExteriorLinks.order_of_cycle p hp mx conn (c.map emb.toHom) (hc.map emb.injective)
-      (fun v hv => by
-        rw [Walk.support_map] at hv
-        obtain ⟨w,_,rfl⟩ := List.mem_map.mp hv
-        exact off w)
-    rw [Walk.length_map] at ord
-    by_contra! long
-    exact (not_lt_of_ge ord) (oversized c.length long)
+    have bound := bounded (c.map emb.toHom) (hc.map emb.injective) (fun v hv => by
+      rw [Walk.support_map] at hv
+      obtain ⟨w,_,rfl⟩ := List.mem_map.mp hv
+      exact off w)
+    simpa only [Walk.length_map] using bound
   let h : E := ⟨highVertex,mem_compl.mpr fun mem => omitted (List.mem_toFinset.mp mem)⟩
   obtain ⟨a,b,q,hq,maxQ⟩ := Graph189ThreeRegularMinimum.longest_path (G:=J) h
   have positive : 0<q.length := by
@@ -137,6 +134,25 @@ theorem of_high {x y : V} (p : G.Walk x y) (hp : p.IsPath)
       intro u v r hr
       simpa using maxQ r hr
   exact ⟨degree,win⟩
+
+/-- In an ordinary longest-path exterior, a high omission gives a rotation
+window after the two-link order bound excludes longer cycles. -/
+theorem of_high {x y : V} (p : G.Walk x y) (hp : p.IsPath)
+    (mx : ∀ {u v}, ∀ q : G.Walk u v, q.IsPath → q.length≤p.length)
+    (conn : 2≤G.vertexConnectivity) {k d L : ℕ} (original : G.secondSmallestDegree=k)
+    (positive : 0<d) (rounding : 2*d≤k+1) (two : 2≤L)
+    (oversized : ∀ q, L<q → Fintype.card V<3*q+(q+1)/2+3)
+    (minimum : ∀ v, 3≤G.degree v) (quota : ∀ v, (univ.filter (fun w => G.dist v w=2)).card≤k)
+    {highVertex : V} (omitted : highVertex∉p.support) (large : k≤G.degree highVertex) :
+    let E := p.support.toFinsetᶜ
+    let J := G.induce (E : Set V)
+    (∀ a : E, k≤G.degree a.val → d≤J.degree a) ∧
+    ∃ B R : Finset E, d≤R.card ∧ R⊆B ∧ B.card≤L ∧ ∀ v∈R,J.neighborFinset v⊆B := by
+  apply of_cycle_cap p hp mx original positive rounding two _ minimum quota omitted large
+  intro r c hc out
+  have n := Graph189TwoExteriorLinks.order_of_cycle p hp mx conn c hc out
+  by_contra! longer
+  exact (not_lt_of_ge n) (oversized c.length longer)
 
 end Graph189OrdinaryRotationWindow
 #print axioms Graph189OrdinaryRotationWindow.full_ports

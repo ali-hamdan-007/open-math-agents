@@ -9,21 +9,15 @@ variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph
 
 /-- The short-order path lower bound of @carl2sheriff and the five-vertex
 exterior exchange give the original conjecture at degree six through order nineteen. -/
-theorem traceable (hc : G.Connected)
+theorem of_deletions (hc : G.Connected)
     (bound : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (six : G.secondSmallestDegree=6) (order : Fintype.card V≤19) :
+    (six : G.secondSmallestDegree=6) (order : Fintype.card V≤19)
+    (hn : 2*G.secondSmallestDegree+3≤Fintype.card V) (uncut : ∀ c : V, (G.induce {v : V | v≠c}).Connected) :
     ∃ a b : V, ∃ p : G.Walk a b, p.IsHamiltonian := by
   classical
   have upper (v : V) : G.distEven v≤1+G.secondSmallestDegree :=
     (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans bound
   have cap (v : V) : G.distEven v≤G.secondSmallestDegree+1 := by simpa only [Nat.add_comm] using upper v
-  by_cases short : Fintype.card V≤2*G.secondSmallestDegree+2
-  · exact OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2.theorem_C hc upper short
-  have hn : 2*G.secondSmallestDegree+3≤Fintype.card V := by omega
-  by_cases uncut : ∀ c : V, (G.induce {v : V | v≠c}).Connected
-  swap
-  · push Not at uncut
-    exact Graph189CutH1.cut_vertex_case G hc upper hn uncut
   obtain ⟨z,hz⟩ := G.exists_minimal_degree_vertex
   have hmin (v : V) : G.degree z≤G.degree v := by rw [←hz]; exact G.minDegree_le_degree v
   have high := b25_hx0 (G:=G) hmin
@@ -74,6 +68,24 @@ theorem traceable (hc : G.Connected)
     exact (both y (by simpa using hy) ⟨l,hl⟩).mpr ((both x (by simpa using hx) ⟨l,hl⟩).mp wx)
   exact two_mark_exchange p hp t mx E (by omega) (fun {v} h => by simpa [E] using h)
     routes M sz links common (by omega) (by intro v _; have := cap v; omega)
+
+/-- The short-order path lower bound of @carl2sheriff and the five-vertex
+exterior exchange give the original conjecture at degree six through order nineteen. -/
+theorem traceable (hc : G.Connected)
+    (bound : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (six : G.secondSmallestDegree=6) (order : Fintype.card V≤19) :
+    ∃ a b : V, ∃ p : G.Walk a b, p.IsHamiltonian := by
+  classical
+  have upper (v : V) : G.distEven v≤1+G.secondSmallestDegree :=
+    (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans bound
+  by_cases short : Fintype.card V≤2*G.secondSmallestDegree+2
+  · exact OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2.theorem_C hc upper short
+  have hn : 2*G.secondSmallestDegree+3≤Fintype.card V := by omega
+  by_cases uncut : ∀ c : V, (G.induce {v : V | v≠c}).Connected
+  swap
+  · push Not at uncut
+    exact Graph189CutH1.cut_vertex_case G hc upper hn uncut
+  exact of_deletions hc bound six order hn uncut
 
 /-- A degree-two vertex forces the order into this entire verified range. -/
 theorem traceable_degree_two (hc : G.Connected)

@@ -8,7 +8,7 @@ open OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R1
 namespace Graph189FiveHighMinimum
 variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph V} [DecidableRel G.Adj]
 
-private theorem low_traceable
+theorem low_traceable
     (cuts : ∀ U : Finset V, U.card<2 → (G.induce {v : V | v∉U}).Connected)
     (z : V) (low : 3 ≤ G.degree z) (high : ∀ w, w≠z → 5 ≤ G.degree w)
     (quota : ∀ w, (univ.filter (fun t => G.dist w t=2)).card ≤ 5) (order : Fintype.card V ≤ 19) :
