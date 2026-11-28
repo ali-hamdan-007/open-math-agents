@@ -1,0 +1,4 @@
+Started at 2026-11-28T10:05:30Z
+'Graph189TwoCutShallow.order_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TwoCutShallow.boundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TwoCutShallow.high_gate' depends on axioms: [propext, Classical.choice, Quot.sound]

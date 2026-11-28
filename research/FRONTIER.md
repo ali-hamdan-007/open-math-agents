@@ -6,6 +6,13 @@ Updated 28 November 2026. This research branch contains local Lean results. The 
 
 
 
+
+## Graph 189 verifies the large shallow two-cut branch and minimum-cut selector
+
+The graph-facing large-side shallow two-cut theorem now passes pinned Lean and a fresh import audit. It derives the actual gate-arm layout, second cut and final `n <= 3k+2` contradiction from genuine cut/contact hypotheses rather than assuming a prepared layout. A separate checked selector produces internally connected, minimum-size sides of a genuine two-cut for k at least 7, and the checked census/parity arithmetic covers the principal complementary counts. The exact kappa-two parent wrapper still needs the balanced, common-free and both-private routing branches; the missing-private k at least 9 wrapper is source-only and not yet verified.
+
+The general near-saturated-column theorem is locally kernel-checked. Independent paper/computational audits support the connectivity-three refinement through k at least 24 and the connectivity-four mask/refinement route through k at least 26, while the graph-facing kernel threshold remains k at least 37 for both. The multi-cycle splice notes are paper work. None of these paper or solver extensions is an official checker verdict. The exact parent remains open.
+
 ## Graph 189 certifies the actual two-cut layout and equality-case structure
 
 The genuine two-cut layout constructor now passes pinned Lean and a fresh consumer import. From the stated large-side contact hypotheses it builds the actual gate-arm partition, a genuine recut, the forced opposite contact and the private high contact, with only the three standard axioms. The next graph-facing shallow wrapper is still being debugged and is not certified.
