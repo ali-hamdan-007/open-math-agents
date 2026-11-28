@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • connectivity four at k≥94; tools for all remaining separators
+
+Every qualifying graph of vertex connectivity four with k≥94 has a spanning path, with no side-size cap or restriction on the unique low vertex. The all-orders paper proof `global/cut4/shallow-large-degree.md`, relative to `research/graph189/full/direct/continuation/`, has been independently reviewed. Its coverage includes the case in which every high vertex on one side touches the separator. If both sides have high nonports, or neither does, the cutoff already drops to k≥16 (see `verify/four-cut-deep-all-sizes.md` and `verify/four-cut-all-high-ports.md`). Further work focuses on the mixed case in the remaining degree range and on separator sizes five and above.
+
+Two general results concern the original conjecture at every order. If some longest cycle has a high exterior vertex with fewer than ceil(k/2) exterior neighbors, the graph is traceable in the remaining connectivity range (`root/longest-cycle-exterior.md`). The unrestricted product inequality XY≤kX+sk² for high populations on the two sides of an s-cut, with X≤Y, now has a local Lean 4.33.1 proof against the pinned graph metric, depending only on propext, Classical.choice and Quot.sound (`root/Graph189CrossOrder.lean`, replay with `root/replay-separator.sh`). A geodesic width/order inequality and a general small-side bound are in `lowblock/geodesic-width-and-order.md` and `root/minimum-cut-populations.md`. Separate counterexample checks exclude weighted nontraceable graph families at arbitrary connectivity; eight numerical optimization tests and analytic arguments are in `search/counterexample/cut4/`. The full conjecture still has no parent proof or official resolution.
+
+
 ## Graph 189 • lowering the sufficient vertex connectivity by one
 
 For every k, every qualifying graph of vertex connectivity at least floor(k/2)−1 has a spanning path. In `research/graph189/full/direct/continuation/`, the proof uses `sep/k10/uniform-matching.md`, `root/one-below-half-clique.md`, and `sep/k10/odd-larger-exterior.md`, together with the preceding high-connectivity results. When a gap of a longest path has exactly the same size as its omitted clique, swapping the two yields more than k distance-two witnesses at a single clique vertex. With all gaps larger, rotating an endpoint gives the opposite order bound. The second odd case uses a matching with tightly confined mark positions. The arguments received independent mathematical review; they have no end-to-end Lean verification.

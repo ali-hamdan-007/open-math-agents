@@ -1,0 +1,2 @@
+import Graph189CrossOrder
+#print axioms Graph189CrossPort.cut_product

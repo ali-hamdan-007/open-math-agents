@@ -1,0 +1,21 @@
+# Opposite private representatives in separator windows
+
+In the two-window calculation of four-cut-large-deep-side.md, for an s-cut with all-nearest high centers y_A,y_B (distance two to every anchor), the same calculation replaces 12k+4−3(w_A+w_B) with 3sk+s−(s−1)(w_A+w_B). Each window still has size at least k+1. The optional odd-depth low nonport is paid at a nearest anchor's opposite representative by its even distance across the separator.
+
+For each index j with a multiple B representative, suppose the representative has at least s−1 more opposite ports among its contacted anchors than the opposite j-ports. Use the analogous assumption for each multiple A representative. Then the upper bound gains s(s−1) further units. To see this, consider all ordered pairs (i,j) of different labels. Each pair incident with a multiple representative on either its A-index i or B-index j can be assigned to such a representative occurrence. Each occurrence receives at most s−1 pairs, paid from its stipulated opposite port savings. For each remaining pair both representatives are private. The A representative on i may see j at distance two, or the B representative on j may see i at distance two. These are distinct savings for every pair that is handled this way. If neither happens, their distance is at least four by passage through S, but at most four via the all-nearest A center and j. The B representative therefore sees the A representative at even distance four beyond the baseline opposite j-ports. For fixed j these witnesses are distinct since the chosen A representatives of the private labels i are distinct. Such B indices are private, hence none of these payments was used by a multiple B representative. We obtain
+
+    n ≤ 3sk+s − (s−1)(w_A+w_B) − s(s−1)
+      ≤ (s+2)k + 2−s².
+
+In particular a four-cut gives n≤6k−14. If A has only private ports and each class has at least three members this always applies, with unrestricted supports in B, since any foreign label on a multiple B representative supplies a disjoint private opposite class. At n≥6k−10 the classes in such an A each have at least four members by the edge common-neighbor theorem, yielding an alternative window proof in four-cut-large-deep-side.md without using the first-step improvement there.
+
+## A cover by port roots at an arbitrary minimum separator
+
+Let both component sides contain a high nonport and let |S|=s≤|B|. The bipartite incidence graph from S to B admits a matching saturating S. Indeed if a nonempty X⊆S had |N_B(X)|<|X|, not all of B is covered by N_B(X) (since |X|≤s≤|B|). Removing (S minus X) and N_B(X) would disconnect B minus N_B(X) from A using fewer than s vertices.
+
+Let q ports of A together cover all anchors at distance two from a high A nonport y. Such nearest anchors exist because y lies at four from an opposite high nonport. The selected ports see all opposite ports touching those anchors at exact distance two. Every other high vertex on the opposite side sees y at four: a three-edge path from y must hit a nearest anchor at its second step and an opposite port at its third step. Thus these q+1 roots collectively cover every high B vertex. For a selected port of support r at least s−r slots are spent outside B by its closed internal neighborhood boundary. Also y spends at least s by its second-layer separator. For each anchor touched by m≥1 selected ports, its distinct matched B contact occurs m times among port-root counts. This permits discarding m−1 duplicate charges (if that contact is low, its charges may all be discarded from a high-only count). Thus
+
+    |B_high| ≤ (q+1)k − s − qs + |union of the q selected port supports|
+             ≤ (q+1)k − qs.
+
+At s=4, wholly high b≥3k−7 forces every high A nonport to have at least three nearest anchors; otherwise two A ports cover its nearest set. All A ports have supports of size at most two, since a triple needs at most one further port to cover the full cut. No two double supports can be disjoint. Whenever an A nonport y has exactly three nearest anchors, every double support must contain its missing label, since a double contained in its nearest set and one further port would cover that set. If n≥6k−10 then the larger wholly high side always satisfies b≥3k−7. The statement with b replaced by |B_high| holds without the wholly high assumption.

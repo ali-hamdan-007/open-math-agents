@@ -1,0 +1,8 @@
+complete 11 {'status': 1, 'minimum_defect': np.int64(258), 'dual_bound': 257.0, 'order': 505, 'actual_k': np.int64(11), 'maximum_even_count': np.int64(269)}
+complete 12 {'status': 0, 'minimum_defect': np.int64(278), 'dual_bound': 278.0, 'order': 547, 'actual_k': np.int64(12), 'maximum_even_count': np.int64(290)}
+complete 16 {'status': 0, 'minimum_defect': np.int64(363), 'dual_bound': 363.0, 'order': 715, 'actual_k': np.int64(16), 'maximum_even_count': np.int64(379)}
+complete 24 {'status': 0, 'minimum_defect': np.int64(532), 'dual_bound': 532.0, 'order': 1053, 'actual_k': np.int64(24), 'maximum_even_count': np.int64(556)}
+cyclic 11 {'status': 0, 'minimum_defect': np.int64(252), 'dual_bound': 252.0, 'order': 505, 'actual_k': np.int64(11), 'maximum_even_count': np.int64(263)}
+cyclic 12 {'status': 0, 'minimum_defect': np.int64(273), 'dual_bound': 273.0, 'order': 547, 'actual_k': np.int64(12), 'maximum_even_count': np.int64(285)}
+cyclic 16 {'status': 1, 'minimum_defect': np.int64(356), 'dual_bound': 355.0000000001936, 'order': 715, 'actual_k': np.int64(16), 'maximum_even_count': np.int64(372)}
+cyclic 24 {'status': 0, 'minimum_defect': np.int64(521), 'dual_bound': 521.0, 'order': 1053, 'actual_k': np.int64(24), 'maximum_even_count': np.int64(545)}
