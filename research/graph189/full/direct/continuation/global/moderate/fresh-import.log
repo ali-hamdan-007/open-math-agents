@@ -1,0 +1,15 @@
+compiler started Graph189CompletionAudit 2026-11-28T07:31:14Z
+Graph189Completion.Rejection.sound.{u_1} {V : Type u_1} [Fintype V] {G L U : SimpleGraph V} {z : V} {f d k : ℕ}
+  {required : V → ℕ} (tree : Rejection z f d k required L U) (actual : Feasible G z f d k required) :
+  L ≤ G → G ≤ U → False
+'Graph189Completion.hasPath_of_list' depends on axioms: [propext, Quot.sound]
+'Graph189Completion.hasPath_induce_of_list' depends on axioms: [propext, Quot.sound]
+'Graph189Completion.saturated_neighbors' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.forcedTwo_card_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.Rejection.sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.Rejection.excludes_relabel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.RowsRepresent.disconnected_after_delete' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.RowsRepresent.excess_of_pairs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.RowsRepresent.add_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.Rejection.cut_row' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189Completion.Rejection.even_row' depends on axioms: [propext, Classical.choice, Quot.sound]

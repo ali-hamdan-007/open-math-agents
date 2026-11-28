@@ -1,0 +1,2 @@
+'Graph189QuadraticOrder.order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189QuadraticOrder.small_degrees' depends on axioms: [propext, Classical.choice, Quot.sound]

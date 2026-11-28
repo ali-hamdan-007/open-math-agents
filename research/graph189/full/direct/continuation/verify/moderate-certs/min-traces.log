@@ -1,0 +1,4 @@
+3 Counter({'path': 8, 'even': 1}) Counter({'forbid': 1})
+4 Counter({'cut': 20, 'path': 7, 'even': 3}) Counter({'forbid': 165})
+5 Counter({'cut': 41, 'path': 7, 'even': 3}) Counter({'forbid': 415})
+6 Counter({'cut': 83, 'degree': 7, 'path': 4, 'even': 4}) Counter({'forbid': 1056})

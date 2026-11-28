@@ -1,0 +1,2 @@
+'Graph189ModeratePort.tight_clique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ModeratePort.distinct_contacts' depends on axioms: [propext, Classical.choice, Quot.sound]

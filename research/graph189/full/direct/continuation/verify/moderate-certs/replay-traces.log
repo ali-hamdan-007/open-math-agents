@@ -1,0 +1,4 @@
+3 9 {'path': 8, 'even': 1} 1
+4 30 {'path': 7, 'cut': 20, 'even': 3} 165
+5 51 {'path': 7, 'cut': 41, 'even': 3} 415
+6 98 {'path': 4, 'degree': 7, 'cut': 83, 'even': 4} 1056

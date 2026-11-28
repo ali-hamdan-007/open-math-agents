@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Pinned certificates for all nine degree-three completion patterns, and an order bound
+
+`verify/moderate-certs/Graph189ModerateK3.lean` now contains nine kernel-checked rejection theorems on explicit lower and upper graphs. The arbitrary-vertex relabeling theorem and graph-interval calculus passed a fresh import with eight controls. Separately, `root/Graph189QuadraticOrder.lean` derives n≤11, 15 and 20 at second-smallest degrees 3, 4 and 5 from the existing layer-cover bound. Thus every residual k=3 graph falls in the moderate window. The step connecting an arbitrary such graph to one of the rejected inputs still requires the formal coverage and path-gap lemmas. `root/Graph189SaturatedEven.lean` verifies that, after a vertex exhausts its positive even-distance allowance on a set at distance two, every other vertex reachable without visiting that set is adjacent to it. The independent graph-side relabeling modules verify exterior isomorphism representatives through order five. All stated kernel results used only the three standard axioms. The exact parent remains unsubmitted.
+
+
 ## Graph 189 structural range reduced to a published cycle theorem and the one-missing-vertex case
 
 In `root/Graph189NearViaCycles.lean`, the pinned Lean kernel now verifies for every original qualifying connected graph with vertex connectivity s≥5 and second-smallest degree k≥26, 3s<k, that either G is traceable or deleting a minimum-degree vertex leaves a traceable graph, provided the named classical exterior-cycle property holds at s and s+1 for each universal-vertex completion. The proof derives the structural order inequalities from the genuine graphs in all low-vertex placements. `lowblock/Graph189BondyCycleInterface.lean` provides a separate, explicit reduction of the classical property to a published longest-cycle inequality under its hypotheses. The exterior-cycle inputs and the general implication from a one-missing-vertex path still require formal proofs. `root/near-via-cycles.log` records the local axiom audit. This result is a conditional part of the full parent proof.

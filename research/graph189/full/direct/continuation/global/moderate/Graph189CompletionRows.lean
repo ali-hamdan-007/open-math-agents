@@ -148,7 +148,7 @@ theorem Rejection.cut_row {high : V→Finset V} (hi : RowsRepresent high U) (v :
     (closed : ∀ x∈C, ∀ y∈high x, y≠v → y∈C) : Rejection z f d k req L U :=
   .cut v (hi.disconnected_after_delete v C av bv ha hb closed)
 
-theorem Rejection.even_row {low high : V→Finset V} (lo : RowsRepresent low L)
+theorem Rejection.even_row [DecidableEq V] {low high : V→Finset V} (lo : RowsRepresent low L)
     (hi : RowsRepresent high U) (v : V) (excess : k<(rowTwo low high v).card) :
     Rejection z f d k req L U :=
   .even v (by rwa [lo.forcedTwo_eq hi])
