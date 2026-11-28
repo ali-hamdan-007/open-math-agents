@@ -1,0 +1,2 @@
+c0162a733aeae81c234e0c3a5a89ca049021cb34548dd743e3991cbd3c2ec5f9  Graph189WedgeCorollary.lean
+'Graph189WedgeOrder.local_ore_of_order' depends on axioms: [propext, Classical.choice, Quot.sound]

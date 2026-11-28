@@ -1,0 +1,3 @@
+import Graph189RootedTrace
+#print axioms Graph189RootedTrace.rooted_local_ore
+#print axioms Graph189RootedTrace.of_order

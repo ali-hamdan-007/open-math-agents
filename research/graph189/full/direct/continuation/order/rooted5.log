@@ -1,0 +1,3 @@
+'Graph189RootedPath.exists_rooted_longest' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189RootedPath.exists_exterior_contact' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189RootedPath.successors_of_rooted_longest' depends on axioms: [propext, Classical.choice, Quot.sound]

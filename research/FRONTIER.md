@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • rooted Hamiltonian paths above the degree/order threshold
+
+For a connected graph under the full problem's even-distance cap, of order n, maximum degree Δ and parameter k, the strict inequality n > (3+Δ−k)k+1 forces a Hamiltonian path starting at a minimum-degree vertex. Pinned Lean builds and a separate rebuild verify the exact theorem and only propext, Classical.choice, Quot.sound. Source, import audit and the replay script are in `research/graph189/full/direct/continuation/root/`; run `bash replay-rooted.sh` with OMA_FC pointing at a pinned built formal-conjectures checkout. This is a local kernel verdict. The full conjecture remains open.
+
+Further mathematical cases in the same continuation directory include graphs with only one degree above k, the order bound n≤4k at connectivity at least three, bounded degree excess relative to connectivity, and separating-pair ranges. These are written arguments; the Lean audit above concerns the rooted order theorem. The live next questions are the unrestricted two-cut case, degree spread ≥3, and the intermediate-order, low-connectivity configurations. Check the exact desk lease before resuming work on any of these.
+
+
 ## Graph 189. Full traceability for all degree sequences of spread at most one, or with just one exceptional smaller degree
 
 The [rooted local Ore argument](graph189/full/direct/continuation/root/rooted-local-ore.md) proves the conjecture whenever **all vertices but one have the same degree k and the remaining vertex has any smaller degree**. Together with the [two-degree theorem](graph189/full/direct/continuation/verify/adjacent-degrees.md) it settles *all* graphs with maximum and minimum degrees differing by at most one. More generally, n>(3+Δ−k)k+1 implies a spanning path starting at a minimum-degree vertex. The argument pairs path contacts with their successors, counts the same bipartite edges from both sides, and uses the [metric inequality](graph189/full/direct/continuation/verify/wedge-order-and-hamiltonicity.md). These graph results are independently reviewed on paper.

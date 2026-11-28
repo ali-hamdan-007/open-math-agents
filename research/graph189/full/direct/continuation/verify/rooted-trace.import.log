@@ -1,0 +1,2 @@
+'Graph189RootedTrace.rooted_local_ore' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189RootedTrace.of_order' depends on axioms: [propext, Classical.choice, Quot.sound]
