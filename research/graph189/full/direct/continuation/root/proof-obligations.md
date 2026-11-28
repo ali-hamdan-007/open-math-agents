@@ -12,3 +12,5 @@ The checked conditional theorem in parent/parent-assembly.md treats graphs with 
 | Alternative 64-band route | Both strengthened degree and width estimates hold for real graphs. The separate exterior modules prove contact matching and path replacements with actual graph vertices. | Join the block decomposition, attachment lower bounds, and finite coverage. |
 
 Paths are relative to the continuation directory unless stated otherwise. PR 18811 concerns a child reduction. The paper argument, research-module kernel checks and a checker verdict on the exact parent are distinct milestones.
+
+Other upstream work overlaps one subcase of the moderate interval. PR [20811](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/20811) is the center case in R1.H1.R1.H1.R1.H1. Its exact statement in reduction 8075 assumes diameter three, minimum degree two, order 2k+3 and further center and independent-set hypotheses. It is a candidate for reuse in that subcase. On the last check it was open. The formalization here does not take it as a proof of either full two-connected case.

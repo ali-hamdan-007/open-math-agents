@@ -8,7 +8,7 @@ variable {V : Type*} [Fintype V] [DecidableEq V] {G : SimpleGraph V}
 variable [DecidableRel G.Adj] {A B S : Finset V}
 
 omit [DecidableRel G.Adj] in
-private theorem even_cover (R Y : Finset V) (k : ℕ) (dis : Disjoint R Y)
+theorem even_cover (R Y : Finset V) (k : ℕ) (dis : Disjoint R Y)
     (cap : ∀ a, G.distEven a ≤ k+1)
     (cover : ∀ v ∈ Y, ∃ a ∈ R, Even (G.dist a v)) : Y.card ≤ R.card*k := by
   classical
@@ -30,7 +30,7 @@ private theorem even_cover (R Y : Finset V) (k : ℕ) (dis : Disjoint R Y)
        _ = _ := by simp
 
 omit [Fintype V] [DecidableEq V] [DecidableRel G.Adj] in
-private theorem cross_two (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
+theorem cross_two (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
     {x v j : V} (hx : x ∈ A) (hv : v ∈ B) (xj : G.Adj x j) (jv : G.Adj j v) :
     G.dist x v = 2 := by
   have ne : x ≠ v := by rintro rfl; exact Finset.disjoint_left.mp sides.apart hx hv

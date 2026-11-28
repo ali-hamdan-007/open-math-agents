@@ -1,0 +1,7 @@
+import Graph189PrivatePortBand
+#print axioms Graph189CutSides.CutSides.private_port_recut
+#print axioms Graph189CutSides.CutSides.high_orientation
+#print axioms Graph189CutSides.CutSides.no_high_private_at_large_label
+#print axioms Graph189CutSides.valid_recut_order
+#print axioms Graph189CutSides.CutSides.private_port_terminal_band
+#print axioms Graph189CutSides.CutSides.common_label_contacts

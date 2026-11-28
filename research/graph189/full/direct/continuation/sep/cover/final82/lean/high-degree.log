@@ -1,0 +1,2 @@
+'Graph189ExteriorGap.adjacent_ambient_degree_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorGap.nonisolated_exterior_half' depends on axioms: [propext, Classical.choice, Quot.sound]

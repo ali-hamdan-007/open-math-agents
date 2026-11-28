@@ -3,6 +3,15 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • two uniform separator counts and the actual residual degree inequality
+
+The second separator contradiction now applies at every valid numerical band, since the band directly implies n≥6k+s+1. See order/Graph189PrivatePortBand.lean. The actual graph's scalar width inequalities and the nonisolated exterior half-degree estimate have also passed the pinned kernel (global/arity/final/Graph189ActualScalarWidth.lean and sep/cover/final82/lean/Graph189HighExteriorDegree.lean).
+
+On paper there is a shorter co-singleton argument. Two lists of separator witnesses cover every large-side high vertex at least twice, giving Y≤sk whenever three or more labels have co-singleton representatives. See root/twofold-cover.md. A single cap k+floor(k/(s−1)) also constructs a valid numerical band whenever either of the two asymptotic upper-order conditions fails. root/synthetic-high-order.md gives the derivation. Once the valid-band graph contradiction is formalized, this directly supplies both upper-order inputs in the unbounded reduction. The two new paper deductions and the entire parent still await full kernel assembly.
+
+PR 20811 concerns a restricted diameter-three center case with n=2k+3. On the last check it was open. The center assumptions are listed in root/proof-obligations.md.
+
+
 ## Graph 189 • the new minimum separator and the exterior degree estimate
 
 The small-side pointwise bound is now a theorem on the graph: a vertex x of A with t separator neighbors sees at most k−s+t vertices of B at positive even distance. See root/Graph189BoundaryDebit.lean. In the opposite direction order/Graph189PrivatePortRecut.lean builds a new minimum separator from a high private contact under its explicit witness hypothesis. The original degree bound Δ≤3k orients its closed neighborhood as the smaller side at n≥6k+s+1. The resulting contradiction still requires the existence of that contact and the uniform support bound.
