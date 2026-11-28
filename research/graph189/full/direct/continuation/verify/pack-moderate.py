@@ -269,7 +269,7 @@ instance {V : Type u} {G : SimpleGraph V} {d : ℕ} (K : Core G d) : DecidableRe
             # The full official Mathlib import supplies notations such as
             # <m and ≤s, and also opens the metric dist_self.
             t = re.sub(r"(?<![<>=-])([<≤>≥])(?=[^\W\d])", r" \1 ", t)
-            if mod == "Graph189LayerCover" or c.name.endswith(".original_dist_two"):
+            if args.original or mod == "Graph189LayerCover" or c.name.endswith(".original_dist_two"):
                 t = re.sub(r"(?<![\w.])dist_self\b", "SimpleGraph.dist_self", t)
             body.append(t)
         rendered="\n".join(body)+"\n"+"end\n"*max(0,stack)
