@@ -1,0 +1,28 @@
+# Independent check of the omitted-component bound
+
+Assume G is 2-connected, k=2h, at most one vertex has degree <k, and every vertex has at most k other vertices at positive even distance. For any globally longest path P, an omitted component C containing a high vertex cannot have exactly h+1 vertices. For h=1 this follows directly from the attachment count. For h≥2 the previous strict lower bound in attachments.md and this exclusion together force |C|≥h+2.
+
+## The equality structure
+
+The earlier attachment argument shows that an omitted component of order h+1 containing a high vertex is a clique, and each high vertex in it has precisely h common attachments A on P. To check the argument directly, an omitted high vertex has an omitted neighbor since its path attachments and their shifts outnumber k if it has no outside neighbor. If its sole omitted neighbor is low, all k−1 attachments of the high vertex form a single step-two run, exhausting its distance-two budget. This leaves the low vertex with no other outside neighbor. Its path attachments must belong to the high vertex's run; for k≥3 every member of that run has a fellow member two steps away and hence is unavailable by the two-vertex splice. This contradicts 2-connectivity. Otherwise there are adjacent high vertices and their path attachment counts are at least h each. A nonsingleton run of one would give the strong overlap inequality that their counts sum to at most k−1. Thus both have only singleton runs, h attachments and internal degree h, hence are both universal in C. Every additional high vertex has a high neighbor, so the same applies to it. Since at most one vertex is low, this makes C complete. The two shifts of the h attachments of any high x take up its entire even budget, forcing all high neighbors to share these attachments: one’s additional attachment would be at distance two from x via that neighbor, but an index adjacent to any existing attachment would permit insertion along an edge of P. This also implies that any low vertex of C has path attachments only within A. At h=1 both omitted vertices have degree at least 2 by 2-connectivity, both have exactly one path attachment by the shift count, and they share it by the same insertion argument. That attachment would be a cut vertex.
+
+For h≥2, put m=h+1 and fix a high vertex x of C. Write B for the 2h vertices of P immediately before and after the marks A. They exhaust the positive even-distance set of x. Every remaining vertex w outside C∪A∪B belongs to a set W of vertices at distance three from x, since distance at least four would introduce a distance-four vertex. Hence every w touches B and none touches A. Every gap of nonmarks along P, tails included, contains at least m vertices. Otherwise insert a spanning path of C between two marks, or use it as a path prefix or suffix, giving a longer path. There are at least two high vertices in C, so distinct entry and exit vertices can be prescribed, and a single mark permits a spanning path from any high entry vertex.
+
+## Checking the upper bound on W
+
+For h≥3, select W₀ of size 2h by following each of the 2h brackets in B one further step along P, away from its mark. The gaps of length m≥4 and two tails give distinct representatives. For a mark a let d be its number of neighbors among A, S its neighbors in B, and U the 2(d+1) brackets of a and its adjacent marks. Distance-two points from a include the h−1−d nonadjacent marks by way of x, positions U minus S through their own marked neighbor, and the representatives in W₀ of positions in S. The sets are disjoint. Thus the number of additional distance-two vertices in W outside W₀ is at most h−1−d−|S minus U|. Every point of W is at distance two from at least one mark via a bracket. Summing over all h marks yields
+|W| ≤ 2h + h(h−1) − Σd − Σ|S minus U| ≤ h²+h.
+The coarser inequality alone suffices.
+
+For h=2, write A={a,c}. If a and c are nonadjacent they each use one distance-two witness on the other, so they collectively see at most six vertices of W at distance two. If adjacent and one mark sees all of B, all of W is within its distance-two set, giving |W|≤4. Otherwise each mark misses a bracket adjacent to the other, again giving |W|≤6. Thus |W|≤h²+h also holds at h=2.
+
+## Applying one rotation at either endpoint
+
+Let g₀,…,g_h count nonmarks in successive gaps, including both tails, and put s=Σ(g_i−m). Since the nonmarks on P comprise the 2h brackets and a subset of W,
+s ≤ 2h+|W|−(h+1)² ≤ h−1.
+
+The endpoint p₁ is in W since its tail contains at least m≥3 nonmarks. It has no neighbor in A and no neighbor outside P. Among the first g₀ path positions there are at most g₀−1 possible neighbors. For every mark p_j, the first m positions p_t following this mark are also unavailable as neighbors. If p₁p_t is an edge, rotating P yields the path p_(t−1),…,p₁,p_t,… . Its opening tail before p_j has only t−1−j<m vertices, contrary to the spanning-C splice. This rotated path has the same vertex set and the same common-attachment marks A. The forbidden intervals after distinct marks are disjoint. Therefore
+d(p₁) ≤ g₀−1 + Σ_{i=1}^h(g_i−m) = h+s ≤ 2h−1.
+Reversing P gives the same bound on its distinct other endpoint, contradicting the degree hypothesis. This argument covers every h≥2 without a finite enumeration.
+
+The strengthened arbitrary-component degree estimate 2d_C(x)≥k+F(x)+T(x) also checks. F counts all vertices at even distance ≥4, and T counts vertices of other exterior components at distance two. They are disjoint from all original shift witnesses, contacts of an omitted neighbor, and internal witnesses from the neighbor’s outside-neighborhood difference. The prior bound with F=T=0 is in gap-packing.md.

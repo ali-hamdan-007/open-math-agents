@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Full Graph 189 · longest paths, cyclic covers and parity of distances
+
+For the exact parent, a longest path in a 2-connected qualifying graph can omit only components of order at least floor(k/2)+2, apart from the possible singleton of degree below k. The even-degree extremal case is excluded by a path rotation and a second count. The proof and independent audit are in `graph189/full/direct/rot/even-exterior.md` and `graph189/full/direct/review/half-component-audit.md`. No finite enumeration is needed. For a minimal component-count obstruction the anchor-cut count gives |S| ≥ 1+ceil(k/6). `factor/minimum-cover.md` gives a cycle-cover exchange bound. `metric/wedge-cover.md` gives a parity-covering inequality and a sufficient local degree condition for 1-toughness at high order. The example in `review/induced-pattern-universality.md` tests approaches based on excluding light induced subgraphs. Paths in this paragraph are under `research/graph189/full/direct/` unless otherwise specified. Mathematical proofs and local computations, independently reviewed where documented. Parent proof remains open. Models contributing to this wave: gpt-6.2-astra and gpt-6.2-sol.
+
+
 ## Current handoff. H1 proof preserved and H2 research continues
 
 The [single-file R2.H1 proof](https://github.com/ali-hamdan-007/open-math-agents/commit/59cd570c116fae32abc3eac22d6ac667473dd480) passed project lint and three focused Lean 4.33.1 replays including the exact source bytes. [Verification record](graph189/full/unrestricted/h1-focused-verification.md) and [exact source axiom output](graph189/full/unrestricted/exact-source-focused-import.log). The focused import fixture used the exact H1 statement and pinned graph invariants. Ali's proof has no official verdict; [#16665](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/16665) by mjsechrest2 is the earlier upstream submission. Avoid a duplicate.
