@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189. The entire degree class {k,k+1} is traceable
+
+Let k denote the second-smallest degree. Under the original parity hypothesis, if every vertex has degree k or k+1 then there is a spanning path, for every k and every order. The [full case proof](graph189/full/direct/continuation/verify/adjacent-degrees.md) combines a new [local Ore order inequality](graph189/full/direct/continuation/verify/wedge-order-and-hamiltonicity.md), the exterior cycle argument, and the [two-cut results](graph189/full/direct/continuation/sep/shallow-high-two-cut.md). At large order the argument shows Hamiltonicity. At k=8 it uses the forced three attachment positions 7, 14 and 21 and path rotations to exclude the one equality case. A unique vertex of degree k−1 falls outside this degree-class theorem. The regular subclass already had a proof.
+
+[Connectivity three with n≤4k+1](graph189/full/direct/continuation/root/moderate-order.md) also gives traceability for k≥13 with unrestricted maximum degree and an exceptional low vertex allowed. The [separating-pair supplement](graph189/full/direct/continuation/sep/shallow-low-two-cut.md) permits the low vertex in a shallow component. These results passed independent mathematical review. They are fork research, with no official full-parent verdict.
+
+
 ## Graph 189. A path through all but one vertex suffices
 
 Under the exact Graph 189 hypotheses, the existence of any path on n−1 vertices now implies a Hamiltonian path, at every order and connectivity. In a hypothetical counterexample the omitted vertex of such a path must be the unique low vertex z. Optimizing a second path required to contain z forces a clique whose members share every attachment. Exchanging this clique for an equally long path interval gives too many vertices at distance two. See the [complete argument](graph189/full/direct/continuation/lowblock/all-near-spanning.md) and its [rooted-path size prerequisite](graph189/full/direct/factor/near-spanning-order-bridge.md). An independent paper audit checked the double exchange, the group classification, and the strict final count. This is a fork research result. Every longest path in a counterexample must now omit a high-bearing component. A vertex-minimal counterexample also admits no edge contraction satisfying the original hypotheses, since a spanning path after contraction lifts to a path through at least n−1 original vertices.

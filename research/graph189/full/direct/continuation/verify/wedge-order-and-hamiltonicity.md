@@ -1,0 +1,11 @@
+# An order bound at each local Ore obstruction
+
+Let G be a finite connected simple graph. Suppose every vertex x has at most k vertices at positive even distance and write e(x) for their count. For any induced path u,w,v set j=|N(u)∪N(w)∪N(v)|−d(u)−d(v). Then
+
+    (k+1) j ≤ 3k+2−n + k(1+d(w)+e(w)−d(u)−d(v)).
+
+To prove this, let Q=N(w)−(N(u)∪N(v)), C=N(u)∩N(v) and C1=C∩N(w). Then j=|Q|−|C|. All Q vertices occur in the closed even-distance sets of both u and v, including u and v themselves. The union of the three closed even-distance sets of u,w,v therefore has size at most 3(k+1)−|Q|. Any vertex outside that union has three odd distances, all equal since the successive roots are adjacent. Those at distance one precisely form C1. For the remaining set T of common odd distance at least three we have |T|≥n−3(k+1)+|Q|−|C1|≥n−3k−2+j, since w∈C−C1.
+
+Let s=|N₂(w)| and M=N₂(w)−(N(u)∪N(v)). The union of the three neighborhoods is the closed radius-two ball around w minus M, so |M|=1+d(w)+s−d(u)−d(v)−j. Assign each t∈T to a penultimate vertex a on any shortest w-to-t path. This a has positive even distance from w. If that distance is two, d(w,t)=3; adjacency of a to u or v would contradict the equal endpoint distances. Thus a∈M, or its distance from w is at least four. There are at most |M|+e(w)−s candidate vertices a. Fix for each candidate a a predecessor on a shortest path from w to a. Every t assigned to a is adjacent to a, two w-layers beyond its fixed predecessor, hence at graph distance exactly two from that predecessor. So |T|≤k(|M|+e(w)−s). Combining proves the inequality without assuming a global diameter bound.
+
+In particular j≥1 implies n≤3k+1+k(d(w)+e(w)−d(u)−d(v)), and j≥2 implies n≤2k+k(d(w)+e(w)−d(u)−d(v)). If the former inequality is violated at every induced path, the graph satisfies the local Ore L0 condition and thus is Hamiltonian by Asratian and Khachatryan. For Graph 189 write δ,Δ for the minimum and maximum degrees. Every pair of distinct vertices includes one of degree ≥k. Thus n>(3+Δ−δ)k+1 implies Hamiltonicity, as does the more precise threshold using the maximum local degree excess above. In particular degree set {k,k+1} and n>4k+1 suffice, without any forest or minimum-codegree assumption. For the L0 theorem see Theorem 2 at https://ris.utwente.nl/ws/files/6633608/Asratian96on.pdf.
