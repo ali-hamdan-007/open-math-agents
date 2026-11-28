@@ -3,6 +3,10 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Every graph with second-smallest degree three is traceable
+
+The kernel checked `Graph189ThreeOriginal.traceable_three` under the registered connectedness and maximum-even-distance hypotheses, for arbitrary order and minimum degree. This closes both parent obligations through second-smallest degree three. The proof routes the possible degree-two vertex through a longest path and combines that result with the tied-minimum, cut-vertex and small-order theorems. The source, five-declaration axiom audit and replay directions are in [the degree-three proof](graph189/full/direct/continuation/verify/degree-three-short-proof.md). The missing low-cut module required by the structural conclusion has also been restored. The pinned kernel checked its two witnesses and the existing effective-deficit consumer. [Low-cut audit](graph189/full/direct/continuation/order/low-mixed-cut.log)
+
 ## A second finite route through all orders at second-smallest degrees three, four and five
 
 The layer-cover order bound brings degree three entirely into the moderate window. Beyond that window only four additional (k,n) pairs are needed up through degree five. Python and C++ independently excluded all 72, 88, 227 and 876 attachment patterns at (4,15), (5,18), (5,19) and (5,20). The last order uses the even-distance saturation and a three-component routing argument giving an actual path on at least 16 of 20 vertices. `root/small-degree-order-windows.md` gives the proof, data and reproducible commands. This is a computer-assisted paper proof using the prior path gap. The local kernel has verified the global order and even-saturation inequalities, with the remaining finite graph-to-certificate connections still in progress. This checkpoint is on Ali's fork.
