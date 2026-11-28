@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 exterior routing replay with prescribed ports
+
+The [portable source archive](graph189/full/direct/continuation/sep/cover/final82/exterior-near-hc-core.tar.gz) includes the locally checked path closure, endpoint matching and near-Hamilton-connected exterior lemmas used in the independent exterior approach. The archive SHA-256 is 4b4b4a83fdf5ba61a510ec1a1e7bcf4b2e96fa75e84bfe5c9b11b5e78e8844a7. These are focused Lean modules. The proof of the exact full parent is still being assembled.
+
+
 ## An accepted upstream linked-set theorem applies to the structural order bound
 
 Upstream [PR 7971](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/7971) by @koolkao includes an all-orders internal theorem for a linked set outside a longest cycle. The official acceptance is for the Bondy theorem. For Graph 189, the native linked-set transport, the one-low-vertex rooted path, the minimum-deletion order estimate, and the two-tight-gaps count have passed the pinned kernel independently. The [application note](graph189/full/direct/continuation/root/upstream-linked-set.md) records the exact stronger internal hypothesis, source, verdict and remaining application to the original graph.
