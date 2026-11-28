@@ -13,6 +13,7 @@ CMD = re.compile(
     r"^(?:@\[[^\]]+\]\s*)?(?:private\s+|protected\s+|public\s+|noncomputable\s+)*"
     r"(theorem|lemma|def|abbrev|structure|class|inductive|instance)\s+(" + QUALIFIED_NAME + ")"
 )
+ANONYMOUS_INSTANCE = re.compile(r"^(?:noncomputable\s+)?instance\s+(?=[({\[])")
 CONTEXT = re.compile(r"^(?:module|(?:public\s+)?import|(?:public\s+|noncomputable\s+)?section|end|namespace|open|variable|universe|omit|include|set_option|attribute|#\w+|@\[)")
 IMPORT = re.compile(r"^(?:public\s+)?import\s+(?:all\s+)?([\w.]+)", re.M)
 IDENT = re.compile(QUALIFIED_NAME)
@@ -64,7 +65,7 @@ class Command:
 
 def parse(module, source):
     lines = uncomment(source).splitlines()
-    cuts = [i for i, line in enumerate(lines) if CMD.match(line) or CONTEXT.match(line)]
+    cuts = [i for i, line in enumerate(lines) if CMD.match(line) or ANONYMOUS_INSTANCE.match(line) or CONTEXT.match(line)]
     cuts.append(len(lines))
     commands = []
     scope = []
@@ -74,6 +75,8 @@ def parse(module, source):
         name = ""
         if match := CMD.match(first):
             name = ".".join(item for item in [*scope,match[2]] if item)
+        elif ANONYMOUS_INSTANCE.match(first):
+            name = ".".join([*filter(None, scope), f"__instance_at_line_{a+1}"])
         commands.append(Command(module,a+1,b,chunk,name,".".join(filter(None,scope)),"private " in first))
         if first.startswith("namespace "):
             scope.append(first.split()[1])
@@ -155,15 +158,28 @@ def main():
     if not pending: raise SystemExit(f"unknown root {args.root}")
     unmapped = []
     if args.dependencies:
-        for entry in args.dependencies.read_text().splitlines():
-            mod,name,line,_body = entry.split("\t")
+        sources_by_constant = {}
+        entries = [entry.split("\t") for entry in args.dependencies.read_text().splitlines()]
+        for mod,name,line,_body in sorted(entries, key=lambda entry: entry[1].count(".")):
             if mod not in modules:
                 raise SystemExit(f"{mod} from the kernel manifest is absent from this source revision")
             records = modules[mod]
             matching = [c for c in records if c.name and (name==c.name or name.startswith(c.name+"."))]
             precise = [c for c in matching if c.start<=int(line)<=c.end] if int(line) else []
+            if not matching and args.original:
+                # The kernel records the location of anonymous and derived
+                # instances at their source instance or deriving clause.
+                matching = [c for c in records if c.name and int(line) and c.start <= int(line) <= c.end]
+                if not matching:
+                    # Equation-compiler lemmas can be materialized on use in a
+                    # later module, retaining the defining declaration's name.
+                    prefix = name
+                    while "." in prefix and not matching:
+                        prefix = prefix.rpartition(".")[0]
+                        matching = sources_by_constant.get((mod, prefix)) or by_name.get(prefix, [])
             if not matching:
                 unmapped.append((mod,name,line))
+            sources_by_constant[mod, name] = precise or matching
             pending.extend(precise or matching)
     while pending:
         c = pending.pop()
