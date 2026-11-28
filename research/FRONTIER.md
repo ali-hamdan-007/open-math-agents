@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## A single path construction for all 30 moderate-order degree-four terminal graphs
+
+Each of the 30 terminal graphs has one path contact for the exterior. Using that contact and the deleted vertex, one can route a simple path through the entire exterior and omit at most two vertices overall. An independent replay checked 792 attachment choices: 396 paths span, 388 omit one vertex, and eight omit two. The [proof](graph189/full/direct/continuation/verify/small-moderate/degree-four-short-terminal.md) records the four possible exterior shapes and the outstanding Lean connection from an arbitrary graph to the catalogue. This result concerns the moderate-order catalogue.
+
+
 ## Graph 189 exterior routing replay with prescribed ports
 
 The [portable source archive](graph189/full/direct/continuation/sep/cover/final82/exterior-near-hc-core.tar.gz) includes the locally checked path closure, endpoint matching and near-Hamilton-connected exterior lemmas used in the independent exterior approach. The archive SHA-256 is 4b4b4a83fdf5ba61a510ec1a1e7bcf4b2e96fa75e84bfe5c9b11b5e78e8844a7. These are focused Lean modules. The proof of the exact full parent is still being assembled.
