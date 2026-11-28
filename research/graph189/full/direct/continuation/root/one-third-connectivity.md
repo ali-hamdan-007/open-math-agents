@@ -1,6 +1,6 @@
 # The one-third-connectivity range using linked sets and the width bound
 
-Assume the original Graph 189 hypotheses, write k for the second-smallest degree, and suppose k≥19 and 3κ≥k. One order comparison rules out a counterexample throughout this range. It avoids the block and endblock calculations in the earlier high-connectivity proof. This is a paper consequence of the graph-facing inputs described below. The integration sources are being checked.
+Assume the original Graph 189 hypotheses, write k for the second-smallest degree, and suppose k≥19 and 3κ≥k. One order comparison rules out a counterexample throughout this range. It avoids the block and endblock calculations in the earlier high-connectivity proof. The graph-facing argument and final integration passed the local pinned Lean 4.33.1 kernel.
 
 Put l=ceil(k/3). Then l≤κ and k≤3l≤k+2. Take a minimum-degree vertex z and assume the original graph has no Hamilton path. We get the same inequality in both alternatives:
 `n≥(l+1)(k−l+2)−1`.

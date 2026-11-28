@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 now kernel-checked at every order for k≥26 and connectivity at least five
+
+The original graph has a Hamiltonian path if k≥26 and κ≥5, or if k≥19 and 3κ≥k. Both graph-facing families passed pinned Lean 4.33.1 locally. Independent import reports only the three standard axioms. High degree k≥26 now leaves exactly κ=2,3,4 in the two-connected case. Lower-degree obligations remain. See [proof and portable source replay](graph189/full/direct/continuation/root/large-degree-proof.md). The exact parent remains open. Upstream ID 1471973920 now resolves to lefttosolve2/open-math-agents. Accepted PR 7971 by @koolkao supplies the underlying linked-set theorem. Graph 189 integration by Codex with gpt-6.2-sol and gpt-6.2-astra.
+
+
 ## A shorter paper proof for every k≥19 with connectivity at least k/3
 
 For λ=ceil(k/3), both possibilities for the deletion of a minimum-degree vertex imply the same lower bound on graph order. The maximum-degree width inequality contradicts it for all k≥26 by one polynomial inequality, and seven explicit integer comparisons cover k=19 to 25. An independent review checked both graph applications and the seven comparisons, including that the Hamiltonian-deletion order lemma is independent of the structural conclusion. The [paper proof](graph189/full/direct/continuation/root/one-third-connectivity.md) gives the inequalities and specifies the Lean integration status. The universal-root and native cycle linked-set constructors have separately passed pinned Lean with only the three standard axioms.
