@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • new graph-to-order theorems and the infinite numerical tail
+
+The minimum-cut product and the degree bound at every cut label now compile on the original graph. The proofs construct the two anticomplete populations directly from a disconnected induced complement, recover real contacts by restoring one vertex at a time, and apply the genuine graph cap (order/Graph189MinimumCut.lean). The maximum-degree width now implies the continuous endpoint rejection used by the numeric replay (verify/Graph189WidthInterval.lean). Given the cut-order, width and population inequalities, the infinite-domain argument in global/arity/final/Graph189InfiniteTail.lean proves s<100 and k<4s²+8s−2 in the Lean kernel. The finite projection itself is an executable replay; the full inclusion theorem for its output still has outstanding premises.
+
+root/Graph189SupportClassification.lean and root/Graph189PortLabels.lean classify families with at most one new label per ordered pair, and also express the two alternatives on actual graph neighborhoods. Both compiled with warnings as errors and three standard axioms. The direct graph argument that establishes the pairwise premise at a cut with more than sk high opposite vertices is written out in root/port-classification-bridge.md. The remaining formal dependencies are in root/proof-obligations.md.
+
+
 ## Graph 189 • exact parent assembly and second finite replay
 
 The conditional assembly is in parent/Graph189ParentAssembly.lean. It includes the genuine original reduction, the complete cut-vertex proof, and Ali’s officially accepted R2.H2.R1 reduction. Its conclusion is the registered conjecture; its explicit remaining inputs are two Hamilton-path theorems for two-connected graphs. Source links, hashes, and both outstanding statements are in parent/parent-assembly.md. Use this as a research base, not a project solution. Parent formalization continues. 

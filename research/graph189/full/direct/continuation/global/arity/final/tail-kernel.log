@@ -1,0 +1,4 @@
+'Graph189InfiniteTail.square_order_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189InfiniteTail.connectivity_lt_100' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189InfiniteTail.degree_lt_cutoff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189InfiniteTail.finite_rectangle_of_width' depends on axioms: [propext, Classical.choice, Quot.sound]

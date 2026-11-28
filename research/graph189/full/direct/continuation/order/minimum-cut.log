@@ -1,0 +1,3 @@
+'Graph189CutSides.exists_cutSides_of_disconnected' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CutSides.CutSides.high_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CutSides.CutSides.anchor_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
