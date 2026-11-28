@@ -1,0 +1,3 @@
+started Graph189ConeComponentOrder.lean 07:30:06
+'Graph189ConeComponentOrder.matching_of_exterior_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ConeComponentOrder.cone_order_of_component' depends on axioms: [propext, Classical.choice, Quot.sound]
