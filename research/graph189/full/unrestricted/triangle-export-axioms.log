@@ -1,0 +1,3 @@
+'Graph189TriangleTransversal.overlap_of_union_caps' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TriangleTransversal.high_intersection_transitive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189TriangleTransversal.no_closing_edge' depends on axioms: [propext, Classical.choice, Quot.sound]
