@@ -1,4 +1,7 @@
 import Graph189ThreeDensityWindow
+import Graph189ConnectivityDegree
+import Graph189TwoResidual
+import Graph189QuadraticOrder
 import Graph189FullLabelExit
 import Graph189TwoRootRecut
 
@@ -148,7 +151,7 @@ def PortQuotas (G : SimpleGraph V) [DecidableRel G.Adj] (A B S : Finset V) : Pro
   let x : ℤ := (A.filter (fun v => G.secondSmallestDegree≤G.degree v)).card
   let y : ℤ := (B.filter (fun v => G.secondSmallestDegree≤G.degree v)).card
   3*k<y ∧ (9*k-15+x<3*y ∨ ((A.card:ℤ)<2*k ∧ 12*k<2*x+3*y+12)) ∧
-    ∀ i∈S, (∀a∈A, G.secondSmallestDegree≤G.degree a → G.Adj a i) → 6*k+x<2*y
+    ∀ i∈S, (∀a∈A, G.secondSmallestDegree≤G.degree a → G.Adj a i) → 6*k+x<2*y+2
 
 private theorem covered_port_quotas (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
     (minimum : S.card=G.vertexConnectivity) (three : S.card=3)
@@ -166,7 +169,8 @@ private theorem covered_port_quotas (hc : G.Connected) (cut : Graph189CutSides.C
     (X:=A.filter (fun a => G.secondSmallestDegree≤G.degree a)) (filter_subset _ _)
     (fun v hv => all v (mem_filter.mp hv).1 (mem_filter.mp hv).2) hb bi
     (fun v => by simpa only [Nat.add_comm 1] using cap v)
-  exact last (by exact_mod_cast few)
+  have h := last (by exact_mod_cast few)
+  omega
 
 /-- Every smaller high side has a common anchor and a high vertex joined to
 all three anchors. Each high vertex of that side has at least two contacts. -/
@@ -185,7 +189,7 @@ theorem ports_of_quotas (hc : G.Connected) (cut : Graph189CutSides.CutSides G A 
   let Y := B.filter (fun v => k≤G.degree v)
   change 3*(k:ℤ)<Y.card ∧ (9*(k:ℤ)-15+X.card<3*(Y.card:ℤ) ∨
       ((A.card:ℤ)<2*k ∧ 12*(k:ℤ)<2*X.card+3*Y.card+12)) ∧
-    (∀i∈S, (∀a∈A,k≤G.degree a → G.Adj a i) → 6*(k:ℤ)+X.card<2*(Y.card:ℤ)) at data
+    (∀i∈S, (∀a∈A,k≤G.degree a → G.Adj a i) → 6*(k:ℤ)+X.card<2*(Y.card:ℤ)+2) at data
   obtain ⟨largeY,notPrivate,notResidual⟩ := data
   have big : S.card*k<Y.card := by
     rw [three]
@@ -241,13 +245,14 @@ theorem ports_of_quotas (hc : G.Connected) (cut : Graph189CutSides.CutSides G A 
       have r := card_sdiff_add_card_eq_card csub
       rw [show C.card=1 from card_singleton i] at r
       omega
-    have residual := Graph189PrivateQuota.residual_singleton_quota hc cut C cs
+    obtain ⟨z,hz⟩ := Graph189QuadraticOrder.second_attained (G:=G)
+    have low := Graph189CutSides.connectivity_le_degree (G:=G) z
+    have enough : 2≤G.secondSmallestDegree := by omega
+    have residual := Graph189TwoResidual.strict_quota hc cut C cs
       (card_pos.mp (by omega)) cp (fun j hj => contacts j (mem_sdiff.mp hj).1)
       (fun a ha high j hj => (mem_singleton.mp hj).symm ▸ all a ha high) privatePorts debit
-    change ((X.card:ℤ)+Y.card)*((S \ C).card:ℤ) ≤ ((S.card:ℤ)*k-((S \ C).card:ℤ)*(((S \ C).card:ℤ)-1)+X.card+C.card+1)*((S \ C).card:ℤ)+X.card at residual
-    rw [three,size] at residual
-    have ccard : C.card=1 := card_singleton _
-    rw [ccard] at residual
+      three (card_singleton _) enough
+    change 2*Y.card+2≤6*k+X.card at residual
     have contradiction := notResidual i hi all
     omega
   obtain ⟨a,aa,ah,whole⟩ := full

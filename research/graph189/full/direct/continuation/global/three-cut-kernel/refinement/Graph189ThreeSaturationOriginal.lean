@@ -1,13 +1,13 @@
 import Graph189ThreeConnectivity
-import Graph189ThreeCutSaturationFacts
+import Graph189ThreeCutSaturation24
 
 open SimpleGraph Finset OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R1
 namespace Graph189ThreeConnectivity
 variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph V} [DecidableRel G.Adj]
 
-theorem traceable_ge25 (connected : G.Connected)
+theorem traceable_ge24 (connected : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp) ≤ 1+G.secondSmallestDegree)
-    (degree : 25≤G.secondSmallestDegree) (three : G.vertexConnectivity=3) :
+    (degree : 24≤G.secondSmallestDegree) (three : G.vertexConnectivity=3) :
     ∃ a b, ∃ p : G.Walk a b,p.IsHamiltonian := by
   classical
   by_cases prev : 33≤G.secondSmallestDegree
@@ -37,9 +37,9 @@ theorem traceable_ge25 (connected : G.Connected)
     let X := A.filter (fun a => k≤G.degree a)
     let Y := B.filter (fun b => k≤G.degree b)
     have sz := sm.trans three
-    have bound := Graph189ThreeCutSaturationFacts.quotas connected cut sm sz
+    have bound := Graph189ThreeCutSaturation24.quotas connected cut sm sz
       (fun v => by have h := point v; omega) degree (by omega) (by omega) orient
-    change Graph189ThreeCutSaturationTable.Good k X.card Y.card at bound
+    change Graph189ThreeCutSaturation24.GoodStrict k X.card Y.card at bound
     obtain ⟨big,privateBound,last⟩ := bound
     have one : (A \ X).card≤1 := by
       apply card_le_one.mpr
@@ -51,7 +51,7 @@ theorem traceable_ge25 (connected : G.Connected)
     have allCard := card_sdiff_add_card_eq_card (show X⊆A from filter_subset _ _)
     change 3*(k:ℤ)<Y.card ∧ (9*(k:ℤ)-15+X.card<3*(Y.card:ℤ) ∨
       ((A.card:ℤ)<2*k ∧ 12*(k:ℤ)<2*X.card+3*Y.card+12)) ∧
-      ∀i∈S,(∀a∈A,k≤G.degree a → G.Adj a i) → 6*(k:ℤ)+X.card<2*(Y.card:ℤ)
+      ∀i∈S,(∀a∈A,k≤G.degree a → G.Adj a i) → 6*(k:ℤ)+X.card<2*(Y.card:ℤ)+2
     refine ⟨by omega,?_,?_⟩
     · rcases privateBound with loose|⟨dense,strict⟩
       · exact Or.inl (by omega)
@@ -59,12 +59,19 @@ theorem traceable_ge25 (connected : G.Connected)
     · intro i si common
       have smaller (T : Finset V) (lt : T.card<S.card) :=
         Graph189CutSides.connected_after_smaller_deletion (G:=G) T (lt.trans_eq sm)
-      have lowerDegree : 25≤k := degree
+      have lowerDegree : 24≤k := degree
       have limited := Graph189CutColumnCaps.common_below_threshold connected cut smaller point
         (X:=X) (Y:=Y) (filter_subset _ _) (filter_subset _ _) (t:=1) (by omega) (by omega) si
         (fun a ha => common a (mem_filter.mp ha).1 (mem_filter.mp ha).2)
       have residual := last (by omega)
       omega
 
+theorem traceable_ge25 (connected : G.Connected)
+    (cap : (univ.image (distEven G)).max' (by simp) ≤ 1+G.secondSmallestDegree)
+    (degree : 25≤G.secondSmallestDegree) (three : G.vertexConnectivity=3) :
+    ∃ a b, ∃ p : G.Walk a b,p.IsHamiltonian :=
+  traceable_ge24 connected cap (by omega) three
+
 #print axioms traceable_ge25
+#print axioms traceable_ge24
 end Graph189ThreeConnectivity

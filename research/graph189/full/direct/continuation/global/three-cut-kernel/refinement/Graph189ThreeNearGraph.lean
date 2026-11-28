@@ -50,10 +50,12 @@ theorem excludes_population (hc : G.Connected) (cut : Graph189CutSides.CutSides 
   have cp (v : V) : G.distEven v≤24+1 := by simpa only [k24] using cap v
   have aBound (i : V) (hi : i∈S) : (A1 i).card≤22 := by
     have t := Graph189ThreeCutSaturationFacts.first_column hc cut smaller three cap xs ys xh yh hi
-    simpa only [k24,x33,y72,Graph189ThreeCutSaturationTable.level] using t
+    rw [k24,x33,y72] at t
+    exact t.trans (by decide)
   have bBound (i : V) (hi : i∈S) : (B1 i).card≤23 := by
     have t := Graph189ThreeCutSaturationFacts.first_column hc cut.swap smaller three cap ys xs yh xh hi
-    simpa only [k24,x33,y72,Graph189ThreeCutSaturationTable.level] using t
+    rw [k24,x33,y72] at t
+    exact t.trans (by decide)
   have budget (i : V) := Graph189PrivateQuota.two_layer_budget G (cp i) (A2 i) (B2 i)
     (cut.apart.mono ((filter_subset _ _).trans xs) ((filter_subset _ _).trans ys))
     (fun a ha => (mem_filter.mp ha).2) (fun b hb => (mem_filter.mp hb).2)
@@ -133,7 +135,8 @@ theorem excludes_population (hc : G.Connected) (cut : Graph189CutSides.CutSides 
   have raw := Graph189DebitedCutProduct.with_columns hc cut xs ys smaller cap xh yh
   have one (w : V) : X.filter (fun x => G.dist x w=1)=A1 w := by
     ext a
-    simp only [A1,mem_filter,dist_comm (u:=a) (v:=w),dist_eq_one_iff_adj]
+    simp only [A1,mem_filter,dist_eq_one_iff_adj]
+    exact and_congr_right (fun _ => G.adj_comm a w)
   have two (w : V) : X.filter (fun x => G.dist x w=2)=A2 w := by
     ext a
     simp only [A2,mem_filter,dist_comm (u:=a) (v:=w)]

@@ -34,9 +34,9 @@ theorem graph_cases {X A D E : Finset α} {B C F : Finset β}
       (C.card=23 → F.card<23 → E.card=22 → P.card≤25 ∨ A.card+D.card+E.card≤44) := by
   classical
   let P := B∪C∪F
-  have flip : B∪F∪C=P := by ext v; simp only [P,mem_union]; tauto
-  have second : C∪B∪F=P := by ext v; simp only [P,mem_union]; tauto
-  have third : F∪B∪C=P := by ext v; simp only [P,mem_union]; tauto
+  have flip : B∪F∪C=P := by dsimp only [P]; ac_rfl
+  have second : C∪B∪F=P := by dsimp only [P]; ac_rfl
+  have third : F∪B∪C=P := by dsimp only [P]; ac_rfl
   have first_center (j : (A∩D).Nonempty) (l : (A∩E).Nonempty) (near : B.card=23) : P.card≤25 :=
     fork_bound B C F (ad j) (ae l) near
   have second_center (j : (A∩D).Nonempty) (l : (D∩E).Nonempty) (near : C.card=23) : P.card≤25 := by
