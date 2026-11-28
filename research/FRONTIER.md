@@ -3,6 +3,10 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Left to Solve records four kernel-checked contributions
+
+The exact parent desk lists entries 107046, 107108, 107544 and 107734 under ali-hamdan-007. They cover degree three, the order lower bound from a Hamiltonian minimum deletion, the conditional terminal-band theorem and the complete cut-vertex proof. The full parent remains open. [Desk receipts, source links and upstream status](graph189/full/direct/continuation/root/left-to-solve-record.md)
+
 ## Every graph with second-smallest degree three is traceable
 
 The kernel checked `Graph189ThreeOriginal.traceable_three` under the registered connectedness and maximum-even-distance hypotheses, for arbitrary order and minimum degree. This closes both parent obligations through second-smallest degree three. The proof routes the possible degree-two vertex through a longest path and combines that result with the tied-minimum, cut-vertex and small-order theorems. The source, five-declaration axiom audit and replay directions are in [the degree-three proof](graph189/full/direct/continuation/verify/degree-three-short-proof.md). The missing low-cut module required by the structural conclusion has also been restored. The pinned kernel checked its two witnesses and the existing effective-deficit consumer. [Low-cut audit](graph189/full/direct/continuation/order/low-mixed-cut.log)
