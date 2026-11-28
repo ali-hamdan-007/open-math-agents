@@ -242,3 +242,25 @@ research/graph189/full/direct/continuation/root/bounded-order/Graph189OptimalMid
 
 research/graph189/full/direct/continuation/root/bounded-order/Graph189LastCliqueOrders.lean sha256 2b318ea5eb713a2c248b186d940f60cade08f7df2d4eb71c2391e7072d619347
 'Graph189LastCliqueOrders.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189OptimalComponents.lean sha256 1e5e5f37bd7d69c97da140f2bad5b58f88c6384cad38e7a8c27f2775b4859808
+'Graph189OptimalExterior.same_part' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189OptimalShell.lean sha256 5f13a39aa3381d85d1df5058b84acbac6f2b369b797b07356aa76f87f0bf5571
+'Graph189OptimalExterior.shell_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189ChosenExterior.lean sha256 5e2056f2a718daaab85aa69c61ff5e0943753d98e09113f5a5992febeedf2e42
+'Graph189OptimalExterior.choose' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189OptimalNeighborhood.lean sha256 3076b86796d5b85e5a830d3c35dbd079378d10f79e64a8c9041152065217d1b1
+'Graph189OptimalExterior.local_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189OptimalHighCore.lean sha256 63232ce6d48759f7538713caa9619de9b8df53e7ae0f97c3958581a0ff3b7c8c
+'Graph189OptimalExterior.high_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189OptimalPorts.lean sha256 65b6f4cb3bdd3a233175bec2d15caa1a4b75358e3d1567b965580063c2bc5955
+'Graph189OptimalExterior.core_ports' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/Graph189SmallOrderWindow.lean sha256 ce35bcb6b78a58585ac84b439574a71ea953c9e4177ffa6a79ebda3ae873603c
+'Graph189SmallOrderWindow.necessary' depends on axioms: [propext, Classical.choice, Quot.sound]
+Linux job https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46149806707/job/140993776538

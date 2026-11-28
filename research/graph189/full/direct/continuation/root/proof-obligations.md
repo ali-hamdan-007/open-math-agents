@@ -1,5 +1,7 @@
 # Formalization of the full Graph 189 paper argument
 
+The [single checked counterexample window](Graph189SmallOrderWindow.lean) is now 7≤k≤21 and 4k−5≤n≤5k−5. The [choice of exterior component](bounded-order/Graph189ChosenExterior.lean), [local graph-to-arithmetic inequalities](bounded-order/Graph189OptimalNeighborhood.lean), [Hamilton-connected high neighborhood](bounded-order/Graph189OptimalHighCore.lean), and [matching with tail extensions](bounded-order/Graph189OptimalPorts.lean) have pinned kernel proofs. They supply the first part of the five-times-order paper’s graph argument. The endblock, cycle, and tail arguments that force the final order remain.
+
 The [terminal-order theorem](bounded-order/Graph189LastCliqueOrders.lean) eliminates all orders n≥5k−4 at 7≤k≤21. This supersedes the terminal type enumeration for the parent. The [midpoint lemma](bounded-order/Graph189OptimalMidpoint.lean) is the graph exchange at the beginning of the bounded-order paper. Its remaining geometric target is to force n≥5k−4 under connectivity at least three. Connectivity two remains separately at k=7,…,11.
 
 The checked conditional theorem in parent/parent-assembly.md treats graphs with a cut vertex and all orders through 2k+2. Its two hypotheses concern two-connected graphs at larger orders. The moderate child is now proved in Lean. The larger-order child remains open. Here k is the second-smallest degree counting multiplicity. The full-target paper argument is in full-argument.md. The original upstream theorem still requires a single unconditional Lean term.

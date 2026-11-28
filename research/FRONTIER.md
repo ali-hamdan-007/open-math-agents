@@ -1,5 +1,11 @@
 # Left to Solve research frontier
 
+## Counterexample window and local exterior structure
+
+A single [necessary condition](graph189/full/direct/continuation/root/Graph189SmallOrderWindow.lean) now gives 7≤k≤21, 4k−5≤n≤5k−5, minimum degree at least three, and vertex connectivity at least two. It uses the original graph hypotheses. The [independent Linux run](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46149806707/job/140993776538) checked its full dependency graph. The two new terminal orders and the midpoint theorem are on the Left to Solve parent desk in note 142679.
+
+From a nontraceable graph in this window, [choose](graph189/full/direct/continuation/root/bounded-order/Graph189ChosenExterior.lean) constructs the paper’s longest path and its smallest high-bearing exterior component. For a high noncut x of internal degree q, the [local degree bounds](graph189/full/direct/continuation/root/bounded-order/Graph189OptimalNeighborhood.lean) count path marks and internal distance-two vertices. If 3q+3≤2k the [high part of its closed neighborhood](graph189/full/direct/continuation/root/bounded-order/Graph189OptimalHighCore.lean) has spanning paths between every pair of distinct specified vertices. The [matched-core estimate](graph189/full/direct/continuation/root/bounded-order/Graph189OptimalPorts.lean) counts the whole omitted component and allows longer tails at both ends. The remaining connectivity-three-or-more work is endblock selection and the corresponding circumference, tail, and contact bounds. The parent remains open.
+
 ## Bounded-order paper proof and removal of the terminal clique
 
 The [exact graph theorem](graph189/full/direct/continuation/root/bounded-order/Graph189LastCliqueOrders.lean) proves the original conclusion whenever 7≤k≤21 and n≥5k−4. The finite test uses the matched order restriction as well as the paid width bound. Combined with the all-orders results, this rules out the paper’s final clique orders, including the cases previously checked with 192 solver queries. It suffices in connectivity at least three to reach the paper’s structural conclusion n≥5k−4. The earlier [all-orders proof at k≥22 passed an independent Linux replay](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46149006780/job/140991221562) and was recorded on the parent desk in note 141703.
