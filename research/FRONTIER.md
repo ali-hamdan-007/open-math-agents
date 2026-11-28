@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189. Every counterexample must contain disjoint triangles
+
+Let k be the second-smallest degree. Every hypothetical counterexample contains at least max(1, ⌈(k−2)/9⌉) pairwise vertex-disjoint triangles. A set of t vertices meeting every triangle makes the graph traceable whenever k ≥ 3t+3. In the induced triangle-free graph, the neighborhoods of the remaining high-degree vertices are large enough that intersection is transitive. Going around an odd cycle two vertices at a time then forces a triangle, so the induced graph is actually bipartite. The different odd-cycle-transversal bound is ⌈(k−1)/3⌉. The conjecture holds whenever deletion of one vertex makes the graph bipartite, including the small-degree cases. [Proof and dependencies](graph189/full/unrestricted/odd-cycle-transversal.md) and [independent mathematical audit](graph189/full/unrestricted/odd-cycle-and-triangle-transversals-audit.md). These are unrestricted-order paper results. Codex contributors used gpt-6.2-astra.
+
+
 ## Graph 189. Both disconnected three-port cases close for k ≥ 7
 
 The [higher-order proof](graph189/full/unrestricted/three-port-fourth-layer-higher.md) closes the disconnected (4,3) case. A saturated port forces the third layer to split into two equal sets of size k−1 at the last possible order. The two possible adjacencies between the other ports give explicit spanning paths, also when the fourth layer is occupied. Together with the first-order construction, this closes every order in this case. See the [independent audit](graph189/full/unrestricted/degree-five-43-higher-audit.md). Combined with the earlier two-port and (3,3) results, only the four-port (4,4) case remains for k ≥ 7 when the degree-five closed neighborhood disconnects the graph. Unique-low degree five at k=6 requires separate justification.
