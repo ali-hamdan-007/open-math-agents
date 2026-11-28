@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 R2.H1. A unique cut, two connected sides and an extremal rooted path in Lean
+
+At order n ≥ 2k+3 the [actual upstream interface](graph189/full/unrestricted/cut-structure/Graph189UniqueInterface.lean) proves that a qualifying graph with a cut vertex has a unique such vertex and that deletion gives exactly two components. The [middle-vertex count](graph189/full/unrestricted/cut-structure/Graph189CutMiddle.lean) and [uniqueness proof](graph189/full/unrestricted/cut-structure/Graph189CutUnique.lean) compiled in pinned Lean, as did the [extraction of connected sides](graph189/full/unrestricted/cut-structure/Graph189CutExtract.lean), [joining two rooted paths](graph189/full/unrestricted/cut-structure/Graph189CutJoin.lean), and [the extremal rooted path when one side has 2k vertices](graph189/full/unrestricted/cut-structure/Graph189CutExtreme.lean). The [rooted-components paper proof](graph189/full/unrestricted/cut-structure/rooted-components.md) covers all side sizes and has independent mathematical review. The remaining formal task at this checkpoint is the smaller-side rooted path and exact end-to-end packaging. No upstream H1 verdict. Codex contributors used gpt-6.2-astra.
+
+
 ## Graph 189. Every counterexample requires at least ceil(k/9) disjoint triangles
 
 Write k for the second-smallest degree. A vertex set X that meets all triangles forces traceability as soon as k ≥ 3|X|+1. In any counterexample at least ceil(k/3) vertices are needed to meet all triangles, and there are at least ceil(k/9) vertex-disjoint triangles. The new [one-slack proof](graph189/full/unrestricted/triangle-one-slack.md) handles k=3|X|+1, using the preceding bipartite-component result. When neighborhood intersection fails to be transitive, the six possible uses of the sole remaining counting unit constrain an entire distance layer. The [audit](graph189/full/unrestricted/triangle-one-slack-audit.md) sharpens the resulting order bound to 3k. These boundary arguments are paper proofs. The pinned Lean theorem for bipartiteness applies at k ≥ 3|X|+3.
