@@ -1,0 +1,5 @@
+Pinned Lean 4.33.1, 28 November 2026
+'Graph189RootedSplice.uniform_gap_exclusion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189RootedSplice.traceable_of_hamiltonian_minimum_deletion_unrestricted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

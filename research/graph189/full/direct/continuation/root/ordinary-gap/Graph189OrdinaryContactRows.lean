@@ -137,7 +137,7 @@ theorem uniform_of_ordinary_census (p : G.Walk x y) (hp : p.IsPath)
     exact mem_biUnion.mpr ⟨v,mem_univ _,hi⟩
   refine ⟨A,cards,cover,?_⟩
   intro v hv
-  exact eq_of_subset_of_card_le (cover v) (by rw [cards]; exact rows v hv)
+  exact eq_of_subset_of_card_le (cover v) (by change q≤_; rw [cards]; exact rows v hv)
 
 #print axioms uniform_of_ordinary_census
 end Graph189ContactGroupCensus

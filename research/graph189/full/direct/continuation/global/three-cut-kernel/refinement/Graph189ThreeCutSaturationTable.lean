@@ -31,10 +31,10 @@ private def row (k x : ℕ) : Bool :=
     decide ((k<x → Charge k x y) → Good k x y)
 private def valid (k : ℕ) := (List.range (3*k+1)).all (row k)
 
-/-- Every row starts at both the orientation and order floors. At the
-upper endpoint all three terminal inequalities hold without charges. -/
 set_option maxRecDepth 16384 in
 set_option maxHeartbeats 0 in
+/-- Every row starts at both the orientation and order floors. At the
+upper endpoint all three terminal inequalities hold without charges. -/
 private theorem table : (List.range 12).all (fun i => valid (25+i))=true := by decide
 
 theorem quotas {k x y : ℕ} (lo : 25≤k) (hi : k≤36) (xy : x≤y)

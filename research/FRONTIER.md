@@ -2,6 +2,12 @@
 
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## All orders are proved for second-smallest degree at least 36
+
+The pinned Lean kernel proves the original conclusion for every connected graph under the original even-distance cap when k≥36, with no restriction on order or vertex connectivity. The same checkpoint proves every order at connectivity two for k≥15, connectivity three for k≥25 and connectivity four for k≥36. The all-connectivity theorem uses the short-order theorem, the cut-vertex theorem and the checked high-connectivity result. All four connectivity cases now meet at 36. The full original conjecture still has unresolved large-order instances below that threshold. [Original-graph theorem](graph189/full/direct/continuation/root/Graph189AllHighOrders.lean) · [Axiom reports](graph189/full/direct/continuation/root/parent-range-axioms.txt)
+
+The official hosted checker accepted the moderate four-case reduction in [upstream PR 27989](https://github.com/lefttosolve2/open-math-agents/pull/27989). [Hosted verifier result](https://github.com/lefttosolve2/open-math-agents/actions/runs/46140068476/job/140963835890) · [Recorded verdict](graph189/full/direct/continuation/verify/desk-checked/reduction-check.json)
+
 ## All four moderate-order proof files pass the project checker
 
 The exact moderate-order child now has four single-file proofs accepted by the upstream checker running on the fork. The 2,980-byte assembly was submitted to Left to Solve in [PR 27989](https://github.com/lefttosolve2/open-math-agents/pull/27989). Each verified file and axiom report is preserved in the [submission archive](graph189/full/direct/continuation/verify/desk-checked/). The short-order result builds on carl2sheriff's proof, and the wider cases reuse earlier work by computerfreak97, philipsaint, and koolkao. The full parent still needs the large-order graph implication.
@@ -9,6 +15,8 @@ The exact moderate-order child now has four single-file proofs accepted by the u
 For vertex connectivity three, Lean now proves the original graph conclusion at every order for every k≥33. A counterexample would give two high-degree populations on opposite sides of a minimum three-cut. The bound on their product, the count of private contacts, and the order lower bound yield an anchor that forces the recut contradiction. This incorporates the actual graph hypotheses. [Graph theorem](graph189/full/direct/continuation/global/three-cut-kernel/refinement/Graph189ThreeConnectivity.lean) · [Axiom report](graph189/full/direct/continuation/global/three-cut-kernel/refinement/degree33-axioms.txt)
 
 The Left to Solve parent board records the moderate-order result, its source credits, and the degree-six result in note #127747. [Parent desk](https://lefttosolve.com/p/WrittenOnTheWallII.GraphConjecture189.conjecture189)
+
+The kernel now proves the minimum-degree deletion step across all k≥5 when the minimum degree is at least three. A spanning path after deleting a minimum-degree vertex forces a spanning path in the original graph. This discharges one of the two graph alternatives used to derive the order bounds in the paper. [Proof and audit](graph189/full/direct/continuation/root/minimum-deletion/unrestricted-minimum-deletion.md)
 
 ## Degree six at connectivity at least three is proved for every order
 

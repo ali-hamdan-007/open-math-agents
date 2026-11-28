@@ -39,7 +39,7 @@ theorem population (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
   have full : Graph189PortLabels.support G S a=S :=
     eq_of_subset_of_card_le (filter_subset _ _) (by omega)
   have all (j : V) (hj : j∈S) : G.Adj a j :=
-    (mem_filter.mp (show j∈Graph189PortLabels.support G S a from full ▸ hj)).2
+    (mem_filter.mp (show j∈Graph189PortLabels.support G S a from by rw [full]; exact hj)).2
   have spos : 0<(Graph189PortLabels.support G S a).card := card_pos.mpr ⟨i,mem_filter.mpr ⟨hi,ai⟩⟩
   have cover : Y⊆U∪S.biUnion B2 := by
     intro v hv

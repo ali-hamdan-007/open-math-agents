@@ -1,0 +1,11 @@
+# The ordinary longest-path exchange
+
+Let a longest path omit at most ⌈k/2⌉+1 vertices, with k≥6 and minimum degree at least three. Under the even-distance cap, suppose that the graph has no spanning path. The minimum-deletion theorem forces a high omitted vertex. The ordinary exterior argument gives a clique E of exactly m=⌈k/2⌉+1 vertices, at most one of low degree. Write u=⌊k/2⌋. The ordinary contact census gives a common set of u marked positions for all high exterior vertices. The contact row of any low exterior vertex is contained in this set.
+
+The marks divide the path into u+1 intervals, including its two ends. Each interval has at least m vertices. Otherwise take two distinct high vertices of E and span the clique between them, replacing the shorter interval to extend the path. This works at an end by keeping only the boundary contact at the other end. The quadratic order estimate gives |P|≤(u+1)m+2u. If all intervals had length at least m+1, counting their vertices and the marks would give |P|≥(u+1)m+2u+1. Choose an interval J of exactly m vertices.
+
+Swap J for a spanning path of E. The new path Q is longest and its omitted set is exactly J. Choose a bordering mark c. It stays on Q and was adjacent to an endpoint of J. Apply the ordinary contact census to Q. Since every contact of any omitted vertex is a contact of every high omitted vertex, c is adjacent to every high member of J. This holds even when its original neighbor in J was the exceptional low vertex.
+
+Fix a high a in E. It was adjacent to c and to no member of J. Thus all high members of J have distance two from a. Additionally each of the u original marks has a predecessor and a successor. They give 2u distinct distance-two vertices because the marks are internal and two different high vertices of E force spacing at least three. Only endpoints of J can belong to this shifted set. Consequently at least 2u+m−3=k+u−2 distinct vertices lie at distance two from a. As u≥3, this exceeds k. This contradiction proves the asserted path extension on paper.
+
+This argument permits one low member of J. It replaces the stronger all-high-gap assumption in the earlier conditional wrapper. The paper argument and the kernel declaration are tracked separately.

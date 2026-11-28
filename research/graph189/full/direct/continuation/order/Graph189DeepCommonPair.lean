@@ -131,9 +131,9 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
           · exact mem_union_left _ wj
           · exact mem_union_right _ wj
       obtain ⟨i,si,dist,_⟩ := nearest hc sides.swap point hb ha
-      rcases eq i si with rfl|rfl
-      · exact pick p q adjacent ps qs eq dist
-      · exact pick q p adjacent.symm qs ps (fun t ht => (eq t ht).symm) dist
+      rcases eq i si with ip|iq
+      · exact pick p q adjacent ps qs eq (ip ▸ dist)
+      · exact pick q p adjacent.symm qs ps (fun t ht => (eq t ht).symm) (iq ▸ dist)
     have upper1 : Fintype.card V+(D A).card+1≤2*k+3+(P A).card+(P B).card := by
       rcases more with ⟨x,both,out⟩|⟨x,port,atAnchor⟩
       · have ext : insert x (D A)⊆E p∩E q := insert_subset both intersect
@@ -149,7 +149,8 @@ theorem traceable (hc : G.Connected) (cap : (univ.image (distEven G)).max' (by s
     have all : (D B).filter (fun x => Even (G.dist a x))=D B := filter_eq_self.mpr (by
       intro x hx
       obtain ⟨i,is_,_,_,four⟩ := nearest hc sides point ha (mem_filter.mp hx).2
-      simp [four])
+      rw [four]
+      decide)
     have empty : Graph189PortLabels.support G S a=∅ := eq_empty_iff_forall_notMem.mpr (by
       intro i hi
       obtain ⟨si,e⟩ := mem_filter.mp hi

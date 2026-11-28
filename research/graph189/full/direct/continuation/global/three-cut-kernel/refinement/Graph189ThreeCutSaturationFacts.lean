@@ -72,7 +72,8 @@ theorem population_data (hc : G.Connected) (cut : Graph189CutSides.CutSides G A 
   rw [three] at pop
   have sa (i : V) (iS : i∈S) := first_column hc cut smaller three cap xs ys xh yh iS
   have sb (i : V) (iS : i∈S) := first_column hc cut.swap smaller three cap ys xs yh xh iS
-  exact ⟨by omega,base,fun many =>
+  have lower : Fintype.card V≤X.card+Y.card+4 := by omega
+  exact ⟨lower,base,fun many =>
     Graph189AsymmetricCharge.alternatives hc cut smaller cap xs ys xh yh many three
       (level_order (k:=k) orient) sa sb⟩
 

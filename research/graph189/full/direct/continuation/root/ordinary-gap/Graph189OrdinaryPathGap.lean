@@ -1,6 +1,7 @@
 import Graph189FullExteriorExchange
 import Graph189HighMinimumGap
 import Graph189OrdinaryContactRows
+import Graph189QuadraticOrder
 import Graph189OrderBound
 import Graph189SingleExteriorShift
 import Graph189ThreeRegularMinimum
@@ -61,7 +62,7 @@ theorem high_exterior_neighbor [Nontrivial V]
   have low {b : V} (hb : b ∈ O) : G.degree b < G.secondSmallestDegree :=
     Nat.lt_of_not_ge (fun h => none ⟨b,off hb,h,edge hb⟩)
   have one : O.card ≤ 1 := card_le_one_iff.mpr (by
-    intro b hb c hc
+    intro b c hb hc
     by_contra ne
     rcases degree_pair (G:=G) b c ne with h | h
     · exact (not_le_of_gt (low hb)) h
@@ -149,7 +150,7 @@ theorem high_omitted_of_nontraceable [Nontrivial V] (hc : G.Connected)
   have small (a : V) (ha : a ∈ E) : G.degree a < G.secondSmallestDegree :=
     Nat.lt_of_not_ge (fun high => never ⟨a,fun h => (mem_sdiff.mp ha).2 (List.mem_toFinset.mpr h),high⟩)
   have one : E.card ≤ 1 := card_le_one_iff.mpr (by
-    intro a ha b hb
+    intro a b ha hb
     by_contra different
     rcases degree_pair (G:=G) a b different with high | high
     · exact (not_le_of_gt (small a ha)) high
@@ -165,7 +166,7 @@ theorem high_omitted_of_nontraceable [Nontrivial V] (hc : G.Connected)
   have least : G.degree z = G.minDegree := by
     obtain ⟨w,hw⟩ := G.exists_minimal_degree_vertex
     by_cases eq : w = z
-    · simpa only [eq] using hw.symm
+    · exact (congrArg G.degree eq).symm.trans hw.symm
     have high := (degree_pair (G:=G) w z eq).resolve_right (not_le_of_gt low)
     have minimal := G.minDegree_le_degree z
     omega
@@ -207,7 +208,7 @@ theorem ordinary_census [Nontrivial V] (hc : G.Connected)
   have leastTwo : 2 ≤ u := by dsimp [u,k]; omega
   have enoughSpace : u < E.card := by dsimp [u]; omega
   have lowCount : L.card ≤ 1 := card_le_one_iff.mpr (by
-    intro a ha b hb
+    intro a b ha hb
     by_contra different
     have diff : a.val ≠ b.val := fun e => different (Subtype.ext e)
     rcases degree_pair (G:=G) a.val b.val diff with high | high
@@ -337,7 +338,7 @@ theorem traceable_of_near_path [Nontrivial V] (hc : G.Connected) (fullGap : HasF
     {x y : V} (p : G.Walk x y) (hp : p.IsPath) (near : Near p) :
     ∃ a b : V, ∃ q : G.Walk a b, q.IsHamiltonian := by
   classical
-  have uniform := uniform_high_contacts hc cap k5
+  have uniform : UniformHighContacts G := @uniform_high_contacts _ _ _ _ _ _ hc cap k5
   by_contra fail
   obtain ⟨a,b,P,hP,longest⟩ := Graph189ThreeRegularMinimum.longest_path (G:=G) x
   have longestP : Longest P := fun r hr => longest r hr

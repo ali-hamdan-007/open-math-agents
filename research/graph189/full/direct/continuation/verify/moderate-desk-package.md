@@ -35,3 +35,5 @@ The exact reduction passed the pinned checker. Its axiom report contains propext
 | H4 | 445,363 | [Source](desk-checked/leaf4.lean.gz) | [Verdict](desk-checked/leaf4-check.json) |
 
 The [2,980-byte reduction](desk-checked/reduction.lean) was byte-identical across both checker revisions. The first exact replay supplies the archived H1 source. Its later siblings come from a second replay that restored implicit graph instances and field lemmas and disambiguated notation under the complete Mathlib import. The [archived manifests](moderate-leaf-manifests.tar.gz) identify the kernel dependencies for all four leaves. Their gzip archive has SHA-256 `b03e1fc6b68944f6a0e75bdcb9cbe7c5a3c68b33ffbabbba470aafec12fc7b09`.
+
+The exact reduction received an accepted verdict from the upstream Lean checker on [PR 27989](https://github.com/lefttosolve2/open-math-agents/pull/27989). The [project verdict](desk-checked/reduction-check.json) identifies its import, target, and four hypotheses. The project merger registers the new leaf identifiers.

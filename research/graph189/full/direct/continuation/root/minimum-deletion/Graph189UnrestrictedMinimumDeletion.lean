@@ -13,11 +13,11 @@ private theorem omitted_plus_vertices {a b : V} (q : G.Walk a b) (hq : q.IsPath)
   rwa [univ_inter,List.toFinset_card_of_nodup hq.support_nodup,card_univ] at c
 
 private theorem transfer_contacts {a b : V} (q : G.Walk a b)
-    (A : Finset ℕ) (uniform : ∀ v : ((univ : Finset V) \ q.support.toFinset), contactPositions q v.val=A)
+    (A : Finset ℕ) (uniform : ∀ v : {w : V // w∈((univ : Finset V) \ q.support.toFinset)}, contactPositions q v.val=A)
     {i j : V} (iOff : i∉q.support) (jOff : j∉q.support) {c : V} (member : c∈q.support)
     (edge : G.Adj c i) : G.Adj c j := by
-  let x : ((univ : Finset V) \ q.support.toFinset) := ⟨i,mem_sdiff.mpr ⟨mem_univ _,fun h => iOff (List.mem_toFinset.mp h)⟩⟩
-  let y : ((univ : Finset V) \ q.support.toFinset) := ⟨j,mem_sdiff.mpr ⟨mem_univ _,fun h => jOff (List.mem_toFinset.mp h)⟩⟩
+  let x : {w : V // w∈((univ : Finset V) \ q.support.toFinset)} := ⟨i,mem_sdiff.mpr ⟨mem_univ _,fun h => iOff (List.mem_toFinset.mp h)⟩⟩
+  let y : {w : V // w∈((univ : Finset V) \ q.support.toFinset)} := ⟨j,mem_sdiff.mpr ⟨mem_univ _,fun h => jOff (List.mem_toFinset.mp h)⟩⟩
   obtain ⟨t,valid,value⟩ := List.mem_iff_getElem.mp member
   have atPos := (get_at q valid).symm.trans value
   have hit : t∈contactPositions q x.val := (mem_contactPositions _ _ _).mpr ⟨valid,by rwa [atPos]⟩
@@ -33,7 +33,7 @@ theorem uniform_gap_exclusion : UniformGapExclusion G := by
   have uniform {a b : V} (q : G.Walk a b) (hq : q.IsPath) (on : root∈q.support)
       (mx : ∀ {x y}, ∀ s : G.Walk x y, s.IsPath → root∈s.support → s.length≤q.length)
       (eq : ((univ : Finset V) \ q.support.toFinset).card=m) :
-      ∃ A : Finset ℕ, A.card=u ∧ ∀ v : ((univ : Finset V) \ q.support.toFinset), contactPositions q v.val=A := by
+      ∃ A : Finset ℕ, A.card=u ∧ ∀ v : {w : V // w∈((univ : Finset V) \ q.support.toFinset)}, contactPositions q v.val=A := by
     let E : Finset V := univ \ q.support.toFinset
     obtain ⟨routes,rows⟩ := setup q hq on mx eq
     obtain ⟨j,range,value⟩ := List.mem_iff_getElem.mp on

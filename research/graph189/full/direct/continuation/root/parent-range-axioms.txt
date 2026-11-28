@@ -120,3 +120,9 @@ https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46135948159/job/
 Pinned Lean 4.33.1, isolated degree-six import, 2026-11-28.
 'Graph189SixThreeConnected.traceable_of_four' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189SixThreeConnected.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'Graph189TwoConnectivity.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'Graph189ThreeConnectivity.traceable_ge25' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'Graph189AllHighOrders.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
