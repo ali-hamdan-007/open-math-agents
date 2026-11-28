@@ -1,0 +1,3 @@
+started Graph189UniversalLinked.lean 08:25:07
+'Graph189UniversalLinked.universal_paths' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189UniversalLinked.linked' depends on axioms: [propext, Classical.choice, Quot.sound]

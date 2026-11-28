@@ -28,7 +28,9 @@ def read_body(checkout, source):
     bondy = (checkout / "FormalConjectures/Arxiv/2606.03696/BondyLongestCycles.lean").read_text()
     return (IMPORTS + "\n" + part(circumference, "namespace SimpleGraph", "end SimpleGraph")
             + "end SimpleGraph\n\nopen SimpleGraph\n" + part(bondy, "namespace Arxiv.", "/--\n**Conjecture 1")
-            + "end Arxiv.«2606.03696»\n\n" + part(source, "namespace OMA.BondyK", "end linked")
+            + "end Arxiv.«2606.03696»\n\n" + part(source, "namespace OMA.BondyK", "section Helpers")
+            + part(source, "/-! ## Closed lists and cycles", "/-! ## The linked-set bound")
+            + part(source, "/-! ## Linked sets (Fable", "end linked")
             + "end linked\n\n" + part(source,"section glue", "open Arxiv.«2606.03696» in")
             + "end glue\nend OMA.BondyK\n\n#print axioms OMA.BondyK.linked_contra\n")
 

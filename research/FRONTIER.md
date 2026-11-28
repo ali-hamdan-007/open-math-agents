@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## A shorter paper proof for every k≥19 with connectivity at least k/3
+
+For λ=ceil(k/3), both possibilities for the deletion of a minimum-degree vertex imply the same lower bound on graph order. The maximum-degree width inequality contradicts it for all k≥26 by one polynomial inequality, and seven explicit integer comparisons cover k=19 to 25. An independent review checked both graph applications and the seven comparisons, including that the Hamiltonian-deletion order lemma is independent of the structural conclusion. The [paper proof](graph189/full/direct/continuation/root/one-third-connectivity.md) gives the inequalities and specifies the Lean integration status. The universal-root and native cycle linked-set constructors have separately passed pinned Lean with only the three standard axioms.
+
+
 ## Explicit routes cover the degree-four catalogue at every remaining order
 
 There are 72 additional terminal patterns at order 15. Forty-five use the single-contact argument. The other 27 admit three short constructions. In the exceptional double-contact triangle, the even-distance cap forces both marks to miss the minimum vertex if it misses the triangle. Four neighbors then give an endpoint extension or two consecutive path neighbors. With the 30 earlier rows, the degree-four completion stage now has explicit paths for all 102 patterns. The [proof and independent replays](graph189/full/direct/continuation/global/moderate/k4-direct-routes.md) include the 1,831 routes tested at order 15. The kernel connection from the original graph to the finite catalogue is still required.
