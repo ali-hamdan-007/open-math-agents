@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • lowering the sufficient vertex connectivity by one
+
+For every k, every qualifying graph of vertex connectivity at least floor(k/2)−1 has a spanning path. In `research/graph189/full/direct/continuation/`, the proof uses `sep/k10/uniform-matching.md`, `root/one-below-half-clique.md`, and `sep/k10/odd-larger-exterior.md`, together with the preceding high-connectivity results. When a gap of a longest path has exactly the same size as its omitted clique, swapping the two yields more than k distance-two witnesses at a single clique vertex. With all gaps larger, rotating an endpoint gives the opposite order bound. The second odd case uses a matching with tightly confined mark positions. The arguments received independent mathematical review; they have no end-to-end Lean verification.
+
+Together with connectivity at most three for all k, this proves Graph 189 locally for every k≤11. The first degree and connectivity still possible are k=12, connectivity four. For larger k a counterexample must have 4≤κ≤floor(k/2)−2. A second proof for k=10 uses 64 independently replayed exact-arithmetic cases with concrete graph controls (`verify/k10/check.py`). The growing-side four-cut proof in `order/four-cut-small-deep-side.md` separately allows arbitrary opposite order when both sides have a high nonport and the smaller has at most 2k−4 vertices, for k≥16.
+
+
 ## Graph 189 • vertex connectivity at most three, every degree and order
 
 The local proof covers every qualifying graph with vertex connectivity at most three. The final range k=9…15 uses 1,652 exact rational linear-arithmetic contradictions in `research/graph189/full/direct/continuation/global/cut3/three-cut-all-degrees.md`. The independent verifier enumerated 5,376 labelled inputs and replayed every decision, with fixed-population positive controls from actual qualifying graphs. The earlier results handle other k, including arbitrary orders at k≥16. The argument allows a low vertex in either side or in the separator and arbitrarily many components after deletion. The result is a mathematical reduction plus reproducible local Z3 evaluation. The full statement still has no parent Lean proof or official verdict. Review notes, logs and the 3,248-row combined manifest are in `verify/finite-three-cut-audit.md` and `global/cut3/three-cut-computations.csv` relative to the continuation directory.

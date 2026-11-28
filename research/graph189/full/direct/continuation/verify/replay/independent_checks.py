@@ -3,7 +3,7 @@ from itertools import product, permutations, combinations
 from collections import deque,Counter
 from pathlib import Path
 import json
-here=Path(__file__).resolve().parent
+here=Path(__file__).resolve().parents[2] / 'global' / 'cut3'
 edges=list(combinations(range(3),2))
 rows={tuple(json.loads(s)[:5]) for s in (here/'deep-cases.jsonl').read_text().splitlines()}
 covered=set();seen=0
