@@ -2,6 +2,12 @@
 
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## Five-connectivity at degree 25 and upstream acceptance of the cut-vertex case
+
+The original graph conclusion holds at every order for k≥25 and connectivity at least five. At k=25, a minimum five-cut containing the low vertex forces its degree to be 24. A hypothetical counterexample then has order at least 139, which contradicts the integer width bound and degree ceiling. Excluding that location raises the order index, and the existing six-index theorem handles the rest. [Lean proof](graph189/full/direct/continuation/root/Graph189FiveConnectivity25.lean)
+
+Left to Solve merged Ali Hamdan’s cut-vertex proof at 12:09 UTC on November 28. The file records the earlier Easwar–Johari cut-vertex result and the earlier submission #16665. This settles the registered large-order cut-vertex child R2.H1. [Accepted proof](https://github.com/lefttosolve2/open-math-agents/pull/24659)
+
 ## Connectivity two at every order from degree 13
 
 For a minimum separating pair, the only previous gap at degrees 13 and 14 was the case with many private contacts and one possible low vertex. A prescribed-start path spans the all-high side when it is dense. Otherwise its loss is at most the number of nonports. At least four contacts on the other side permit joining through the same separator vertex. The resulting path omits at most ten vertices, within the available two-cut bound. Lean verifies the original conclusion under the original even-distance hypothesis. The underlying path rotation uses work by @carl2sheriff and @philipsaint. [Two-cut theorem](graph189/full/direct/continuation/root/Graph189TwoConnectivity.lean) · [Prescribed-start lemma](graph189/full/direct/continuation/order/Graph189DenseRootedRoute.lean) · [All-connectivity degree-33 Linux replay](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46142414545/job/140971072238)

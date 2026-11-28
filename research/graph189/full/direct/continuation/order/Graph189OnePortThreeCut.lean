@@ -7,7 +7,8 @@ open SimpleGraph Finset Graph189UniversalCycle
 namespace Graph189OnePortCover
 variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph V} [DecidableRel G.Adj]
 
-private theorem additional_index_of_exclusion (hc : G.Connected)
+/-- Excluding a low vertex on a minimum cut raises the available order index by one. -/
+theorem additional_index_of_exclusion (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
     (two : 2≤G.vertexConnectivity)
     (wide : 4*G.vertexConnectivity+1≤G.secondSmallestDegree)
