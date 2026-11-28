@@ -1,3 +1,4 @@
+import Graph189FourDegreeFacts
 import Graph189FourCutSaturationFacts
 import Graph189CutFamilies
 import Graph189CrossBoundaryProduct
@@ -12,6 +13,14 @@ namespace Graph189FourCut
 def Range (k n : ℕ) : Prop :=
   ((26 : ℤ) ≤ k ∧ 6 * (k : ℤ) ≤ (n : ℤ) + 10) ∨
   ((33 : ℤ) ≤ k ∧ 6 * (k : ℤ) ≤ (n : ℤ) + 19)
+
+/-- In the two boundary degrees the actual maximum degree supplies the
+additional column constraint on every minimum separator. -/
+def ExtendedRange (k n Δ : ℕ) : Prop := Range k n ∨
+  (31≤k ∧ k≤32 ∧ 6*k≤n+19 ∧ Δ≤Graph189FourDegreeTable.maxDeg k)
+
+theorem extended_floor {k n Δ : ℕ} (h : ExtendedRange k n Δ) : 26≤k ∧ 6*k≤n+19 := by
+  rcases h with (⟨_,_⟩|⟨_,_⟩)|⟨_,_,_,_⟩ <;> omega
 
 private theorem large_population {k x y d : ℤ} (hk : 0 < k) (hd : 0 ≤ d)
     (margin : 3*d < 2*k) (total : 6*k-d ≤ x+y) (orient : x ≤ y)
@@ -62,13 +71,13 @@ variable {G : SimpleGraph V} [DecidableRel G.Adj] {A B S : Finset V}
 
 /-- Every oriented minimum four-cut in the stated range has at least two
 labels adjacent to every high vertex of its smaller side. -/
-theorem two_common (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
+theorem two_common_extended (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
     (deletion : ∀ z : V, (G.induce {v : V | v ≠ z}).Connected)
     (minimum : S.card = G.vertexConnectivity) (four : S.card = 4)
     (cap : ∀ v, G.distEven v ≤ 1 + G.secondSmallestDegree)
     (orient : (A.filter (fun v => G.secondSmallestDegree ≤ G.degree v)).card ≤
       (B.filter (fun v => G.secondSmallestDegree ≤ G.degree v)).card)
-    (region : Range G.secondSmallestDegree (Fintype.card V)) :
+    (region : ExtendedRange G.secondSmallestDegree (Fintype.card V) G.maxDegree) :
     S.card*G.secondSmallestDegree < (B.filter (fun v => G.secondSmallestDegree ≤ G.degree v)).card ∧
     (S.card+1)*G.secondSmallestDegree+S.card+1 < Fintype.card V ∧
     2 ≤ (S.filter (fun i => ∀ a ∈ A, G.secondSmallestDegree ≤ G.degree a → G.Adj a i)).card := by
@@ -92,22 +101,28 @@ theorem two_common (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
   have debitZ : (X.card:ℤ)*Y.card+X.card*4 ≤ X.card*k+4*((k:ℤ)*k)+4*k := by exact_mod_cast debited
   have bounds : 4*(k:ℤ)<Y.card ∧ 16*(k:ℤ)-44+X.card<4*Y.card ∧
       ((X.card:ℤ)≤k → 12*(k:ℤ)-12+X.card<3*Y.card) := by
-    by_cases old : ((26:ℤ)≤k ∧ 6*(k:ℤ)≤(Fintype.card V:ℤ)+10) ∨
-        ((36:ℤ)≤k ∧ 6*(k:ℤ)≤(Fintype.card V:ℤ)+19)
-    · exact population_bounds old (by positivity) (by omega) (by exact_mod_cast orient)
-        (by nlinarith) (by nlinarith)
-    · change ((26:ℤ)≤k ∧ 6*(k:ℤ)≤(Fintype.card V:ℤ)+10) ∨
-          ((33:ℤ)≤k ∧ 6*(k:ℤ)≤(Fintype.card V:ℤ)+19) at region
-      have special := Graph189FourCutSaturationFacts.quotas hc cut minimum four cap
-        (by change 33≤k; omega) (by change k≤35; omega)
-        (by change 6*k≤Fintype.card V+19; omega) orient
+    rcases region with historical|⟨lo,hi,order,mx⟩
+    · by_cases old : ((26:ℤ)≤k ∧ 6*(k:ℤ)≤(Fintype.card V:ℤ)+10) ∨
+          ((36:ℤ)≤k ∧ 6*(k:ℤ)≤(Fintype.card V:ℤ)+19)
+      · exact population_bounds old (by positivity) (by omega) (by exact_mod_cast orient)
+          (by nlinarith) (by nlinarith)
+      · change ((26:ℤ)≤k ∧ 6*(k:ℤ)≤(Fintype.card V:ℤ)+10) ∨
+            ((33:ℤ)≤k ∧ 6*(k:ℤ)≤(Fintype.card V:ℤ)+19) at historical
+        have special := Graph189FourCutSaturationFacts.quotas hc cut minimum four cap
+          (by change 33≤k; omega) (by change k≤35; omega)
+          (by change 6*k≤Fintype.card V+19; omega) orient
+        change 4*k<Y.card ∧ 16*k+X.card<4*Y.card+44 ∧ (X.card≤k → 12*k+X.card<3*Y.card+12) at special
+        omega
+    · have special := Graph189FourDegreeFacts.quotas hc cut minimum four cap lo hi mx order orient
       change 4*k<Y.card ∧ 16*k+X.card<4*Y.card+44 ∧ (X.card≤k → 12*k+X.card<3*Y.card+12) at special
       omega
   obtain ⟨large,noPrivate,noResidual⟩ := bounds
   have big : S.card*k < Y.card := by rw [four]; exact_mod_cast large
   have room : (S.card+1)*k+S.card+1 < Fintype.card V := by
     rw [four]
-    rcases region with ⟨_,_⟩|⟨_,_⟩ <;> dsimp only [k] <;> omega
+    have h := extended_floor region
+    dsimp only [k]
+    omega
   refine ⟨big,room,?_⟩
   change 2 ≤ C.card
   have contact (i : V) (hi : i ∈ S) := Graph189HighLabel.all_labels_in_order_range hc cut deletion sm cp
@@ -171,6 +186,18 @@ theorem two_common (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
     change (S.filter (fun i => ∃ y ∈ X, ¬G.Adj y i)).card ≤ 2 at few
     rw [← eq] at few
     omega
+
+theorem two_common (hc : G.Connected) (cut : Graph189CutSides.CutSides G A B S)
+    (deletion : ∀ z : V, (G.induce {v : V | v ≠ z}).Connected)
+    (minimum : S.card = G.vertexConnectivity) (four : S.card = 4)
+    (cap : ∀ v, G.distEven v ≤ 1 + G.secondSmallestDegree)
+    (orient : (A.filter (fun v => G.secondSmallestDegree ≤ G.degree v)).card ≤
+      (B.filter (fun v => G.secondSmallestDegree ≤ G.degree v)).card)
+    (region : Range G.secondSmallestDegree (Fintype.card V)) :
+    S.card*G.secondSmallestDegree < (B.filter (fun v => G.secondSmallestDegree ≤ G.degree v)).card ∧
+    (S.card+1)*G.secondSmallestDegree+S.card+1 < Fintype.card V ∧
+    2 ≤ (S.filter (fun i => ∀ a ∈ A, G.secondSmallestDegree ≤ G.degree a → G.Adj a i)).card :=
+  two_common_extended hc cut deletion minimum four cap orient (Or.inl region)
 
 #print axioms two_common
 end Graph189FourCut

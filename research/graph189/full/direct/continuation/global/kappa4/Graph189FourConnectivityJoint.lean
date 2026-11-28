@@ -1,3 +1,4 @@
+import Graph189FourDegreeWidth
 import Graph189FourCutCommon
 import Graph189TwoRootRecut
 import Graph189ResidualTerminal
@@ -13,23 +14,24 @@ variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V] {G : SimpleGraph
 
 /-- A qualifying graph of vertex connectivity four satisfies both explicit
 order cutoffs, regardless of traceability or the number of components. -/
-theorem exclude (hc : G.Connected) (cap : ∀ v, G.distEven v ≤ 1+G.secondSmallestDegree)
+theorem exclude_extended (hc : G.Connected) (cap : ∀ v, G.distEven v ≤ 1+G.secondSmallestDegree)
     (deletion : ∀ z : V, (G.induce {v : V | v ≠ z}).Connected)
     (four : G.vertexConnectivity=4)
-    (region : Range G.secondSmallestDegree (Fintype.card V)) : False := by
+    (region : ExtendedRange G.secondSmallestDegree (Fintype.card V) G.maxDegree) : False := by
   classical
   let k := G.secondSmallestDegree
   let H (P : Finset V) := P.filter (fun v => k ≤ G.degree v)
   let core (P T : Finset V) := T.filter (fun i => ∀ a ∈ P, k ≤ G.degree a → G.Adj a i)
+  have floor := extended_floor region
   have bigOrder : 4*k+5 ≤ Fintype.card V := by
-    rcases region with ⟨hg,hn⟩|⟨hg,hn⟩ <;> dsimp only [k] <;> omega
+    dsimp only [k]; omega
   have hk26 : 26≤k := by
-    rcases region with ⟨hg,_⟩|⟨hg,_⟩ <;> dsimp only [k] <;> omega
+    dsimp only [k]; omega
   have room : G.vertexConnectivity < Fintype.card V-1 := by omega
   have uniform {W F T : Finset V} (cut : Graph189CutSides.CutSides G W F T)
       (eq : T.card = G.vertexConnectivity) (small : (H W).card ≤ (H F).card) :
       2 ≤ (core W T).card :=
-    (two_common hc cut deletion eq (eq.trans four) cap small region).2.2
+    (two_common_extended hc cut deletion eq (eq.trans four) cap small region).2.2
   have allTwo (W F T : Finset V) (cut : Graph189CutSides.CutSides G W F T)
       (eq : T.card = G.vertexConnectivity) (small : (H W).card ≤ (H F).card)
       (y : V) (yw : y ∈ W) (yh : k ≤ G.degree y) : 2 ≤ (T.filter (G.Adj y)).card := by
@@ -55,7 +57,7 @@ theorem exclude (hc : G.Connected) (cap : ∀ v, G.distEven v ≤ 1+G.secondSmal
     Graph189CutSides.connected_after_smaller_deletion (G:=G) T (lt.trans_eq minimum)
   have common (a : V) (aa : a ∈ A) (ah : k ≤ G.degree a) (j : V) (jc : j ∈ C) :=
     (mem_filter.mp jc).2 a aa ah
-  obtain ⟨big,order,_⟩ := two_common hc cut deletion minimum ns cap orient region
+  obtain ⟨big,order,_⟩ := two_common_extended hc cut deletion minimum ns cap orient region
   have cap' (v : V) : G.distEven v ≤ k+1 := by simpa [k,Nat.add_comm] using cap v
   have contact {j : V} (js : j∈S) : ∃ a∈A, k≤G.degree a ∧ G.Adj a j :=
     Graph189HighLabel.all_labels_in_order_range hc cut deletion small cap'
@@ -90,7 +92,7 @@ theorem exclude (hc : G.Connected) (cap : ∀ v, G.distEven v ≤ 1+G.secondSmal
     obtain ⟨v,vb,vi⟩ := (cut.contacts_of_minimum small (cs ic)).2
     have xb := Graph189PortDifference.common_label_capacity hc cut (X:=H A) (filter_subset _ _)
       (fun a ha => common a (mem_filter.mp ha).1 (mem_filter.mp ha).2 i ic) vb vi cap'
-    have hk : 6≤k := by rcases region with ⟨hg,hn⟩|⟨hg,hn⟩ <;> dsimp only [k] <;> omega
+    have hk : 6≤k := by dsimp only [k]; omega
     change S.card*k<(H B).card at big
     rw [ns] at big
     rw [dd,cc] at bound
@@ -102,6 +104,12 @@ theorem exclude (hc : G.Connected) (cap : ∀ v, G.distEven v ≤ 1+G.secondSmal
   have many := Graph189CutSides.CutSides.common_label_contacts
     (fun x xa xh => common x xa xh j jc) cnt
   exact private_recut hc cut minimum cap (by omega) vb vh support many allTwo
+
+theorem exclude (hc : G.Connected) (cap : ∀ v, G.distEven v ≤ 1+G.secondSmallestDegree)
+    (deletion : ∀ z : V, (G.induce {v : V | v ≠ z}).Connected)
+    (four : G.vertexConnectivity=4)
+    (region : Range G.secondSmallestDegree (Fintype.card V)) : False :=
+  exclude_extended hc cap deletion four (Or.inl region)
 
 #print axioms exclude
 end Graph189FourCut
@@ -115,10 +123,10 @@ variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V]
 variable {G : SimpleGraph V} [DecidableRel G.Adj]
 
 /-- The four-cut upper-order bound and the minimum-deletion lower-order
-bound prove the original statement at connectivity four and degree at least 33. -/
-theorem traceable_of_33 (hc : G.Connected)
+bound prove the original statement at connectivity four and degree at least 31. -/
+theorem traceable_of_31 (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (four : G.vertexConnectivity=4) (large : 33≤G.secondSmallestDegree) :
+    (four : G.vertexConnectivity=4) (large : 31≤G.secondSmallestDegree) :
     ∃ a b : V, ∃ p : G.Walk a b, p.IsHamiltonian := by
   classical
   obtain ⟨z,hz⟩ := G.exists_minimal_degree_vertex
@@ -142,16 +150,24 @@ theorem traceable_of_33 (hc : G.Connected)
     rw [four] at lower
     have lowerN : 6*G.secondSmallestDegree≤Fintype.card V+19 := by norm_num at lower; omega
     have lowerZ : 6*(G.secondSmallestDegree:ℤ)≤(Fintype.card V:ℤ)+19 := by exact_mod_cast lowerN
-    have largeZ : (33:ℤ)≤G.secondSmallestDegree := by exact_mod_cast large
     have deletion (u : V) : (G.induce {v : V | v≠u}).Connected := by
       have eq : {v : V | v∉({u} : Finset V)} = {v : V | v≠u} := by
         ext v
         simp
       rw [←eq]
       exact Graph189CutSides.connected_after_smaller_deletion ({u} : Finset V) (by simp [four])
-    exact exclude hc (fun v => by simpa only [Nat.add_comm 1] using point v) deletion four
-      (Or.inr ⟨largeZ,by omega⟩)
+    apply exclude_extended hc (fun v => by simpa only [Nat.add_comm 1] using point v) deletion four
+    by_cases previous : 33≤G.secondSmallestDegree
+    · exact Or.inl (Or.inr ⟨by exact_mod_cast previous,by omega⟩)
+    exact Or.inr ⟨large,by omega,lowerN,
+      Graph189FourDegreeWidth.max_degree hc cap fail large (by omega) lowerN⟩
 
+theorem traceable_of_33 (hc : G.Connected)
+    (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (four : G.vertexConnectivity=4) (large : 33≤G.secondSmallestDegree) :
+    ∃a b,∃p : G.Walk a b,p.IsHamiltonian := traceable_of_31 hc cap four (by omega)
+
+#print axioms traceable_of_31
 /-- The original all-order threshold for connectivity four. -/
 theorem traceable_of_36 (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)

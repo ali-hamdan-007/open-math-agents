@@ -2,6 +2,10 @@
 
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## All orders from second-smallest degree 31
+
+Lean proves the original Hamiltonian-path conclusion for every order and connectivity when k≥31. At connectivity four, the small-side and large-side contact counts in each separator column sum to at most the maximum degree. Counting the two distinct contacts required by a high nonport with a sole nearest separator vertex excludes the last feasible rows at degrees 31 and 32. [All-order proof](graph189/full/direct/continuation/root/Graph189AllHighOrders.lean) · [Graph incidence proof](graph189/full/direct/continuation/global/kappa4/Graph189FourDegreeColumns.lean) · [Finite table](graph189/full/direct/continuation/global/kappa4/Graph189FourDegreeTable.lean)
+
 ## The five-cut endpoint at degree 18
 
 A minimum cut through a low vertex gives a strict order-deficit inequality. In its two-edge wedge there is a higher-degree second common neighbor. Either a common neighbor misses the low center, or the center and an endpoint count a common even-distance vertex. Retaining that one unit in the wedge count excludes the equality case at k=18. Together with the published degree-sum argument this proves every order at connectivity at least five for k≥18. [Strict wedge](graph189/full/direct/continuation/order/Graph189StrictLowWedge.lean) · [Separator theorem](graph189/full/direct/continuation/order/Graph189StrictCutDeficit.lean) · [All-order conclusion](graph189/full/direct/continuation/root/Graph189FiveConnectivity19.lean)

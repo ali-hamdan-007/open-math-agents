@@ -152,3 +152,25 @@ Degree-independent ordinary gap, connectivity two from 12, and connectivity at l
 'Graph189WedgeOrder.strict_order' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189CutSides.CutSides.strict_low_cut' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189FiveConnectivity.traceable_ge18' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189FourDegreeColumns 3ebde2fb37ea73f41f58d43c12bb58a5f673435fc6ffb8ae495c5bd2a9d17c46
+'Graph189FourDegreeColumns.weighted_cover' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189FourDegreeFacts a744a02771aeb2145dc3758ca4f66068239ec4cf2ce74ad82cce1793b91a9f99
+'Graph189FourDegreeFacts.quotas' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189FourDegreeTable dbb7b9a5a28c23782fa0db8f22e115b5b0dd1e46e8bc9babf9a3db16c369a8e9
+'Graph189FourDegreeTable.quotas' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189FourDegreeWidth cf270d0bbca6cb2888083c5cb8f13eab3cb5442a38d8f7e7c2ecf533c5794edd
+'Graph189FourDegreeWidth.max_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189FourConnectivityJoint cc23836ec99fa3c91e10f5188a36ae6bd87ae86fb1c2c92a8cf852f6cdbec5ca
+'Graph189FourCut.exclude' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189FourCut.traceable_of_31' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189FourCut.traceable_of_33' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189FourCut.traceable_of_36' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189FourCut.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189AllHighOrders 1e02ee3dc9ed4421752b8895979de9475a70b00d9c578810cdaa35d576c1f173
+'Graph189AllHighOrders.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
