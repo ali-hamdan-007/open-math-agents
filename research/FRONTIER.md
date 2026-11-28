@@ -3,6 +3,13 @@
 Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189: a large-common-neighborhood routing theorem
+
+In the six remaining high-order degree-three templates, let h be the number of triple-visible remotes, e the number of exceptional ports, and W the universal ports. If k-h >= e(e+1)+3 and every triple-visible remote has at least h+e+1 neighbors in W, then the graph is traceable, with no connectivity assumption on the nontriple remote layer. Closure creates a prescribed W-endpoint route through the triples and high ports; low exceptional ports insert on remote-cycle edges, while disconnected or cut remote layers split into two Hamilton-connected pieces. The f=7,b=3 extremal visibility profile is handled separately. The paper proof and [independent audit](graph189/full/unrestricted/degree-three-large-common-neighborhoods-audit.md) are at [large common neighborhoods](graph189/full/unrestricted/degree-three-large-common-neighborhoods.md).
+
+Together with the audited k >= 7h+84 theorem, a surviving template must lie in the large-h regime and contain a triple with at most h+e universal-port neighbors. This is not a Lean formalization or official checker verdict.
+
+
 ## Graph 189: arbitrary triple layers at k >= 7h+84
 
 For each of the six remaining high-order degree-three templates, let h be the number of triple-visible third-layer vertices. If k >= 7h+84, then the graph is traceable, with no connectivity, Hall, or common-port incidence assumption. The proof first builds one or two cycles through the remote core using the Bauer–Morgana–Schmeichel–Veldman independent-triple degree-sum criterion and closure, inserts low-incidence exceptional ports and triples on distinct cycle edges, and routes the remaining vertices through a dense block graph on the universal ports. The disconnected and cut-core supplement supplies Hamilton-connected pieces and an explicit two-cycle attachment route. All endpoint, component, and insertion counts were independently audited. See [remote cycle](graph189/full/unrestricted/degree-three-nontriple-cycle.md) and [audit](graph189/full/unrestricted/degree-three-nontriple-cycle-audit.md), the [arbitrary-triple routing theorem](graph189/full/unrestricted/degree-three-all-triples-routing.md) and [audit](graph189/full/unrestricted/degree-three-all-triples-routing-audit.md), then [connectivity removal](graph189/full/unrestricted/degree-three-all-triples-connectivity.md) and its [audit](graph189/full/unrestricted/degree-three-all-triples-connectivity-audit.md).
