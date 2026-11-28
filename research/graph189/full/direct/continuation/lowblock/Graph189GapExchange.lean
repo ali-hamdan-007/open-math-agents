@@ -8,11 +8,11 @@ variable {V : Type*} {G : SimpleGraph V} {a b x y : V}
 /-- Replacing a real open interval by a spanning exterior route makes every
 removed vertex adjacent to one old bounding mark, using the common-neighbor
 property on the new maximal path. -/
-theorem interval_exchange_witnesses (p : G.Walk a b) (hp : p.IsPath) (t : Fin p.support.length)
+theorem interval_exchange_witnesses_with_route (p : G.Walk a b) (hp : p.IsPath) (t : Fin p.support.length)
     (M : Finset (Fin p.support.length)) (q : G.Walk x y) (hq : q.IsPath)
     (dis : List.Disjoint q.support p.support)
     (touch : ∀ i ∈ M, G.Adj p.support[i.val] x ∧ G.Adj p.support[i.val] y)
-    (uniform : ∀ {i j}, ∀ r : G.Walk i j, r.IsPath → p.support[t.val] ∈ r.support → r.length=p.length →
+    (uniform : ∀ {i j}, ∀ r : G.Walk i j, r.IsPath → p.support[t.val] ∈ r.support → q.support ⊆ r.support → r.length=p.length →
       ∀ c ∈ r.support, ∀ v ∉ r.support, ∀ w ∉ r.support, G.Adj c v → G.Adj c w)
     {lo hi : ℕ} (nonempty : lo<hi) (bound : hi ≤ p.support.length) (size : hi-lo=q.support.length)
     (safe : t.val<lo ∨ hi ≤ t.val) (lower : lo=0 ∨ ∃ i∈M, i.val+1=lo)
@@ -80,9 +80,22 @@ theorem interval_exchange_witnesses (p : G.Walk a b) (hp : p.IsPath) (t : Fin p.
       rw [get_at p i.isLt,e]
       exact edge.symm
   obtain ⟨c,hc,cx,neighbor⟩ := witness
-  have all := protected_swap_neighbors p hp _ A J B split (kept t safe) q hq dis length left right uniform hc neighbor
+  have all := protected_swap_neighbors_with_route p hp _ A J B split (kept t safe) q hq dis length left right uniform hc neighbor
   intro i h
   exact ⟨c,cx,(all _ (inside i (mem_Ico.mp h).1 (mem_Ico.mp h).2)).symm⟩
+
+theorem interval_exchange_witnesses (p : G.Walk a b) (hp : p.IsPath) (t : Fin p.support.length)
+    (M : Finset (Fin p.support.length)) (q : G.Walk x y) (hq : q.IsPath)
+    (dis : List.Disjoint q.support p.support)
+    (touch : ∀ i ∈ M, G.Adj p.support[i.val] x ∧ G.Adj p.support[i.val] y)
+    (uniform : ∀ {i j}, ∀ r : G.Walk i j, r.IsPath → p.support[t.val] ∈ r.support → r.length=p.length →
+      ∀ c ∈ r.support, ∀ v ∉ r.support, ∀ w ∉ r.support, G.Adj c v → G.Adj c w)
+    {lo hi : ℕ} (nonempty : lo<hi) (bound : hi ≤ p.support.length) (size : hi-lo=q.support.length)
+    (safe : t.val<lo ∨ hi ≤ t.val) (lower : lo=0 ∨ ∃ i∈M, i.val+1=lo)
+    (upper : hi=p.support.length ∨ ∃ i∈M, i.val=hi) (one : 0<lo ∨ hi<p.support.length) :
+    ∀ i ∈ Ico lo hi, ∃ w, G.Adj x w ∧ G.Adj (p.getVert i) w := by
+  apply interval_exchange_witnesses_with_route p hp t M q hq dis touch _ nonempty bound size safe lower upper one
+  exact fun r hr hz _ => uniform r hr hz
 
 #print axioms interval_exchange_witnesses
 end Graph189ExteriorGap

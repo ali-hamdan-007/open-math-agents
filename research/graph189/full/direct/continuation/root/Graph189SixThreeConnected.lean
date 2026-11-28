@@ -1,3 +1,4 @@
+import Graph189ConnectivityDegree
 import Graph189SixWideRotation
 import Graph189SixProtected
 import Graph189HighMinimumGap

@@ -51,14 +51,15 @@ theorem high {k : ℕ} (large : 10≤k) (sides : Graph189CutSides.CutSides G A B
   let f := (Embedding.induce (G:=G) (A:Set V)).toHom
   let r := w.map f
   have port := (mem_filter.mp (mem_subtype.mp xM)).2
-  refine ⟨x.val,y.val,r,hw.map Subtype.val_injective,port,?_,?_⟩
+  refine ⟨_,_,r,hw.map Subtype.val_injective,port,?_,?_⟩
   · intro v seen
     rw [show r.support=w.support.map f from Walk.support_map _ _] at seen
     obtain ⟨v,_,rfl⟩ := List.mem_map.mp seen
     exact v.property
   · change Fintype.card A≤w.support.length+1 at len
     rw [Fintype.card_coe] at len
-    simpa [r] using len
+    have eq : r.support.length=w.support.length := by simp [r]
+    omega
 
 theorem exceptional {k : ℕ} (large : 10≤k) (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q})
     (free : ∀x∈A,¬(G.Adj x p ∧ G.Adj x q)) (con : (G.induce (A:Set V)).Connected)
@@ -106,8 +107,8 @@ theorem exceptional {k : ℕ} (large : 10≤k) (sides : Graph189CutSides.CutSide
   have length : A.card≤r.support.length+3 := by simpa [r] using len
   have pm : pred x.val := (mem_filter.mp (mem_subtype.mp xM)).2
   rcases pm with xp|xq
-  · exact Or.inl ⟨x.val,y.val,r,hw.map Subtype.val_injective,xp,inside,length⟩
-  · exact Or.inr ⟨x.val,y.val,r,hw.map Subtype.val_injective,xq,inside,length⟩
+  · exact Or.inl ⟨_,_,r,hw.map Subtype.val_injective,xp,inside,length⟩
+  · exact Or.inr ⟨_,_,r,hw.map Subtype.val_injective,xq,inside,length⟩
 
 #print axioms contacts
 #print axioms high

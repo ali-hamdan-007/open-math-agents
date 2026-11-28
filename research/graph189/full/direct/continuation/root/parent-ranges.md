@@ -7,6 +7,7 @@ The pinned Lean kernel checked each of the following graph-facing conclusions. H
 | Exact moderate child, 2k+3≤n≤3k+2, every k | A Hamiltonian path. [ModerateComplete.moderate](Graph189ModerateComplete.lean) has the registered child type and passed [independent kernel replay](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46135948159/job/140951158759). |
 | k=5, or k=6 and a degree-two vertex, κ≥2 | A Hamiltonian path at every order. [FiveOriginal](../verify/Graph189FiveOriginal.lean) and [SixOrder](../verify/Graph189SixOrder.lean) passed [independent replay](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46134769244/job/140947485627). |
 | k≥7, n≤3k+2 | A Hamiltonian path in the original graph. [ModerateSeven.original](Graph189ModerateSeven.lean) |
+| k=6, κ≥3 | A Hamiltonian path at every order. [SixThreeConnected.traceable](Graph189SixThreeConnected.lean) |
 | k=6, κ≥2, δ≥3, n≤20 | A Hamiltonian path. [SixMinimumThree.traceable](Graph189SixMinimumThree.lean) |
 | k=4 | A Hamiltonian path at every order. [FourOriginal.traceable_four](../verify/Graph189FourOriginal.lean) |
 | k=5, δ=5 | A Hamiltonian path at every order. [FiveTiedOriginal.traceable_tied_five](../verify/Graph189FiveTiedOriginal.lean) |

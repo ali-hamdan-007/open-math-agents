@@ -5,21 +5,32 @@ from dataclasses import dataclass
 from pathlib import Path
 import re
 
-STEP = "WrittenOnTheWallII.GraphConjecture189.conjecture189.R2.H2.R1"
 R2 = "OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R2"
-TARGET = R2 + "_H2_R1.H1"
 ROOT = "Graph189ModerateComplete.moderate"
-CMD = re.compile(r"^(?:@\[[^\]]+\]\s*)?(?:private\s+|protected\s+|public\s+|noncomputable\s+)*(theorem|lemma|def|abbrev|structure|class|inductive|instance)\s+([\w'][\w'?!]*(?:\.[\w'][\w'?!]*)*)")
+NAME_PART = r"(?:«[^»\n]+»|[\w'][\w'?!]*)"
+QUALIFIED_NAME = NAME_PART + r"(?:\." + NAME_PART + r")*"
+CMD = re.compile(
+    r"^(?:@\[[^\]]+\]\s*)?(?:private\s+|protected\s+|public\s+|noncomputable\s+)*"
+    r"(theorem|lemma|def|abbrev|structure|class|inductive|instance)\s+(" + QUALIFIED_NAME + ")"
+)
 CONTEXT = re.compile(r"^(?:module|(?:public\s+)?import|(?:public\s+|noncomputable\s+)?section|end|namespace|open|variable|universe|omit|include|set_option|attribute|#\w+|@\[)")
 IMPORT = re.compile(r"^(?:public\s+)?import\s+(?:all\s+)?([\w.]+)", re.M)
-IDENT = re.compile(r"[\w'][\w'?!]*(?:\.[\w'][\w'?!]*)*")
-CREDITS = """-- Graph 189, moderate two-connected case, by @ali-hamdan-007 and contributors.
--- R2 and the short-order proof are by @carl2sheriff (PR 22587), with R1
--- path and metric arguments by @computerfreak97 (PR 2971) and philipsaint.
--- The linked-set argument of Ma, Ning and Zhao is formalized by @koolkao (PR 7971).
--- Source and full provenance: github.com/ali-hamdan-007/open-math-agents,
--- branch research/parallel-lean-results, research/graph189/full/direct/continuation.
-"""
+IDENT = re.compile(QUALIFIED_NAME)
+def credits(chosen):
+    modules = {c.module for c in chosen}
+    lines = ["-- Written on the Wall II, Graph 189. Integration by @ali-hamdan-007."]
+    if "Graph189UpstreamShortOrder" in modules:
+        lines += ["-- Short-order theorem and protected-path estimates by @carl2sheriff,",
+                  "-- https://github.com/lefttosolve2/open-math-agents/pull/22587"]
+    lines += ["-- R2 by @carl2sheriff, with R1 path and metric arguments by",
+              "-- @computerfreak97 (PR 2971) and philipsaint's Dirac formalization."]
+    if "Graph189UpstreamBondy" in modules:
+        lines += ["-- The linked-set theorem of Ma, Ning and Zhao was formalized by @koolkao,",
+                  "-- https://github.com/lefttosolve2/open-math-agents/pull/7971"]
+    lines += ["-- Sources and credits are in github.com/ali-hamdan-007/open-math-agents,",
+              "-- research/parallel-lean-results, research/graph189/full/direct/continuation."]
+    return "\n".join(lines)
+
 def uncomment(s):
     result = []
     i = depth = 0
@@ -86,6 +97,8 @@ def main():
     p.add_argument("--root", default=ROOT, help="fully qualified statement implementing the exact child")
     p.add_argument("--dependencies", type=Path, help="TSV produced by extract-kernel-deps.py")
     args = p.parse_args()
+    if args.kernel_only and not args.dependencies:
+        p.error("--kernel-only requires --dependencies")
     base = R2 + "_H2_R1"
     if args.leaf:
         args.root = "Graph189ModerateSplitProofs." + ("short","five","six","seven")[args.leaf-1]
@@ -100,20 +113,21 @@ def main():
     def visit(n):
         if n in modules: return
         candidate = args.build / (n+".lean")
-        source = (candidate if candidate.exists() and (not args.checkout_sources or n=="Graph189ParentFocused" or n not in files) else files[n]).read_text()
+        use_snapshot = candidate.exists() and (
+            not args.checkout_sources or n == "Graph189ParentFocused" or n not in files
+        )
+        source = (candidate if use_snapshot else files[n]).read_text()
         for dep in IMPORT.findall(uncomment(source)):
             if dep.startswith("Graph189"): visit(dep)
         modules[n] = parse(n,source)
     visit(args.root.split(".")[0])
     by_name = defaultdict(list)
     by_leaf = defaultdict(list)
-    all_decls = []
     for commands in modules.values():
         for c in commands:
             if c.name:
                 by_name[c.name].append(c)
                 by_leaf[c.name.rsplit(".",1)[-1]].append(c)
-                all_decls.append(c)
     # The historical focused parent inlined a few of the same cut-vertex
     # and trace-closure sources that the modular replay imports separately.
     canonical = {}
@@ -128,27 +142,33 @@ def main():
         opened = []
         for r in records:
             if r.text.startswith("open "):
-                opened.extend(n for n in r.text.split()[1:] if re.fullmatch(r"[\w.]+",n) and n!="in")
+                opened.extend(n for n in r.text.split()[1:] if IDENT.fullmatch(n) and n!="in")
         opens[module] = list(dict.fromkeys(opened))
     chosen = set()
     pending = list(by_name[args.root])
     if not pending: raise SystemExit(f"unknown root {args.root}")
+    unmapped = []
     if args.dependencies:
         for entry in args.dependencies.read_text().splitlines():
             mod,name,line,_body = entry.split("\t")
+            if mod not in modules:
+                raise SystemExit(f"{mod} from the kernel manifest is absent from this source revision")
             records = modules[mod]
-            if int(line):
-                matches=[c for c in records if c.name and c.start<=int(line)<=c.end]
-            else: matches=[]
-            if not matches:
-                matches=[c for c in records if c.name and (name==c.name or name.startswith(c.name+"."))]
-            pending.extend(matches)
+            matching = [c for c in records if c.name and (name==c.name or name.startswith(c.name+"."))]
+            precise = [c for c in matching if c.start<=int(line)<=c.end] if int(line) else []
+            if not matching:
+                unmapped.append((mod,name,line))
+            pending.extend(precise or matching)
     while pending:
         c = pending.pop()
         c = canonical.get(c,c)
         if c in chosen or in_official(c) or (args.leaf and c.module=="Graph189ModerateSplit"): continue
         chosen.add(c)
         if args.kernel_only: continue
+        # An open command needs its namespace even when the proof term only
+        # uses the definitionally equal OMA.BondyK.offWalk.
+        if "Arxiv.«2606.03696»" in opens[c.module]:
+            pending.extend(by_name["Arxiv.«2606.03696».offWalk"])
         for tok in set(IDENT.findall(c.text)):
             if tok in by_name:
                 pending.extend(by_name[tok])
@@ -172,7 +192,7 @@ def main():
         if counts[c.name]>1 and c.private:
             leaf=c.name.rsplit(".",1)[-1]
             rename[c.module][leaf]=f"{c.module.removeprefix('Graph189')}_{leaf}"
-    chunks = [f"import OMAReductions.{base[4:]}",CREDITS]
+    chunks = [f"import OMAReductions.{base[4:]}",credits(chosen)]
     report = []
     for mod, commands in modules.items():
         if not any(c in chosen for c in commands): continue
@@ -211,6 +231,11 @@ instance {V : Type u} {G : SimpleGraph V} {d : ℕ} (K : Core G d) : DecidableRe
             if re.match(r"^end\b",t): stack-=1
             for before,after in rename.get(mod,{}).items():
                 t=re.sub(r"(?<![\w'.])"+re.escape(before)+r"(?![\w'])",after,t)
+            # The full official Mathlib import supplies notations such as
+            # <m and ≤s, and also opens the metric dist_self.
+            t = re.sub(r"(?<![<>=-])([<≤>≥])(?=[^\W\d])", r" \1 ", t)
+            if mod == "Graph189LayerCover" or c.name.endswith(".original_dist_two"):
+                t = re.sub(r"(?<![\w.])dist_self\b", "SimpleGraph.dist_self", t)
             body.append(t)
         rendered="\n".join(body)+"\n"+"end\n"*max(0,stack)
         rendered="\n".join(line.rstrip() for line in rendered.splitlines() if line.strip())
@@ -220,6 +245,12 @@ instance {V : Type u} {G : SimpleGraph V} {d : ℕ} (K : Core G d) : DecidableRe
     text="\n".join(chunks)+"\n"
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(text)
+    if args.dependencies:
+        args.output.with_suffix(".unmapped.tsv").write_text(
+            "".join("\t".join(row) + "\n" for row in unmapped)
+        )
+        if unmapped:
+            print(f"{len(unmapped)} constants did not match this source revision")
     args.output.with_suffix(".modules.tsv").write_text("\n".join(report)+"\n")
     print(f"{len(chosen)} source declarations, {len(report)} modules, {len(text.encode())} bytes")
 if __name__=="__main__":

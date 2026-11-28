@@ -20,7 +20,7 @@ theorem cycle_card {r : V} (C : G.Walk r r) (hc : C.IsCycle) : C.support.toFinse
   rw [same,List.toFinset_card_of_nodup hc.support_nodup,List.length_tail,C.length_support]
   omega
 
-theorem extends {r a b w : V} (C : G.Walk r r) (hc : C.IsCycle) (edge : s(a,b)∈C.edges)
+theorem insert_on_edge {r a b w : V} (C : G.Walk r r) (hc : C.IsCycle) (edge : s(a,b)∈C.edges)
     (outside : w∉C.support) (wa : G.Adj w a) (wb : G.Adj w b) :
     ∃ T : G.Walk w w, T.IsCycle ∧ T.length=C.length+1 ∧ ∀ v∈T.support, v=w ∨ v∈C.support := by
   obtain ⟨q,hq,len,sub⟩ := Graph189CycleEdgeMarks.complementary C hc edge
@@ -31,9 +31,10 @@ theorem extends {r a b w : V} (C : G.Walk r r) (hc : C.IsCycle) (edge : s(a,b)�
   have qlen := q.length_support
   have lengthT : T.length=C.length+1 := by simp [T]; omega
   refine ⟨T,Walk.isCycle_iff_isPath_tail_and_le_length.mpr ⟨?_,by omega⟩,lengthT,?_⟩
-  · exact Q
+  · rw [show T=Walk.cons wa (q.concat wb.symm) from rfl, Walk.tail_cons]
+    exact (Walk.isPath_copy _ _ _).mpr Q
   · intro v hv
-    simp only [T,Walk.support_cons,Walk.support_concat,List.mem_cons,List.mem_append,List.mem_singleton] at hv
+    simp only [T,Walk.support_cons,Walk.support_concat,List.mem_cons,List.mem_append,List.not_mem_nil,or_false] at hv
     exact hv.elim Or.inl (fun h => h.elim (fun hq => Or.inr (sub _ hq)) Or.inl)
 
 variable [Fintype V] [Nontrivial V] [DecidableRel G.Adj]
@@ -71,7 +72,7 @@ theorem seven {a b r : V} (p : G.Walk a b) (hp : p.IsPath)
   have ep : s(u,R.penultimate)∈R.edges := Sym2.eq_swap ▸ R.mk_penultimate_end_mem_edges rc.not_nil
   have absent {v : V} (uv : s(u,v)∈R.edges) : ¬G.Adj w v := by
     intro wv
-    obtain ⟨T,hT,len,vertices⟩ := extends R rc uv (fun h => outsideW ((inR _).mp h)) wu wv
+    obtain ⟨T,hT,len,vertices⟩ := insert_on_edge R rc uv (fun h => outsideW ((inR _).mp h)) wu wv
     have lower := Graph189TwoExteriorLinks.order_of_cycle p hp mx conn T hT (by
       intro z hz
       rcases vertices z hz with rfl|h
@@ -149,5 +150,53 @@ theorem seven {a b r : V} (p : G.Walk a b) (hp : p.IsPath)
   change p.support.length+E.card=Fintype.card V at pop
   omega
 
+/-- Every cycle outside any ordinary longest path in a qualifying
+two-connected graph of second-smallest degree six has length at most five. -/
+theorem five_bound (hcG : G.Connected)
+    (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
+    (degree : G.secondSmallestDegree=6) (conn : 2≤G.vertexConnectivity)
+    {a b r : V} (p : G.Walk a b) (hp : p.IsPath)
+    (mx : ∀ {u v}, ∀ q : G.Walk u v, q.IsPath → q.length≤p.length)
+    (C : G.Walk r r) (hc : C.IsCycle) (off : ∀ v∈C.support,v∉p.support) : C.length≤5 := by
+  classical
+  have point (v : V) : G.distEven v≤6+1 := by
+    have h := (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap
+    omega
+  obtain ⟨z,sz⟩ := Graph189QuadraticOrder.second_attained (G:=G)
+  have quad := Graph189QuadraticOrder.rooted hcG z 6 point
+  rw [sz,degree] at quad
+  have order : Fintype.card V≤25 := by omega
+  have pbound := Graph189TwoExteriorLinks.path_of_cycle p hp mx conn C hc off
+  have nbound := Graph189TwoExteriorLinks.order_of_cycle p hp mx conn C hc off
+  by_contra! more
+  have six : C.length=6 := by omega
+  let E := p.support.toFinsetᶜ
+  by_cases small : E.card≤6
+  · exact Graph189SixCycleSpanning.excluded p hp mx conn C hc six off small degree order
+  have pop := card_add_card_compl p.support.toFinset
+  rw [List.toFinset_card_of_nodup hp.support_nodup] at pop
+  change p.support.length+E.card=Fintype.card V at pop
+  have szE : E.card=7 := by omega
+  have high (v : V) : 6≤G.degree v := by
+    have q := Graph189QuadraticOrder.rooted hcG v 6 point
+    omega
+  have quota (v : V) : (univ.filter (fun w => G.dist v w=2)).card≤6 := by
+    let D := univ.filter (fun w => G.dist v w=2)
+    have inc : insert v D⊆univ.filter (fun w => Even (G.dist v w)) := by
+      intro w hw
+      rcases mem_insert.mp hw with rfl|h
+      · simp
+      · exact mem_filter.mpr ⟨mem_univ _,by simp [(mem_filter.mp h).2]⟩
+    have bound := card_le_card inc
+    rw [card_insert_of_notMem (by simp [D])] at bound
+    change D.card+1≤G.distEven v at bound
+    exact Nat.le_of_succ_le_succ (bound.trans (point v))
+  apply seven p hp mx conn C hc six off szE high order
+  intro w wh
+  obtain ⟨v,hv,edge,_⟩ := (high_exterior_half p hp mx wh (quota w) (high w)
+    (fun u => by have := high u; omega) (fun u _ lo _ => False.elim (Nat.not_lt_of_ge (high u) lo))).1
+  exact ⟨v,hv,edge⟩
+
 #print axioms seven
+#print axioms five_bound
 end Graph189SixCycleExtra

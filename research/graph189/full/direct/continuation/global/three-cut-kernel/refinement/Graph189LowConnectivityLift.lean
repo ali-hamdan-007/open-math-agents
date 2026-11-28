@@ -1,4 +1,6 @@
-import Graph189CoreOrderJoint
+import Graph189ConeLinkedOrder
+import Graph189CriticalConnectivity
+import Graph189MinimumCutOrder
 import Graph189FourCritical
 
 open SimpleGraph Finset Graph189ExteriorDegreeCycle Graph189UniversalCycle

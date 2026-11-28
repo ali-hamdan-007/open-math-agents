@@ -32,3 +32,6 @@ for i, name in enumerate(("short","five","six","seven"),1):
     subprocess.run(command, check=True)
     report=target.with_suffix(".modules.tsv")
     report.replace(reports/report.name)
+    if args.dependencies:
+        unmapped = target.with_suffix(".unmapped.tsv")
+        unmapped.replace(reports/unmapped.name)
