@@ -72,13 +72,15 @@ private theorem representatives (hc : G.Connected) (sides : Graph189CutSides.Cut
 
 /-- In a nonadjacent mixed pair with two private types in the shallow
 common side, the actual anchor and representative rows give 2n ≤ 7k. -/
-theorem census (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
+theorem census_with_ports (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
     (pair : S={p,q}) (ne : p≠q) (nonadj : ¬G.Adj p q) (sc : S.card≤G.vertexConnectivity)
     (con : (G.induce (A:Set V)).Connected) (point : ∀v,G.distEven v≤G.secondSmallestDegree+1)
     (largeB : 2*G.secondSmallestDegree≤B.card) (shallow : ∀x∈A,G.secondSmallestDegree≤G.degree x → ∃i∈S,G.Adj i x)
     (free : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q)) (common : ∃x∈A,∀i∈S,G.Adj x i)
     (privateP : ∃x∈A,G.Adj x p ∧ ¬G.Adj x q) (privateQ : ∃x∈A,G.Adj x q ∧ ¬G.Adj x p) :
-    2*Fintype.card V≤7*G.secondSmallestDegree := by
+    G.secondSmallestDegree≤A.card ∧
+      2*Fintype.card V≤6*G.secondSmallestDegree+(B.filter (fun y => ∃i∈S,G.Adj i y)).card ∧
+      (B.filter (fun y => ∃i∈S,G.Adj i y)).card≤G.secondSmallestDegree := by
   classical
   let k := G.secondSmallestDegree
   let AP := A.filter (G.Adj p)
@@ -219,7 +221,18 @@ theorem census (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
   have add := card_union_add_card_inter (E p) (E q)
   have ep' : (E p).card≤k+1 := point p
   have eq' : (E q).card≤k+1 := point q
-  change 2*Fintype.card V≤7*k
+  refine ⟨bigA,?_,ports⟩
+  change 2*Fintype.card V≤6*k+P.card
+  omega
+
+theorem census (hc : G.Connected) (sides : Graph189CutSides.CutSides G A B S)
+    (pair : S={p,q}) (ne : p≠q) (nonadj : ¬G.Adj p q) (sc : S.card≤G.vertexConnectivity)
+    (con : (G.induce (A:Set V)).Connected) (point : ∀v,G.distEven v≤G.secondSmallestDegree+1)
+    (largeB : 2*G.secondSmallestDegree≤B.card) (shallow : ∀x∈A,G.secondSmallestDegree≤G.degree x → ∃i∈S,G.Adj i x)
+    (free : ∀x∈B,¬(G.Adj x p ∧ G.Adj x q)) (common : ∃x∈A,∀i∈S,G.Adj x i)
+    (privateP : ∃x∈A,G.Adj x p ∧ ¬G.Adj x q) (privateQ : ∃x∈A,G.Adj x q ∧ ¬G.Adj x p) :
+    2*Fintype.card V≤7*G.secondSmallestDegree := by
+  obtain ⟨_,lower,upper⟩ := census_with_ports hc sides pair ne nonadj sc con point largeB shallow free common privateP privateQ
   omega
 
 /-- For every second degree at least eleven, this mixed two-cut configuration satisfies
@@ -239,6 +252,7 @@ theorem below_four_of_large_free_side (hc : G.Connected) (sides : Graph189CutSid
   have h := census hc sides pair ne nonadj sc con point largeB shallow free common privateP privateQ
   omega
 
+#print axioms census_with_ports
 #print axioms census
 #print axioms below_four_of_large_free_side
 end Graph189ShallowMixedPair

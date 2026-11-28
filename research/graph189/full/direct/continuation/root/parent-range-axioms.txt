@@ -350,3 +350,19 @@ research/graph189/full/direct/continuation/order/Graph189ShallowMixedPair.lean s
 research/graph189/full/direct/continuation/root/Graph189TwoConnectivity.lean sha256 57bc00523a510484adfe61011162ff84eedfe057170974cc43dcf3e5cc93ca2a
 'Graph189TwoConnectivity.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189TwoConnectivity.of_eleven' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189MarkedHighEnds.lean sha256 6c653c9ccefce69bb950eed43c51accd9365a0886aa604de427a1d2743368683
+'Graph189MarkedHighEnds.marked' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189MarkedHighEnds.marked_using_unmarked' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189SmallPrivateRoutes.lean sha256 07cb5d72918614d948104368a5652e24ce54f18de7de34b1b89a7a6535186ab2
+'Graph189SmallPrivatePair.from_marks' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189PrivateSmallDegrees.lean sha256 28e6609b6c4944758373f9916a5d13322683cb4681af5e03838beddb3dbf0bb7
+'Graph189SmallPrivatePair.clean_from_seven' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SmallPrivatePair.private_from_seven' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/order/Graph189ShallowMixedCensus.lean sha256 2a98cd037906a65c5f5205f37f15103942dab3072fbc658d27def1993fa1976f
+'Graph189ShallowMixedPair.census_with_ports' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ShallowMixedPair.census' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ShallowMixedPair.below_four_of_large_free_side' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,5 +1,9 @@
 # Formalization of the full Graph 189 paper argument
 
+## Common-free separating pairs through the last four degrees
+
+The [original graph conclusion](bounded-order/Graph189PrivateSmallDegrees.lean) holds throughout the residual window whenever neither side has a common contact, including all four remaining degrees 7–10. In a common-free side the exceptional vertex still has two internal neighbors. The [one-exception marked-path theorem](bounded-order/Graph189MarkedHighEnds.lean) rotates a longest path to avoid that vertex at both ends, then applies the accepted endpoint-degree sum and the checked rotation to start at a separator contact. The longer side chooses the anchor. The shorter side uses its contacts with that anchor and the sum of the two actual losses is within the verified gap.
+
 ## Connectivity two at every order from degree eleven
 
 Lean proves the original Hamiltonian-path conclusion for every graph of vertex connectivity two with second-smallest degree at least eleven, at every order. At degree eleven the stronger path gap covers balanced sides. The clean mixed case counts an opposite common port in both anchor columns, and the large shallow case uses the sharper mixed census from the parallel branch. This leaves degrees seven through ten at connectivity two. The strict circumference theorem remains the input for the separate three-connected assembly. [Combined theorem](Graph189TwoConnectivity.lean)
