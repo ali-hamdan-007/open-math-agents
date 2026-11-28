@@ -1,0 +1,2 @@
+started Graph189RootedOneLow.lean 08:09:13
+'Graph189RootedOneLow.rooted_path' depends on axioms: [propext, Classical.choice, Quot.sound]

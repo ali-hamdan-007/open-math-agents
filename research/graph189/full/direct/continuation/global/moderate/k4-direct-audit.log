@@ -1,0 +1,5 @@
+catalog SHA-256 4f0fb0d4dc878abeb684ac07e8ad7aec1880362c33a49217d8cbcce8ff5035a6
+row counts by (outside order,edge count) {(3, 3): 10, (4, 4): 1, (4, 5): 4, (4, 6): 15}
+largest arm 6 viable exterior z-masks 99 blocked masks after degree floor 1
+route checks by omitted vertex count {0: 396, 1: 388, 2: 8}
+total routes 792

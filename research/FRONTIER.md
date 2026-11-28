@@ -7,6 +7,26 @@ Updated 28 November 2026. This research branch contains local Lean results. The 
 
 The exact parent desk lists entries 107046, 107108, 107544 and 107734 under ali-hamdan-007. They cover degree three, the order lower bound from a Hamiltonian minimum deletion, the conditional terminal-band theorem and the complete cut-vertex proof. The full parent remains open. [Desk receipts, source links and upstream status](graph189/full/direct/continuation/root/left-to-solve-record.md)
 
+## Explicit routes cover the degree-four catalogue at every remaining order
+
+There are 72 additional terminal patterns at order 15. Forty-five use the single-contact argument. The other 27 admit three short constructions. In the exceptional double-contact triangle, the even-distance cap forces both marks to miss the minimum vertex if it misses the triangle. Four neighbors then give an endpoint extension or two consecutive path neighbors. With the 30 earlier rows, the degree-four completion stage now has explicit paths for all 102 patterns. The [proof and independent replays](graph189/full/direct/continuation/global/moderate/k4-direct-routes.md) include the 1,831 routes tested at order 15. The kernel connection from the original graph to the finite catalogue is still required.
+
+
+## A single path construction for all 30 moderate-order degree-four terminal graphs
+
+Each of the 30 terminal graphs has one path contact for the exterior. Using that contact and the deleted vertex, one can route a simple path through the entire exterior and omit at most two vertices overall. An independent replay checked 792 attachment choices: 396 paths span, 388 omit one vertex, and eight omit two. The [proof](graph189/full/direct/continuation/verify/small-moderate/degree-four-short-terminal.md) records the four possible exterior shapes and the outstanding Lean connection from an arbitrary graph to the catalogue. This result concerns the moderate-order catalogue.
+
+
+## Graph 189 exterior routing replay with prescribed ports
+
+The [portable source archive](graph189/full/direct/continuation/sep/cover/final82/exterior-near-hc-core.tar.gz) includes the locally checked path closure, endpoint matching and near-Hamilton-connected exterior lemmas used in the independent exterior approach. The archive SHA-256 is 4b4b4a83fdf5ba61a510ec1a1e7bcf4b2e96fa75e84bfe5c9b11b5e78e8844a7. These are focused Lean modules. The proof of the exact full parent is still being assembled.
+
+
+## An accepted upstream linked-set theorem applies to the structural order bound
+
+Upstream [PR 7971](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/7971) by @koolkao includes an all-orders internal theorem for a linked set outside a longest cycle. The official acceptance is for the Bondy theorem. For Graph 189, the native linked-set transport, the one-low-vertex rooted path, the minimum-deletion order estimate, and the two-tight-gaps count have passed the pinned kernel independently. The [application note](graph189/full/direct/continuation/root/upstream-linked-set.md) records the exact stronger internal hypothesis, source, verdict and remaining application to the original graph.
+
+
 ## Every graph with second-smallest degree three is traceable
 
 The kernel checked `Graph189ThreeOriginal.traceable_three` under the registered connectedness and maximum-even-distance hypotheses, for arbitrary order and minimum degree. This closes both parent obligations through second-smallest degree three. The proof routes the possible degree-two vertex through a longest path and combines that result with the tied-minimum, cut-vertex and small-order theorems. The source, five-declaration axiom audit and replay directions are in [the degree-three proof](graph189/full/direct/continuation/verify/degree-three-short-proof.md). The missing low-cut module required by the structural conclusion has also been restored. The pinned kernel checked its two witnesses and the existing effective-deficit consumer. [Low-cut audit](graph189/full/direct/continuation/order/low-mixed-cut.log)

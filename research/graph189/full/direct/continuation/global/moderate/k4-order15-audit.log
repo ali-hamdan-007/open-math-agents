@@ -1,0 +1,3 @@
+terminal families {'single mark': 45, 'two marks, triangle with forced z-edge': 24, 'two marks, triangle with no forced z-edge': 1, 'four marks, singleton and K4': 2}
+one-mark maximum arm orders {5: 41, 6: 2, 7: 2}
+concrete route checks by number of omissions {0: 732, 1: 730, 2: 190, 3: 179}

@@ -1,0 +1,3 @@
+30 layouts, 792 admissible z-neighborhood / path-site combinations
+exterior shape counts: {'triangle': 10, 'four-cycle': 1, 'diamond': 4, 'four-clique': 15}
+omitted vertices: {0: 396, 1: 388, 2: 8}
