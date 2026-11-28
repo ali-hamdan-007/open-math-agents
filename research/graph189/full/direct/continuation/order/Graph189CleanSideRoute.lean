@@ -81,11 +81,14 @@ theorem high_route (A : Finset V) (i : V) {k r : ℕ} (large : 15≤k) (few : r�
 
 /-- On an all-high side the actual path loss is at most the number of nonports.
 At zero excess, open a spanning path at a prescribed contact using the half-degree bound. -/
-theorem high_route_sharp (A : Finset V) (i : V) {k r : ℕ} (large : 11≤k) (few : r≤7)
+theorem high_route_by_size (A : Finset V) (i : V) {k : ℕ} (large : 5≤k)
     (con : (G.induce (A:Set V)).Connected)
     (min : ∀v : A,k-1≤(G.induce (A:Set V)).degree v)
-    (size : A.card≤2*k-2+r) (marks : (A.filter (G.Adj i)).Nonempty)
-    (miss : (A.filter (fun v => ¬G.Adj i v)).card≤k-1+r) : Route G A i r := by
+    (marks : (A.filter (G.Adj i)).Nonempty)
+    (miss : (A.filter (fun v => ¬G.Adj i v)).card<2*(k-1)) : Route G A i (A.card-(2*k-2)) := by
+  let r := A.card-(2*k-2)
+  change Route G A i r
+  have size : A.card≤2*k-2+r := by dsimp [r]; omega
   classical
   obtain ⟨z,zP⟩ := marks
   let z' : A := ⟨z,(mem_filter.mp zP).1⟩
@@ -108,22 +111,32 @@ theorem high_route_sharp (A : Finset V) (i : V) {k r : ℕ} (large : 11≤k) (fe
   · rw [Walk.support_map,List.length_map,hp.length_support,Fintype.card_coe]
     omega
 
+theorem high_route_sharp (A : Finset V) (i : V) {k r : ℕ} (large : 11≤k) (few : r≤7)
+    (con : (G.induce (A:Set V)).Connected)
+    (min : ∀v : A,k-1≤(G.induce (A:Set V)).degree v)
+    (size : A.card≤2*k-2+r) (marks : (A.filter (G.Adj i)).Nonempty)
+    (miss : (A.filter (fun v => ¬G.Adj i v)).card≤k-1+r) : Route G A i r := by
+  obtain ⟨a,b,w,hw,edge,inside,length⟩ := high_route_by_size A i (by omega : 5≤k)
+    con min marks (by omega)
+  exact ⟨a,b,w,hw,edge,inside,by omega⟩
+
 /-- If deleting the low vertex disconnects this side, the two dense end
 pieces have a marked spanning route. Otherwise rotate a longest path
 in its connected high part and charge the low vertex to the loss. -/
-theorem low_route (A : Finset V) (i : V) {k r : ℕ} (large : 11≤k) (few : r≤7)
+theorem low_route_by_size (A : Finset V) (i : V) {k : ℕ} (large : 5≤k)
     (con : (G.induce (A:Set V)).Connected) {z : V} (za : z∈A)
     (min : ∀v : A,v.val≠z → k-1≤(G.induce (A:Set V)).degree v)
-    (size : A.card≤2*k-2+r) (enough : 4≤(A.filter (G.Adj i)).card)
-    (miss : (A.filter (fun v => ¬G.Adj i v)).card≤k-1+r) :
-    Route G A i (r+2) := by
+    (size : A.card≤3*(k-2)) (two : 2≤(A.filter (G.Adj i)).card)
+    (marksLarge : 2*k-3<A.card → 4≤(A.filter (G.Adj i)).card)
+    (miss : (A.filter (fun v => ¬G.Adj i v)).card<2*(k-2)) :
+    Route G A i (max 1 (A.card-(2*k-4))) := by
   classical
   let R := A.erase z
   let J := G.induce (A:Set V)
   let z' : A := ⟨z,za⟩
   have sz : R.card+1=A.card := card_erase_add_one za
-  have remote := (card_le_card (filter_subset_filter (fun v => ¬G.Adj i v) (erase_subset z A))).trans miss
-  change (R.filter (fun v => ¬G.Adj i v)).card≤k-1+r at remote
+  have remote := (card_le_card (filter_subset_filter (fun v => ¬G.Adj i v) (erase_subset z A))).trans_lt miss
+  change (R.filter (fun v => ¬G.Adj i v)).card<2*(k-2) at remote
   have drop : A.filter (G.Adj i) ⊆ insert z (R.filter (G.Adj i)) := by
     intro x hx
     by_cases eq : x=z
@@ -147,6 +160,26 @@ theorem low_route (A : Finset V) (i : V) {k r : ℕ} (large : 11≤k) (few : r�
     change k-2≤Y.card
     omega
   obtain ⟨v,mv⟩ := card_pos.mp (show 0<(R.filter (G.Adj i)).card by omega)
+  by_cases small : A.card≤2*k-3
+  · let v' : R := ⟨v,(mem_filter.mp mv).1⟩
+    have dt := (G.induce (R:Set V)).degree_lt_card_verts v'
+    have dv := minR v'
+    change _<Fintype.card R at dt
+    letI : Nontrivial R := Fintype.one_lt_card_iff_nontrivial.mp (by omega)
+    obtain ⟨y,q,hq⟩ := Graph189DenseRootedRoute.from_vertex v' minR (by rw [Fintype.card_coe]; omega)
+    let f := (Embedding.induce (G:=G) (R:Set V)).toHom
+    refine ⟨_,_,q.map f,hq.isPath.map Subtype.val_injective,(mem_filter.mp mv).2,?_,?_⟩
+    · intro w hw
+      rw [Walk.support_map] at hw
+      obtain ⟨y,_,rfl⟩ := List.mem_map.mp hw
+      exact (mem_erase.mp y.property).2
+    · rw [Walk.support_map,List.length_map,hq.length_support,Fintype.card_coe]
+      omega
+  have enough := marksLarge (by omega)
+  let r := A.card-(2*k-2)
+  have actual : max 1 (A.card-(2*k-4))=r+2 := by dsimp [r]; omega
+  rw [actual]
+  have order : A.card≤2*k-2+r := by dsimp [r]; omega
   by_cases connectedR : (G.induce (R:Set V)).Connected
   · obtain ⟨a,b,w,hw,iv,range,len⟩ := region R i (d:=k-2) (b:=r) (by omega) (by omega)
       connectedR minR (by omega) ⟨v,mv⟩ (by omega)
@@ -189,6 +222,16 @@ theorem low_route (A : Finset V) (i : V) {k r : ℕ} (large : 11≤k) (few : r�
     change A.card≤Fintype.card A+(r+2)
     rw [Fintype.card_coe]
     omega
+
+theorem low_route (A : Finset V) (i : V) {k r : ℕ} (large : 11≤k) (few : r≤7)
+    (con : (G.induce (A:Set V)).Connected) {z : V} (za : z∈A)
+    (min : ∀v : A,v.val≠z → k-1≤(G.induce (A:Set V)).degree v)
+    (size : A.card≤2*k-2+r) (enough : 4≤(A.filter (G.Adj i)).card)
+    (miss : (A.filter (fun v => ¬G.Adj i v)).card≤k-1+r) :
+    Route G A i (r+2) := by
+  obtain ⟨a,b,w,hw,edge,inside,length⟩ := low_route_by_size A i (by omega : 5≤k) con za min
+    (by omega) (by omega) (fun _ => enough) (by omega)
+  exact ⟨a,b,w,hw,edge,inside,by omega⟩
 
 #print axioms low_route
 end Graph189CleanSideRoute

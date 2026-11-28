@@ -31,7 +31,7 @@ private theorem mark_count (W : Finset V) (pred : V → Prop) [DecidablePred pre
     ((W.filter pred).subtype (fun v => v∈W)).card=(W.filter pred).card := by
   rw [card_subtype,filter_eq_self.mpr (fun v h => (mem_filter.mp h).1)]
 
-theorem high {k : ℕ} (large : 10≤k) (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q})
+theorem high_of_five {k : ℕ} (large : 5≤k) (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q})
     (free : ∀x∈A,¬(G.Adj x p ∧ G.Adj x q)) (minimum : ∀x∈A,k≤G.degree x)
     (small : A.card+1≤2*k) (marks : 2≤(A.filter (G.Adj p)).card) : Route G A p 1 := by
   classical
@@ -61,7 +61,7 @@ theorem high {k : ℕ} (large : 10≤k) (sides : Graph189CutSides.CutSides G A B
     have eq : r.support.length=w.support.length := by simp [r]
     omega
 
-theorem exceptional {k : ℕ} (large : 10≤k) (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q})
+theorem exceptional_of_five {k : ℕ} (large : 5≤k) (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q})
     (free : ∀x∈A,¬(G.Adj x p ∧ G.Adj x q)) (con : (G.induce (A:Set V)).Connected)
     {z : V} (za : z∈A) (minimum : ∀x∈A,x≠z → k≤G.degree x) (small : A.card+1≤2*k)
     (marksP : 2≤(A.filter (G.Adj p)).card) (marksQ : 2≤(A.filter (G.Adj q)).card) :
@@ -109,6 +109,18 @@ theorem exceptional {k : ℕ} (large : 10≤k) (sides : Graph189CutSides.CutSide
   rcases pm with xp|xq
   · exact Or.inl ⟨_,_,r,hw.map Subtype.val_injective,xp,inside,length⟩
   · exact Or.inr ⟨_,_,r,hw.map Subtype.val_injective,xq,inside,length⟩
+
+theorem high {k : ℕ} (large : 10≤k) (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q})
+    (free : ∀x∈A,¬(G.Adj x p ∧ G.Adj x q)) (minimum : ∀x∈A,k≤G.degree x)
+    (small : A.card+1≤2*k) (marks : 2≤(A.filter (G.Adj p)).card) : Route G A p 1 :=
+  high_of_five (by omega) sides pair free minimum small marks
+
+theorem exceptional {k : ℕ} (large : 10≤k) (sides : Graph189CutSides.CutSides G A B S) (pair : S={p,q})
+    (free : ∀x∈A,¬(G.Adj x p ∧ G.Adj x q)) (con : (G.induce (A:Set V)).Connected)
+    {z : V} (za : z∈A) (minimum : ∀x∈A,x≠z → k≤G.degree x) (small : A.card+1≤2*k)
+    (marksP : 2≤(A.filter (G.Adj p)).card) (marksQ : 2≤(A.filter (G.Adj q)).card) :
+    Route G A p 3 ∨ Route G A q 3 :=
+  exceptional_of_five (by omega) sides pair free con za minimum small marksP marksQ
 
 #print axioms contacts
 #print axioms high

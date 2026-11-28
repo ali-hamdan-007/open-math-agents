@@ -1,5 +1,9 @@
 # Left to Solve research frontier
 
+## Separating pairs without common contacts
+
+At second-smallest degree eleven, [both sides without common contacts](graph189/full/direct/continuation/root/bounded-order/Graph189PrivateEleven.lean) now give a Hamiltonian path throughout the residual order window. A clean side bounds the combined number of nonports, so the two path losses together with the unused separator vertex total at most nine. If neither side is clean, the existing defective-side bound puts both orders below twice the second-smallest degree. The [balanced common-free theorem](graph189/full/direct/continuation/root/bounded-order/Graph189SmallPrivatePair.lean) applies in this latter case for every k≥7. The [independent Linux check](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46154963128) also verified the stronger path gap and the three-connected assembly with its explicit circumference hypothesis.
+
 ## Long-cycle assembly and the stronger path gap for separating pairs
 
 The [three-connected assembly](graph189/full/direct/continuation/root/bounded-order/Graph189LongCycleAssembly.lean) now constructs the exact component or endblock, locates the exceptional vertex, minimizes the high internal degree, and uses the small-order cycle, both endblock exclusions, the whole-component exclusion, and the terminal clique contradiction. Its only additional graph theorem is the strict one-exception circumference bound for an induced graph of order greater than 2q. The [parallel linkage proof](graph189/full/direct/continuation/root/bounded-order/Graph189FanLinkage.lean) constructs the two anchored disjoint links for that classical step.

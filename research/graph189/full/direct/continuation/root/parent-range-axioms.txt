@@ -319,3 +319,10 @@ research/graph189/full/direct/continuation/root/bounded-order/Graph189NearDegree
 
 research/graph189/full/direct/continuation/root/bounded-order/Graph189LongCycleAssembly.lean sha256 f2f62914fd8010b43eb897dd9f5613c93d217f2ce9b0e80091a52f99cfaa496c
 'Graph189ExteriorLeaf.three_connected_of_long_cycles' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189SmallPrivatePair.lean sha256 3bdc3471f8dca8ed48d044590dd3ea520453d9cef064912010c4a9c3c1700d44
+'Graph189SmallPrivatePair.balanced' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189PrivateEleven.lean sha256 f93a1e8e8164307dd22955ec2785c778ad8a614738729c4ce2242f7a4941e61c
+'Graph189SmallPrivatePair.clean_eleven' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SmallPrivatePair.private_eleven' depends on axioms: [propext, Classical.choice, Quot.sound]

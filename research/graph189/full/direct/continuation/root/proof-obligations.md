@@ -1,5 +1,9 @@
 # Formalization of the full Graph 189 paper argument
 
+## Current separating-pair proof
+
+At second-smallest degree eleven, [both sides without common contacts](bounded-order/Graph189PrivateEleven.lean) now give a Hamiltonian path throughout the residual order window. A clean side bounds the combined number of nonports, so the two path losses together with the unused separator vertex total at most nine. If neither side is clean, the existing defective-side bound puts both orders below twice the second-smallest degree. The [balanced common-free theorem](bounded-order/Graph189SmallPrivatePair.lean) applies in this latter case for every k≥7. The [independent Linux check](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46154963128) also verified the stronger path gap and the three-connected assembly with its explicit circumference hypothesis.
+
 The [assembly for connectivity at least three](bounded-order/Graph189LongCycleAssembly.lean) now takes only the strict one-exception circumference theorem as its additional input. For separating pairs in the residual window, the [new path-gap theorem](bounded-order/Graph189NearDegreeWindow.lean) reduces the permitted loss to the explicit target of at most k−2 omitted vertices.
 
 Lean now [excludes the final common-contact clique](bounded-order/Graph189DenseTerminal.lean) by a tight-gap exchange, completing the dense branch. The parallel [one-exception circumference module](bounded-order/Graph189FanCycle.lean) handles orders up to 2q. The strict larger-order circumference and the residual separating pairs are the outstanding inputs.
