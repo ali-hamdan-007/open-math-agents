@@ -1,5 +1,6 @@
 import Graph189FourFiveFloor
 import Graph189MatchedFloor
+import Graph189PaidRootWidth
 import Graph189FiveConnectivity19
 import Graph189ThirdLayerDegreeCeiling
 
@@ -9,7 +10,10 @@ namespace Graph189WidthSectors
 private def test (b k e : ℕ) : Bool :=
   let w := Graph189RootWidth.width b k (k+e)
   let L := b-(k+e)-k-2
-  decide (w*L≤k*(k+e) ∧ (w-k)*L≤k*k ∧ b≤3*k+1+(k-2)*e)
+  let t := (b-2*k+k)/(k+1)
+  let m := min e (w+1-t)
+  decide (w*L≤k*(k+e) ∧ (w-k)*L≤k*k ∧ b≤3*k+1+(k-2)*e ∧
+    (m+t≤w+1 → 2*k+(k+1)*(t-1)<b → (k*w+m*t)*L≤k*(k*(k+e))))
 
 private def clearAt (b k : ℕ) : Bool :=
   (List.range (2*k+1-(if 5*k+2<b then 3 else 0))).all fun e => !(test b k e)
@@ -19,7 +23,7 @@ private def base5 (k : ℕ) := 7*k-31
 private def base6 (k : ℕ) := 7*k-29
 
 private theorem checked :
-    ([20,21,22,23,24,25,26,27,28].all fun k => clearAt (base4 k) k)=true ∧
+    ([19,20,21,22,23,24,25,26,27,28,29,30].all fun k => clearAt (base4 k) k)=true ∧
     ([15,16,17].all fun k => clearAt (base5 k) k)=true ∧
     ([14,15,16,17].all fun k => clearAt (base6 k) k)=true := by decide
 
@@ -41,7 +45,23 @@ private theorem exclude (hc : G.Connected)
   have oreN : b≤3*k+1+(k-2)*e := by
     have h : ((k-2:ℕ):ℤ)=(k:ℤ)-2 := by change 3≤k at hk; omega
     exact_mod_cast (show (b:ℤ)≤3*(k:ℤ)+1+((k-2:ℕ):ℤ)*(e:ℤ) by rwa [h])
-  have testYes : test b k e=true := decide_eq_true ⟨v,v',oreN⟩
+  have ke : k+e=G.maxDegree := by
+    have low : k≤G.maxDegree := by
+      obtain ⟨a,z,ne⟩ := exists_pair_ne V
+      rcases OMA.R_WrittenOnTheWallII_GraphConjecture189_conjecture189_R1.degree_pair (G:=G) a z ne with h|h
+      · exact h.trans (G.degree_le_maxDegree a)
+      · exact h.trans (G.degree_le_maxDegree z)
+    dsimp [e]; omega
+  let W := Graph189RootWidth.width b k (k+e)
+  let t := (b-2*k+k)/(k+1)
+  let m := min e (W+1-t)
+  have paid (fit : m+t≤W+1) (floor : 2*k+(k+1)*(t-1)<b) :
+      (k*W+m*t)*(b-(k+e)-k-2)≤k*(k*(k+e)) := by
+    have result := Graph189PaidRootWidth.bound hc cap ord (w:=W) (by dsimp [W]; rw [ke])
+      fit (min_le_left e _) floor
+    rw [ke]
+    exact result
+  have testYes : test b k e=true := decide_eq_true ⟨v,v',oreN,paid⟩
   have lim := Graph189DegreeCeiling.maxDegree_le_three_mul_secondSmallestDegree hc
     (fun v => (le_max' _ _ (mem_image_of_mem _ (mem_univ v))).trans cap)
   have idx : e<2*k+1-(if 5*k+2<b then 3 else 0) := by
@@ -59,7 +79,7 @@ private theorem exclude (hc : G.Connected)
 /-- The original statement at every order for minimum four-cuts in the indicated interval. -/
 theorem four (hc : G.Connected)
     (cap : (univ.image (distEven G)).max' (by simp)≤1+G.secondSmallestDegree)
-    (conn : G.vertexConnectivity=4) (lo : 20≤G.secondSmallestDegree) (hi : G.secondSmallestDegree≤28) :
+    (conn : G.vertexConnectivity=4) (lo : 19≤G.secondSmallestDegree) (hi : G.secondSmallestDegree≤30) :
     ∃a b,∃p : G.Walk a b,p.IsHamiltonian := by
   by_contra bad
   let k := G.secondSmallestDegree
@@ -68,8 +88,8 @@ theorem four (hc : G.Connected)
   have lower : base4 k≤Fintype.card V := by unfold base4; split_ifs with h <;> grind
   apply exclude hc cap bad lower (by omega)
   apply List.all_eq_true.mp checked.1 k
-  change 20≤k at lo
-  change k≤28 at hi
+  change 19≤k at lo
+  change k≤30 at hi
   simp; omega
 
 /-- Original graph conclusion for arbitrary connectivity at least five from degree fifteen. -/

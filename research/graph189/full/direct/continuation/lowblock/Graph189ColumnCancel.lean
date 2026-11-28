@@ -104,12 +104,12 @@ theorem column (hc : G.Connected) (x b u : V) (C : Finset V) {k : ℕ}
 
 /-- At a maximum-degree root, its missing first-layer neighbors pay for every
 direct neighbor in the second layer; the remaining incidences debit even pairs. -/
-theorem row_bound (hc : G.Connected) (x a : V) (B C : Finset V) {k : ℕ}
+theorem row_bound_with_deficit (hc : G.Connected) (x a : V) (B C : Finset V) {k : ℕ}
     (hxa : G.Adj x a) (maxd : G.degree a ≤ G.degree x)
     (hB : ∀ b ∈ B, G.dist x b = 2) (hC : ∀ y ∈ C, G.dist x y = 3)
     (cap : G.distEven a ≤ k+1) :
     (C.filter (fun y => G.dist a y = 2)).card +
-      (B.filter (fun b => G.dist a b ≤ 2)).card ≤ k := by
+      (B.filter (fun b => G.dist a b ≤ 2)).card + (G.degree x-G.degree a) ≤ k := by
   classical
   let A := G.neighborFinset x
   let D := A.filter (fun v => G.dist a v = 2)
@@ -164,7 +164,7 @@ theorem row_bound (hc : G.Connected) (x a : V) (B C : Finset V) {k : ℕ}
   have erased := card_erase_add_one haN
   have partA : D.card + N.card = A.card := A.card_filter_add_card_filter_not _
   have cA : A.card = G.degree x := G.card_neighborFinset_eq_degree x
-  have qd : Q.card ≤ D.card := by omega
+  have qd : Q.card + (G.degree x-G.degree a) ≤ D.card := by omega
   have dp : Disjoint D P := by
     rw [Finset.disjoint_left]
     intro v hv hp
@@ -187,7 +187,16 @@ theorem row_bound (hc : G.Connected) (x a : V) (B C : Finset V) {k : ℕ}
     · exact (mem_filter.mp hv).2) (fun _ hv => (mem_filter.mp hv).2) cap
   rw [card_union_of_disjoint dp] at three
   have partT : P.card + Q.card = T.card := T.card_filter_add_card_filter_not _
-  change Y.card + T.card ≤ k
+  change Y.card + T.card + (G.degree x-G.degree a) ≤ k
+  omega
+
+theorem row_bound (hc : G.Connected) (x a : V) (B C : Finset V) {k : ℕ}
+    (hxa : G.Adj x a) (maxd : G.degree a ≤ G.degree x)
+    (hB : ∀ b ∈ B, G.dist x b = 2) (hC : ∀ y ∈ C, G.dist x y = 3)
+    (cap : G.distEven a ≤ k+1) :
+    (C.filter (fun y => G.dist a y = 2)).card +
+      (B.filter (fun b => G.dist a b ≤ 2)).card ≤ k := by
+  have h := row_bound_with_deficit hc x a B C hxa maxd hB hC cap
   omega
 
 theorem full_column_cancellation (hc : G.Connected) (x : V) (B C : Finset V) {k w : ℕ}

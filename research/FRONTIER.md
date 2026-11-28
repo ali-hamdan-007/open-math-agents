@@ -2,6 +2,10 @@
 
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
+## All orders from second-smallest degree 24
+
+The kernel now verifies the original conjecture at every order and connectivity for k≥24. In a minimum four-cut it also proves the conclusion for every 19≤k≤30, including degrees 29 and 30. The maximum-root proof retains the degree deficit of every first neighbor and the excess Δ−k in every second-layer column. The endpoint wedge at a third-layer vertex charges any shortage of second-layer neighbors to several distinct first neighbors. This closes the two last degrees between the previous complete sectors. [All-order theorem](graph189/full/direct/continuation/root/Graph189AllHighOrders.lean) · [Retained charges](graph189/full/direct/continuation/verify/Graph189RootDegreeSavings.lean) · [Graph inequality](graph189/full/direct/continuation/verify/matched-formal/Graph189PaidRootWidth.lean) · [Integer checks](graph189/full/direct/continuation/root/Graph189WidthSectors.lean)
+
 ## Four-cuts at degrees 20 through 28 and connectivity at least five from degree 15
 
 Each high target in the third layer of a maximum-degree root can pay at most k units of its width with first-layer vertices at distance two. Its remaining incidences go through at most k second-layer vertices, each meeting at most k targets. This gives (w−k)₊ L≤k², where L=n−Δ−k−2. Combining it with the previous width inequality, the matched rooted order bound, and the strict minimum-cut deficit proves the original Hamiltonian-path conclusion at four-connectivity for 20≤k≤28 and at connectivity at least five for every k≥15. The four-connectivity result closes the last case at degrees 24 through 28 across all orders. [Second-layer bound](graph189/full/direct/continuation/verify/Graph189SecondLayerBudget.lean) · [Order bound](graph189/full/direct/continuation/order/Graph189FourFiveFloor.lean) · [Graph conclusions](graph189/full/direct/continuation/root/Graph189WidthSectors.lean)

@@ -7,7 +7,7 @@ namespace Graph189RetainedWidth
 
 variable {V : Type*} [Fintype V] [DecidableEq V] {G : SimpleGraph V} [DecidableRel G.Adj]
 
-private theorem union_lower {a b c : V} (hab : G.Adj b a) (hbc : G.Adj b c)
+theorem union_lower {a b c : V} (hab : G.Adj b a) (hbc : G.Adj b c)
     (hne : a ≠ c) (hac : ¬G.Adj a c) :
     G.degree a + G.degree c + 2 ≤
       (G.neighborFinset b ∪ (G.neighborFinset a ∪ G.neighborFinset c)).card +

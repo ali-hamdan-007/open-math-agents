@@ -45,7 +45,7 @@ private theorem linear_width_le {n k d D : ℕ}
 
 variable {V : Type*} {G : SimpleGraph V}
 
-private theorem predecessor {x z : V} {j : ℕ} (hz : G.dist x z = j+1) :
+theorem predecessor {x z : V} {j : ℕ} (hz : G.dist x z = j+1) :
     ∃ a, G.dist x a = j ∧ G.Adj a z := by
   have hr : G.dist z x = j+1 := by rwa [dist_comm]
   have hp : G.Reachable z x := Reachable.of_dist_ne_zero (by omega)
@@ -162,14 +162,17 @@ theorem geodesic_admissible (hc : G.Connected) {x i j y : V}
 
 /-- The maximum-degree root satisfies the exact matched width inequality used by the
 64-band replay under the unmodified Graph 189 even-distance hypothesis. -/
-theorem root_matched_width_bounds (hc : G.Connected)
+theorem root_matched_width_all (hc : G.Connected)
     (hcap : (univ.image (distEven G)).max' (by simp) ≤ 1+G.secondSmallestDegree) :
     width (Fintype.card V) G.secondSmallestDegree G.maxDegree *
       (Fintype.card V - G.maxDegree - G.secondSmallestDegree - 2) ≤
         G.secondSmallestDegree * G.maxDegree ∧
     (width (Fintype.card V) G.secondSmallestDegree G.maxDegree - G.secondSmallestDegree) *
       (Fintype.card V - G.maxDegree - G.secondSmallestDegree - 2) ≤
-        G.secondSmallestDegree * G.secondSmallestDegree := by
+        G.secondSmallestDegree * G.secondSmallestDegree ∧
+    (width (Fintype.card V) G.secondSmallestDegree G.maxDegree - G.secondSmallestDegree) *
+      (Fintype.card V - G.maxDegree - G.secondSmallestDegree - 2) ≤
+        G.secondSmallestDegree * (2*G.secondSmallestDegree-(G.maxDegree-G.secondSmallestDegree)-1) := by
   classical
   let k := G.secondSmallestDegree
   let n := Fintype.card V
@@ -203,10 +206,24 @@ theorem root_matched_width_bounds (hc : G.Connected)
   have pay := Graph189ColumnCancel.full_column_cancellation hc x B C hmax large hB pred hC cap w
   have layer := Graph189HighThirdLayer.card_highThird_at_max hc hcap x hx.symm
   change n - G.maxDegree - k - 2 ≤ C.card at layer
-  have second := Graph189SecondLayerBudget.bound hc x B C large hB pred hC cap w
+  have second := Graph189SecondLayerBudget.bounds hc x B C large hB pred hC cap w
   rw [hx] at layer ⊢
   exact ⟨(Nat.mul_le_mul_left (width n k (G.degree x)) layer).trans pay,
-    (Nat.mul_le_mul_left (width n k (G.degree x)-k) layer).trans second⟩
+    (Nat.mul_le_mul_left (width n k (G.degree x)-k) layer).trans second.1,
+    (Nat.mul_le_mul_left (width n k (G.degree x)-k) layer).trans second.2⟩
+
+theorem root_matched_width_bounds (hc : G.Connected)
+    (hcap : (univ.image (distEven G)).max' (by simp) ≤ 1+G.secondSmallestDegree) :
+    width (Fintype.card V) G.secondSmallestDegree G.maxDegree *
+      (Fintype.card V - G.maxDegree - G.secondSmallestDegree - 2) ≤
+        G.secondSmallestDegree * G.maxDegree ∧
+    (width (Fintype.card V) G.secondSmallestDegree G.maxDegree - G.secondSmallestDegree) *
+      (Fintype.card V - G.maxDegree - G.secondSmallestDegree - 2) ≤
+        G.secondSmallestDegree * G.secondSmallestDegree := by
+  have h := root_matched_width_all hc hcap
+  exact ⟨h.1,h.2.1⟩
+
+#print axioms root_matched_width_all
 
 theorem root_matched_width_bound (hc : G.Connected)
     (hcap : (univ.image (distEven G)).max' (by simp) ≤ 1+G.secondSmallestDegree) :

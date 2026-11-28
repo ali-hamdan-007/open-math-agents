@@ -192,3 +192,17 @@ Graph189FourFiveFloor a3b3ca8abc956071bda6eccf9796fade3ec8605b790515be502e294122
 Graph189WidthSectors 848500d5ce2dec4b9118e3a904bb836c0d87d75c1666fa894532cccbd81c92e1
 'Graph189WidthSectors.four' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189WidthSectors.five' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189RootDegreeSavings 7d1bf59f75ca20047089f99db09976cf01d8e9d4c71bee6e66f6f01ac54315b0
+'Graph189RootDegreeSavings.budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189RootDegreeSavings.charge' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189PaidRootWidth b6cb556e5bded1debcbf9bba2779e3ea263be885bd32bc2f3e34577845ffdaf1
+'Graph189PaidRootWidth.bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189WidthSectors ab70ba0048c33fcb90e78f98c037ba503690b6ec2fcf89d80d1ce52766b2cdd6
+'Graph189WidthSectors.four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189WidthSectors.five' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Graph189AllHighOrders 94187e47523357728950c249f0e015b6997978acbc18fc2b2137eb72b3233cc6
+'Graph189AllHighOrders.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
