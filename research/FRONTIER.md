@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Replay data for the 188 moderate-order completion certificates
+
+The minimized traces and every initial pattern are stored under `verify/moderate-certs/`. The independent Python replay validates 1,637 explicit forbidden-edge path witnesses and all 188 terminal rejections. The three larger lookup tables are gzip-compressed. `Graph189ModerateK3.lean` is the locally kernel-checked nine-pattern instance. These data are research evidence about the displayed intervals. Full graph coverage and a parent checker verdict are separate.
+
+
 ## Pinned certificates for all nine degree-three completion patterns, and an order bound
 
 `verify/moderate-certs/Graph189ModerateK3.lean` now contains nine kernel-checked rejection theorems on explicit lower and upper graphs. The arbitrary-vertex relabeling theorem and graph-interval calculus passed a fresh import with eight controls. Separately, `root/Graph189QuadraticOrder.lean` derives n≤11, 15 and 20 at second-smallest degrees 3, 4 and 5 from the existing layer-cover bound. Thus every residual k=3 graph falls in the moderate window. The step connecting an arbitrary such graph to one of the rejected inputs still requires the formal coverage and path-gap lemmas. `root/Graph189SaturatedEven.lean` verifies that, after a vertex exhausts its positive even-distance allowance on a set at distance two, every other vertex reachable without visiting that set is adjacent to it. The independent graph-side relabeling modules verify exterior isomorphism representatives through order five. All stated kernel results used only the three standard axioms. The exact parent remains unsubmitted.
