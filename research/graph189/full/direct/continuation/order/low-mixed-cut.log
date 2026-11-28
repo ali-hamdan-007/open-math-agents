@@ -1,0 +1,3 @@
+'Graph189CutSides.CutSides.low_cut_three_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CutSides.CutSides.no_low_at_nine_of_width' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189EffectiveDeficit.low_witnesses' depends on axioms: [propext, Classical.choice, Quot.sound]
