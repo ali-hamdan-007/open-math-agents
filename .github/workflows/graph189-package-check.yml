@@ -87,31 +87,65 @@ jobs:
           #print axioms Graph189SmallMixedPair.nonadjacent_from_seven
           #print axioms Graph189SmallPrivatePair.private_from_seven
 
-          namespace Graph189ParentAudit
-          
+          namespace Graph189SorryAudit
+
           open Lean Elab Command
-          
-          private def sorryChain (env : Environment) (root : Name) : Option (List Name) := Id.run do
-            let mut work : Array (Name × List Name) := #[(root, [])]
-            let mut seen : NameSet := {}
-            while let some (name, ancestors) := work.back? do
-              work := work.pop
-              if seen.contains name then continue
-              seen := seen.insert name
-              let path := name :: ancestors
-              if name == ``sorryAx then return some path.reverse
-              if let some info := env.find? name then
-                for dependency in info.getUsedConstantsAsSet do
-                  if !seen.contains dependency then work := work.push (dependency, path)
-            return none
-          
-          run_cmd do
-            match sorryChain (← getEnv) ``OMA.solution with
-            | none => logInfo "No dependency chain from OMA.solution to sorryAx was found."
-            | some nodes =>
-              logInfo <| "Dependency chain to sorryAx:\n" ++ String.intercalate "\n" (nodes.map Name.toString)
-          
-          end Graph189ParentAudit
+
+          private def sourceLabel (n : Name) : CommandElabM String := do
+            let some ranges ← findDeclarationRanges? n | return n.toString
+            let pos := ranges.range.pos
+            return s!"{n} (L{pos.line}:{pos.column + 1})"
+
+          private def traceFrontiers (root : Name) : CommandElabM Unit := do
+            unless (← collectAxioms root).contains ``sorryAx do
+              logInfo m!"Axiom audit: {root} is sorry-free."
+              return
+            let env := (← getEnv).setExporting false
+            let kernel := env.checked.get
+            let mut cache : NameMap Bool := {}
+            let mut seen : NameSet := ({} : NameSet).insert root
+            let mut queue : Array (Name × List Name) := #[(root, [root])]
+            let mut index := 0
+            let mut ends := 0
+            while h : index < queue.size do
+              let (name, revPath) := queue[index]
+              index := index + 1
+              let some info := kernel.find? name | throwError "No checked declaration for {name}"
+              let mut deps := info.type.getUsedConstantsAsSet
+              if let some val := info.value? (allowOpaque := true) then
+                deps := deps ++ val.getUsedConstantsAsSet
+              if let .inductInfo val := info then
+                deps := deps ++ .ofList val.ctors
+              let mut found := false
+              for dep in deps do
+                let tainted ← match cache.find? dep with
+                  | some b => pure b
+                  | none => pure ((← collectAxioms dep).contains ``sorryAx)
+                cache := cache.insert dep tainted
+                unless tainted do continue
+                found := true
+                if dep == ``sorryAx || env.isImportedConst dep then
+                  let origin := if dep == ``sorryAx then "direct sorryAx" else
+                    s!"imported {env.allImportedModuleNames[(env.getModuleIdxFor? dep).get!.toNat]!}"
+                  let edge := if info.type.getUsedConstantsAsSet.contains dep then "type" else
+                    if (info.value? (allowOpaque := true)).isSome then "value" else "constructor"
+                  let path := String.intercalate " -> " ((dep :: revPath).reverse.map Name.toString)
+                  logInfo m!"Sorry frontier [{origin}] in {edge} of {← sourceLabel name}: {path}"
+                  ends := ends + 1
+                else if !seen.contains dep then
+                  seen := seen.insert dep
+                  queue := queue.push (dep, dep :: revPath)
+              unless found do
+                logInfo m!"Axiom report and checked declaration differ at {← sourceLabel name}"
+            logInfo m!"Sorry audit reached {ends} terminal edges across {seen.size} tainted local declarations."
+
+          set_option maxHeartbeats 0 in
+          run_cmd traceFrontiers ``OMA.solution
+
+          end Graph189SorryAudit
+
+          set_option pp.sorrySource true in
+          #print sorries OMA.solution
           LEAN
           timeout 2700 lake env lean Graph189ParentAudit.lean 2>&1 | tee "$diag/axioms.log"
       - name: Save the diagnostics
