@@ -1,34 +1,27 @@
-name: Check and stage the Graph 189 parent proof
+name: Diagnose the Graph 189 flattened proof
 on:
   workflow_dispatch:
   push:
     branches: [research/graph189-package-check]
 
-permissions: {}
+permissions:
+  actions: read
+  contents: read
 
 concurrency:
   group: graph189-parent-package
   cancel-in-progress: false
 
 env:
-  UPSTREAM_REPOSITORY: lefttosolve2/open-math-agents
   PROOF_ID: WrittenOnTheWallII.GraphConjecture189.conjecture189
-  PROOF_PATH: proofs/WrittenOnTheWallII.GraphConjecture189.conjecture189.lean
   SOURCE_SHA: 9c33964d57066e257b69192a02f05081b2cfc3fe97dc5d7ac6f6414d6eeae43f
   PROOF_SHA: 45c92561b28970cf9b3190c43ffd1f62a918463ac86312469dff05fd477a4918
-  DEST_REF: refs/heads/oma/graph189-full-proof
 
 jobs:
-  check:
+  diagnose:
     if: github.repository == 'ali-hamdan-007/open-math-agents'
     runs-on: ubuntu-latest
     timeout-minutes: 90
-    permissions:
-      actions: read
-      contents: read
-    outputs:
-      base_sha: ${{ steps.base.outputs.sha }}
-      checked_artifact_id: ${{ steps.checked.outputs.artifact-id }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -46,38 +39,7 @@ jobs:
           run-id: '46158940698'
           path: ${{ runner.temp }}/graph189-kernel-audit
           merge-multiple: true
-      - name: Verify, clean, and lint the exact file
-        id: base
-        shell: bash
-        working-directory: upstream
-        run: |
-          set -euo pipefail
-          source="$RUNNER_TEMP/graph189-kernel-audit/parent-package.lean"
-          test -f "$source" && test ! -L "$source"
-          printf '%s  %s\n' "$SOURCE_SHA" "$source" | sha256sum --check
-          if git cat-file -e "HEAD:$PROOF_PATH" 2>/dev/null; then
-            echo "The exact parent already has a proof on upstream main."
-            exit 1
-          fi
-          mkdir -p proofs
-          sed 's/^@\[expose\] def marked/def marked/' "$source" > "$PROOF_PATH"
-          printf '%s  %s\n' "$PROOF_SHA" "$PROOF_PATH" | sha256sum --check
-          python3 - <<'PY'
-          import os
-          from pathlib import Path
-
-          problem = os.environ["PROOF_ID"]
-          registry = Path("tools/large_proofs.txt")
-          rows = [
-              row for row in registry.read_text().splitlines()
-              if row.split("#", 1)[0].split()[:1] != [problem]
-          ]
-          rows.append(f"{problem} 4096")
-          registry.write_text("\n".join(rows) + "\n")
-          PY
-          python3 -I tools/lint.py "$PROOF_PATH" data/catalog.json
-          printf 'sha=%s\n' "$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-      - name: Prepare the exact Formal Conjectures pin
+      - name: Prepare the upstream Lean environment
         shell: bash
         working-directory: upstream
         run: |
@@ -95,93 +57,68 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           printf '%s\n' "$HOME/.elan/bin" >> "$GITHUB_PATH"
           printf 'OMA_FC=%s\n' "$fc" >> "$GITHUB_ENV"
+          mkdir -p "$RUNNER_TEMP/graph189-diagnostics"
           cd "$fc"
-          lake exe cache get
-      - name: Run the project checker and require acceptance
+          lake exe cache get 2>&1 | tee "$RUNNER_TEMP/graph189-diagnostics/cache.log"
+          timeout 2400 lake build FormalConjectures.WrittenOnTheWallII.GraphConjecture189 2>&1 |
+            tee "$RUNNER_TEMP/graph189-diagnostics/import.log"
+      - name: Compile the same flattened proof and inspect its dependencies
         shell: bash
-        working-directory: upstream
         run: |
           set -euo pipefail
-          verdict="$RUNNER_TEMP/graph189-verdict.json"
-          tools/check.sh "$PROOF_PATH" "$verdict" || { cat "$verdict"; exit 1; }
-          cat "$verdict"
-          jq -e '.ok == true and .theorem == "OMA.solution" and .verdict == "accepted"' "$verdict"
-          mkdir -p "$RUNNER_TEMP/graph189-checked"
-          cp "$PROOF_PATH" "$RUNNER_TEMP/graph189-checked/$PROOF_ID.lean"
-          cp "$verdict" "$RUNNER_TEMP/graph189-checked/verdict.json"
-      - name: Preserve the verified file and checker output
-        id: checked
+          source="$RUNNER_TEMP/graph189-kernel-audit/parent-package.lean"
+          test -f "$source" && test ! -L "$source"
+          printf '%s  %s\n' "$SOURCE_SHA" "$source" | sha256sum --check
+          diag="$RUNNER_TEMP/graph189-diagnostics"
+          cd "$OMA_FC"
+          sed 's/^@\[expose\] def marked/def marked/' "$source" > Graph189ParentAudit.lean
+          printf '%s  %s\n' "$PROOF_SHA" Graph189ParentAudit.lean | sha256sum --check
+          cat >> Graph189ParentAudit.lean <<'LEAN'
+
+          #print axioms OMA.solution
+          #print axioms Graph189FullProof.original
+          #print axioms Graph189SmallOrderWindow.necessary
+          #print axioms Graph189ExteriorLeaf.traceable_three_connected
+          #print axioms Graph189TwoConnectivity.of_ten
+          #print axioms Graph189ModerateSeven.original
+          #print axioms Graph189TwoCutSelect.exists_connected_least_cut
+          #print axioms Graph189SmallMixedPair.both
+          #print axioms Graph189AdjacentPrivateCut.above_moderate
+          #print axioms Graph189SmallMixedPair.nonadjacent_from_seven
+          #print axioms Graph189SmallPrivatePair.private_from_seven
+
+          namespace Graph189ParentAudit
+          
+          open Lean Elab Command
+          
+          private def sorryChain (env : Environment) (root : Name) : Option (List Name) := Id.run do
+            let mut work : Array (Name × List Name) := #[(root, [])]
+            let mut seen : NameSet := {}
+            while let some (name, ancestors) := work.back? do
+              work := work.pop
+              if seen.contains name then continue
+              seen := seen.insert name
+              let path := name :: ancestors
+              if name == ``sorryAx then return some path.reverse
+              if let some info := env.find? name then
+                for dependency in info.getUsedConstantsAsSet do
+                  if !seen.contains dependency then work := work.push (dependency, path)
+            return none
+          
+          run_cmd do
+            match sorryChain (← getEnv) ``OMA.solution with
+            | none => logInfo "No dependency chain from OMA.solution to sorryAx was found."
+            | some nodes =>
+              logInfo <| "Dependency chain to sorryAx:\n" ++ String.intercalate "\n" (nodes.map Name.toString)
+          
+          end Graph189ParentAudit
+          LEAN
+          timeout 2700 lake env lean Graph189ParentAudit.lean 2>&1 | tee "$diag/axioms.log"
+      - name: Save the diagnostics
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: graph189-checked-package
-          path: ${{ runner.temp }}/graph189-checked
+          name: graph189-flattened-axioms
+          path: ${{ runner.temp }}/graph189-diagnostics/
           if-no-files-found: error
-          retention-days: 14
-
-  publish:
-    if: github.repository == 'ali-hamdan-007/open-math-agents'
-    needs: check
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      actions: read
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          repository: lefttosolve2/open-math-agents
-          ref: ${{ needs.check.outputs.base_sha }}
-          path: upstream
-          fetch-depth: 1
-          persist-credentials: false
-      - name: Download the accepted submission from this run
-        uses: actions/download-artifact@v4
-        with:
-          artifact-ids: ${{ needs.check.outputs.checked_artifact_id }}
-          github-token: ${{ github.token }}
-          repository: ali-hamdan-007/open-math-agents
-          run-id: ${{ github.run_id }}
-          path: ${{ runner.temp }}/graph189-checked
-          merge-multiple: true
-      - name: Commit only the accepted proof
-        shell: bash
-        working-directory: upstream
-        env:
-          BASE_SHA: ${{ needs.check.outputs.base_sha }}
-        run: |
-          set -euo pipefail
-          test "$(git rev-parse HEAD)" = "$BASE_SHA"
-          git fetch --no-tags --depth 1 origin main
-          if git cat-file -e "FETCH_HEAD:$PROOF_PATH" 2>/dev/null; then
-            echo "The exact parent already has a proof on upstream main."
-            exit 1
-          fi
-          checked="$RUNNER_TEMP/graph189-checked"
-          input="$checked/$PROOF_ID.lean"
-          test -f "$input" && test ! -L "$input"
-          printf '%s  %s\n' "$PROOF_SHA" "$input" | sha256sum --check
-          jq -e '.ok == true and .theorem == "OMA.solution" and .verdict == "accepted"' \
-            "$checked/verdict.json"
-          mkdir -p proofs
-          cp "$input" "$PROOF_PATH"
-          git -c user.name=ali-hamdan-007 \
-            -c user.email=299801298+ali-hamdan-007@users.noreply.github.com \
-            add -- "$PROOF_PATH"
-          test "$(git diff --cached --name-status)" = "$(printf 'A\t%s' "$PROOF_PATH")"
-          git -c user.name=ali-hamdan-007 \
-            -c user.email=299801298+ali-hamdan-007@users.noreply.github.com \
-            commit -m "proof: $PROOF_ID"
-          test "$(git rev-parse HEAD^)" = "$BASE_SHA"
-          test "$(git diff --name-status HEAD^ HEAD)" = "$(printf 'A\t%s' "$PROOF_PATH")"
-      - name: Stage the branch on Ali's fork
-        shell: bash
-        working-directory: upstream
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          gh auth setup-git --hostname github.com
-          fork_url=https://github.com/ali-hamdan-007/open-math-agents.git
-          prior="$(git ls-remote "$fork_url" "$DEST_REF" | cut -f1)"
-          git push --force-with-lease="$DEST_REF:$prior" "$fork_url" "HEAD:$DEST_REF"
 
