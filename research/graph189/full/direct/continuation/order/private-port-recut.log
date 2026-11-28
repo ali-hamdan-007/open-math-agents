@@ -1,0 +1,3 @@
+'Graph189CutSides.CutSides.private_port_recut' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CutSides.CutSides.high_orientation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189CutSides.CutSides.no_high_private_at_large_label' depends on axioms: [propext, Classical.choice, Quot.sound]

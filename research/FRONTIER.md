@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • the new minimum separator and the exterior degree estimate
+
+The small-side pointwise bound is now a theorem on the graph: a vertex x of A with t separator neighbors sees at most k−s+t vertices of B at positive even distance. See root/Graph189BoundaryDebit.lean. In the opposite direction order/Graph189PrivatePortRecut.lean builds a new minimum separator from a high private contact under its explicit witness hypothesis. The original degree bound Δ≤3k orients its closed neighborhood as the smaller side at n≥6k+s+1. The resulting contradiction still requires the existence of that contact and the uniform support bound.
+
+The genuine longest-path exterior inequality in sep/cover/final82/lean/Graph189ExteriorDegree.lean gives degree(a)≤2|N(a) outside the path| whenever a has a high exterior neighbor. The finite graph edge-to-cycle and single-contact-shift lemmas appear under lowblock/. The exact original-hypothesis result for k≤2 has been compiled in verify/Graph189LowDegreeOriginal.lean. The eleven scalar modules also passed a new clean-directory build from sources. The current remaining obligations for the full theorem are in root/proof-obligations.md.
+
+
 ## Graph 189 • both small degrees and the matched root and exterior path bounds
 
 In the two-connected residual left by the existing parent assembly, all cases k≤2 now have a pinned proof. verify/Graph189LowDegreeResidual.lean proves that if distance four occurs in this range, the second layer would be a singleton separator, and uses the previously checked degree-two traceability theorem.

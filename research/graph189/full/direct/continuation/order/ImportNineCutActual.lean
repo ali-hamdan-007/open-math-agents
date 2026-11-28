@@ -1,0 +1,2 @@
+import Graph189NineCutActual
+#print axioms Graph189CutSides.no_low_on_minimum_nine_cut

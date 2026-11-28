@@ -1,0 +1,3 @@
+'Graph189ExteriorGap.exterior_contact_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorGap.cross_contact_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorGap.half_degree_outside_longest' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,3 @@
+'Graph189ExteriorDegreeCycle.degree_le_deletion_add_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorDegreeCycle.cycle_of_nonisolated_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorDegreeCycle.cycle_from_cross_contacts' depends on axioms: [propext, Classical.choice, Quot.sound]

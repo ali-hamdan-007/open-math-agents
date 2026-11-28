@@ -1,14 +1,14 @@
-# Parent formalization dependencies
+# Formalization of the full Graph 189 paper argument
 
-The conditional root theorem and its two residual propositions are in parent/parent-assembly.md. All items here refer to formal proof in the original graph setting. A theorem marked absent in this map may already have a paper proof.
+The checked conditional theorem in parent/parent-assembly.md treats graphs with a cut vertex and all orders through 2k+2. Its two hypotheses concern two-connected graphs at larger orders. Here k is the second-smallest degree counting multiplicity. The full-target paper argument is in full-argument.md. The original upstream theorem still requires a single unconditional Lean term.
 
-| Part of contradiction | Lean checkpoint | Remaining dependency |
+| Part of the argument | Pinned Lean results | Remaining formal work |
 |---|---|---|
-| All connected graphs through order 2k+2, and graphs with a cut vertex | Original R2 plus cut-vertex proof in the conditional parent assembly | Unconditional proof of the two-connected branch |
-| Bounding the maximum degree and counting third neighbors | order/Graph189MaximumDegree.lean and verify/Graph189RootWidth.lean | Use the actual order inequalities with the lower bounds at a minimum cut |
-| Order and connectivity cutoff for the alternative 102-band route | global/arity/final/Graph189InfiniteTail.lean and verify/Graph189WidthInterval.lean | Derive every cut-order input from graph structure; certify that the generator includes every resulting finite parameter tuple |
-| Two populations at a minimum separator | order/Graph189CutSides.lean and order/Graph189MinimumCut.lean | Count private, common and complementary supports and complete the change-of-separator contradiction |
-| Terminal scalar inequalities for the 102 bands | global/arity/final/Graph189FiniteDomain.lean and Graph189TerminalQuotas.lean | Supply the graph-derived premises for the exhaustive bands |
-| Alternative 64-band exterior-path argument | root/full-argument.md and sep/cover/final82/ | Formal path gap, block/attachment and inherited-distance arguments, plus exact finite-domain coverage, are needed for this route |
+| Small degrees and small connectivity | verify/Graph189LowDegreeResidual.lean closes k≤2 in the parent residual. The paper treats k≤25 and all cuts of size at most four. | The general low-connectivity and small-degree classifications still have to reach the parent. |
+| Maximum degree and geometric width | order/Graph189MaximumDegree.lean, verify/Graph189RootWidth.lean and verify/Graph189WidthReplayBridge.lean supply the real graph inequalities. verify/matched-formal also proves the stronger matched width. | Join these results to the structural order bounds in one graph-facing theorem. |
+| Lower order from a longest cycle | Graph189UniversalCycle relates longest cycles of a completion to longest paths after deleting its universal vertex. root/Graph189CriticalConnectivity.lean proves the classical critical-connectivity bound from finite minimum-separator intersections. | Supply the long-cycle order estimate and its full exterior hypotheses. |
+| Numerical reduction for s≥5 and k≥26 | global/arity/final/Graph189ScalarConclusion.lean treats unbounded integer inputs under its displayed inequalities. Its finite part gives 113 degree rows at 5≤s≤8. | Establish the structural hypotheses for all remaining graphs. |
+| Terminal geometry for those 113 rows | Graph189ValidBand.consequences gives the contradiction thresholds for actual populations. Graph189CutClassification classifies the high-vertex supports, Graph189HighLabel supplies a high contact at every label, and Graph189BoundaryDebit supplies the exact pointwise reserve at a minimum separator. | Complete both families of support counts and join the second separator contradiction. |
+| Alternative 64-band route | Both strengthened degree and width estimates hold for real graphs. The separate exterior modules prove contact matching and path replacements with actual graph vertices. | Join the block decomposition, attachment lower bounds, and finite coverage. |
 
-The previous low-connectivity results, the long-cycle order theorem and the critical-connectivity input enter before the finite contradiction. Proving the 102-band route needs only the basic rounded root width. The 64-band route uses the stronger matched-wedge bound. A passing terminal table establishes all entries in its literal list; membership of a counterexample's parameters in that list is a distinct theorem.
+Paths are relative to the continuation directory unless stated otherwise. PR 18811 concerns a child reduction. The paper argument, research-module kernel checks and a checker verdict on the exact parent are distinct milestones.

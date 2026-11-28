@@ -1,0 +1,22 @@
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+'Graph189FiniteDomain.population_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189FiniteDomain.terminal_bands_checked' does not depend on any axioms
+'Graph189FiniteDomain.terminal_bands_count' does not depend on any axioms
+'Graph189FiniteDomain.terminal_population' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189InfiniteTail.square_order_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189InfiniteTail.connectivity_lt_100' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189InfiniteTail.degree_lt_cutoff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189InfiniteTail.finite_rectangle_of_width' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189WidthWindows.window_impossible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189WindowCover.all_windows' does not depend on any axioms
+'Graph189WindowCover.no_lower_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189LargeDegree.no_high_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189NineCutDebit.no_low_at_nine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189NineCutDebit.no_lifted_nine_middle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189EightCutoff.connectivity_le_eight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189FiveCutDebit.no_low' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SmallWindowCover.all_pairs' depends on axioms: [propext]
+'Graph189SmallWindowCover.lower_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189SmallWindowCover.terminal_quotas' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ValidBand.consequences' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ScalarConclusion.terminal_band' depends on axioms: [propext, Classical.choice, Quot.sound]

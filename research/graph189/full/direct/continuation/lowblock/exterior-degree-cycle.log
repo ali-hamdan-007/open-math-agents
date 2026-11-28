@@ -1,0 +1,3 @@
+'Graph189ExteriorDegreeCycle.cycle_of_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorDegreeCycle.original_dist_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189ExteriorDegreeCycle.induced_second_layer' depends on axioms: [propext, Classical.choice, Quot.sound]
