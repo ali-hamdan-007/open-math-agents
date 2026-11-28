@@ -1,5 +1,11 @@
 # Left to Solve research frontier
 
+## The terminal clique is impossible throughout the remaining interval
+
+The [terminal contradiction](graph189/full/direct/continuation/root/bounded-order/Graph189DenseTerminal.lean) discharges the whole dense-component case from the original metric hypothesis. After exchanging a tight gap for the saturated clique, the new path omits at most k−1 vertices. All its high omissions [lie in one component](graph189/full/direct/continuation/root/bounded-order/Graph189SmallExteriorComponent.lean). Its [contact-transfer theorem](graph189/full/direct/continuation/root/bounded-order/Graph189SmallExteriorTransfer.lean) makes every high member of the old gap visible at distance two. The previously checked gap debit then requires 2s+m≤k+3, contradictory to m+s=k+1 and s≥3. This reuses the fork’s verified tight-gap exchange and eliminates the final endpoint-rotation obligation.
+
+At connectivity at least three the remaining graph input is the long-cycle theorem in an exterior component or an endblock. The [parallel cycle proof](graph189/full/direct/continuation/root/bounded-order/Graph189FanCycle.lean) supplies it up to and including order 2q. For order greater than 2q the required circumference is 2q. Connectivity two at degrees 7 through 11 remains separate.
+
 ## Dense exterior components have the paper’s common contact clique
 
 The [graph-facing theorem](graph189/full/direct/continuation/root/bounded-order/Graph189DenseClique.lean) proves that a chosen dense component is a clique, all its high vertices touch exactly the same k+1−m path positions, and any low member can touch only those positions. At most one other vertex is omitted by the longest path. The proof [counts all omitted vertices](graph189/full/direct/continuation/root/bounded-order/Graph189DenseExteriorCensus.lean), uses the verified almost-spanning theorem through its path-length gap, and [rules out a low-only extra contact](graph189/full/direct/continuation/root/bounded-order/Graph189DenseCommonContacts.lean) by extending an actual high matching. The preceding prescribed-route and order proofs [passed independent Linux replay](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46153386665/job/141004660788).

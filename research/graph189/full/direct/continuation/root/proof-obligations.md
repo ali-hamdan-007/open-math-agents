@@ -1,5 +1,7 @@
 # Formalization of the full Graph 189 paper argument
 
+Lean now [excludes the final common-contact clique](bounded-order/Graph189DenseTerminal.lean) by a tight-gap exchange, completing the dense branch. The parallel [one-exception circumference module](bounded-order/Graph189FanCycle.lean) handles orders up to 2q. The strict larger-order circumference and the residual separating pairs are the outstanding inputs.
+
 The [dense-component theorem](bounded-order/Graph189DenseClique.lean) now obtains the full clique, its common high contact rows, containment of the exceptional low row, and at most one other omitted vertex. The remaining terminal step for this component is to contradict its contact pattern.
 
 The [two-connected component order argument](bounded-order/Graph189TwoConnectedCoreOrder.lean) excludes m≥2q once the circumference witness is available. In the complementary range the [prescribed routes](bounded-order/Graph189DenseComponentRoutes.lean) and [three-contact size bound](bounded-order/Graph189DenseMatching.lean) now give m≤k−2 in Lean, including a possible degree-two exceptional vertex inside the component.

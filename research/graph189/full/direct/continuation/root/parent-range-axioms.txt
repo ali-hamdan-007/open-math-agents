@@ -304,3 +304,12 @@ research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseCommo
 
 research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseClique.lean sha256 22aff46f4e702219f7bc59455c8d1cb77e2615bce5e25641f475b7d35f9856c9
 'Graph189ExteriorLeaf.dense_clique' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189SmallExteriorComponent.lean sha256 ba52239da456473256ff73d88c7f2f479681a83668c5d0115506db8a6176343d
+'Graph189ExteriorLeaf.chosen_of_small_exterior' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189SmallExteriorTransfer.lean sha256 ff921db0d3c9e7c8f959773dbb45ab105b5c542b41c9484727f1b95ea13d0eba
+'Graph189ExteriorLeaf.small_exterior_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseTerminal.lean sha256 74dc291466a3b3e3cf88613193ddad00838800ea6961889d3cd2a402c1b8a4db
+'Graph189ExteriorLeaf.no_dense_component' depends on axioms: [propext, Classical.choice, Quot.sound]
