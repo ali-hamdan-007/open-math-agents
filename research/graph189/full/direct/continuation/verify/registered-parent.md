@@ -31,6 +31,6 @@ python3 "$verify/pack-moderate.py" "$build" \
   --original --dependencies "$out/parent-deps.tsv"
 ```
 
-Left to Solve checks the submitted file separately. The registered modular proof and the recorded request for the project's per-problem file-size allowance are available in the [upstream parent progress record](https://github.com/lefttosolve2/open-math-agents/pull/18811#issuecomment-7240288281).
+[Upstream parent PR 34187](https://github.com/lefttosolve2/open-math-agents/pull/34187) contains one proof file authored by `ali-hamdan-007`. Its initial dependency-selected export is 2,707,831 bytes. Left to Solve checks the submitted file separately. The registered modular proof and the recorded request for the project's per-problem file-size allowance are available in the [upstream parent progress record](https://github.com/lefttosolve2/open-math-agents/pull/18811#issuecomment-7240288281).
 
 Ali Hamdan integrated the full argument and its graph formalizations. The proof reuses the short-order and longest-path work of carl2sheriff, the earlier metric and path work of computerfreak97, philipsaint's Dirac formalization, and koolkao's formalization of the linked-set argument of Ma, Ning and Zhao. The export preserves those source credits. [Short-order source](https://github.com/lefttosolve2/open-math-agents/pull/22587) · [Earlier path reduction](https://github.com/lefttosolve2/open-math-agents/pull/2971) · [Linked-set proof](https://github.com/lefttosolve2/open-math-agents/pull/7971)
