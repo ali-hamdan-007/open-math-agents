@@ -1,6 +1,14 @@
 # Left to Solve research frontier
 
-Updated 27 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
+Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
+
+
+## Graph 189: mixed common-neighborhood routing
+
+In each of the six remaining high-order degree-three templates, let (g) be the number of triple-visible remotes with at least (h+e+1) neighbours in (W), and let (r=h-g). If (k >= 2g+7r+84), the graph is traceable, with no connectivity assumption on the nontriple remote layer. The proof applies the earlier arbitrary-triple machinery with the effective parameter (K=k-g), handles the exceptional (f=7,b=3) visibility profile using a high-triple witness, routes disconnected and cut layers through two Hamilton-connected pieces, and checks all insertion, outer-closure, and endpoint counts. See [mixed common neighborhoods](graph189/full/unrestricted/degree-three-mixed-common-neighborhoods.md) and its [independent audit](graph189/full/unrestricted/degree-three-mixed-common-neighborhoods-audit.md).
+
+This is an independently audited paper theorem, not a Lean formalization or official checker verdict. The full conjecture remains open.
+
 
 
 ## Graph 189: a small-common-neighborhood routing theorem
