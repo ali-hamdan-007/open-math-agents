@@ -3,6 +3,15 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189. Half-degree connectivity including equality, exterior triangles and separating pairs
+
+The [standalone proof](graph189/full/direct/continuation/lowblock/high-connectivity-complete.md) and [equality proof](graph189/full/direct/continuation/lowblock/half-connectivity-boundary.md) give a spanning path when κ≥floor(k/2). A nontraceable example must therefore have κ<floor(k/2). Both proofs received independent paper review. The [shallow two-cut proof](graph189/full/direct/continuation/sep/shallow-high-two-cut.md), together with the previously settled deep and private cases, closes a separating pair with two components whose vertices all have degree at least k.
+
+For any edge with c common neighbors, [the order bound](graph189/full/direct/continuation/root/edge-order.md) gives n≤3k+2+(k+1)c. Every high–high edge outside a longest path must [lie in a triangle entirely outside that path](graph189/full/direct/continuation/root/exterior-triangle.md). Its [path-index lemma](graph189/full/direct/continuation/root/Graph189ExteriorContacts.lean) passed [independent pinned Lean compilation](graph189/full/direct/continuation/verify/exterior-contacts.replay.log) and fresh import. The graph consequences are paper results.
+
+Also independently reviewed are [dense block extraction](graph189/full/direct/continuation/order/global-dense-blocks.md), [traceability-preserving compression](graph189/full/direct/continuation/order/dense-block-compression.md), and [a gateway matching obstruction](graph189/full/direct/continuation/search/gateway-matching-defect.md). The reduced graph in the compression need not satisfy the original metric cap. Research contributors included gpt-6.2-sol and gpt-6.2-astra. These checkpoints have no full-parent checker verdict.
+
+
 ## Graph 189. A spanning path whenever vertex-connectivity exceeds half the second-smallest degree
 
 Let k be the second-smallest degree. The [endblock and pendant-vertex proof](graph189/full/direct/continuation/lowblock/high-connectivity-two-endblocks.md) finishes the last case of the [earlier connectivity reduction](graph189/full/direct/coord/connectivity-and-exterior-cycles.md). In any finite connected graph satisfying the conjecture's even-distance cap, κ > k/2 now implies a Hamiltonian path. The [independent audit](graph189/full/direct/continuation/verify/high-connectivity-audit.md) checks the exceptional endpoint pair, the two path tails, both parities, and the exact distance-two count at the exceptional vertex. This is a paper proof on the fork. The unrestricted parent remains open. The next problem is to exploit separators of size at most floor(k/2), with cut vertices already handled. Contributing workers included gpt-6.2-astra.

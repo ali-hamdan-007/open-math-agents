@@ -1,0 +1,2 @@
+import Graph189ExteriorContacts
+#print axioms Graph189ExteriorContacts.cross_contact_count

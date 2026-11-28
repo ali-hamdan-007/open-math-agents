@@ -1,0 +1,2 @@
+45b16c59d736f28a8f04521ea1b9b584d02d2e6c05989c9425e689a43d2e8d56  Graph189ExteriorContacts.lean
+'Graph189ExteriorContacts.cross_contact_count' depends on axioms: [propext, Classical.choice, Quot.sound]
