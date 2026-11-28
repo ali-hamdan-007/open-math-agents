@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## A second finite route through all orders at second-smallest degrees three, four and five
+
+The layer-cover order bound brings degree three entirely into the moderate window. Beyond that window only four additional (k,n) pairs are needed up through degree five. Python and C++ independently excluded all 72, 88, 227 and 876 attachment patterns at (4,15), (5,18), (5,19) and (5,20). The last order uses the even-distance saturation and a three-component routing argument giving an actual path on at least 16 of 20 vertices. `root/small-degree-order-windows.md` gives the proof, data and reproducible commands. This is a computer-assisted paper proof using the prior path gap. The local kernel has verified the global order and even-saturation inequalities, with the remaining finite graph-to-certificate connections still in progress. This checkpoint is on Ali's fork.
+
+
 ## Replay data for the 188 moderate-order completion certificates
 
 The minimized traces and every initial pattern are stored under `verify/moderate-certs/`. The independent Python replay validates 1,637 explicit forbidden-edge path witnesses and all 188 terminal rejections. The three larger lookup tables are gzip-compressed. `Graph189ModerateK3.lean` is the locally kernel-checked nine-pattern instance. These data are research evidence about the displayed intervals. Full graph coverage and a parent checker verdict are separate.

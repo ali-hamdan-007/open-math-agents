@@ -1,0 +1,21 @@
+n 18 p 13 b 4 exteriors 4
+n 18 p 12 b 5 exteriors 14
+n 18 p 11 b 6 exteriors 25
+n 18 p 10 b 7 exteriors 31
+n 18 p 9 b 8 exteriors 51
+k 5 n 18 patterns 88 direct 3 propagation 85 left 0
+n 19 p 14 b 4 exteriors 4
+n 19 p 13 b 5 exteriors 14
+n 19 p 12 b 6 exteriors 25
+n 19 p 11 b 7 exteriors 67
+n 19 p 10 b 8 exteriors 51
+n 19 p 9 b 9 exteriors 85
+k 5 n 19 patterns 227 direct 94 propagation 133 left 0
+n 20 p 15 b 4 exteriors 4
+n 20 p 14 b 5 exteriors 14
+n 20 p 13 b 6 exteriors 73
+n 20 p 12 b 7 exteriors 67
+n 20 p 11 b 8 exteriors 231
+n 20 p 10 b 9 exteriors 85
+n 20 p 9 b 10 exteriors 180
+k 5 n 20 patterns 876 direct 281 propagation 595 left 0

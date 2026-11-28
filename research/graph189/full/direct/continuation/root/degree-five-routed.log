@@ -1,0 +1,21 @@
+n=18 p=13 b=4 exteriors=4 cumulative={'attachment patterns before path test': 5, 'mandatory path meets gap bound': 2, 'excluded by completion constraints': 3}
+n=18 p=12 b=5 exteriors=14 cumulative={'attachment patterns before path test': 87, 'mandatory path meets gap bound': 2, 'excluded by completion constraints': 85}
+n=18 p=11 b=6 exteriors=25 cumulative={'attachment patterns before path test': 88, 'mandatory path meets gap bound': 3, 'excluded by completion constraints': 85}
+n=18 p=10 b=7 exteriors=31 cumulative={'attachment patterns before path test': 88, 'mandatory path meets gap bound': 3, 'excluded by completion constraints': 85}
+n=18 p=9 b=8 exteriors=51 cumulative={'attachment patterns before path test': 88, 'mandatory path meets gap bound': 3, 'excluded by completion constraints': 85}
+n=18 results={'attachment patterns before path test': 88, 'mandatory path meets gap bound': 3, 'excluded by completion constraints': 85} examples=[]
+n=19 p=14 b=4 exteriors=4 cumulative={'attachment patterns before path test': 95, 'mandatory path meets gap bound': 90, 'excluded by completion constraints': 5}
+n=19 p=13 b=5 exteriors=14 cumulative={'attachment patterns before path test': 223, 'mandatory path meets gap bound': 90, 'excluded by completion constraints': 132, 'excluded by saturated single contacts': 1}
+n=19 p=12 b=6 exteriors=25 cumulative={'attachment patterns before path test': 227, 'mandatory path meets gap bound': 94, 'excluded by completion constraints': 132, 'excluded by saturated single contacts': 1}
+n=19 p=11 b=7 exteriors=67 cumulative={'attachment patterns before path test': 227, 'mandatory path meets gap bound': 94, 'excluded by completion constraints': 132, 'excluded by saturated single contacts': 1}
+n=19 p=10 b=8 exteriors=51 cumulative={'attachment patterns before path test': 227, 'mandatory path meets gap bound': 94, 'excluded by completion constraints': 132, 'excluded by saturated single contacts': 1}
+n=19 p=9 b=9 exteriors=85 cumulative={'attachment patterns before path test': 227, 'mandatory path meets gap bound': 94, 'excluded by completion constraints': 132, 'excluded by saturated single contacts': 1}
+n=19 results={'attachment patterns before path test': 227, 'mandatory path meets gap bound': 94, 'excluded by completion constraints': 132, 'excluded by saturated single contacts': 1} examples=[]
+n=20 p=15 b=4 exteriors=4 cumulative={'attachment patterns before path test': 274, 'mandatory path meets gap bound': 266, 'excluded by completion constraints': 8}
+n=20 p=14 b=5 exteriors=14 cumulative={'attachment patterns before path test': 455, 'mandatory path meets gap bound': 268, 'excluded by completion constraints': 185, 'excluded by saturated single contacts': 2}
+n=20 p=13 b=6 exteriors=73 cumulative={'attachment patterns before path test': 870, 'mandatory path meets gap bound': 275, 'excluded by completion constraints': 185, 'excluded by saturated single contacts': 2, 'excluded by three-component routing': 408}
+n=20 p=12 b=7 exteriors=67 cumulative={'attachment patterns before path test': 870, 'mandatory path meets gap bound': 275, 'excluded by completion constraints': 185, 'excluded by saturated single contacts': 2, 'excluded by three-component routing': 408}
+n=20 p=11 b=8 exteriors=231 cumulative={'attachment patterns before path test': 876, 'mandatory path meets gap bound': 281, 'excluded by completion constraints': 185, 'excluded by saturated single contacts': 2, 'excluded by three-component routing': 408}
+n=20 p=10 b=9 exteriors=85 cumulative={'attachment patterns before path test': 876, 'mandatory path meets gap bound': 281, 'excluded by completion constraints': 185, 'excluded by saturated single contacts': 2, 'excluded by three-component routing': 408}
+n=20 p=9 b=10 exteriors=180 cumulative={'attachment patterns before path test': 876, 'mandatory path meets gap bound': 281, 'excluded by completion constraints': 185, 'excluded by saturated single contacts': 2, 'excluded by three-component routing': 408}
+n=20 results={'attachment patterns before path test': 876, 'mandatory path meets gap bound': 281, 'excluded by completion constraints': 185, 'excluded by saturated single contacts': 2, 'excluded by three-component routing': 408} examples=[]
