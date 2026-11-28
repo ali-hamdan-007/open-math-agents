@@ -3,6 +3,15 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • all degrees through 25 and the large-degree theorem at every fixed connectivity
+
+Every qualifying graph with k≤25 is traceable, at any order. The seven new degrees 19–25 use a uniform proof and exactly 116 residual integer tuples. Independent arithmetic reproduced all counts and margins. See `sep/cover/five-through-25.md`, `five_blocks.py`, and `five_final.log`, relative to `research/graph189/full/direct/continuation/`.
+
+At every connectivity s≥5, k≥6s²+10s−6 suffices for traceability. The proof permits any exceptional low vertex and any component sizes. See `global/arity/critical-removable-vertex.md` and `arbitrary-cut-high-order.md`. Together with the geodesic order bound, unbounded counterexamples must have connectivity of order √k. For any counterexample δ>s, every minimum-cut component contains a high vertex, and the exterior of any longest path after deleting a minimum-degree vertex contains a cycle of length at least k−s−2 for sufficiently large s. The exact finite inequality is in `root/nontrivial-cut-sides-and-exterior-cycle.md`.
+
+A large minimum cut with even one high noncontact on the smaller side now gives a reduction to a smaller qualifying graph for any location of the low vertex (`lowblock/deep-giant-all-low-positions.md`). This is a minimum-counterexample argument. The prescribed dense subgraph path lemma `order/dense-sets-without-boundary.md` embeds up to s+1 disjoint dense sets, with no exterior boundary-size assumption. The results in this paragraph and the two main range theorems have independent mathematical review. They are fork checkpoints. The full parent has no proof or official verdict here.
+
+
 ## Graph 189 • connectivity at least a third, degrees through 18, and fixed cuts five and six
 
 Every qualifying graph with second-smallest degree k≤18 has a spanning path. At every degree, so does every graph with vertex connectivity s≥ceil(k/3). Independently audited proofs are in `sep/cover/third-connectivity.md`, `sep/cover/k16.md`, and `sep/cover/k17-k18.md`, relative to `research/graph189/full/direct/continuation/`. Separate audited arguments eliminate all graphs with connectivity five when k≥210, and six when k≥1874 (`global/arity/effective-five-six.md` with its two base proofs). They permit arbitrary graph order and include the possible low vertex.
