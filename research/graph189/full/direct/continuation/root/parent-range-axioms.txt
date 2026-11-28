@@ -295,3 +295,12 @@ research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseCompo
 research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseMatching.lean sha256 7b2845c2caad5d1ec7d641ca684c03b76e072e9210d17c01a47d7b3bd212c3f7
 'Graph189ExteriorLeaf.near_match_order' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Graph189ExteriorLeaf.dense_component_size' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseExteriorCensus.lean sha256 2cbdaf1a911681ab768ce8e12778d537a97926a6ffe4b0eab7f5f75b508b6bb2
+'Graph189ExteriorLeaf.dense_exterior_census' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseCommonContacts.lean sha256 eb6e8bf4bb46d85230c5ca545b6461f1a2fbf7c747551ec5e7ee3f531c52c293
+'Graph189ExteriorLeaf.common_contacts' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189DenseClique.lean sha256 22aff46f4e702219f7bc59455c8d1cb77e2615bce5e25641f475b7d35f9856c9
+'Graph189ExteriorLeaf.dense_clique' depends on axioms: [propext, Classical.choice, Quot.sound]

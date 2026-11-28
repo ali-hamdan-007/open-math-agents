@@ -1,5 +1,7 @@
 # Formalization of the full Graph 189 paper argument
 
+The [dense-component theorem](bounded-order/Graph189DenseClique.lean) now obtains the full clique, its common high contact rows, containment of the exceptional low row, and at most one other omitted vertex. The remaining terminal step for this component is to contradict its contact pattern.
+
 The [two-connected component order argument](bounded-order/Graph189TwoConnectedCoreOrder.lean) excludes m≥2q once the circumference witness is available. In the complementary range the [prescribed routes](bounded-order/Graph189DenseComponentRoutes.lean) and [three-contact size bound](bounded-order/Graph189DenseMatching.lean) now give m≤k−2 in Lean, including a possible degree-two exceptional vertex inside the component.
 
 The [short leaf block](bounded-order/Graph189ShortLeafOrder.lean) is excluded across the residual range. [Selecting an actual leaf](bounded-order/Graph189ExteriorLeaf.lean) and [extending its tail through the articulation](bounded-order/Graph189ShortLeafRoutes.lean) are proved. The other leaf alternative, of order at least twice its minimum interior degree minus one, uses the circumference bound for a two-connected graph with one exceptional low vertex.
