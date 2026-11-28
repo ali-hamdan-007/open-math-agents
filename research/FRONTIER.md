@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Explicit routes cover the degree-four catalogue at every remaining order
+
+There are 72 additional terminal patterns at order 15. Forty-five use the single-contact argument. The other 27 admit three short constructions. In the exceptional double-contact triangle, the even-distance cap forces both marks to miss the minimum vertex if it misses the triangle. Four neighbors then give an endpoint extension or two consecutive path neighbors. With the 30 earlier rows, the degree-four completion stage now has explicit paths for all 102 patterns. The [proof and independent replays](graph189/full/direct/continuation/global/moderate/k4-direct-routes.md) include the 1,831 routes tested at order 15. The kernel connection from the original graph to the finite catalogue is still required.
+
+
 ## A single path construction for all 30 moderate-order degree-four terminal graphs
 
 Each of the 30 terminal graphs has one path contact for the exterior. Using that contact and the deleted vertex, one can route a simple path through the entire exterior and omit at most two vertices overall. An independent replay checked 792 attachment choices: 396 paths span, 388 omit one vertex, and eight omit two. The [proof](graph189/full/direct/continuation/verify/small-moderate/degree-four-short-terminal.md) records the four possible exterior shapes and the outstanding Lean connection from an arbitrary graph to the catalogue. This result concerns the moderate-order catalogue.
