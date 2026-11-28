@@ -1,5 +1,7 @@
 # Formalization of the full Graph 189 paper argument
 
+The [terminal-order theorem](bounded-order/Graph189LastCliqueOrders.lean) eliminates all orders n≥5k−4 at 7≤k≤21. This supersedes the terminal type enumeration for the parent. The [midpoint lemma](bounded-order/Graph189OptimalMidpoint.lean) is the graph exchange at the beginning of the bounded-order paper. Its remaining geometric target is to force n≥5k−4 under connectivity at least three. Connectivity two remains separately at k=7,…,11.
+
 The checked conditional theorem in parent/parent-assembly.md treats graphs with a cut vertex and all orders through 2k+2. Its two hypotheses concern two-connected graphs at larger orders. The moderate child is now proved in Lean. The larger-order child remains open. Here k is the second-smallest degree counting multiplicity. The full-target paper argument is in full-argument.md. The original upstream theorem still requires a single unconditional Lean term.
 
 The surviving original inputs are now confined to 7≤k≤21 and 4k−5≤n≤5k−3. The maximum-root estimates give this upper bound even when the exceptional vertex is away from the separator. The exact all-orders conclusion holds for k≥22, for connectivity two at k≥12, connectivity four at k≥15, and connectivity at least five at k≥14. The remaining paper proof is the [bounded-order theorem](../global/cut3/five-times-order-small.md) together with the small separating-pair arguments it cites.

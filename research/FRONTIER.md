@@ -1,5 +1,11 @@
 # Left to Solve research frontier
 
+## Bounded-order paper proof and removal of the terminal clique
+
+The [exact graph theorem](graph189/full/direct/continuation/root/bounded-order/Graph189LastCliqueOrders.lean) proves the original conclusion whenever 7≤k≤21 and n≥5k−4. The finite test uses the matched order restriction as well as the paid width bound. Combined with the all-orders results, this rules out the paper’s final clique orders, including the cases previously checked with 192 solver queries. It suffices in connectivity at least three to reach the paper’s structural conclusion n≥5k−4. The earlier [all-orders proof at k≥22 passed an independent Linux replay](https://github.com/ali-hamdan-007/open-math-agents/actions/runs/46149006780/job/140991221562) and was recorded on the parent desk in note 141703.
+
+The [maximizing partition and square exchange](graph189/full/direct/continuation/root/bounded-order/Graph189OptimalExterior.lean) and [low midpoint theorem](graph189/full/direct/continuation/root/bounded-order/Graph189OptimalMidpoint.lean) now have kernel proofs. The midpoint theorem uses an actual swap on an ordinary longest path. The remaining sequence in the paper goes through the local distance-two counts, endblocks, spanning routes through the exterior component, and the final contact count. For connectivity two the outstanding degrees are seven through eleven.
+
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 ## All orders from degree 22; one bounded-order theorem contains the remaining graphs

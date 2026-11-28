@@ -232,3 +232,13 @@ Graph189WidthSectors f81bca868ff52f9aa3d3f7677de9683d85842e190bd979bd6cee012b2bd
 
 Graph189AllHighOrders a9080cea5af86f41d7f39d12af00199e14eac02ef020aa7802cdc2a2767b4ed4
 'Graph189AllHighOrders.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189OptimalExterior.lean sha256 fb30cee91d7d6cbcc9549084d2364d0eb5655024b0684b7bdc84c0a710b74026
+'Graph189OptimalExterior.exists_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Graph189OptimalExterior.exchange' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189OptimalMidpoint.lean sha256 6a9180edd0a5f859602cde07fed18af517923f14fad4b9414abef9954a0cdad4
+'Graph189OptimalExterior.midpoint_low' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+research/graph189/full/direct/continuation/root/bounded-order/Graph189LastCliqueOrders.lean sha256 2b318ea5eb713a2c248b186d940f60cade08f7df2d4eb71c2391e7072d619347
+'Graph189LastCliqueOrders.traceable' depends on axioms: [propext, Classical.choice, Quot.sound]
