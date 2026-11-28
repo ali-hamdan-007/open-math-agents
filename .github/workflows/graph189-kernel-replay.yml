@@ -1,0 +1,162 @@
+name: Graph 189 independent kernel replay
+on:
+  push:
+    branches: [research/graph189-kernel-replay]
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 95
+    strategy:
+      fail-fast: false
+      matrix:
+        family: [high]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install the pinned Lean and required library modules
+        shell: bash
+        run: |
+          set -euxo pipefail
+          git init -q "$RUNNER_TEMP/fc"
+          git -C "$RUNNER_TEMP/fc" fetch -q --depth 1 https://github.com/google-deepmind/formal-conjectures.git 9097e2f90e66d2f6244209cb1c07f7120d17ec53
+          git -C "$RUNNER_TEMP/fc" checkout -q FETCH_HEAD
+          git init -q "$RUNNER_TEMP/mathlib"
+          git -C "$RUNNER_TEMP/mathlib" fetch -q --depth 1 https://github.com/leanprover-community/mathlib4.git 0df444a360eaa60ab8c11dca51a86af692955474
+          git -C "$RUNNER_TEMP/mathlib" checkout -q FETCH_HEAD
+          curl -fsSL --retry 3 https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o "$RUNNER_TEMP/elan-init.sh"
+          sh "$RUNNER_TEMP/elan-init.sh" -y --default-toolchain none
+          export PATH="$HOME/.elan/bin:$PATH"
+          cd "$RUNNER_TEMP/mathlib"
+          lake --version
+          lake env lean --version
+          python3 - <<'PY'
+          import os, pathlib, re, subprocess
+          base=pathlib.Path(os.environ['GITHUB_WORKSPACE'])
+          fc=pathlib.Path(os.environ['RUNNER_TEMP'])/'fc'
+          tree=base/'research/graph189'
+          sources=sorted(tree.rglob('*.lean'),key=lambda p:('continuation' not in p.parts,'verify' not in p.parts,'refinement' not in p.parts,len(p.parts),str(p)))
+          sources+=sorted((base/'research').glob('*.lean'))
+          modules={}
+          for p in sources: modules.setdefault(p.stem,p)
+          parent=tree/'full/direct/continuation/parent'
+          focused=pathlib.Path(os.environ['RUNNER_TEMP'])/'Graph189ParentFocused.lean'
+          subprocess.run(['python3',str(parent/'make-focused.py'),str(parent/'Graph189ParentAssembly.lean'),str(fc/'FormalConjectures/WrittenOnTheWallII/GraphConjecture189.lean'),str(focused)],check=True)
+          modules[focused.stem]=focused
+          families={
+              'saturation':['Graph189ThreeSaturationOriginal'],
+              'exchange':['Graph189UnrestrictedMinimumDeletion'],
+              'high':['Graph189OriginalSolution'],
+              'ordinary':['Graph189OrdinaryNearOriginal'],
+              'four':['Graph189FourConnectivityJoint'],
+              'three':['Graph189PositiveEvenCut','Graph189TwoRootRecut','Graph189ThreePrivateDensity','Graph189ThreeConnectivity'],
+              'moderate':['Graph189ModerateComplete','Graph189ModerateForDesk','Graph189ModerateSplitProofs'],
+              'six':['Graph189SmallOrderWindow'],
+              'clean':['Graph189CleanPrivatePair','Graph189MarkedException','Graph189DirtyPrivatePair'],
+              'dirty':['Graph189MixedDeepCounts','Graph189DirtyPrivatePair','Graph189DirtySideOrder'],
+              'common':['Graph189SeparatedSideComponents','Graph189MissingPrivateMixed','Graph189ShallowMixedCensus','Graph189BothCommonPair','Graph189AdjacentDeepPair','Graph189AdjacentPrivateCut'],
+              'balanced':['Graph189TwoConnectivity']}
+          targets=families[os.environ['FAMILY']]
+          (focused.parent/'targets.txt').write_text('\n'.join(targets)+'\n')
+          seen=set(); math=set()
+          def visit(name):
+              if name in seen:return
+              seen.add(name)
+              if name.startswith('Mathlib'):
+                  math.add(name);return
+              src=fc/pathlib.Path(*name.split('.')).with_suffix('.lean') if name.startswith('FormalConjectures') else modules.get(name)
+              if src is None:return
+              for dep in re.findall(r'^(?:public\s+)?import\s+(?:all\s+)?([\w.]+)',src.read_text(),re.M):visit(dep)
+          for name in targets:visit(name)
+          subprocess.run(['lake','exe','cache','get',*sorted(math)],check=True)
+          PY
+        env:
+          FAMILY: ${{ matrix.family }}
+      - uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/graph-build
+          key: graph189-linux-4.33.1-${{ matrix.family }}-${{ github.sha }}
+          restore-keys: |
+            graph189-linux-4.33.1-${{ matrix.family }}-
+      - name: Run the pinned kernel
+        id: kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$HOME/.elan/bin:$PATH"
+          cd "$RUNNER_TEMP/mathlib"
+          mkdir -p "$RUNNER_TEMP/graph-build"
+          OPT=()
+          if [[ "${{ matrix.family }}" == six || "${{ matrix.family }}" == high ]]; then OPT=(--modular-cut); fi
+          ret=0
+          while read -r target; do
+            if lake env python3 "$GITHUB_WORKSPACE/research/graph189/full/direct/continuation/verify/replay-parent-ranges.py" "$RUNNER_TEMP/fc" "$RUNNER_TEMP/graph-build" "$target" ${OPT[@]}; then
+              echo "Verified $target" >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "Replay failed for $target" >> "$GITHUB_STEP_SUMMARY"
+              ret=1
+            fi
+          done < "$RUNNER_TEMP/targets.txt"
+          exit "$ret"
+      - name: Measure exact original proof dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$HOME/.elan/bin:$PATH"
+          verify="$GITHUB_WORKSPACE/research/graph189/full/direct/continuation/verify"
+          cd "$RUNNER_TEMP/mathlib"
+          lake env python3 "$verify/extract-kernel-deps.py" "$RUNNER_TEMP/graph-build" "$RUNNER_TEMP/parent-deps.tsv" --original --module Graph189Unconditional --root Graph189FullProof.original
+          python3 "$verify/pack-moderate.py" "$RUNNER_TEMP/graph-build" "$RUNNER_TEMP/parent-package.lean" --original --kernel-only --dependencies "$RUNNER_TEMP/parent-deps.tsv"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: parent-dependency-audit
+          path: |
+            ${{ runner.temp }}/parent-deps.tsv
+            ${{ runner.temp }}/parent-package.*
+      - name: Compile the exact registered OMA.solution
+        if: success() || (failure() && steps.kernel.outcome == 'success')
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$HOME/.elan/bin:$PATH"
+          cd "$RUNNER_TEMP/fc"
+          mkdir -p .lake/packages
+          git -C "$RUNNER_TEMP/mathlib" remote add origin https://github.com/leanprover-community/mathlib4
+          ln -s "$RUNNER_TEMP/mathlib" .lake/packages/mathlib
+          for pkg in "$RUNNER_TEMP"/mathlib/.lake/packages/*; do ln -s "$pkg" ".lake/packages/$(basename "$pkg")"; done
+          df -h .
+          lake exe cache get
+          bash "$GITHUB_WORKSPACE/research/graph189/full/direct/continuation/verify/replay-registered.sh" "$RUNNER_TEMP/graph-build"
+      - name: Extract exact moderate proof dependencies
+        if: always() && matrix.family == 'moderate'
+        shell: bash
+        run: |
+          set -eu
+          export PATH="$HOME/.elan/bin:$PATH"
+          cd "$RUNNER_TEMP/mathlib"
+          for mod in Graph189ModerateComplete Graph189ModerateForDesk; do
+            if test -f "$RUNNER_TEMP/graph-build/$mod.olean"; then
+              lake env python3 "$GITHUB_WORKSPACE/research/graph189/full/direct/continuation/verify/extract-kernel-deps.py" "$RUNNER_TEMP/graph-build" "$RUNNER_TEMP/$mod-deps.tsv" --root "$mod.moderate"
+            fi
+          done
+          if test -f "$RUNNER_TEMP/graph-build/Graph189ModerateSplitProofs.olean"; then
+            for leaf in short five six seven; do
+              lake env python3 "$GITHUB_WORKSPACE/research/graph189/full/direct/continuation/verify/extract-kernel-deps.py" "$RUNNER_TEMP/graph-build" "$RUNNER_TEMP/$leaf-deps.tsv" --root "Graph189ModerateSplitProofs.$leaf"
+            done
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always() && matrix.family == 'moderate'
+        with:
+          name: graph189-declaration-dependencies
+          path: ${{ runner.temp }}/*-deps.tsv
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: ${{ runner.temp }}/graph-build
+          key: graph189-linux-4.33.1-${{ matrix.family }}-${{ github.sha }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: graph189-logs-${{ matrix.family }}
+          path: ${{ runner.temp }}/graph-build/**/*.log
