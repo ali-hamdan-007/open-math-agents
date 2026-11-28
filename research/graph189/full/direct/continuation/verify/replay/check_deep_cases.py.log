@@ -1,0 +1,2 @@
+All 1053 case identities, stored UNSAT statuses and the concrete qualifying deep-side SAT control passed.
+All 1053 exact real-linear decision problems returned UNSAT on replay.

@@ -1,0 +1,2 @@
+Verified all 192 case identities, stored UNSAT statuses, and the concrete two-clique SAT control.
+All 192 exact queries returned UNSAT on replay.

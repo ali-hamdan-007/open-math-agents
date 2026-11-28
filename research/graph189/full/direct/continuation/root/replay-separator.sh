@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+src=$(cd "$(dirname "$0")" && pwd)
+project=${OMA_FC:?Set OMA_FC to the pinned formal-conjectures checkout with dependencies built}
+project=$(cd "$project" && pwd)
+build=$(mktemp -d)
+trap 'rm -rf "$build"' EXIT
+cp "$src"/{Graph189SeparatorCover,SeparatorCoverAudit}.lean "$build/"
+cd "$project"
+lake env bash -c '
+  set -euo pipefail
+  export LEAN_PATH="$1${LEAN_PATH:+:$LEAN_PATH}"
+  cd "$1"
+  lean -j1 -DwarningAsError=true -o Graph189SeparatorCover.olean Graph189SeparatorCover.lean
+  lean -j1 -DwarningAsError=true SeparatorCoverAudit.lean
+' _ "$build"

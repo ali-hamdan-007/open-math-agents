@@ -3,6 +3,13 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## Graph 189 • vertex connectivity at most three, every degree and order
+
+The local proof covers every qualifying graph with vertex connectivity at most three. The final range k=9…15 uses 1,652 exact rational linear-arithmetic contradictions in `research/graph189/full/direct/continuation/global/cut3/three-cut-all-degrees.md`. The independent verifier enumerated 5,376 labelled inputs and replayed every decision, with fixed-population positive controls from actual qualifying graphs. The earlier results handle other k, including arbitrary orders at k≥16. The argument allows a low vertex in either side or in the separator and arbitrarily many components after deletion. The result is a mathematical reduction plus reproducible local Z3 evaluation. The full statement still has no parent Lean proof or official verdict. Review notes, logs and the 3,248-row combined manifest are in `verify/finite-three-cut-audit.md` and `global/cut3/three-cut-computations.csv` relative to the continuation directory.
+
+The next unrestricted case has vertex connectivity at least four. The same large-side researcher is testing arbitrary side orders there, alongside separate counterexample search and unrestricted minimal-counterexample arguments. The first-step even-distance covering lemma, for cuts defined by every walk meeting a separator, has separately passed Lean 4.33.1 checking and a fresh import with the three standard axioms in `root/Graph189SeparatorCover.lean`. Upstream #18811 is a separate rooted-order reduction.
+
+
 ## Graph 189 • exact local elimination of connectivity three at k≥16
 
 For k≥16, every qualifying graph of connectivity three has a spanning path, irrespective of order, degree distribution, and component sizes. The two mathematical reductions and reproducible exact rational Z3 programs are in `research/graph189/full/direct/continuation/global/cut3/{shallow-three-cut,all-three-cuts}.md`. The calculations comprise 351 shallow-side and 1,053 remaining configurations. Each query uses a real variable for k and populations, so UNSAT rules out all integer instances in the specified regime. The encoding and geometry received independent review. A Hamiltonian-path proof based on a local exact computation is different from an end-to-end Lean certificate or an official project verdict. The three-cut fixtures supply concrete qualifying SAT controls.

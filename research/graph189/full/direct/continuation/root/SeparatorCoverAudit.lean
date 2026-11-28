@@ -1,0 +1,3 @@
+import Graph189SeparatorCover
+#print axioms Graph189SeparatorCover.of_walk_separator
+#print axioms Graph189SeparatorCover.first_step_cover
