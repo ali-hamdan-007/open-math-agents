@@ -1,0 +1,21 @@
+path, cut, and relabeling controls passed
+b 3 k 3 accumulated 9
+b 3 k 4 accumulated 10
+b 4 k 3 accumulated 9
+b 4 k 4 accumulated 30
+b 4 k 5 accumulated 10
+b 4 k 6 accumulated 4
+b 5 k 3 accumulated 9
+b 5 k 4 accumulated 30
+b 5 k 5 accumulated 51
+b 5 k 6 accumulated 14
+b 6 k 4 accumulated 30
+b 6 k 5 accumulated 51
+b 6 k 6 accumulated 98
+b 7 k 5 accumulated 51
+b 7 k 6 accumulated 98
+b 8 k 6 accumulated 98
+k 3 patterns 9 immediate 8 propagation 1 remaining 0
+k 4 patterns 30 immediate 7 propagation 23 remaining 0
+k 5 patterns 51 immediate 7 propagation 44 remaining 0
+k 6 patterns 98 immediate 4 propagation 94 remaining 0

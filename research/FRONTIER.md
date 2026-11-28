@@ -3,6 +3,11 @@
 Updated 28 November 2026. This research branch contains local Lean results. The upstream pull requests and the project ledger below record official decisions.
 
 
+## A shorter proof of the entire moderate Graph 189 case
+
+For degrees 3,4,5,6, independent Python and C++ computations reproduced every candidate attachment record and excluded all 188. Per degree the counts were 9,30,51,98. Direct mandatory paths excluded 26 and forced-edge/degree/connectivity/even-distance propagation excluded 162, with no branching. The full reduction and reproduction commands are in `root/moderate-small-completion.md`. `verify/small-moderate/Graph189DeletionOrders.lean` kernel-checks the exact search window for an original longest deletion path, given the gap. Together with k≤2 in Lean and the independently reviewed k≥7 routing argument this covers the entire moderate case on paper using finite computation. The general graph-to-enumeration bridge, certificate reflection, and the joined Lean proof of H1 remain in progress. There is no official full-parent submission. Paths are relative to `research/graph189/full/direct/continuation/`.
+
+
 ## Graph 189 moderate degrees seven and eight
 
 The contact-and-cycle proof now treats k=7,8, and hence every k≥7 in the moderate case, on paper. At the last equality, k=7, an exterior five-cycle is a clique with common marks 5 and 11 on a path of order 17. The deleted vertex completes it to a six-clique, giving a path that misses only five vertices. Independent review covered both orders, the cut vertex placements, and the short leaf blocks. Three exact order/position checks passed the pinned Lean kernel in `root/Graph189ModerateBorder.lean` (`root/moderate-border.log`); the paper argument is `root/moderate-seven-eight.md`. The four remaining degrees in this shorter moderate approach are 3 through 6 before comparison with the older small-degree proof. The two parent Lean obligations remain open. Paths are relative to `research/graph189/full/direct/continuation/`.
